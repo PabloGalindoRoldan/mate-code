@@ -25,17 +25,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          # Cache de npm para que las builds sean más rápidas
           cache: 'npm'
-          # Buscamos el package-lock.json dentro de la subcarpeta
-          cache-dependency-path: './Desktop/CODE/proyecto_universidad/matecode/package-lock.json'
+          cache-dependency-path: './matecode/package-lock.json'
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./Desktop/CODE/proyecto_universidad/matecode
+        working-directory: ./matecode
 
       - name: Build
         run: npm run build
-        working-directory: ./Desktop/CODE/proyecto_universidad/matecode
+        working-directory: ./matecode
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -43,8 +43,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Aquí le decimos que suba lo que está en la carpeta dist de la subcarpeta
-          path: './Desktop/CODE/proyecto_universidad/matecode/dist'
+          # Aquí le decimos que suba la carpeta dist que está dentro de matecode
+          path: './matecode/dist'
 
   deploy:
     environment:
