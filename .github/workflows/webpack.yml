@@ -1,0 +1,58 @@
+name: Deploy Vite site to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          # Buscamos el package-lock.json dentro de la subcarpeta
+          cache-dependency-path: './Desktop/CODE/proyecto_universidad/matecode/package-lock.json'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./Desktop/CODE/proyecto_universidad/matecode
+
+      - name: Build
+        run: npm run build
+        working-directory: ./Desktop/CODE/proyecto_universidad/matecode
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Aquí le decimos que suba lo que está en la carpeta dist de la subcarpeta
+          path: './Desktop/CODE/proyecto_universidad/matecode/dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
