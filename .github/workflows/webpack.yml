@@ -26,12 +26,16 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          # Buscamos el package-lock.json dentro de la subcarpeta
+          cache-dependency-path: './Desktop/CODE/proyecto_universidad/matecode/package-lock.json'
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./NOMBRE_DE_TU_CARPETA
 
       - name: Build
         run: npm run build
+        working-directory: ./NOMBRE_DE_TU_CARPETA
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -39,8 +43,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Importante: Vite por defecto construye en la carpeta 'dist'
-          path: './dist'
+          # Aquí le decimos que suba lo que está en la carpeta dist de la subcarpeta
+          path: './Desktop/CODE/proyecto_universidad/matecode/dist'
 
   deploy:
     environment:
