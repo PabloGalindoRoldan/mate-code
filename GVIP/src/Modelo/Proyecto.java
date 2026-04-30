@@ -1,10 +1,10 @@
 package Modelo;
 
 public abstract class Proyecto {
-   private final String APROBADO = "aproado";
+   private static final String APROBADO = "aproado";
    private final String PENDIENTE = "pendiente";
-   private final String RECHAZADO = "rechazado";
-    private final String RECTITIFICADO = "rectificado";
+   private static final String RECHAZADO = "rechazado";
+    private static final String RECTITIFICADO = "rectificado";
     protected String identificacion;// seria la misma que de la empresa, el cuit
     protected String actividadPrincipal;
     protected String referente;
@@ -12,18 +12,18 @@ public abstract class Proyecto {
     protected double energiaRequerida;
     protected int personalAOcupar;
     protected String estado;
-    public Proyecto(String identificacion, String actividadPrincipal, String referente, int superficieRequerida, double energiaRequerida, int personalAOcupar) {
+    public Proyecto(String identificacion, String actividadPrincipal, String referente, int superficieRequerida, double energiaRequerida, int personalAOcupar) throws Exception {
         if (identificacion == null || identificacion.isBlank()) {
-            throw new IllegalArgumentException("La identificación del proyecto no puede estar vacía");
+            throw new Exception("La identificación del proyecto no puede estar vacía");
         }
         if (superficieRequerida <= 0) {
-            throw new IllegalArgumentException("La superficie requerida debe ser mayor que cero");
+            throw new Exception("La superficie requerida debe ser mayor que cero");
         }
         if (energiaRequerida <= 0) {
-            throw new IllegalArgumentException("La energía requerida debe ser mayor que cero");
+            throw new Exception("La energía requerida debe ser mayor que cero");
         }
         if (personalAOcupar <= 0) {
-            throw new IllegalArgumentException("El personal a ocupar debe ser mayor que cero");
+            throw new Exception("El personal a ocupar debe ser mayor que cero");
         }
 
         this.identificacion = identificacion;
@@ -33,6 +33,15 @@ public abstract class Proyecto {
         this.energiaRequerida = energiaRequerida;
         this.personalAOcupar = personalAOcupar;
         this.estado = PENDIENTE; // por defecto una vez q se crea queda en pendiente
+    }
+    public void aprobar(){
+        this.estado = APROBADO;
+    }
+    public void rechazar(){
+        this.estado = RECHAZADO;
+    }
+    public void rectificar(){
+        this.estado = RECTITIFICADO;
     }
     // quien deba aprobar rechazar un proyecto debe ser un admin
 }

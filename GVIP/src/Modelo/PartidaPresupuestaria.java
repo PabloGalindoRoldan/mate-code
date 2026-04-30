@@ -8,23 +8,23 @@ public class PartidaPresupuestaria {
     private double monto;
     private LocalDate fecha;
 
-    public PartidaPresupuestaria(String nombre, String descripcion, double monto, LocalDate fecha) {
-        validar(nombre, descripcion, monto, fecha);
+    public PartidaPresupuestaria(String nombre, String descripcion, double monto, LocalDate fecha) throws Exception {
+        validar(nombre, monto, fecha);
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.monto = monto;
         this.fecha = fecha;
     }
 
-    private void validar(String nombre, String descripcion, double monto, LocalDate fecha) {
+    private void validar(String nombre, double monto, LocalDate fecha) throws Exception {
         if (nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("El nombre de la partida no puede estar vacío");
+            throw new Exception("El nombre de la partida no puede estar vacío");
         }
         if (monto < 0) {
-            throw new IllegalArgumentException("El monto no puede ser negativo");
+            throw new Exception("El monto no puede ser negativo");
         }
         if (fecha == null) {
-            throw new IllegalArgumentException("La fecha es obligatoria");
+            throw new Exception("La fecha es obligatoria");
         }
     }
 

@@ -6,7 +6,7 @@ public abstract class Usuario {
     private String nombreUsuario;
     private String contraseña;
 
-    public Usuario(String nombre, String apellido, String email, String nombreUsuario, String contraseña) {
+    public Usuario(String nombre, String apellido, String email, String nombreUsuario, String contraseña) throws Exception {
         validar(nombre);
         validar(apellido);
         validarEmail(email);
@@ -21,19 +21,19 @@ public abstract class Usuario {
         this.contraseña = contraseña;
     }
 
-    private void validar(String texto) { // Renombrado a 'texto' para ser más genérico
+    private void validar(String texto) throws Exception { // Renombrado a 'texto' para ser más genérico
         if (texto == null || texto.isBlank()) {
-            throw new IllegalArgumentException("El campo no puede ser nulo ni estar vacío");
+            throw new Exception("El campo no puede ser nulo ni estar vacío");
         }
     }
 
-    private void validarEmail(String email) {
+    private void validarEmail(String email) throws Exception {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";//esto lo saque de un repo q mando el profe
         if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("El email no puede ser nulo ni estar vacío");
+            throw new Exception("El email no puede ser nulo ni estar vacío");
         }
         if (!email.matches(regex)) {
-            throw new IllegalArgumentException("El formato del email no es válido");
+            throw new Exception("El formato del email no es válido");
         }
     }
     private void validarUsuario(String Usuario){

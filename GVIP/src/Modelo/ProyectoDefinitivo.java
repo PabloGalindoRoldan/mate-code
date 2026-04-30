@@ -11,7 +11,7 @@ public class ProyectoDefinitivo extends Proyecto {
     public ProyectoDefinitivo(String identificacion, String actividadPrincipal, String referente,
                                int superficieRequerida, double energiaRequerida, int personalAOcupar,
                                LocalDate fechaInicioObra, LocalDate fechaFinObra,
-                               boolean viabilidadFinanciera, String informeAmbiental) {
+                               boolean viabilidadFinanciera, String informeAmbiental) throws Exception {
         super(identificacion, actividadPrincipal, referente, superficieRequerida, energiaRequerida, personalAOcupar);
         validarFechas(fechaInicioObra, fechaFinObra);
         this.fechaInicioObra = fechaInicioObra;
@@ -20,15 +20,15 @@ public class ProyectoDefinitivo extends Proyecto {
         this.informeAmbiental = informeAmbiental;
     }
 
-    private void validarFechas(LocalDate inicio, LocalDate fin) {
+    private void validarFechas(LocalDate inicio, LocalDate fin) throws Exception {
         if (inicio == null) {
-            throw new IllegalArgumentException("La fecha de inicio de obra no puede ser nula.");
+            throw new Exception("La fecha de inicio de obra no puede ser nula.");
         }
         if (fin == null) {
-            throw new IllegalArgumentException("La fecha de fin de obra no puede ser nula.");
+            throw new Exception("La fecha de fin de obra no puede ser nula.");
         }
         if (fin.isBefore(inicio)) {
-            throw new IllegalArgumentException("La fecha de fin de obra no puede ser anterior a la de inicio.");
+            throw new Exception("La fecha de fin de obra no puede ser anterior a la de inicio.");
         }
     }
 }

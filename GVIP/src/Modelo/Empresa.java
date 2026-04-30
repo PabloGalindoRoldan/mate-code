@@ -11,7 +11,7 @@ public class Empresa {
     private List<Lote> lote; // una empresa creo q podia tener mas de un lote o ninguno, por eso puse un list, si no es asi cambiarlo
     private Proyecto proyecto;//una emprsa puedo
 
-    public Empresa(String identificacion, String actividadPrincipal, boolean esRadicada) {
+    public Empresa(String identificacion, String actividadPrincipal, boolean esRadicada)throws Exception {
         validarCuit(identificacion);
         validarActividad(actividadPrincipal);
         this.identificacion = identificacion;
@@ -19,20 +19,29 @@ public class Empresa {
         this.esRadicada = esRadicada;
         this.representantes = new ArrayList<>();
     }
-    private void validarActividad(String actividadPrincipal) {
+    private void validarActividad(String actividadPrincipal)throws Exception {
         if(actividadPrincipal == null || actividadPrincipal.isBlank()){
-            throw new IllegalArgumentException("La actividad principal no puede estar vacía");
+            throw new Exception("La actividad principal no puede estar vacía");
         }
     }
-    private  void validarCuit(String identificacion ) {
+    private  void validarCuit(String identificacion )throws Exception {
         if (identificacion == null || identificacion.isBlank()) {
-            throw new IllegalArgumentException("La identificación no puede estar vacía");
+            throw new Exception("La identificación no puede estar vacía");
         }
         String regexCuit = "^\\d{2}-\\d{8}-\\d{1}$";
         if (!identificacion.matches(regexCuit)) {
-            throw new IllegalArgumentException("El formato del CUIT es inválido. Debe ser XX-XXXXXXXX-X.");
+            throw new Exception("El formato del CUIT es inválido. Debe ser XX-XXXXXXXX-X.");
         }
     }
-   // public void agregarRepresentante(RepresentanteEmpresa representante);
+    public void asignarLote(Lote lote){
+        this.lote.add(lote);
+    }
+
+    public void agregarRepresentante(RepresentanteEmpresa representante){
+        this.representantes.add(representante);
+    }
+    public void crearProyecto(Proyecto proyecto){
+        this.proyecto = proyecto;
+    }
 
 }
