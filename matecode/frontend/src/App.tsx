@@ -1,13 +1,12 @@
-import MateCode from './assets/MateCode.png'
+
 import './App.css'
+import Landing from './components/views/Landing';
 
 function App() {
 
   return (
     <>
-      <section id="center">
-        <img src={MateCode} alt="Logo"/>
-      </section>
+      <Landing></Landing>
     </>
   )
 }
