@@ -1,7 +1,7 @@
 import LandingBody from '../shared/LandingBody';
 import Publicaciones from '../shared/PublicacionesView';
 import Footer from '../shared/Footer';
-import NavBar from '../shared/Navbar';
+import NavBar from '../shared/NavBar';
 import './Landing.css'
 
 export default function Landing() {
