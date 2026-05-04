@@ -1,13 +1,17 @@
-.navbar{
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    height: 80px;
     color: #30332D;
     background-color: var(--verde1);
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.buttonList{
+.buttonList {
     display: flex;
     gap: 1rem;
     align-items: end;
@@ -15,7 +19,7 @@
     list-style-type: none;
 }
 
-.navButtonContacto{
+.navButtonContacto {
     background-color: transparent;
     border: none;
     color: var(--gris1);
@@ -27,12 +31,12 @@
     position: relative;
 }
 
-.navButtonContacto:hover{
+.navButtonContacto:hover {
     color: var(--gris2);
     transform: translateY(-2px);
 }
 
-.navButtonIngresar{
+.navButtonIngresar {
     background-color: transparent;
     border: 2px solid var(--gris1);
     color: var(--gris1);
@@ -43,14 +47,14 @@
     font-weight: 500;
 }
 
-.navButtonIngresar:hover{
+.navButtonIngresar:hover {
     background-color: var(--gris1);
     color: var(--verde1);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.navButtonRegistrarse{
+.navButtonRegistrarse {
     background-color: var(--gris1);
     border: 2px solid var(--gris1);
     color: var(--verde1);
@@ -62,7 +66,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-.navButtonRegistrarse:hover{
+.navButtonRegistrarse:hover {
     background-color: var(--gris1);
     border-color: var(--gris1);
     color: var(--verde1);

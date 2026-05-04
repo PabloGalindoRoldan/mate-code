@@ -1,15 +1,16 @@
 import LandingBody from '../shared/LandingBody';
 import Publicaciones from '../shared/PublicacionesView';
 import Footer from '../shared/Footer';
-import Navbar from '../shared/Navbar';
+import NavBar from '../shared/Navbar';
+import './Landing.css'
 
 export default function Landing() {
   return (
-    <>
-      <Navbar />
+    <section className="landingSection">
+      <NavBar />
       <LandingBody />
       <Publicaciones />
       <Footer />
-    </>
+    </section>
   )
 }

@@ -1,9 +1,15 @@
+import "./LandingBody.css";
+
 
 export default function LandingBody() {
     return (
         <section className="landingBodySection" id="center">
-            <h1>Welcome to MateCode!</h1>
-            <p>Your ultimate coding companion. Connect, collaborate, and code together in real-time. Join our community of developers and take your coding experience to the next level!</p>
+            <h1 className="tituloLanding">ENREPAVI</h1>
+            <h2 className="subtituloLanding">Sistema de Gestion</h2>
+            <div className="botoneraLanding">
+                <button className="buttonIngresarLanding">Ingresar</button>
+                <button className="buttonRegistrarseLanding">Registrarse</button>
+            </div>
         </section>
     )
 }

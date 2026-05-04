@@ -1,0 +1,57 @@
+.landingBodySection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    height: calc(100vh - 80px);
+    width: 100%;
+    background-color: white;
+    color: var(--gris1);
+    box-sizing: border-box;
+}
+
+.tituloLanding {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.subtituloLanding {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+}
+
+.botoneraLanding {
+    display: flex;
+    gap: 20px;
+}
+
+.buttonIngresarLanding {
+    background-color: var(--verde1);
+    border: none;
+    color: var(--gris1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+}
+
+.buttonIngresarLanding:hover {
+    background-color: var(--verde2);
+}
+
+.buttonRegistrarseLanding {
+    background-color: var(--gris1);
+    border: none;
+    color: var(--verde1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+}
+
+.buttonRegistrarseLanding:hover {
+    background-color: var(--gris2);
+}
