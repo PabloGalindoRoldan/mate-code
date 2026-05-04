@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-export default function Landing() {
+export default function LandingBody() {
   return (
     <>
       <section id="center">
