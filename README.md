@@ -30,3 +30,8 @@ Una vez instaladas las dependencias, levantá el proyecto con:
 npm run dev
 ```
 
+### 5. CONVENCIONES A SEGUIR
+- Nombrar las carpetas con camelCase y sin espacios ni guiones (camelCase arranca en minuscula y separa las palabras con mayusculas; mate y code seria mateYCode)
+- Nombrar los archivos con PascalCase (arranca con mayuscula y separa las palabras con mayusculas, mate y code seria MateYCode)
+- NO HACER PUSH A MAIN. La rama colectora es develop, pero tampoco se pushea a develop. Cada feature se pushea a su propia rama nombrada "nroX-tituloDelTicket" y despues se hace el pull-request a develop (importante chequear que el pull request sea a develop!!)
+- 

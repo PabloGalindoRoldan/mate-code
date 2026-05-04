@@ -27,15 +27,15 @@ jobs:
           node-version: 20
           # Cache de npm para que las builds sean más rápidas
           cache: 'npm'
-          cache-dependency-path: './matecode/package-lock.json'
+          cache-dependency-path: './matecode/frontend/package-lock.json'
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./matecode
+        working-directory: ./matecode/frontend
 
       - name: Build
         run: npm run build
-        working-directory: ./matecode
+        working-directory: ./matecode/frontend
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -43,8 +43,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Aquí le decimos que suba la carpeta dist que está dentro de matecode
-          path: './matecode/dist'
+          # Aquí le decimos que suba la carpeta dist que está dentro de matecode/frontend
+          path: './matecode/frontend/dist'
 
   deploy:
     environment:
