@@ -1,3 +1,4 @@
+import React from 'react';
 import MateCode from './assets/MateCode.png'
 import './App.css'
 
