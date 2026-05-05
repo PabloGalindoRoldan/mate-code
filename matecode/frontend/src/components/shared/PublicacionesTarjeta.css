@@ -1,0 +1,50 @@
+.publicacionTarjeta {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+    border-radius: 20px;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    color: var(--gris2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.publicacionTarjeta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.16);
+}
+
+.publicacionTarjeta__imagenWrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.publicacionTarjeta__imagenWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.publicacionTarjeta__contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px 24px 26px;
+}
+
+.publicacionTarjeta__contenido h2 {
+    font-size: 1.25rem;
+    color: var(--gris1);
+    line-height: 1.3;
+}
+
+.publicacionTarjeta__contenido p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #4e534d;
+    min-height: 5.2rem;
+}
