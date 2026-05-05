@@ -1,11 +1,23 @@
 import './PublicacionesTarjeta.css';
 
-export default function PublicacionesTarjeta(params: any) {
+interface PublicacionTarjetaProps {
+    imagen: string;
+    alt: string;
+    titulo: string;
+    contenido: string;
+    className?: string;
+}
+
+export default function PublicacionesTarjeta({ imagen, alt, titulo, contenido, className }: PublicacionTarjetaProps) {
     return (
-        <div className="publicacionTarjeta">
-            <img src={params.imagen} alt={params.alt} />
-            <h2>{params.titulo}</h2>
-            <p>{params.contenido}</p>
-        </div>
+        <article className={`publicacionTarjeta ${className ?? ''}`}>
+            <div className="publicacionTarjeta__imagenWrapper">
+                <img src={imagen} alt={alt} />
+            </div>
+            <div className="publicacionTarjeta__contenido">
+                <h2>{titulo}</h2>
+                <p>{contenido}</p>
+            </div>
+        </article>
     )
 }
