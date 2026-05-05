@@ -1,0 +1,16 @@
+{
+    "carrousel": [
+        {
+            "id": 1,
+            "image": "https://images.pexels.com/photos/19544248/pexels-photo-19544248.jpeg"
+        },
+        {
+            "id": 2,
+            "image": "https://images.pexels.com/photos/20354107/pexels-photo-20354107.jpeg"
+        },
+        {
+            "id": 3,
+            "image": "https://images.pexels.com/photos/18920790/pexels-photo-18920790.jpeg"
+        }
+    ]
+}
