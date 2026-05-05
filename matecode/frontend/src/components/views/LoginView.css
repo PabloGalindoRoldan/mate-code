@@ -14,7 +14,7 @@
 
 .loginForm {
     width: 25vw;
-    height: 30vh;
+    min-height: 30vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -70,4 +70,21 @@
 
 .loginForm button:hover {
     background-color: var(--gris2);
+}
+
+@media (max-width: 768px) {
+    .loginForm {
+        width: 80vw;
+        height: auto;
+        min-height: 50vh;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .loginForm {
+        width: 80vw;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
 }
