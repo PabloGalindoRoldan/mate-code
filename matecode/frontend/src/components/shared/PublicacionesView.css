@@ -1,0 +1,27 @@
+.publicacionesView {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+}
+
+.publicacionesView>h2 {
+    font-size: 2rem;
+    color: var(--gris1);
+    margin-bottom: 20px;
+}
+
+.publicacionesView>div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+}

@@ -1,0 +1,15 @@
+.imageContainer {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.imageContainer>img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0px;
+}

@@ -1,7 +1,8 @@
 import LandingBody from '../shared/LandingBody';
-import Publicaciones from '../shared/PublicacionesView';
+import PublicacionesView from '../shared/PublicacionesView';
 import Footer from '../shared/Footer';
 import NavBar from '../shared/NavBar';
+import ImageContainer from '../shared/ImageContainer';
 import './Landing.css'
 
 export default function Landing() {
@@ -9,7 +10,8 @@ export default function Landing() {
     <section className="landingSection">
       <NavBar />
       <LandingBody />
-      <Publicaciones />
+      <ImageContainer />
+      <PublicacionesView />
       <Footer />
     </section>
   )
