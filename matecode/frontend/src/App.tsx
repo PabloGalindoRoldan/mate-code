@@ -4,6 +4,7 @@ import Landing from './components/views/Landing';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import SysAdminView from './components/views/SysAdminView';
 import LoginView from './components/views/LoginView';
+import RegisterView from './components/views/RegisterView';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/admin" element={<SysAdminView />} />
         <Route path="/login" element={<LoginView />} />
+        <Route path="/register" element={<RegisterView />} />
       </Routes>
     </BrowserRouter>
   )
