@@ -1,0 +1,46 @@
+{
+    "publicaciones": [
+        {
+            "id": 1,
+            "titulo": "Publicación 1",
+            "imagen": "https://via.placeholder.com/150",
+            "alt": "Imagen de la publicación 1",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 2,
+            "titulo": "Publicación 2",
+            "imagen": "https://via.placeholder.com/151",
+            "alt": "Imagen de la publicación 2",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 3,
+            "titulo": "Publicación 3",
+            "imagen": "https://via.placeholder.com/152",
+            "alt": "Imagen de la publicación 3",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 4,
+            "titulo": "Publicación 4",
+            "imagen": "https://via.placeholder.com/153",
+            "alt": "Imagen de la publicación 4",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 5,
+            "titulo": "Publicación 5",
+            "imagen": "https://via.placeholder.com/154",
+            "alt": "Imagen de la publicación 5",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 6,
+            "titulo": "Publicación 6",
+            "imagen": "https://via.placeholder.com/155",
+            "alt": "Imagen de la publicación 6",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        }
+    ]
+}
