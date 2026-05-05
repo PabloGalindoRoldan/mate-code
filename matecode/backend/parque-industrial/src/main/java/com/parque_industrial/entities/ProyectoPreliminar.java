@@ -1,4 +1,4 @@
-package Modelo;
+package com.parque_industrial.entities;
 
 public class ProyectoPreliminar extends Proyecto {
     public ProyectoPreliminar(String identificacion, String actividadPrincipal, String referente,
