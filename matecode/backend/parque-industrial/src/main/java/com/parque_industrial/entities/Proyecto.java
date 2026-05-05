@@ -1,4 +1,4 @@
-package Modelo;
+package com.parque_industrial.entities;
 
 public abstract class Proyecto {
    private static final String APROBADO = "aproado";

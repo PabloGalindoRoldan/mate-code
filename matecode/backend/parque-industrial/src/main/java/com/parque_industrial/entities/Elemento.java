@@ -1,4 +1,4 @@
-package Modelo;
+package com.parque_industrial.entities;
 
 public class Elemento {
     private String nombre;

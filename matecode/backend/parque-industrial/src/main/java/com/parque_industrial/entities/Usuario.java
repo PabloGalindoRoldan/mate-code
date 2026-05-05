@@ -1,4 +1,4 @@
-package Modelo;
+package com.parque_industrial.entities;
 public abstract class Usuario {
     private String nombre;
     private String apellido;

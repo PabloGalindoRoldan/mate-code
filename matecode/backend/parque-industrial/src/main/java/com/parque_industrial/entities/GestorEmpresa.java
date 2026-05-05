@@ -1,4 +1,4 @@
-package Modelo;
+package com.parque_industrial.entities;
 
 import java.util.List;
 
