@@ -7,7 +7,7 @@ export default function ContactoView() {
         <>
             <NavBar />
             <div className="contactoSection">
-                <h2 className="contactoTitle">Contacto</h2>
+                <h2 className="contactoTitle">CONTACTO</h2>
                 <div className="contactoContent">
                     <p className="contactoItem"><strong>Tel:</strong> 02920 - 29202920</p>
                     <p className="contactoItem"><strong>Email:</strong> info@info.com</p>
