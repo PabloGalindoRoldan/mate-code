@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function ImageContainer() {
 
-    const [imagenes, setImagenes] = useState(data);
+    const [imagenes] = useState(data);
 
     function randomizeImage() {
         const randomIndex = Math.floor(Math.random() * imagenes.carrousel.length);
