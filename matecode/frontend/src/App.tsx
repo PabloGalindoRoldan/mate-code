@@ -6,6 +6,7 @@ import SysAdminView from './components/views/SysAdminView';
 import LoginView from './components/views/LoginView';
 import RegisterView from './components/views/RegisterView';
 import ContactoView from './components/views/ContactoView';
+import EmpresaNoRadicadaView from './components/views/EmpresaNoRadicadaView';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<LoginView />} />
         <Route path="/register" element={<RegisterView />} />
         <Route path="/contact" element={<ContactoView />} />
+        <Route path="/nueva-empresa" element={<EmpresaNoRadicadaView />} />
       </Routes>
     </BrowserRouter>
   )

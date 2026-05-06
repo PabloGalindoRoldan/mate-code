@@ -1,0 +1,94 @@
+.empresaNoRadicadaView {
+    min-height: 100vh;
+    background-color: white;
+}
+
+.empresaNoRadicadaBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: calc(100vh - 80px);
+    color: var(--gris1);
+    padding: 2rem;
+}
+
+.empresaNoRadicadaBody h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gris1);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.empresaNoRadicadaBody p {
+    font-size: 1rem;
+    color: var(--gris2);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.project-form {
+    width: 50vw;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border: 1px solid var(--verde1);
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--gris1);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--verde1);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--verde1, --verde3);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+@media (max-width: 768px) {
+    .project-form {
+        width: 80vw;
+        height: auto;
+        min-height: 50vh;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-form {
+        width: 80vw;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+}
