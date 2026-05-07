@@ -18,7 +18,7 @@ function App() {
         <Route path="/admin" element={<SysAdminView />} />
         <Route path="/login" element={<LoginView />} />
         <Route path="/register" element={<RegisterView />} />
-        <Route path="/contact" element={<ContactoView />} />
+        <Route path="/contacto" element={<ContactoView />} />
         <Route path="/nueva-empresa" element={<EmpresaNoRadicadaView />} />
         <Route path="/empresa-radicada" element={<EmpresaRadicadaView />} />
       </Routes>

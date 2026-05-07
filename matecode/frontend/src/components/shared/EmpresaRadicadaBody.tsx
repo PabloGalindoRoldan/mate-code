@@ -3,12 +3,14 @@ import InfoPanel from "./InfoPanel";
 import StatisticsPanel from "./StatisticsPanel";
 
 
-export default function EmpresaRadicadaBody(params: { empresaInfo: any }) {
+export default function EmpresaRadicadaBody(params: { empresaInfo: any, isMenuOpen: boolean }) {
+    const { isMenuOpen } = params;
+    const { empresaInfo } = params;
 
     return (
-        <div className="empresaRadicadaBody">
-            <InfoPanel empresaInfo={params.empresaInfo} />
-            <StatisticsPanel empresaInfo={params.empresaInfo} />
+        <div className={`empresaRadicadaBody ${isMenuOpen ? "shrunk" : "full"}`}>
+            <InfoPanel empresaInfo={empresaInfo} />
+            <StatisticsPanel empresaInfo={empresaInfo} />
         </div>
     );
 }
