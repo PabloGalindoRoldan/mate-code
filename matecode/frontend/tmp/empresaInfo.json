@@ -1,0 +1,135 @@
+{
+    "empresas": [
+        {
+            "id": 1,
+            "nombre": "Tech Solutions S.A.",
+            "direccion": "Calle Falsa 123, Ciudad, País",
+            "telefono": "+123456789",
+            "email": "info@techsolutions.com",
+            "data": {
+                "consumos": [
+                    {
+                        "mes": 1,
+                        "año": 2024,
+                        "empleados": 130,
+                        "electricidad": 500,
+                        "agua": 1000,
+                        "gas": 300
+                    },
+                    {
+                        "mes": 2,
+                        "año": 2024,
+                        "empleados": 128,
+                        "electricidad": 450,
+                        "agua": 950,
+                        "gas": 280
+                    },
+                    {
+                        "mes": 3,
+                        "año": 2024,
+                        "empleados": 125,
+                        "electricidad": 480,
+                        "agua": 1100,
+                        "gas": 320
+                    },
+                    {
+                        "mes": 4,
+                        "año": 2024,
+                        "empleados": 130,
+                        "electricidad": 470,
+                        "agua": 1050,
+                        "gas": 310
+                    },
+                    {
+                        "mes": 5,
+                        "año": 2024,
+                        "empleados": 140,
+                        "electricidad": 460,
+                        "agua": 1020,
+                        "gas": 290
+                    },
+                    {
+                        "mes": 6,
+                        "año": 2024,
+                        "empleados": 140,
+                        "electricidad": 490,
+                        "agua": 1080,
+                        "gas": 330
+                    },
+                    {
+                        "mes": 7,
+                        "año": 2024,
+                        "empleados": 140,
+                        "electricidad": 480,
+                        "agua": 1070,
+                        "gas": 300
+                    },
+                    {
+                        "mes": 8,
+                        "año": 2024,
+                        "empleados": 140,
+                        "electricidad": 470,
+                        "agua": 1040,
+                        "gas": 290
+                    },
+                    {
+                        "mes": 9,
+                        "año": 2024,
+                        "empleados": 123,
+                        "electricidad": 460,
+                        "agua": 1010,
+                        "gas": 280
+                    },
+                    {
+                        "mes": 10,
+                        "año": 2024,
+                        "empleados": 123,
+                        "electricidad": 450,
+                        "agua": 980,
+                        "gas": 270
+                    },
+                    {
+                        "mes": 11,
+                        "año": 2024,
+                        "empleados": 130,
+                        "electricidad": 440,
+                        "agua": 950,
+                        "gas": 260
+                    },
+                    {
+                        "mes": 12,
+                        "año": 2024,
+                        "empleados": 130,
+                        "electricidad": 430,
+                        "agua": 920,
+                        "gas": 250
+                    },
+                    {
+                        "mes": 1,
+                        "año": 2025,
+                        "empleados": 130,
+                        "electricidad": 420,
+                        "agua": 900,
+                        "gas": 240
+                    },
+                    {
+                        "mes": 2,
+                        "año": 2025,
+                        "empleados": 130,
+                        "electricidad": 410,
+                        "agua": 880,
+                        "gas": 230
+                    },
+                    {
+                        "mes": 3,
+                        "año": 2025,
+                        "empleados": 130,
+                        "electricidad": 400,
+                        "agua": 860,
+                        "gas": 220
+                    }
+                ]
+            }
+        }
+    ]
+}
