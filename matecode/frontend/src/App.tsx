@@ -7,6 +7,7 @@ import LoginView from './components/views/LoginView';
 import RegisterView from './components/views/RegisterView';
 import ContactoView from './components/views/ContactoView';
 import EmpresaNoRadicadaView from './components/views/EmpresaNoRadicadaView';
+import EmpresaRadicadaView from './components/views/EmpresaRadicadaView';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/register" element={<RegisterView />} />
         <Route path="/contact" element={<ContactoView />} />
         <Route path="/nueva-empresa" element={<EmpresaNoRadicadaView />} />
+        <Route path="/empresa-radicada" element={<EmpresaRadicadaView />} />
       </Routes>
     </BrowserRouter>
   )

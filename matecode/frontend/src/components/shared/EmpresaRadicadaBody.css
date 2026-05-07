@@ -1,0 +1,8 @@
+.empresaRadicadaBody {
+    background-color: #ffffff;
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--gris1);
+}
