@@ -2,34 +2,47 @@ import { useState, useMemo } from "react";
 import "./StatisticsPanel.css";
 import {
     Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    BarController,
-    LineController,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
+    registerables,
     type ChartData,
     type ChartOptions,
 } from "chart.js";
+// Importamos solo el componente genérico para evitar el error de "variable no usada"
 import { Chart } from "react-chartjs-2";
 
-// Register Line elements for the "Empleados" variable
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    BarController,
-    LineController,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-);
+// Esto registra TODOS los controladores (Bar, Line, etc.) de forma global.
+// Es la clave para que GitHub Pages no falle.
+ChartJS.register(...registerables);
+
+// import {
+//     Chart as ChartJS,
+//     CategoryScale,
+//     LinearScale,
+//     BarElement,
+//     BarController,
+//     LineController,
+//     PointElement,
+//     LineElement,
+//     Title,
+//     Tooltip,
+//     Legend,
+//     type ChartData,
+//     type ChartOptions,
+// } from "chart.js";
+// import { Chart, Bar } from "react-chartjs-2";
+
+// // Register Line elements for the "Empleados" variable
+// ChartJS.register(
+//     CategoryScale,
+//     LinearScale,
+//     BarElement,
+//     BarController,
+//     LineController,
+//     PointElement,
+//     LineElement,
+//     Title,
+//     Tooltip,
+//     Legend
+// );
 
 export default function StatisticsPanel({ empresaInfo }: { empresaInfo: any }) {
     const empresa = empresaInfo?.empresas?.[0];
