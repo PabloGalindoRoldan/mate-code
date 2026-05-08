@@ -6,58 +6,22 @@ import {
     type ChartData,
     type ChartOptions,
 } from "chart.js";
-// Importamos solo el componente genérico para evitar el error de "variable no usada"
 import { Chart } from "react-chartjs-2";
-
-// Esto registra TODOS los controladores (Bar, Line, etc.) de forma global.
-// Es la clave para que GitHub Pages no falle.
 ChartJS.register(...registerables);
 
-// import {
-//     Chart as ChartJS,
-//     CategoryScale,
-//     LinearScale,
-//     BarElement,
-//     BarController,
-//     LineController,
-//     PointElement,
-//     LineElement,
-//     Title,
-//     Tooltip,
-//     Legend,
-//     type ChartData,
-//     type ChartOptions,
-// } from "chart.js";
-// import { Chart, Bar } from "react-chartjs-2";
 
-// // Register Line elements for the "Empleados" variable
-// ChartJS.register(
-//     CategoryScale,
-//     LinearScale,
-//     BarElement,
-//     BarController,
-//     LineController,
-//     PointElement,
-//     LineElement,
-//     Title,
-//     Tooltip,
-//     Legend
-// );
 
 export default function StatisticsPanel({ empresaInfo }: { empresaInfo: any }) {
     const empresa = empresaInfo?.empresas?.[0];
     const consumos = empresa?.data?.consumos ?? [];
 
-    // 1. State for Filters
     const [selectedYear, setSelectedYear] = useState<string>("All");
 
-    // 2. Extract available years for the dropdown
     const availableYears = useMemo(() => {
         const years = consumos.map((c: any) => String(c.año));
         return ["All", ...Array.from(new Set(years))];
     }, [consumos]);
 
-    // 3. Filter Data
     const filteredConsumos = useMemo(() => {
         return selectedYear === "All"
             ? consumos
@@ -66,7 +30,6 @@ export default function StatisticsPanel({ empresaInfo }: { empresaInfo: any }) {
 
     const labels = filteredConsumos.map((c: any) => `${c.mes}/${c.año}`);
 
-    // 4. Chart Data using CSS Variables
     const data: ChartData<"bar" | "line"> = {
         labels,
         datasets: [
