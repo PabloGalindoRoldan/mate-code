@@ -9,7 +9,7 @@ import data from "../../../tmp/empresaInfo.json";
 
 export default function EmpresaRadicadaView() {
     const [empresaInfo] = useState(data);
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // Default closed for dashboard feel
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
