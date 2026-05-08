@@ -11,25 +11,25 @@ public class Lote {
     public static final int SUPERFICIE_MEDIO= 1;
     public static final int SUPERFICIE_MAYOR= 1;
 
-    private int superficie;
-    private String identificacion;
+    private double superficie;
+    private int identificacion;
     private String estado;
     private LocalDate fechaVenta;
     private double montoVenta;
 
-    public Lote(int superficie, String identificacion)throws Exception  {
+    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, double montoVenta)throws Exception  {
         validar(superficie, identificacion);
         this.superficie = superficie;
         this.identificacion = identificacion;
         this.estado = DISPONIBLE; // por defecto le ponemos disponible y con precio 0
         this.montoVenta = 0.0;
     }
-    private void validar(double superficie, String identificacion) throws Exception  {
+    private void validar(double superficie, int identificacion) throws Exception  {
         if (superficie <= 0) {
             throw new Exception("La superficie debe ser un valor positivo");
         }
-        if (identificacion == null || identificacion.isBlank()) {
-            throw new Exception("La identificación del lote no puede estar vacía");
+        if (identificacion < 0) {
+            throw new Exception("La identificación del lote es un numero postivo");
         }
     }
     public void reservar()throws Exception  {
@@ -51,4 +51,20 @@ public class Lote {
             throw new Exception("El lote " + identificacion + " no puede ser vendido en su estado actual.");
         }
     }
+    public String getEstado() {
+        return estado;
+    }
+    public double getSuperficie() {
+        return superficie;
+    }
+    public int getIdentificacion() {
+        return identificacion;
+    }
+    public LocalDate getFechaVenta() {
+        return fechaVenta;
+    }
+    public double getMontoVenta() {
+        return montoVenta;
+    }
+
 }
