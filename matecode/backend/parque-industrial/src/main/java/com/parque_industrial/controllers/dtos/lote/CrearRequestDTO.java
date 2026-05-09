@@ -1,3 +1,3 @@
 package com.parque_industrial.controllers.dtos.lote;
 
-public record CrearRequestDTO (){}
+public record CrearRequestDTO (int identificacion, double superficie){}

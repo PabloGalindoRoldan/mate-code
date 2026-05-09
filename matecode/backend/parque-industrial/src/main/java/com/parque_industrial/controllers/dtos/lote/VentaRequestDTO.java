@@ -1,4 +1,4 @@
 package com.parque_industrial.controllers.dtos.lote;
 
-public record VentaRequestDTO() {
+public record VentaRequestDTO(int identificacion, double monto) {
 }

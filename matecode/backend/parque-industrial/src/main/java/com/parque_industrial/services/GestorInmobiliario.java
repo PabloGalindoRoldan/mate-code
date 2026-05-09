@@ -22,12 +22,17 @@ public class GestorInmobiliario{
         dao.crearLote(lote1);
     }
     public List<LoteDTO> LotesDisponibles() throws Exception {
-       return dao.LotesDisponibles().stream().map(lote -> LoteDTO.dto(lote)).toList();
+       return dao.LotesDisponibles();
+    }
+    public LoteDTO buscarLote(int identificacion) throws Exception {
+        return dao.buscarLotePorID(identificacion) ;
     }
 
 
-
-
-
-
+    public List<LoteDTO> LotesVendidos() throws Exception{
+        return dao.LotesVendidos();
+    }
+    public List<LoteDTO> LotesReservados() throws Exception{
+        return dao.LotesReservados();
+    }
 }

@@ -3,9 +3,9 @@ package com.parque_industrial.entities;
 import java.time.LocalDate;
 
 public class Lote {
-    private final String DISPONIBLE = "disponible";
-    private final String RESERVADO = "reservado";
-    private final String VENDIDO= "vendido";
+    public static final String DISPONIBLE = "disponible";
+    public static final String RESERVADO = "reservado";
+    public static final String VENDIDO= "vendido";
     // Las hice asi ya que eran solo tres tipos de superficie no recuerdo cuanto metros cuadrados abarcaba cada una, mas adelante los vamos a usar
     public static final int SUPERFICIE_MENOR= 1;
     public static final int SUPERFICIE_MEDIO= 1;
@@ -21,9 +21,17 @@ public class Lote {
         validar(superficie, identificacion);
         this.superficie = superficie;
         this.identificacion = identificacion;
-        this.estado = DISPONIBLE; // por defecto le ponemos disponible y con precio 0
-        this.montoVenta = 0.0;
+        this.estado = estado;
+        this.montoVenta = montoVenta;
     }
+    public Lote( int identificacion, double superficie)throws Exception  {
+        validar(superficie, identificacion);
+        this.superficie = superficie;
+        this.identificacion = identificacion;
+        this.estado = DISPONIBLE;
+        this.montoVenta = 0;
+    }
+
     private void validar(double superficie, int identificacion) throws Exception  {
         if (superficie <= 0) {
             throw new Exception("La superficie debe ser un valor positivo");

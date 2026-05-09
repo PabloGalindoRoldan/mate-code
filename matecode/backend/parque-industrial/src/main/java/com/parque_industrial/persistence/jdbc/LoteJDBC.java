@@ -1,5 +1,6 @@
 package com.parque_industrial.persistence.jdbc;
 import com.parque_industrial.entities.Lote;
+import com.parque_industrial.persistence.dtos.LoteDTO;
 import com.parque_industrial.services.DAOInmobiliario;
 import javax.sql.DataSource;
 import java.sql.*;
@@ -24,18 +25,18 @@ public class LoteJDBC implements DAOInmobiliario {
     }
 
     @Override
-    public List<Lote> LotesDisponibles() throws Exception{
+    public List<LoteDTO> LotesDisponibles() throws Exception{
         String query = "SELECT * FROM Lote WHERE " + ESTADO + " = '" + DISPONIBLE + "'";
-        List<Lote> lotes = new ArrayList<>();
+        List<LoteDTO> lotes = new ArrayList<>();
         try(Connection con = this.conecction.getConnection();
         PreparedStatement ps = con.prepareStatement(query)){
             ResultSet res = ps.executeQuery();
             while (res.next()){
-                lotes.add( new Lote(res.getInt(ID),
+                lotes.add( LoteDTO.dto(new Lote(res.getInt(ID),
                         res.getDouble(SUPERFICIE),
                         res.getString(ESTADO),
                         res.getDate(FECHA).toLocalDate(),
-                        res.getDouble(MONTO))
+                        res.getDouble(MONTO)))
                 );
             }
         }catch (SQLException ex) {
@@ -83,6 +84,69 @@ public class LoteJDBC implements DAOInmobiliario {
         }catch (SQLException exception){
             throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
         }
+    }
+
+    @Override
+    public LoteDTO buscarLotePorID(int identificacion) throws Exception {
+       String query = "SELECT * FROM LOTE WHERE " + ID + " = ?";
+       try(Connection conn = this.conecction.getConnection();
+           PreparedStatement ps = conn.prepareStatement(query)){
+           ps.setInt(1, identificacion);
+           ResultSet res = ps.executeQuery();
+           if(res.next()){
+               return LoteDTO.dto(new Lote(res.getInt(ID),
+                       res.getDouble(SUPERFICIE),
+                       res.getString(ESTADO),
+                       res.getDate(FECHA).toLocalDate(),
+                       res.getDouble(MONTO)));
+           }else {
+               return null;// esto retornaria null o un optinal? creo q nunca retornaria null siempre buscamos un lote de nuestro mapa
+           }
+       } catch (SQLException exception){
+                throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+       }
+    }
+
+    @Override
+    public List<LoteDTO> LotesVendidos() throws Exception {
+        String query = "SELECT * FROM Lote WHERE " + ESTADO + " = '" + VENDIDO + "'";
+        List<LoteDTO> lotes = new ArrayList<>();
+        try(Connection con = this.conecction.getConnection();
+            PreparedStatement ps = con.prepareStatement(query)){
+            ResultSet res = ps.executeQuery();
+            while (res.next()){
+                lotes.add( LoteDTO.dto(new Lote(res.getInt(ID),
+                        res.getDouble(SUPERFICIE),
+                        res.getString(ESTADO),
+                        res.getDate(FECHA).toLocalDate(),
+                        res.getDouble(MONTO)))
+                );
+            }
+        }catch (SQLException ex) {
+            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
+        }
+        return lotes;
+    }
+
+    @Override
+    public List<LoteDTO> LotesReservados() throws Exception {
+        String query = "SELECT * FROM Lote WHERE " + ESTADO + " = '" + RESERVADO + "'";
+        List<LoteDTO> lotes = new ArrayList<>();
+        try(Connection con = this.conecction.getConnection();
+            PreparedStatement ps = con.prepareStatement(query)){
+            ResultSet res = ps.executeQuery();
+            while (res.next()){
+                lotes.add( LoteDTO.dto(new Lote(res.getInt(ID),
+                        res.getDouble(SUPERFICIE),
+                        res.getString(ESTADO),
+                        res.getDate(FECHA).toLocalDate(),
+                        res.getDouble(MONTO)))
+                );
+            }
+        }catch (SQLException ex) {
+            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
+        }
+        return lotes;
     }
 
 }
