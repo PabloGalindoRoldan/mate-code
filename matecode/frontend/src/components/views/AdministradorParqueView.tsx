@@ -7,6 +7,7 @@ import { Settings, ChevronLeft } from "lucide-react";
 import data from "../../../tmp/empresaInfo.json";
 import "./AdministradorParqueView.css";
 import "./EmpresaRadicadaView.css";
+import { MapProvider } from "../shared/MapProvider";
 
 
 export default function AdministradorParqueView() {
@@ -16,8 +17,9 @@ export default function AdministradorParqueView() {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
 
+
     return (
-        <>
+        <MapProvider>
             <div className={`empresaRadicadaView ${isMenuOpen ? "menu-open" : "menu-closed"}`}>
                 <NavBar />
                 <button
@@ -35,6 +37,6 @@ export default function AdministradorParqueView() {
                 </div>
                 <Footer />
             </div>
-        </ >
+        </MapProvider>
     )
 }
