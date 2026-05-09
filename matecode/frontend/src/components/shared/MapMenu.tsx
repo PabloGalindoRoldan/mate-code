@@ -1,4 +1,3 @@
-import { Satellite, RotateCw, RotateCcw } from "lucide-react";
 import "./MapMenu.css";
 
 interface MapMenuProps {
@@ -18,24 +17,28 @@ export default function MapMenu({
 }: MapMenuProps) {
     return (
         <aside className={`map-menu-sidebar ${isOpen ? "open" : "closed"}`}>
+
             <div className="menu-items">
-                <h3 className="menu-title">Vista del Mapa</h3>
-
-                <button
-                    className={`menu-item ${isSatellite ? "active" : ""}`}
-                    onClick={() => setIsSatellite(!isSatellite)}
-                >
-                    <Satellite size={18} />
-                    {isSatellite ? "Quitar Satélite" : "Ver Satélite"}
-                </button>
-
-                <button
-                    className={`menu-item ${rotationEnabled ? "active" : ""}`}
-                    onClick={() => setRotationEnabled(!rotationEnabled)}
-                >
-                    {rotationEnabled ? <RotateCcw size={18} /> : <RotateCw size={18} />}
-                    {rotationEnabled ? "Pausar Giro" : "Activar Giro"}
-                </button>
+                {/* Opción Rotación */}
+                <div className="menu-option">
+                    <span className="option-label">Auto Rotación</span>
+                    <button
+                        className={`switch-btn ${rotationEnabled ? "on" : "off"}`}
+                        onClick={() => setRotationEnabled(!rotationEnabled)}
+                    >
+                        <span className="switch-slider"></span>
+                    </button>
+                </div>
+                {/* Opción Satélite */}
+                <div className="menu-option">
+                    <span className="option-label">Vista Satélite</span>
+                    <button
+                        className={`switch-btn ${isSatellite ? "on" : "off"}`}
+                        onClick={() => setIsSatellite(!isSatellite)}
+                    >
+                        <span className="switch-slider"></span>
+                    </button>
+                </div>
             </div>
         </aside>
     );

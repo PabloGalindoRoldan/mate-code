@@ -1,16 +1,15 @@
 .map-menu-sidebar {
-    width: 240px;
-    background-color: var(--gris1);
-    color: white;
-    height: calc(100vh - 100px);
-    /* Adjust based on your NavBar/Footer */
     position: absolute;
     right: 0;
-    /* Align to the right side */
-    transition: transform 0.3s ease;
-    z-index: 101;
-    padding-top: 20px;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: var(--gris2);
+    backdrop-filter: blur(5px);
+    z-index: 15;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 20px 20px 20px 20px;
 }
 
 .map-menu-sidebar.closed {
@@ -23,15 +22,61 @@
 
 .menu-title {
     font-family: var(--asap);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--verde2);
-    margin-bottom: 12px;
-    padding-left: 16px;
+    color: var(--gris1);
+    margin-bottom: 20px;
+    font-size: 1.2rem;
 }
 
-.menu-item.active {
-    background-color: var(--verde2);
+.menu-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.option-label {
+    font-family: var(--asap);
+    font-weight: 300;
     color: white;
+    font-size: 1rem;
+}
+
+.switch-btn {
+    position: relative;
+    width: 44px;
+    height: 22px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 0;
+}
+
+.switch-btn.off {
+    background-color: #ccc;
+}
+
+.switch-btn.on {
+    background-color: var(--verde1, #8CC63F);
+}
+
+.switch-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Movimiento según el estado */
+.switch-btn.on .switch-slider {
+    transform: translateX(22px);
+}
+
+.switch-btn.off .switch-slider {
+    transform: translateX(0);
 }

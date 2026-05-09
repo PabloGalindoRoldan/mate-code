@@ -2,37 +2,8 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    /* Necesario para posicionar el botón */
+
     overflow: hidden;
-}
-
-.mapToggleButton {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 10;
-    /* Asegura que esté por encima del mapa */
-
-    padding: 10px 20px;
-    background-color: var(--verde1, #8CC63F);
-    color: white;
-    border: none;
-    border-radius: 8px;
-
-    font-family: var(--asap, sans-serif);
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.mapToggleButton:hover {
-    background-color: var(--verde2, #75944D);
-    transform: translateY(-2px);
-}
-
-.mapToggleButton:active {
-    transform: translateY(0);
 }
 
 .mapControls {
@@ -69,4 +40,32 @@
 
 .menuItem input {
     cursor: pointer;
+}
+
+.map-settings-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+    background-color: var(--verde1);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.map-settings-menu-open {
+    right: 310px;
+}
+
+.map-settings-btn:hover {
+    background-color: var(--verde2);
+    transform: scale(1.05);
 }

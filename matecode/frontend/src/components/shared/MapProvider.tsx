@@ -13,7 +13,7 @@ interface MapContextType {
 const MapContext = createContext<MapContextType | undefined>(undefined);
 
 export const MapProvider = ({ children }: { children: ReactNode }) => {
-    const [isSatellite, setIsSatellite] = useState(false);
+    const [isSatellite, setIsSatellite] = useState(true);
     const [rotationEnabled, setRotationEnabled] = useState(true);
     const [isMapMenuOpen, setIsMapMenuOpen] = useState(false);
 
