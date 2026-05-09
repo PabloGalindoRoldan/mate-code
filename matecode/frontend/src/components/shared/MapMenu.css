@@ -1,0 +1,37 @@
+.map-menu-sidebar {
+    width: 240px;
+    background-color: var(--gris1);
+    color: white;
+    height: calc(100vh - 100px);
+    /* Adjust based on your NavBar/Footer */
+    position: absolute;
+    right: 0;
+    /* Align to the right side */
+    transition: transform 0.3s ease;
+    z-index: 101;
+    padding-top: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-menu-sidebar.closed {
+    transform: translateX(100%);
+}
+
+.map-menu-sidebar.open {
+    transform: translateX(0);
+}
+
+.menu-title {
+    font-family: var(--asap);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--verde2);
+    margin-bottom: 12px;
+    padding-left: 16px;
+}
+
+.menu-item.active {
+    background-color: var(--verde2);
+    color: white;
+}
