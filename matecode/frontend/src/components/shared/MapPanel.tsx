@@ -1,22 +1,17 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Map, { Source, Layer, type MapRef } from "react-map-gl/maplibre";
-import { Map as MapIcon, ChevronRight } from "lucide-react"; // Iconos para el botón
+import { Map as MapIcon, ChevronRight } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapPanel.css";
 import mapData from "../../assets/data/parqueIndustrialMap.json";
 import { useMap } from "./MapProvider";
 import MapMenu from "./MapMenu";
 
-
 export default function MapPanel() {
     const mapRef = useRef<MapRef>(null);
     const {
-        isSatellite,
-        setIsSatellite,
-        rotationEnabled,
-        setRotationEnabled,
-        isMapMenuOpen,
-        setIsMapMenuOpen
+        isSatellite, rotationEnabled, isMapMenuOpen, setIsMapMenuOpen,
+        showNuevo, showViejo, showStreets, showDisponible, showOcupado
     } = useMap();
 
     const [isInteracting, setIsInteracting] = useState(false);
@@ -25,10 +20,28 @@ export default function MapPanel() {
     const styleBase = "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
     const styleSatelite = "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json";
 
-    // --- LÓGICA DE ROTACIÓN ---
+    // --- 1. LÓGICA DE COLOR DINÁMICA ---
+    const dynamicColor: any = [
+        "case",
+        ["all", ["literal", showDisponible], ["==", ["get", "estado"], "disponible"]], "#76e3bb",
+        ["all", ["literal", showOcupado], ["==", ["get", "estado"], "ocupado"]], "#FF8B94",
+        ["all", ["literal", showStreets], ["==", ["get", "estado"], "infraestructura"]], "#808080",
+        "#8CC63F"
+    ];
+
+    // --- 2. LÓGICA DE FILTRO (VISIBILIDAD) ---
+    const mapFilter: any = [
+        "all",
+        ["case", ["==", ["get", "parque"], "nuevo"], ["literal", showNuevo], true],
+        ["case", ["==", ["get", "parque"], "viejo"], ["literal", showViejo], true],
+        ["case", ["==", ["get", "estado"], "infraestructura"], ["literal", showStreets], true]
+    ];
+
+    // Rotación automática del mapa
     useEffect(() => {
         let animationFrame: number;
         const rotate = () => {
+            // Solo rota si NO hay interacción y la rotación está habilitada
             if (!isInteracting && rotationEnabled && mapRef.current) {
                 const map = mapRef.current.getMap();
                 map.setBearing(map.getBearing() + 0.08);
@@ -39,7 +52,10 @@ export default function MapPanel() {
         return () => cancelAnimationFrame(animationFrame);
     }, [isInteracting, rotationEnabled]);
 
-    // --- MANEJADORES DE HOVER ---
+    // Handlers de interacción corregidos
+    const startInteraction = useCallback(() => setIsInteracting(true), []);
+    const stopInteraction = useCallback(() => setIsInteracting(false), []);
+
     const onHover = useCallback((event: any) => {
         const map = mapRef.current?.getMap();
         if (!map) return;
@@ -68,7 +84,6 @@ export default function MapPanel() {
 
     return (
         <div className="mapContainer">
-            {/* Botón flotante para abrir el menú del mapa */}
             <button
                 className={`map-settings-btn ${isMapMenuOpen ? "map-settings-menu-open" : ""}`}
                 onClick={() => setIsMapMenuOpen(!isMapMenuOpen)}
@@ -76,31 +91,61 @@ export default function MapPanel() {
                 {isMapMenuOpen ? <ChevronRight size={20} /> : <MapIcon size={20} />}
             </button>
 
-            {/* Sidebar del Mapa */}
-            <MapMenu
-                isSatellite={isSatellite}
-                setIsSatellite={setIsSatellite}
-                rotationEnabled={rotationEnabled}
-                setRotationEnabled={setRotationEnabled}
-                isOpen={isMapMenuOpen}
-            />
+            <MapMenu {...useMap()} isOpen={isMapMenuOpen} />
 
             <Map
                 ref={mapRef}
-                initialViewState={{ longitude: -62.964, latitude: -40.840, zoom: 15.4, pitch: 45 }}
+                initialViewState={{
+                    longitude: -62.964,
+                    latitude: -40.840,
+                    zoom: 15.4,
+                    pitch: 45
+                }}
                 mapStyle={isSatellite ? styleSatelite : styleBase}
                 style={{ width: "100%", height: "100%" }}
                 interactiveLayerIds={["lotes-fill"]}
+
+                // Eventos de Mouse
+                onMouseDown={startInteraction}
+                onMouseUp={stopInteraction}
+
+                // Eventos Táctiles (Celulares/Tablets)
+                onTouchStart={startInteraction}
+                onTouchEnd={stopInteraction}
+
+                // Eventos de Cámara (Por si se mueve con teclado o gestos complejos)
+                onMoveStart={startInteraction}
+                onMoveEnd={stopInteraction}
+
                 onMouseMove={onHover}
                 onMouseLeave={onMouseLeave}
                 onMouseEnter={onMouseEnter}
-                onMouseDown={() => setIsInteracting(true)}
-                onMouseUp={() => setIsInteracting(false)}
             >
                 <Source id="lotes-source" type="geojson" data={mapData as any} promoteId="id">
-                    <Layer id="lotes-fill" type="fill" paint={{ "fill-color": "#FFFFFF", "fill-opacity": isSatellite ? 0.2 : 0.4 }} />
-                    <Layer id="lotes-outline" type="line" paint={{ "line-color": "#8CC63F", "line-width": isSatellite ? 2 : 1 }} />
-                    <Layer id="lotes-hover" type="fill" paint={{ "fill-color": "#8CC63F", "fill-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.5, 0] }} />
+                    <Layer
+                        id="lotes-outline"
+                        type="line"
+                        filter={mapFilter}
+                        paint={{
+                            "line-color": dynamicColor,
+                            "line-width": isSatellite ? 2 : 1.2,
+                            "line-opacity": 1
+                        }}
+                    />
+                    <Layer
+                        id="lotes-fill"
+                        type="fill"
+                        filter={mapFilter}
+                        paint={{
+                            "fill-color": dynamicColor,
+                            "fill-opacity": [
+                                "case",
+                                ["boolean", ["feature-state", "hover"], false],
+                                0.5,
+                                0.05
+                            ]
+                        }}
+                    />
                 </Source>
             </Map>
         </div>
