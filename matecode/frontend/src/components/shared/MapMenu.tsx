@@ -6,39 +6,53 @@ interface MapMenuProps {
     rotationEnabled: boolean;
     setRotationEnabled: (val: boolean) => void;
     isOpen: boolean;
+    showNuevo: boolean;
+    setShowNuevo: (val: boolean) => void;
+    showViejo: boolean;
+    setShowViejo: (val: boolean) => void;
+    showStreets: boolean;
+    setShowStreets: (val: boolean) => void;
+    showDisponible: boolean;
+    setShowDisponible: (val: boolean) => void;
+    showOcupado: boolean;
+    setShowOcupado: (val: boolean) => void;
 }
 
 export default function MapMenu({
-    isSatellite,
-    setIsSatellite,
-    rotationEnabled,
-    setRotationEnabled,
-    isOpen
+    isSatellite, setIsSatellite,
+    rotationEnabled, setRotationEnabled,
+    isOpen,
+    showNuevo, setShowNuevo,
+    showViejo, setShowViejo,
+    showStreets, setShowStreets,
+    showDisponible, setShowDisponible,
+    showOcupado, setShowOcupado
 }: MapMenuProps) {
+
+    // Helper to render toggles consistently
+    const ToggleRow = (label: string, value: boolean, setter: (v: boolean) => void) => (
+        <div className="menu-option">
+            <span className="option-label">{label}</span>
+            <button
+                className={`switch-btn ${value ? "on" : "off"}`}
+                onClick={() => setter(!value)}
+            >
+                <span className="switch-slider"></span>
+            </button>
+        </div>
+    );
+
     return (
         <aside className={`map-menu-sidebar ${isOpen ? "open" : "closed"}`}>
-
             <div className="menu-items">
-                {/* Opción Rotación */}
-                <div className="menu-option">
-                    <span className="option-label">Auto Rotación</span>
-                    <button
-                        className={`switch-btn ${rotationEnabled ? "on" : "off"}`}
-                        onClick={() => setRotationEnabled(!rotationEnabled)}
-                    >
-                        <span className="switch-slider"></span>
-                    </button>
-                </div>
-                {/* Opción Satélite */}
-                <div className="menu-option">
-                    <span className="option-label">Vista Satélite</span>
-                    <button
-                        className={`switch-btn ${isSatellite ? "on" : "off"}`}
-                        onClick={() => setIsSatellite(!isSatellite)}
-                    >
-                        <span className="switch-slider"></span>
-                    </button>
-                </div>
+                {ToggleRow("Auto Rotación", rotationEnabled, setRotationEnabled)}
+                {ToggleRow("Vista Satélite", isSatellite, setIsSatellite)}
+                <hr style={{ opacity: 0.1, margin: "10px 0" }} />
+                {ToggleRow("Nuevo", showNuevo, setShowNuevo)}
+                {ToggleRow("Viejo", showViejo, setShowViejo)}
+                {ToggleRow("Calles", showStreets, setShowStreets)}
+                {ToggleRow("Disponible", showDisponible, setShowDisponible)}
+                {ToggleRow("Ocupado", showOcupado, setShowOcupado)}
             </div>
         </aside>
     );
