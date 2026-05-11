@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/backend/parque-industrial/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/backend/parque-industrial/src/test/java" isTestSource="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="21" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
