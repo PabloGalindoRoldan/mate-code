@@ -48,16 +48,21 @@ public class Lote {
         }
     }
     public void vender(double monto)throws Exception {
-        if (this.estado == RESERVADO || this.estado == DISPONIBLE) {
-            if (monto <= 0) {
-                throw new Exception("El monto de venta debe ser positivo.");
-            }
-            this.estado = VENDIDO;
-            this.montoVenta = monto;
-            this.fechaVenta = LocalDate.now();
-        } else {
+        if (this.estado != RESERVADO) {
             throw new Exception("El lote " + identificacion + " no puede ser vendido en su estado actual.");
         }
+        if (monto <= 0) {
+            throw new Exception("El monto de venta debe ser positivo.");
+        }
+        this.estado = VENDIDO;
+        this.montoVenta = monto;
+        this.fechaVenta = LocalDate.now();
+    }
+    public void cancelarReserva() throws Exception {
+        if(this.estado != Lote.RESERVADO){
+            throw new Exception("No se puede cancelar la reserva del lote");
+        }
+        this.estado = Lote.DISPONIBLE;
     }
     public String getEstado() {
         return estado;

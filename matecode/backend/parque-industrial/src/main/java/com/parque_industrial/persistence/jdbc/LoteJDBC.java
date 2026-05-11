@@ -149,4 +149,16 @@ public class LoteJDBC implements DAOInmobiliario {
         return lotes;
     }
 
+    @Override
+    public void cancelarReserva(Lote lote) throws Exception {
+        String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + " WHERE " + ID + " = ?";
+        try(Connection conn = this.conecction.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, lote.getIdentificacion());
+            ps.executeUpdate();
+        }catch (SQLException exception){
+            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+        }
+    }
+
 }
