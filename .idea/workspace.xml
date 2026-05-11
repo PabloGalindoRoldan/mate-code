@@ -5,9 +5,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="ns">
+      <change afterPath="$PROJECT_DIR$/matecode/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/AdminSistemaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/EmpresaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/ProyectoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/UsuarioController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/explicacion.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/usuario/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/JdbcUsuarioRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/UsuarioRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/persistence/TestConexion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/assets/data/parqueIndustrialMap.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/EmpresaRadicadaBody.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/EmpresaRadicadaBody.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/InfoPanel.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/InfoPanel.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapMenu.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapPanel.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapPanel.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapProvider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuEmpresa.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuEmpresa.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuParque.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuParque.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/ParqueBody.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/ParqueBody.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/StatisticsPanel.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/StatisticsPanel.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/AdministradorParqueView.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/AdministradorParqueView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/EmpresaRadicadaView.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/EmpresaRadicadaView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/declarations.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/frontend/tmp/empresaInfo.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/.idea/matecode.iml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/.idea/matecode.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/LoteJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/LoteJDBC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/assets/LogoMateCode.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/assets/MateCode.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/components/shared/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/NavBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +125,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "nro23-AdministracionDeLotes",
+    "git-widget-placeholder": "Merging nro23-AdministracionDeLotes",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/augus_r4ret8/IdeaProjects/mate-code",
     "project.structure.last.edited": "Modules",
