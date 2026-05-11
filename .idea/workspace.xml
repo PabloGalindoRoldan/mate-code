@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="ns">
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/LoteJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/LoteJDBC.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;quintas1812&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PabloGalindoRoldan/mate-code.git&quot;,
+    &quot;accountId&quot;: &quot;f5d0174d-22c4-44a3-8628-d0f80431bfab&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3DVUOaXGMdepGADYYngEDNqbGJo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testCrearLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testReservarLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testReservarLoteReservado.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testReservarLoteVendido.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testVenderLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testVenderLoteVendido.executor": "Run",
+    "JUnit.LoteTest.executor": "Run",
+    "JUnit.LoteTest.testCancelarReservaLoteDisponibleLanzaExcepcion.executor": "Run",
+    "JUnit.LoteTest.testCancelarReservaLoteReservado.executor": "Run",
+    "JUnit.LoteTest.testCancelarReservaLoteVendidoLanzaExcepcion.executor": "Run",
+    "JUnit.LoteTest.testMontoVentaNegativoLanzaExcepcion.executor": "Run",
+    "JUnit.LoteTest.testNoSePuedeReservarLoteVendido.executor": "Run",
+    "JUnit.LoteTest.testReservarLoteDisponible.executor": "Run",
+    "JUnit.LoteTest.testReservarLoteReservado.executor": "Run",
+    "JUnit.LoteTest.testSuperficeNegativa.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteDisponible.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteReservado.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteVendido.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "nro23-AdministracionDeLotes",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/augus_r4ret8/IdeaProjects/mate-code",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.25136238",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial" />
+      <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\main\java" />
+      <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\test" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.LoteTest">
+    <configuration name="GestorInmobiliarioTest.testCancelarReservaLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parque-industrial" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
+      <option name="METHOD_NAME" value="testCancelarReservaLote" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GestorInmobiliarioTest.testCrearLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parque-industrial" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
+      <option name="METHOD_NAME" value="testCrearLote" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GestorInmobiliarioTest.testVenderLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parque-industrial" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
+      <option name="METHOD_NAME" value="testVenderLote" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoteTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parque-industrial" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.entities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.parque_industrial.entities" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.entities.LoteTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoteTest.testVenderLoteVendidoLanzaExcepcion" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parque-industrial" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.entities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.parque_industrial.entities" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.entities.LoteTest" />
+      <option name="METHOD_NAME" value="testVenderLoteVendidoLanzaExcepcion" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.LoteTest" />
+        <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testVenderLote" />
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testCancelarReservaLote" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.33514.17" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="" />
+      <created>1778366701961</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778366701961</updated>
+    </task>
+    <task id="LOCAL-00001" summary="loteTest listo, se testeo la clase lote">
+      <option name="closed" value="true" />
+      <created>1778386090359</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1778386090359</updated>
+    </task>
+    <task id="LOCAL-00002" summary="ns">
+      <option name="closed" value="true" />
+      <created>1778531159924</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1778531159924</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="loteTest listo, se testeo la clase lote" />
+    <MESSAGE value="ns" />
+    <option name="LAST_COMMIT_MESSAGE" value="ns" />
+  </component>
+</project>

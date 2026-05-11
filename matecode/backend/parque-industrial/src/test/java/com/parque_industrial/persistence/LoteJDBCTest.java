@@ -17,7 +17,7 @@ public class LoteJDBCTest {
         testDataSource.setUrl("jdbc:mysql://localhost:3306/parque_industrial_test");
         testDataSource.setUser("test_user");
         testDataSource.setPassword("test_pass");
-
+        
         // 2. Inyectamos el DataSource en el repositorio (Constructor Injection) [1, 2]
         repo = new LoteRepositoryJDBC(testDataSource);
     }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LoteJDBC implements DAOInmobiliario {
     // columnas de lote
-    private final String ID = "identificacion";
+    private final String ID = "id";
     private final String SUPERFICIE = "superficie";
     private final String ESTADO = "estado";
     private final String FECHA = "fechaVenta";

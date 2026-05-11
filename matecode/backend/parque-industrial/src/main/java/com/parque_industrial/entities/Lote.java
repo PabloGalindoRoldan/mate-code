@@ -41,11 +41,11 @@ public class Lote {
         }
     }
     public void reservar()throws Exception  {
-        if (this.estado == DISPONIBLE) {
-            this.estado = RESERVADO;
-        } else {
+        if (this.estado != DISPONIBLE) {
             throw new Exception("El lote " + identificacion + " no está disponible para reservar.");
         }
+        this.estado = RESERVADO;
+
     }
     public void vender(double monto)throws Exception {
         if (this.estado != RESERVADO) {
