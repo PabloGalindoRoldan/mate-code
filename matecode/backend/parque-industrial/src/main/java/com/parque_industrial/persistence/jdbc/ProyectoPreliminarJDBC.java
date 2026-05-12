@@ -1,4 +1,4 @@
-package com.parque_industrial.persistence;
+package com.parque_industrial.persistence.jdbc;
 
 import com.parque_industrial.entities.ProyectoPreliminar;
 

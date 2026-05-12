@@ -1,13 +1,14 @@
-package com.parque_industrial.persistence;
+package com.parque_industrial.services;
 
-import com.parque_industrial.entities.GestorProyectos;
 import com.parque_industrial.entities.ProyectoDefinitivo;
 import com.parque_industrial.entities.ProyectoPreliminar;
+import com.parque_industrial.persistence.jdbc.ProyectoDefinitivoJDBC;
+import com.parque_industrial.persistence.jdbc.ProyectoPreliminarJDBC;
 
 import java.sql.Connection;
 import java.util.List;
 
-public class GestorProyectosDAO implements GestorProyectos {
+public class GestorProyectosDAO implements DAOProyectos {
 
     private final Connection connection;
 
