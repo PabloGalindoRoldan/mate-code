@@ -22,7 +22,7 @@ public class LoteController {
     @PostMapping("/vender")
     public ResponseEntity<String> procesarVenta(@RequestBody VentaRequestDTO datosEntrada) {
        // el framework cuendo se realiza la peticion, convierte el json en VentaRequestDTO
-        // Si el frontend manda basura, devolvemos error 400
+        // Si el frontend manda basura, devolvemos error 400 Bad Request
         if (datosEntrada.identificacion() < 0 || datosEntrada.monto() <= 0) {
             return ResponseEntity.badRequest().body("Datos de venta inválidos");
         }
@@ -30,7 +30,7 @@ public class LoteController {
             LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
             gestor.VenderLote(dto, datosEntrada.monto());
             // 4. Respuesta Exitosa:
-            // Informamos a React que todo salió bien (HTTP 200) [Historial].
+            // Informamos a React que todo salió bien con el código HTTP 200 Ok.
             return ResponseEntity.ok("Venta registrada exitosamente");
         } catch (Exception e) {
             // 5. Manejo de Errores de Negocio:
