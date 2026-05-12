@@ -6,4 +6,10 @@ public class ProyectoPreliminar extends Proyecto {
         super(identificacion, actividadPrincipal, referente, superficieRequerida, energiaRequerida, personalAOcupar);
     }
 
+    @Override
+    public void listoParaRevision() throws Exception {
+        this.validar();
+        this.estado = PENDIENTE;
+    }
+
 }
