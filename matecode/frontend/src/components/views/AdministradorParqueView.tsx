@@ -15,6 +15,7 @@ export default function AdministradorParqueView() {
     const [empresaInfo] = useState(data);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const [activeTab, setActiveTab] = useState("map");
 
 
 
@@ -30,9 +31,9 @@ export default function AdministradorParqueView() {
                     {isMenuOpen ? <ChevronLeft size={20} /> : <Settings size={20} />}
                 </button>
                 <div className="main-layout">
-                    <MenuParque isOpen={isMenuOpen} />
+                    <MenuParque isOpen={isMenuOpen} setActiveTab={setActiveTab} />
                     <main className="content-area">
-                        <ParqueBody empresaInfo={empresaInfo} isMenuOpen={isMenuOpen} />
+                        <ParqueBody empresaInfo={empresaInfo} isMenuOpen={isMenuOpen} activeTab={activeTab} />
                     </main>
                 </div>
                 <Footer />

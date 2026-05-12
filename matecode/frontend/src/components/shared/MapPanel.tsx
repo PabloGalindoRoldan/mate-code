@@ -3,7 +3,7 @@ import Map, { Source, Layer, type MapRef } from "react-map-gl/maplibre";
 import { Map as MapIcon, ChevronRight } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapPanel.css";
-import mapData from "../../assets/data/parqueIndustrialMap.json";
+import mapData from "../../assets/data/parqueIndustrialMap2.json";
 import { useMap } from "./MapProvider";
 import MapMenu from "./MapMenu";
 
@@ -121,7 +121,7 @@ export default function MapPanel() {
                 onMouseLeave={onMouseLeave}
                 onMouseEnter={onMouseEnter}
             >
-                <Source id="lotes-source" type="geojson" data={mapData as any} promoteId="id">
+                <Source id="lotes-source" type="geojson" data={mapData as any} promoteId="lote">
                     <Layer
                         id="lotes-outline"
                         type="line"

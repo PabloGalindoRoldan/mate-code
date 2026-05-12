@@ -25,11 +25,9 @@ export default function MapMenu({
     showNuevo, setShowNuevo,
     showViejo, setShowViejo,
     showStreets, setShowStreets,
-    showDisponible, setShowDisponible,
     showOcupado, setShowOcupado
 }: MapMenuProps) {
 
-    // Helper to render toggles consistently
     const ToggleRow = (label: string, value: boolean, setter: (v: boolean) => void) => (
         <div className="menu-option">
             <span className="option-label">{label}</span>
@@ -51,8 +49,7 @@ export default function MapMenu({
                 {ToggleRow("Nuevo", showNuevo, setShowNuevo)}
                 {ToggleRow("Viejo", showViejo, setShowViejo)}
                 {ToggleRow("Calles", showStreets, setShowStreets)}
-                {ToggleRow("Disponible", showDisponible, setShowDisponible)}
-                {ToggleRow("Ocupado", showOcupado, setShowOcupado)}
+                {ToggleRow("Disponibilidad", showOcupado, setShowOcupado)}
             </div>
         </aside>
     );

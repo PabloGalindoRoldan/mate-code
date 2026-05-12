@@ -1,4 +1,3 @@
-import { Car } from "lucide-react";
 import "./EmpresaRadicadaBody.css";
 import InfoPanel from "./InfoPanel";
 import StatisticsPanel from "./StatisticsPanel";
