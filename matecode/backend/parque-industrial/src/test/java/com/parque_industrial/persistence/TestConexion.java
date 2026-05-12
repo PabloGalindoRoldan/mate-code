@@ -28,11 +28,11 @@ class TestConexion {
 
     @Test
     void conectarBD() throws Exception {
-
+ //variables de entorno
+        // (si creas otro entorno de desarrollo en railway y copias las variables de entorno,  en url agregarle al principio jdbc:)
+        // produccion: DB_URL=jdbc:mysql://viaduct.proxy.rlwy.net:20719/railway;DB_USERNAME=root;DB_PASSWORD=zTUeEPDomRVwmjXyqYKWNqerekEQPJwl
         try (Connection con = dataSource.getConnection()) {
-
             assertNotNull(con);
-
             System.out.println("Conexión exitosa");
         }
     }
