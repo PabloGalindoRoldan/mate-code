@@ -1,6 +1,7 @@
 package com.parque_industrial.persistence;
 
 import com.parque_industrial.entities.Lote;
+import com.parque_industrial.persistence.dtos.LoteDTO;
 import com.parque_industrial.persistence.jdbc.LoteJDBC;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,61 @@ public class LoteJDBCTest {
     @Test
     @Transactional // Esto asegura que la prueba se ejecute en una transacción y se haga rollback al final
     public void testCrearLote() throws Exception {
-        Lote lote = new Lote(6, 200.0);
+        Lote lote = new Lote(10, 200.0);
         jdbc.crearLote(lote);
-        assertEquals(lote.getIdentificacion() , jdbc.buscarLotePorID(6).identificacion());
+        assertEquals(lote.getIdentificacion() , jdbc.buscarLotePorID(10).identificacion());
     }
+    @Test
+    @Transactional
+    public void testBuscarLotePorID() throws Exception {
+        LoteDTO lote = jdbc.buscarLotePorID(6);
+        assertEquals(6 ,lote.identificacion());
+        assertEquals(300,lote.superficie());
+        assertEquals(Lote.VENDIDO, lote.estado());
+        assertEquals("2026-03-03", lote.fechaVenta().toString());
+
+    }
+
+    @Test
+    @Transactional
+    public void testReservarLote() throws Exception {
+        LoteDTO l = jdbc.buscarLotePorID(1);
+        jdbc.reservarLote(l.entidad());
+        LoteDTO loteReservado= jdbc.buscarLotePorID(1);
+        assertEquals(Lote.RESERVADO, loteReservado.estado());
+    }
+    @Test
+    @Transactional
+    public void testVenderLote() throws Exception {
+        LoteDTO l = jdbc.buscarLotePorID(4);
+        Lote lote = l.entidad();
+        lote.vender(500.0);
+        jdbc.venderLote(lote);
+        LoteDTO loteVendido= jdbc.buscarLotePorID(4);
+        assertEquals(Lote.VENDIDO, loteVendido.estado());
+    }
+    @Test
+    @Transactional
+    public void testCancelarReserva() throws Exception {
+        LoteDTO l = jdbc.buscarLotePorID(3);
+        jdbc.cancelarReserva(l.entidad());
+        LoteDTO loteReservado = jdbc.buscarLotePorID(3);
+        assertEquals(Lote.DISPONIBLE, loteReservado.estado());
+    }
+    @Test
+    @Transactional
+    public void testLotesDisponibles() throws Exception {
+        assertEquals(2, jdbc.LotesDisponibles().size());
+    }
+    @Test
+    @Transactional
+    public void testLotesVendidos() throws Exception {
+        assertEquals(2, jdbc.LotesVendidos().size());
+    }
+    @Test
+    @Transactional
+    public void testLotesReservados() throws Exception {
+        assertEquals(2, jdbc.LotesReservados().size());
+    }
+
 }

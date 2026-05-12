@@ -42,14 +42,14 @@ public class Lote {
         }
     }
     public void reservar()throws Exception  {
-        if (this.estado != DISPONIBLE) {
+        if (!this.estado.equals(DISPONIBLE)) {
             throw new Exception("El lote " + identificacion + " no está disponible para reservar.");
         }
         this.estado = RESERVADO;
 
     }
     public void vender(double monto)throws Exception {
-        if (this.estado != RESERVADO) {
+        if (!this.estado.equals(RESERVADO)) {
             throw new Exception("El lote " + identificacion + " no puede ser vendido en su estado actual.");
         }
         if (monto <= 0) {
@@ -60,7 +60,7 @@ public class Lote {
         this.fechaVenta = LocalDate.now();
     }
     public void cancelarReserva() throws Exception {
-        if(this.estado != Lote.RESERVADO){
+        if(!this.estado.equals(RESERVADO)){
             throw new Exception("No se puede cancelar la reserva del lote");
         }
         this.estado = Lote.DISPONIBLE;

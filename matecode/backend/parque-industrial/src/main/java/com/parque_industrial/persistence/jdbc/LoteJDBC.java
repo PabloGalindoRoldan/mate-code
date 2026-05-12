@@ -80,7 +80,7 @@ public class LoteJDBC implements DAOInmobiliario {
     }
     @Override
     public void venderLote(Lote lote) throws Exception {
-        String sql = "UPDATE Lote SET " + ESTADO + " = '" + VENDIDO + "', FECHA +  = ?, " + MONTO + " = ? WHERE " + ID + " = ?";
+        String sql = "UPDATE Lote SET " + ESTADO + " = '" + VENDIDO + "', " + FECHA + " = ?, " + MONTO + " = ? WHERE " + ID + " = ? ";
         Connection conn = null;
         try{
             conn = DataSourceUtils.getConnection(this.conecction);
@@ -99,7 +99,7 @@ public class LoteJDBC implements DAOInmobiliario {
 
     @Override
     public void reservarLote(Lote lote) throws Exception {
-        String sql = "UPDATE Lote SET " + ESTADO + " = '" + RESERVADO+" WHERE " + ID + " = ?";
+        String sql = "UPDATE Lote SET " + ESTADO + " = '" + RESERVADO+"' WHERE " + ID + " = ? ";
         Connection conn = null;
         try{
             conn = DataSourceUtils.getConnection(this.conecction);
@@ -126,11 +126,11 @@ public class LoteJDBC implements DAOInmobiliario {
                 if(res.next()){
                     Date fechaVentaSql = res.getDate(FECHA);
                     LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
-                    return LoteDTO.dto(new Lote(res.getInt(ID),
+                    return new LoteDTO(res.getInt(ID),
                             res.getDouble(SUPERFICIE),
                             res.getString(ESTADO),
                             fechaVenta,
-                            res.getDouble(MONTO)));
+                            res.getDouble(MONTO));
                 }else {
                     return null;
                 }
@@ -200,7 +200,7 @@ public class LoteJDBC implements DAOInmobiliario {
 
     @Override
     public void cancelarReserva(Lote lote) throws Exception {
-        String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + " WHERE " + ID + " = ?";
+        String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + "' WHERE " + ID + " = ? ";
         Connection conn = null;
         try{
             conn = DataSourceUtils.getConnection(this.conecction);

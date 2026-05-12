@@ -3,6 +3,7 @@ package com.parque_industrial.controllers;
 import com.parque_industrial.controllers.dtos.lote.CrearRequestDTO;
 import com.parque_industrial.controllers.dtos.lote.ReservarRequestDTO;
 import com.parque_industrial.controllers.dtos.lote.VentaRequestDTO;
+import com.parque_industrial.controllers.dtos.lote.AnularReservaRequestDTO;
 import com.parque_industrial.persistence.dtos.LoteDTO;
 import com.parque_industrial.services.GestorInmobiliario;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class LoteController {
         } catch (Exception e) {
             // 5. Manejo de Errores de Negocio:
             // Si la entidad Lote lanza error (ej: ya estaba vendido), mandamos 409 Conflict [Historial].
+            // o no se encontro ese lote en la bd
             return ResponseEntity.status(409).body(e.getMessage());
         }
     }
@@ -92,5 +94,18 @@ public class LoteController {
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(lista);
+    }
+    @PostMapping("/cancelarReserva")//este es por si no cumplio y se le quita el lote
+    public ResponseEntity<String> cancelarReserva(@RequestBody AnularReservaRequestDTO datosEntrada) {
+        if (datosEntrada.identificacion() < 0) {
+            return ResponseEntity.badRequest().body("Datos de venta inválidos");
+        }
+        try {
+            LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
+            gestor.cancelarReserva(dto);
+            return ResponseEntity.ok("Reserva cancelada exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
     }
 }
