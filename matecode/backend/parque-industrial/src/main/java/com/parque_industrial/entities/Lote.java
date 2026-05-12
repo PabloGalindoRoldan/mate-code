@@ -1,54 +1,88 @@
 package com.parque_industrial.entities;
 
 import java.time.LocalDate;
+import java.sql.Date;
 
 public class Lote {
-    private final String DISPONIBLE = "disponible";
-    private final String RESERVADO = "reservado";
-    private final String VENDIDO= "vendido";
+    public static final String DISPONIBLE = "disponible";
+    public static final String RESERVADO = "reservado";
+    public static final String VENDIDO= "vendido";
     // Las hice asi ya que eran solo tres tipos de superficie no recuerdo cuanto metros cuadrados abarcaba cada una, mas adelante los vamos a usar
     public static final int SUPERFICIE_MENOR= 1;
     public static final int SUPERFICIE_MEDIO= 1;
     public static final int SUPERFICIE_MAYOR= 1;
 
-    private int superficie;
-    private String identificacion;
+    private double superficie;
+    private int identificacion;
     private String estado;
     private LocalDate fechaVenta;
-    private double montoVenta;
+    private Double montoVenta;
 
-    public Lote(int superficie, String identificacion)throws Exception  {
+    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, Double montoVenta)throws Exception  {
         validar(superficie, identificacion);
         this.superficie = superficie;
         this.identificacion = identificacion;
-        this.estado = DISPONIBLE; // por defecto le ponemos disponible y con precio 0
+        this.estado = estado;
+        this.montoVenta = montoVenta;
+    }
+    public Lote( int identificacion, double superficie)throws Exception  {
+        validar(superficie, identificacion);
+        this.superficie = superficie;
+        this.identificacion = identificacion;
+        this.estado = DISPONIBLE;
         this.montoVenta = 0.0;
     }
-    private void validar(double superficie, String identificacion) throws Exception  {
+
+    private void validar(double superficie, int identificacion) throws Exception  {
         if (superficie <= 0) {
             throw new Exception("La superficie debe ser un valor positivo");
         }
-        if (identificacion == null || identificacion.isBlank()) {
-            throw new Exception("La identificación del lote no puede estar vacía");
+        if (identificacion < 0) {
+            throw new Exception("La identificación del lote es un numero postivo");
         }
     }
     public void reservar()throws Exception  {
-        if (this.estado == DISPONIBLE) {
-            this.estado = RESERVADO;
-        } else {
+        if (!this.estado.equals(DISPONIBLE)) {
             throw new Exception("El lote " + identificacion + " no está disponible para reservar.");
         }
+        this.estado = RESERVADO;
+
     }
     public void vender(double monto)throws Exception {
-        if (this.estado == RESERVADO || this.estado == DISPONIBLE) {
-            if (monto <= 0) {
-                throw new Exception("El monto de venta debe ser positivo.");
-            }
-            this.estado = VENDIDO;
-            this.montoVenta = monto;
-            this.fechaVenta = LocalDate.now();
-        } else {
+        if (!this.estado.equals(RESERVADO)) {
             throw new Exception("El lote " + identificacion + " no puede ser vendido en su estado actual.");
         }
+        if (monto <= 0) {
+            throw new Exception("El monto de venta debe ser positivo.");
+        }
+        this.estado = VENDIDO;
+        this.montoVenta = monto;
+        this.fechaVenta = LocalDate.now();
     }
+    public void cancelarReserva() throws Exception {
+        if(!this.estado.equals(RESERVADO)){
+            throw new Exception("No se puede cancelar la reserva del lote");
+        }
+        this.estado = Lote.DISPONIBLE;
+    }
+    public String getEstado() {
+        return estado;
+    }
+    public double getSuperficie() {
+        return superficie;
+    }
+    public int getIdentificacion() {
+        return identificacion;
+    }
+    public Date FechaVentaSQL() {
+
+        return (this.fechaVenta == null) ? null : new Date(this.fechaVenta.getYear(), this.fechaVenta.getMonthValue(), this.fechaVenta.getDayOfMonth());
+    }
+    public LocalDate getFechaVenta(){
+        return this.fechaVenta;
+    }
+    public double getMontoVenta() {
+        return montoVenta;
+    }
+
 }
