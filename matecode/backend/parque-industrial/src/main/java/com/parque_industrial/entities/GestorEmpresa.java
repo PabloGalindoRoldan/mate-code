@@ -8,5 +8,5 @@ public interface GestorEmpresa {
     public List<Empresa> empresasRadicadas();
     public List<Empresa> empresasNoRedicadas();
     public List<Empresa> empresas();
-    public void asignarRepresentante(RepresentanteEmpresa representanteEmpresa);
+    public void asignarRepresentante(Usuario representanteEmpresa);
 }
