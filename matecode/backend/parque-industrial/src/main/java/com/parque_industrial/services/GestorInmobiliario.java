@@ -3,8 +3,11 @@ import com.parque_industrial.entities.Empresa;
 import com.parque_industrial.entities.Lote;
 import com.parque_industrial.persistence.dtos.LoteDTO;
 import org.springframework.stereotype.Service; // Importar la anotación @Service
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 @Service // Indicar que esta clase es un servicio Spring
+@Transactional
 public class GestorInmobiliario{
     private DAOInmobiliario dao;
     public GestorInmobiliario(DAOInmobiliario dao) {

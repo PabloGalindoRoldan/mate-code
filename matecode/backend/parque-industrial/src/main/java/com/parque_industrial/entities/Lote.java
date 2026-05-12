@@ -1,6 +1,7 @@
 package com.parque_industrial.entities;
 
 import java.time.LocalDate;
+import java.sql.Date;
 
 public class Lote {
     public static final String DISPONIBLE = "disponible";
@@ -15,9 +16,9 @@ public class Lote {
     private int identificacion;
     private String estado;
     private LocalDate fechaVenta;
-    private double montoVenta;
+    private Double montoVenta;
 
-    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, double montoVenta)throws Exception  {
+    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, Double montoVenta)throws Exception  {
         validar(superficie, identificacion);
         this.superficie = superficie;
         this.identificacion = identificacion;
@@ -29,7 +30,7 @@ public class Lote {
         this.superficie = superficie;
         this.identificacion = identificacion;
         this.estado = DISPONIBLE;
-        this.montoVenta = 0;
+        this.montoVenta = 0.0;
     }
 
     private void validar(double superficie, int identificacion) throws Exception  {
@@ -73,8 +74,12 @@ public class Lote {
     public int getIdentificacion() {
         return identificacion;
     }
-    public LocalDate getFechaVenta() {
-        return fechaVenta;
+    public Date FechaVentaSQL() {
+
+        return (this.fechaVenta == null) ? null : new Date(this.fechaVenta.getYear(), this.fechaVenta.getMonthValue(), this.fechaVenta.getDayOfMonth());
+    }
+    public LocalDate getFechaVenta(){
+        return this.fechaVenta;
     }
     public double getMontoVenta() {
         return montoVenta;

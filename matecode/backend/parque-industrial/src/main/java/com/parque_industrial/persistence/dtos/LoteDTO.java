@@ -10,10 +10,10 @@ public record LoteDTO(
         double superficie,
     String estado,
     LocalDate fechaVenta,
-    double montoVenta
+    Double montoVenta
 ) {
     public LoteDTO( int identificacion, double superficie)   {
-        this(identificacion, superficie, DISPONIBLE, null, 0);
+        this(identificacion, superficie, DISPONIBLE, null, 0.0);
     }
     public LoteDTO{
         if (identificacion < 0 ){
