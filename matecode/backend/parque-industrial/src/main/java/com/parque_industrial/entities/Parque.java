@@ -1,6 +1,7 @@
 package com.parque_industrial.entities;
 
-import java.util.ArrayList;
+import com.parque_industrial.services.*;
+
 import java.util.List;
 
 public class Parque {

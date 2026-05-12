@@ -1,9 +1,13 @@
-package com.parque_industrial.entities;
+package com.parque_industrial.services;
 
-import java.util.ArrayList;
+import com.parque_industrial.entities.Proyecto;
+import com.parque_industrial.entities.ProyectoDefinitivo;
+import com.parque_industrial.entities.ProyectoPreliminar;
+
 import java.util.List;
+// la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
 
-public interface GestorProyectos {
+public interface DAOProyectos {
    // toodos estso metodos tienen que estar en la persistencia
    public void crearProyectoPreliminar(ProyectoPreliminar proyecto) throws Exception;
 
