@@ -25,7 +25,7 @@
 }
 
 .error-text {
-    color: var(--verde3);
+    color: #de9494c0;
     font-size: 0.75rem;
     margin-top: 4px;
     display: block;
