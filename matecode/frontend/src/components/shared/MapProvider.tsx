@@ -27,7 +27,7 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
     const [isMapMenuOpen, setIsMapMenuOpen] = useState(false);
     const [showNuevo, setShowNuevo] = useState(true);
     const [showViejo, setShowViejo] = useState(true);
-    const [showStreets, setShowStreets] = useState(false);
+    const [showStreets, setShowStreets] = useState(true);
     const [showDisponible, setShowDisponible] = useState(false);
     const [showOcupado, setShowOcupado] = useState(false);
 
