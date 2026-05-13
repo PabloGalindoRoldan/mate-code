@@ -71,6 +71,12 @@
 			<version>8.3.0</version>
 		</dependency>
 
+		<!-- Spring Boot Starter Security -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<!-- Tests -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
