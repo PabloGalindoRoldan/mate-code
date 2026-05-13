@@ -44,15 +44,15 @@
 
 .map-settings-btn {
     position: absolute;
-    top: 20px;
+    top: 16px;
     right: 20px;
     z-index: 20;
     background-color: var(--verde1);
     color: white;
     border: none;
     border-radius: 8px;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -10,6 +10,7 @@ import data from "../../../tmp/empresaInfo.json";
 export default function EmpresaRadicadaView() {
     const [empresaInfo] = useState(data);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState("info");
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -26,9 +27,9 @@ export default function EmpresaRadicadaView() {
             </button>
 
             <div className="main-layout">
-                <MenuEmpresa isOpen={isMenuOpen} />
+                <MenuEmpresa isOpen={isMenuOpen} setActiveTab={setActiveTab} activeTab={activeTab} />
                 <main className="content-area">
-                    <EmpresaRadicadaBody empresaInfo={empresaInfo} isMenuOpen={isMenuOpen} />
+                    <EmpresaRadicadaBody empresaInfo={empresaInfo} isMenuOpen={isMenuOpen} activeTab={activeTab} />
                 </main>
             </div>
             <Footer />
