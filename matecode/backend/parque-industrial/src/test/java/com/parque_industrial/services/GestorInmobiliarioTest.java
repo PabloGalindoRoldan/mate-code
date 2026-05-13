@@ -14,7 +14,7 @@ public class GestorInmobiliarioTest {
 
     @Test
     public void testCrearLote() throws Exception {
-        LoteDTO lote = new LoteDTO(10, 500.00);
+        LoteDTO lote = new LoteDTO(10, 500.00, "N/A", "nuevo");
         this.gestor.crearLote(lote);
         assertEquals(fake.getLote().getIdentificacion(), 10);
         assertEquals(fake.getLote().getSuperficie(), 500.00);
@@ -36,6 +36,27 @@ public class GestorInmobiliarioTest {
         LoteDTO lote= fake.buscarLotePorID(4); // lote id 4 reservado
         this.gestor.VenderLote(lote, 500.0);
         assertEquals(fake.getLote().getEstado(), Lote.VENDIDO);
+    }
+    @Test
+    public void testListarDisponibles() throws Exception {
+        assertEquals(3, this.gestor.LotesDisponibles().size());
+    }
+
+    @Test
+    public void testListarReservados() throws Exception {
+        assertEquals(3, this.gestor.LotesReservados().size());
+    }
+    @Test
+    public void testListarLotesVendidos() throws Exception {
+        assertEquals(3, this.gestor.LotesVendidos().size());
+    }
+    @Test
+    public void testListarLotesDeParqueNuevo() throws Exception {
+        assertEquals(6, this.gestor.LotesDeParqueNuevo().size());
+    }
+    @Test
+    public void testListarLotesDeParqueViejo() throws Exception {
+        assertEquals(3, this.gestor.LotesDeParqueViejo().size());
     }
 
 

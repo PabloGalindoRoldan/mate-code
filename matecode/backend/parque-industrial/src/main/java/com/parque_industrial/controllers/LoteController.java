@@ -118,7 +118,7 @@ public class LoteController {
         }
         return ResponseEntity.ok(lista);
     }
-    @GetMapping("/nuevos")
+    @GetMapping("/viejos")
     public ResponseEntity<List<LoteDTO>> listarLotesDeParqueViejo()  {
         List<LoteDTO> lista = null;
         try {
@@ -128,5 +128,4 @@ public class LoteController {
         }
         return ResponseEntity.ok(lista);
     }
-
 }
