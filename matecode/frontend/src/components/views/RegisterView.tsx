@@ -13,8 +13,8 @@ export default function RegisterView() {
         password: '', confirmarPassword: ''
     });
 
-    // Track which fields are missing data
-    const [formErrors, setFormErrors] = useState<Record<string, boolean>>({});
+    // We store strings now to hold specific messages like "Email inválido"
+    const [formErrors, setFormErrors] = useState<Record<string, string>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -23,21 +23,20 @@ export default function RegisterView() {
     const formatCUIT = (value: string) => {
         const digits = value.replace(/\D/g, '');
         let masked = digits;
-        if (digits.length > 2) {
-            masked = `${digits.substring(0, 2)}-${digits.substring(2)}`;
-        }
-        if (digits.length > 10) {
-            masked = `${masked.substring(0, 11)}-${digits.substring(10, 11)}`;
-        }
+        if (digits.length > 2) masked = `${digits.substring(0, 2)}-${digits.substring(2)}`;
+        if (digits.length > 10) masked = `${masked.substring(0, 11)}-${digits.substring(10, 11)}`;
         return masked.substring(0, 13);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        // Clear error for this field as user types
         if (formErrors[name]) {
-            setFormErrors(prev => ({ ...prev, [name]: false }));
+            setFormErrors(prev => {
+                const next = { ...prev };
+                delete next[name];
+                return next;
+            });
         }
 
         if (name === 'cuitUsuario' || name === 'cuitEmpresa') {
@@ -48,19 +47,26 @@ export default function RegisterView() {
     };
 
     const validateForm = () => {
-        const newErrors: Record<string, boolean> = {};
+        const newErrors: Record<string, string> = {};
         let isValid = true;
 
-        // Check required fields
+        // 1. Check for empty fields
         Object.keys(formData).forEach((key) => {
             const value = formData[key as keyof typeof formData];
             if (!value || value.trim() === '') {
-                newErrors[key] = true;
+                newErrors[key] = "Este campo es obligatorio";
                 isValid = false;
             }
         });
 
-        // Specific Password Check
+        // 2. Email Format Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (formData.email && !emailRegex.test(formData.email)) {
+            newErrors.email = "Formato de email no válido";
+            isValid = false;
+        }
+
+        // 3. Password Match Check
         if (formData.password !== formData.confirmarPassword) {
             setError("Las contraseñas no coinciden");
             isValid = false;
@@ -78,6 +84,7 @@ export default function RegisterView() {
 
         setIsLoading(true);
         try {
+            // Note: Strip CUIT hyphens here if your backend requires only numbers
             const response = await api.post('/login/registrarse', formData);
             if (response.status === 200 || response.status === 201) {
                 setIsSubmitted(true);
@@ -109,12 +116,8 @@ export default function RegisterView() {
                     <div className="successCard">
                         <Alert type="success" message="¡Registro exitoso! Ya podés iniciar sesión." />
                         <div className="botonera">
-                            <button className="botonBotonera" onClick={() => navigate('/login')}>
-                                Iniciar sesión
-                            </button>
-                            <button className="botonBotonera" onClick={() => navigate('/')}>
-                                Home
-                            </button>
+                            <button className="botonBotonera" onClick={() => navigate('/login')}>Iniciar sesión</button>
+                            <button className="botonBotonera" onClick={() => navigate('/')}>Home</button>
                         </div>
                     </div>
                 ) : (
@@ -136,7 +139,7 @@ export default function RegisterView() {
                                         autoComplete="off"
                                     />
                                     {formErrors[field.name] && (
-                                        <span className="error-text">Completar este campo</span>
+                                        <span className="error-text">{formErrors[field.name]}</span>
                                     )}
                                 </div>
                             ))}
