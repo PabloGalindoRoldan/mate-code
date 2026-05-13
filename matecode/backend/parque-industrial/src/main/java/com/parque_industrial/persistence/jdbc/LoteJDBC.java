@@ -20,6 +20,12 @@ public class LoteJDBC implements DAOInmobiliario {
     private final String ESTADO = "estado";
     private final String FECHA = "fechaVenta";
     private final String MONTO = "montoVenta";
+    private final String NC = "nc";
+    private final String TIPO = "tipo";
+    private final String PARQUE = "parque";
+    // valores de parque
+    private final String PARQUE_VIEJO = "viejo";
+    private final String PARQUE_NUEVO = "nuevo";
     // estados de lote
     private final String DISPONIBLE = "disponible";
     private final String RESERVADO = "reservado";
@@ -42,11 +48,15 @@ public class LoteJDBC implements DAOInmobiliario {
                 while (res.next()){
                     Date fechaVentaSql = res.getDate(FECHA);
                     LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
-                    lotes.add( LoteDTO.dto(new Lote(res.getInt(ID),
+                    lotes.add( new LoteDTO(res.getInt(ID),
                             res.getDouble(SUPERFICIE),
                             res.getString(ESTADO),
                             fechaVenta,
-                            res.getDouble(MONTO)))
+                            res.getDouble(MONTO),
+                            res.getString(NC),
+                            res.getString(TIPO),
+                            res.getString(PARQUE)
+                            )
                     );
                 }
             }
@@ -60,7 +70,8 @@ public class LoteJDBC implements DAOInmobiliario {
 
     @Override
     public void crearLote(Lote lote) throws Exception {
-        String insert = "INSERT INTO Lote ("+ID+","+ SUPERFICIE +","+ESTADO+","+FECHA+","+MONTO+") VALUES (?, ?, ?, ?, ?)";
+        String insert = "INSERT INTO Lote ("+ID+","+ SUPERFICIE +","+ESTADO+","+FECHA+","+MONTO+","+
+                NC+","+TIPO+","+PARQUE+") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         try{
             conn = DataSourceUtils.getConnection(this.conecction);
@@ -70,6 +81,9 @@ public class LoteJDBC implements DAOInmobiliario {
                 ps.setString(3, lote.getEstado());
                 ps.setDate(4, lote.FechaVentaSQL());
                 ps.setDouble(5, lote.getMontoVenta());
+                ps.setString(6, lote.getNc());
+                ps.setString(7, lote.getTipo());
+                ps.setString(8, lote.getParque());
                 ps.executeUpdate();
             }
         }catch (SQLException exception){
@@ -115,6 +129,23 @@ public class LoteJDBC implements DAOInmobiliario {
     }
 
     @Override
+    public void cancelarReserva(Lote lote) throws Exception {
+        String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + "' WHERE " + ID + " = ? ";
+        Connection conn = null;
+        try{
+            conn = DataSourceUtils.getConnection(this.conecction);
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setInt(1, lote.getIdentificacion());
+                ps.executeUpdate();
+            }
+        }catch (SQLException exception){
+            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+        } finally {
+            DataSourceUtils.releaseConnection(conn, this.conecction);
+        }
+    }
+
+    @Override
     public LoteDTO buscarLotePorID(int identificacion) throws Exception {
         String query = "SELECT * FROM Lote WHERE " + ID + " = ?";
         Connection conn = null;
@@ -130,7 +161,11 @@ public class LoteJDBC implements DAOInmobiliario {
                             res.getDouble(SUPERFICIE),
                             res.getString(ESTADO),
                             fechaVenta,
-                            res.getDouble(MONTO));
+                            res.getDouble(MONTO),
+                            res.getString(NC),
+                            res.getString(TIPO),
+                            res.getString(PARQUE)
+                    );
                 }else {
                     return null;
                 }
@@ -154,11 +189,14 @@ public class LoteJDBC implements DAOInmobiliario {
                 while (res.next()){
                     Date fechaVentaSql = res.getDate(FECHA);
                     LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
-                    lotes.add( LoteDTO.dto(new Lote(res.getInt(ID),
+                    lotes.add( new LoteDTO(res.getInt(ID),
                             res.getDouble(SUPERFICIE),
                             res.getString(ESTADO),
                             fechaVenta,
-                            res.getDouble(MONTO)))
+                            res.getDouble(MONTO),
+                            res.getString(NC),
+                            res.getString(TIPO),
+                            res.getString(PARQUE))
                     );
                 }
             }
@@ -182,11 +220,14 @@ public class LoteJDBC implements DAOInmobiliario {
                 while (res.next()){
                     Date fechaVentaSql = res.getDate(FECHA);
                     LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
-                    lotes.add( LoteDTO.dto(new Lote(res.getInt(ID),
+                    lotes.add( new LoteDTO(res.getInt(ID),
                             res.getDouble(SUPERFICIE),
                             res.getString(ESTADO),
                             fechaVenta,
-                            res.getDouble(MONTO)))
+                            res.getDouble(MONTO),
+                            res.getString(NC),
+                            res.getString(TIPO),
+                            res.getString(PARQUE))
                     );
                 }
             }
@@ -199,19 +240,64 @@ public class LoteJDBC implements DAOInmobiliario {
     }
 
     @Override
-    public void cancelarReserva(Lote lote) throws Exception {
-        String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + "' WHERE " + ID + " = ? ";
+    public List<LoteDTO> LotesNuevos() throws Exception {
+        String query = "SELECT * FROM Lote WHERE " + PARQUE + " = '" + PARQUE_NUEVO + "'";
+        List<LoteDTO> lotes = new ArrayList<>();
         Connection conn = null;
-        try{
+        try {
             conn = DataSourceUtils.getConnection(this.conecction);
-            try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setInt(1, lote.getIdentificacion());
-                ps.executeUpdate();
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    Date fechaVentaSql = res.getDate(FECHA);
+                    LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
+                    lotes.add(new LoteDTO(res.getInt(ID),
+                            res.getDouble(SUPERFICIE),
+                            res.getString(ESTADO),
+                            fechaVenta,
+                            res.getDouble(MONTO),
+                            res.getString(NC),
+                            res.getString(TIPO),
+                            res.getString(PARQUE))
+                    );
+                }
             }
-        }catch (SQLException exception){
-            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+        } catch (SQLException ex) {
+            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
+        return lotes;
+    }
+
+    @Override
+    public List<LoteDTO> LotesViejos() throws Exception {
+        String query = "SELECT * FROM Lote WHERE " + PARQUE + " = '" + PARQUE_VIEJO + "'";
+        List<LoteDTO> lotes = new ArrayList<>();
+        Connection conn = null;
+        try {
+            conn = DataSourceUtils.getConnection(this.conecction);
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    Date fechaVentaSql = res.getDate(FECHA);
+                    LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
+                    lotes.add(new LoteDTO(res.getInt(ID),
+                            res.getDouble(SUPERFICIE),
+                            res.getString(ESTADO),
+                            fechaVenta,
+                            res.getDouble(MONTO),
+                            res.getString(NC),
+                            res.getString(TIPO),
+                            res.getString(PARQUE))
+                    );
+                }
+            }
+        } catch (SQLException ex) {
+            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
+        } finally {
+            DataSourceUtils.releaseConnection(conn, this.conecction);
+        }
+        return lotes;
     }
 }

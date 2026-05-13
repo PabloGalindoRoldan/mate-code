@@ -7,6 +7,9 @@ public class Lote {
     public static final String DISPONIBLE = "disponible";
     public static final String RESERVADO = "reservado";
     public static final String VENDIDO= "vendido";
+    public static final String PARQUE_NUEVO ="nuevo";
+    public static final String PARQUE_VIEJO ="viejo";
+
     // Las hice asi ya que eran solo tres tipos de superficie no recuerdo cuanto metros cuadrados abarcaba cada una, mas adelante los vamos a usar
     public static final int SUPERFICIE_MENOR= 1;
     public static final int SUPERFICIE_MEDIO= 1;
@@ -17,30 +20,36 @@ public class Lote {
     private String estado;
     private LocalDate fechaVenta;
     private Double montoVenta;
-
-    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, Double montoVenta)throws Exception  {
+    private String nc;
+    private String tipo ;
+    private String parque;
+    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, Double montoVenta, String nc,  String parque)throws Exception  {
         validar(superficie, identificacion);
+        validarParque();
         this.superficie = superficie;
         this.identificacion = identificacion;
         this.estado = estado;
         this.montoVenta = montoVenta;
+        this.fechaVenta = fechaVenta;
+        this.nc = nc;
+        this.tipo = "lote";
+        this.parque = parque;
     }
-    public Lote( int identificacion, double superficie)throws Exception  {
+
+    public Lote(int identificacion, double superficie, String nc,String parque)throws Exception  {
         validar(superficie, identificacion);
+        validarParque();
         this.superficie = superficie;
         this.identificacion = identificacion;
         this.estado = DISPONIBLE;
         this.montoVenta = 0.0;
+        this.fechaVenta = null;
+        this.nc = nc;
+        this.tipo = "lote";
+        this.parque = parque;
+
     }
 
-    private void validar(double superficie, int identificacion) throws Exception  {
-        if (superficie <= 0) {
-            throw new Exception("La superficie debe ser un valor positivo");
-        }
-        if (identificacion < 0) {
-            throw new Exception("La identificación del lote es un numero postivo");
-        }
-    }
     public void reservar()throws Exception  {
         if (!this.estado.equals(DISPONIBLE)) {
             throw new Exception("El lote " + identificacion + " no está disponible para reservar.");
@@ -65,6 +74,28 @@ public class Lote {
         }
         this.estado = Lote.DISPONIBLE;
     }
+    private void validar(double superficie, int identificacion) throws Exception  {
+        if (superficie <= 0) {
+            throw new Exception("La superficie debe ser un valor positivo");
+        }
+        if (identificacion < 0) {
+            throw new Exception("La identificación del lote es un numero postivo");
+        }
+    }
+    public void validarParque() throws Exception {
+        if (!this.parque.equals(PARQUE_NUEVO) && !this.parque.equals(PARQUE_VIEJO)){
+            throw new Exception("El parque debe ser nuevo o viejo");
+        }
+    }
+    public String getTipo() {
+        return tipo;
+    }
+    public String getNc() {
+        return nc;
+    }
+    public String getParque() {
+        return parque;
+    }
     public String getEstado() {
         return estado;
     }
@@ -75,7 +106,6 @@ public class Lote {
         return identificacion;
     }
     public Date FechaVentaSQL() {
-
         return (this.fechaVenta == null) ? null : new Date(this.fechaVenta.getYear(), this.fechaVenta.getMonthValue(), this.fechaVenta.getDayOfMonth());
     }
     public LocalDate getFechaVenta(){

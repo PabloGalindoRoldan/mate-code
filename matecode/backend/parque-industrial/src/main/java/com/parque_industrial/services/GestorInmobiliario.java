@@ -1,5 +1,4 @@
 package com.parque_industrial.services;
-import com.parque_industrial.entities.Empresa;
 import com.parque_industrial.entities.Lote;
 import com.parque_industrial.persistence.dtos.LoteDTO;
 import org.springframework.stereotype.Service; // Importar la anotación @Service
@@ -15,7 +14,7 @@ public class GestorInmobiliario{
     }
     // la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
     public void crearLote(LoteDTO lote) throws Exception {
-        Lote lote1 = new Lote(lote.identificacion(), lote.superficie());
+        Lote lote1 = new Lote(lote.identificacion(), lote.superficie(), lote.nc(), lote.parque());
         dao.crearLote(lote1);
     }
     public void ReservarLote(LoteDTO lote) throws Exception {
@@ -47,4 +46,11 @@ public class GestorInmobiliario{
     public List<LoteDTO> LotesReservados() throws Exception{
         return dao.LotesReservados();
     }
+    public List<LoteDTO> LotesDeParqueNuevo() throws Exception{
+        return dao.LotesNuevos();
+    }
+    public List<LoteDTO> LotesDeParqueViejo() throws Exception{
+        return dao.LotesViejos();
+    }
+
 }

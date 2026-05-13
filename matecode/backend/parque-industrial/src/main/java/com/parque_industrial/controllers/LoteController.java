@@ -58,9 +58,22 @@ public class LoteController {
             return ResponseEntity.badRequest().body("Datos de venta inválidos");
         }
         try {
-            LoteDTO lote = new LoteDTO(datosEntrada.identificacion(), datosEntrada.superficie());
+            LoteDTO lote = new LoteDTO(datosEntrada.identificacion(), datosEntrada.superficie(), datosEntrada.nc(), datosEntrada.parque() );
            gestor.crearLote(lote);
             return ResponseEntity.ok("Lote registrado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+    }
+    @PostMapping("/cancelarReserva")//este es por si no cumplio y se le quita el lote
+    public ResponseEntity<String> cancelarReserva(@RequestBody AnularReservaRequestDTO datosEntrada) {
+        if (datosEntrada.identificacion() < 0) {
+            return ResponseEntity.badRequest().body("Datos de venta inválidos");
+        }
+        try {
+            LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
+            gestor.cancelarReserva(dto);
+            return ResponseEntity.ok("Reserva cancelada exitosamente");
         } catch (Exception e) {
             return ResponseEntity.status(409).body(e.getMessage());
         }
@@ -95,17 +108,25 @@ public class LoteController {
         }
         return ResponseEntity.ok(lista);
     }
-    @PostMapping("/cancelarReserva")//este es por si no cumplio y se le quita el lote
-    public ResponseEntity<String> cancelarReserva(@RequestBody AnularReservaRequestDTO datosEntrada) {
-        if (datosEntrada.identificacion() < 0) {
-            return ResponseEntity.badRequest().body("Datos de venta inválidos");
-        }
+    @GetMapping("/nuevos")
+    public ResponseEntity<List<LoteDTO>> listarLotesDeParqueNuevo()  {
+        List<LoteDTO> lista = null;
         try {
-            LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
-            gestor.cancelarReserva(dto);
-            return ResponseEntity.ok("Reserva cancelada exitosamente");
+            lista = gestor.LotesDeParqueNuevo();
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(e.getMessage());
+            throw new RuntimeException(e);
         }
+        return ResponseEntity.ok(lista);
     }
+    @GetMapping("/nuevos")
+    public ResponseEntity<List<LoteDTO>> listarLotesDeParqueViejo()  {
+        List<LoteDTO> lista = null;
+        try {
+            lista = gestor.LotesDeParqueViejo();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(lista);
+    }
+
 }

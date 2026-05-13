@@ -13,6 +13,9 @@ public interface DAOInmobiliario {
     public List<LoteDTO> LotesDisponibles() throws Exception;
     public List<LoteDTO> LotesVendidos() throws Exception;
     public List<LoteDTO> LotesReservados() throws Exception;
+    public List<LoteDTO> LotesNuevos() throws Exception;
+    public List<LoteDTO> LotesViejos() throws Exception;
+
 }
 // la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
 
