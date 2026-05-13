@@ -21,7 +21,7 @@ public record LoteDTO(int identificacion, double superficie, String estado, Loca
             throw new IllegalArgumentException("La superficie debe ser un valor positivo");
         }
     }
-    public Lote entidad() throws Exception  {
+    public Lote entidad()   {
         return new Lote(this.identificacion, this.superficie,  this.estado, this.fechaVenta, this.montoVenta,this.nc, this.parque);
     }
     public static LoteDTO dto(Lote lote) {

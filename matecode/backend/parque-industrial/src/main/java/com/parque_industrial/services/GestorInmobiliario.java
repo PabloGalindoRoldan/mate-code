@@ -13,43 +13,43 @@ public class GestorInmobiliario{
         this.dao = dao;
     }
     // la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
-    public void crearLote(LoteDTO lote) throws Exception {
+    public void crearLote(LoteDTO lote) {
         Lote lote1 = new Lote(lote.identificacion(), lote.superficie(), lote.nc(), lote.parque());
         dao.crearLote(lote1);
     }
-    public void ReservarLote(LoteDTO lote) throws Exception {
+    public void ReservarLote(LoteDTO lote)  {
         Lote lote1 = lote.entidad();
         lote1.reservar();
         dao.reservarLote(lote1);
     }
-    public void cancelarReserva(LoteDTO lote) throws Exception {
+    public void cancelarReserva(LoteDTO lote)  {
         Lote lote1 = lote.entidad();
         lote1.cancelarReserva();
         dao.cancelarReserva(lote1);
     }
-    public void VenderLote(LoteDTO lote, double montoVenta) throws Exception {
+    public void VenderLote(LoteDTO lote, double montoVenta)   {
         Lote lote1 = lote.entidad();
         lote1.vender(montoVenta);
         dao.venderLote(lote1);
     }
-    public LoteDTO buscarLote(int identificacion) throws Exception {
+    public LoteDTO buscarLote(int identificacion)  {
         return dao.buscarLotePorID(identificacion) ;
     }
 
-    public List<LoteDTO> LotesDisponibles() throws Exception {
+    public List<LoteDTO> LotesDisponibles()  {
        return dao.LotesDisponibles();
     }
 
-    public List<LoteDTO> LotesVendidos() throws Exception{
+    public List<LoteDTO> LotesVendidos() {
         return dao.LotesVendidos();
     }
-    public List<LoteDTO> LotesReservados() throws Exception{
+    public List<LoteDTO> LotesReservados()  {
         return dao.LotesReservados();
     }
-    public List<LoteDTO> LotesDeParqueNuevo() throws Exception{
+    public List<LoteDTO> LotesDeParqueNuevo() {
         return dao.LotesNuevos();
     }
-    public List<LoteDTO> LotesDeParqueViejo() throws Exception{
+    public List<LoteDTO> LotesDeParqueViejo() {
         return dao.LotesViejos();
     }
 

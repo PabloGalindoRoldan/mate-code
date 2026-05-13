@@ -23,9 +23,9 @@ public class Lote {
     private String nc;
     private String tipo ;
     private String parque;
-    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, Double montoVenta, String nc,  String parque)throws Exception  {
+    public Lote( int identificacion, double superficie, String estado, LocalDate fechaVenta, Double montoVenta, String nc,  String parque)  {
         validar(superficie, identificacion);
-        validarParque();
+        validarParque(parque);
         this.superficie = superficie;
         this.identificacion = identificacion;
         this.estado = estado;
@@ -36,9 +36,9 @@ public class Lote {
         this.parque = parque;
     }
 
-    public Lote(int identificacion, double superficie, String nc,String parque)throws Exception  {
+    public Lote(int identificacion, double superficie, String nc,String parque)  {
         validar(superficie, identificacion);
-        validarParque();
+        validarParque(parque);
         this.superficie = superficie;
         this.identificacion = identificacion;
         this.estado = DISPONIBLE;
@@ -50,41 +50,40 @@ public class Lote {
 
     }
 
-    public void reservar()throws Exception  {
+    public void reservar()  {
         if (!this.estado.equals(DISPONIBLE)) {
-            throw new Exception("El lote " + identificacion + " no está disponible para reservar.");
+            throw new IllegalArgumentException("El lote " + identificacion + " no está disponible para reservar.");
         }
         this.estado = RESERVADO;
-
     }
-    public void vender(double monto)throws Exception {
+    public void vender(double monto) {
         if (!this.estado.equals(RESERVADO)) {
-            throw new Exception("El lote " + identificacion + " no puede ser vendido en su estado actual.");
+            throw new IllegalArgumentException("El lote " + identificacion + " no puede ser vendido en su estado actual.");
         }
         if (monto <= 0) {
-            throw new Exception("El monto de venta debe ser positivo.");
+            throw new IllegalArgumentException("El monto de venta debe ser positivo.");
         }
         this.estado = VENDIDO;
         this.montoVenta = monto;
         this.fechaVenta = LocalDate.now();
     }
-    public void cancelarReserva() throws Exception {
+    public void cancelarReserva()  {
         if(!this.estado.equals(RESERVADO)){
-            throw new Exception("No se puede cancelar la reserva del lote");
+            throw new IllegalArgumentException("No se puede cancelar la reserva del lote");
         }
         this.estado = Lote.DISPONIBLE;
     }
-    private void validar(double superficie, int identificacion) throws Exception  {
+    private void validar(double superficie, int identificacion){
         if (superficie <= 0) {
-            throw new Exception("La superficie debe ser un valor positivo");
+            throw new IllegalArgumentException("La superficie debe ser un valor positivo");
         }
         if (identificacion < 0) {
-            throw new Exception("La identificación del lote es un numero postivo");
+            throw new IllegalArgumentException("La identificación del lote es un numero postivo");
         }
     }
-    public void validarParque() throws Exception {
-        if (!this.parque.equals(PARQUE_NUEVO) && !this.parque.equals(PARQUE_VIEJO)){
-            throw new Exception("El parque debe ser nuevo o viejo");
+    public void validarParque(String parque)  {
+        if (!parque.equals(PARQUE_NUEVO) && !parque.equals(PARQUE_VIEJO)){
+            throw new IllegalArgumentException("El parque debe ser nuevo o viejo");
         }
     }
     public String getTipo() {

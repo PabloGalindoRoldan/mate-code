@@ -37,39 +37,7 @@ public class LoteJDBC implements DAOInmobiliario {
     }
 
     @Override
-    public List<LoteDTO> LotesDisponibles() throws Exception{
-        String query = "SELECT * FROM Lote WHERE " + ESTADO + " = '" + DISPONIBLE + "'";
-        List<LoteDTO> lotes = new ArrayList<>();
-        Connection conn = null; // Declarar fuera del try-with-resources para DataSourceUtils
-        try{
-            conn = DataSourceUtils.getConnection(this.conecction); // Obtener conexión transaccional
-            try(PreparedStatement ps = conn.prepareStatement(query)){
-                ResultSet res = ps.executeQuery();
-                while (res.next()){
-                    Date fechaVentaSql = res.getDate(FECHA);
-                    LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
-                    lotes.add( new LoteDTO(res.getInt(ID),
-                            res.getDouble(SUPERFICIE),
-                            res.getString(ESTADO),
-                            fechaVenta,
-                            res.getDouble(MONTO),
-                            res.getString(NC),
-                            res.getString(TIPO),
-                            res.getString(PARQUE)
-                            )
-                    );
-                }
-            }
-        }catch (SQLException ex) {
-            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
-        } finally {
-            DataSourceUtils.releaseConnection(conn, this.conecction); // Liberar conexión transaccional
-        }
-        return lotes;
-    }
-
-    @Override
-    public void crearLote(Lote lote) throws Exception {
+    public void crearLote(Lote lote)  {
         String insert = "INSERT INTO Lote ("+ID+","+ SUPERFICIE +","+ESTADO+","+FECHA+","+MONTO+","+
                 NC+","+TIPO+","+PARQUE+") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
@@ -87,13 +55,14 @@ public class LoteJDBC implements DAOInmobiliario {
                 ps.executeUpdate();
             }
         }catch (SQLException exception){
-            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+            throw  new IllegalArgumentException("Error al acceder a Railway:" + exception.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
     }
+
     @Override
-    public void venderLote(Lote lote) throws Exception {
+    public void venderLote(Lote lote)   {
         String sql = "UPDATE Lote SET " + ESTADO + " = '" + VENDIDO + "', " + FECHA + " = ?, " + MONTO + " = ? WHERE " + ID + " = ? ";
         Connection conn = null;
         try{
@@ -105,14 +74,13 @@ public class LoteJDBC implements DAOInmobiliario {
                 ps.executeUpdate();
             }
         }catch (SQLException exception){
-            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+            throw  new IllegalArgumentException("Error al acceder a Railway:" + exception.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
     }
-
     @Override
-    public void reservarLote(Lote lote) throws Exception {
+    public void reservarLote(Lote lote)   {
         String sql = "UPDATE Lote SET " + ESTADO + " = '" + RESERVADO+"' WHERE " + ID + " = ? ";
         Connection conn = null;
         try{
@@ -122,14 +90,14 @@ public class LoteJDBC implements DAOInmobiliario {
                 ps.executeUpdate();
             }
         }catch (SQLException exception){
-            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+            throw  new IllegalArgumentException("Error al acceder a Railway:" + exception.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
     }
 
     @Override
-    public void cancelarReserva(Lote lote) throws Exception {
+    public void cancelarReserva(Lote lote)   {
         String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + "' WHERE " + ID + " = ? ";
         Connection conn = null;
         try{
@@ -139,14 +107,14 @@ public class LoteJDBC implements DAOInmobiliario {
                 ps.executeUpdate();
             }
         }catch (SQLException exception){
-            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+            throw  new IllegalArgumentException("Error al acceder a Railway:" + exception.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
     }
 
     @Override
-    public LoteDTO buscarLotePorID(int identificacion) throws Exception {
+    public LoteDTO buscarLotePorID(int identificacion)  {
         String query = "SELECT * FROM Lote WHERE " + ID + " = ?";
         Connection conn = null;
         try{
@@ -171,14 +139,46 @@ public class LoteJDBC implements DAOInmobiliario {
                 }
             }
         } catch (SQLException exception){
-            throw  new Exception("Error al acceder a Railway:" + exception.getMessage());
+            throw  new IllegalArgumentException("Error al acceder a Railway:" + exception.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
     }
 
     @Override
-    public List<LoteDTO> LotesVendidos() throws Exception {
+    public List<LoteDTO> LotesDisponibles() {
+        String query = "SELECT * FROM Lote WHERE " + ESTADO + " = '" + DISPONIBLE + "'";
+        List<LoteDTO> lotes = new ArrayList<>();
+        Connection conn = null; // Declarar fuera del try-with-resources para DataSourceUtils
+        try{
+            conn = DataSourceUtils.getConnection(this.conecction); // Obtener conexión transaccional
+            try(PreparedStatement ps = conn.prepareStatement(query)){
+                ResultSet res = ps.executeQuery();
+                while (res.next()){
+                    Date fechaVentaSql = res.getDate(FECHA);
+                    LocalDate fechaVenta = (fechaVentaSql != null) ? fechaVentaSql.toLocalDate() : null;
+                    lotes.add( new LoteDTO(res.getInt(ID),
+                                    res.getDouble(SUPERFICIE),
+                                    res.getString(ESTADO),
+                                    fechaVenta,
+                                    res.getDouble(MONTO),
+                                    res.getString(NC),
+                                    res.getString(TIPO),
+                                    res.getString(PARQUE)
+                            )
+                    );
+                }
+            }
+        }catch (SQLException ex) {
+            throw new IllegalArgumentException("Error al acceder a Railway:" + ex.getMessage());
+        } finally {
+            DataSourceUtils.releaseConnection(conn, this.conecction); // Liberar conexión transaccional
+        }
+        return lotes;
+    }
+
+    @Override
+    public List<LoteDTO> LotesVendidos()  {
         String query = "SELECT * FROM Lote WHERE " + ESTADO + " = '" + VENDIDO + "'";
         List<LoteDTO> lotes = new ArrayList<>();
         Connection conn = null;
@@ -201,7 +201,7 @@ public class LoteJDBC implements DAOInmobiliario {
                 }
             }
         }catch (SQLException ex) {
-            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
+            throw new IllegalArgumentException("Error al acceder a Railway:" + ex.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
@@ -209,7 +209,7 @@ public class LoteJDBC implements DAOInmobiliario {
     }
 
     @Override
-    public List<LoteDTO> LotesReservados() throws Exception {
+    public List<LoteDTO> LotesReservados()  {
         String query = "SELECT * FROM Lote WHERE " + ESTADO + " = '" + RESERVADO + "'";
         List<LoteDTO> lotes = new ArrayList<>();
         Connection conn = null;
@@ -232,7 +232,7 @@ public class LoteJDBC implements DAOInmobiliario {
                 }
             }
         }catch (SQLException ex) {
-            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
+            throw new IllegalArgumentException("Error al acceder a Railway:" + ex.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
@@ -240,7 +240,7 @@ public class LoteJDBC implements DAOInmobiliario {
     }
 
     @Override
-    public List<LoteDTO> LotesNuevos() throws Exception {
+    public List<LoteDTO> LotesNuevos()  {
         String query = "SELECT * FROM Lote WHERE " + PARQUE + " = '" + PARQUE_NUEVO + "'";
         List<LoteDTO> lotes = new ArrayList<>();
         Connection conn = null;
@@ -263,7 +263,7 @@ public class LoteJDBC implements DAOInmobiliario {
                 }
             }
         } catch (SQLException ex) {
-            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
+            throw new IllegalArgumentException("Error al acceder a Railway:" + ex.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }
@@ -271,7 +271,7 @@ public class LoteJDBC implements DAOInmobiliario {
     }
 
     @Override
-    public List<LoteDTO> LotesViejos() throws Exception {
+    public List<LoteDTO> LotesViejos()  {
         String query = "SELECT * FROM Lote WHERE " + PARQUE + " = '" + PARQUE_VIEJO + "'";
         List<LoteDTO> lotes = new ArrayList<>();
         Connection conn = null;
@@ -294,7 +294,7 @@ public class LoteJDBC implements DAOInmobiliario {
                 }
             }
         } catch (SQLException ex) {
-            throw new Exception("Error al acceder a Railway:" + ex.getMessage());
+            throw new IllegalArgumentException("Error al acceder a Railway:" + ex.getMessage());
         } finally {
             DataSourceUtils.releaseConnection(conn, this.conecction);
         }

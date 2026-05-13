@@ -17,48 +17,48 @@ public class FakeDaoInmobiliario implements DAOInmobiliario{
     }
 
     @Override
-    public List<LoteDTO> LotesDisponibles() throws Exception {
+    public List<LoteDTO> LotesDisponibles()  {
         return listLotes.stream().filter(loteDTO->  loteDTO.estado().equals(Lote.DISPONIBLE)).toList();
     }
 
     @Override
-    public void crearLote(Lote lote) throws Exception {
+    public void crearLote(Lote lote)  {
         this.lote = lote;
     }
 
     @Override
-    public void venderLote(Lote lote) throws Exception {
+    public void venderLote(Lote lote)  {
         this.lote = lote;
     }
 
     @Override
-    public void reservarLote(Lote lote) throws Exception {
+    public void reservarLote(Lote lote)  {
         this.lote = lote;
     }
 
     @Override
-    public LoteDTO buscarLotePorID(int identificacion) throws Exception {
+    public LoteDTO buscarLotePorID(int identificacion){
         return listLotes.stream().filter(loteDTO->  loteDTO.identificacion() == identificacion).findFirst().get();
     }
 
     @Override
-    public List<LoteDTO> LotesVendidos() throws Exception {
+    public List<LoteDTO> LotesVendidos()  {
         return listLotes.stream().filter(loteDTO->  loteDTO.estado().equals(Lote.VENDIDO)).toList();
 
     }
 
     @Override
-    public List<LoteDTO> LotesReservados() throws Exception {
+    public List<LoteDTO> LotesReservados() {
         return listLotes.stream().filter(loteDTO->  loteDTO.estado().equals(Lote.RESERVADO)).toList();
     }
 
     @Override
-    public List<LoteDTO> LotesNuevos() throws Exception {
+    public List<LoteDTO> LotesNuevos() {
         return listLotes.stream().filter(l -> l.parque().equals("nuevo")).toList();
     }
 
     @Override
-    public List<LoteDTO> LotesViejos() throws Exception {
+    public List<LoteDTO> LotesViejos() {
         return listLotes.stream().filter(l -> l.parque().equals("viejo")).toList();
 
     }

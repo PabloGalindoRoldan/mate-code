@@ -18,114 +18,49 @@ public class LoteController {
     public LoteController(GestorInmobiliario gestor) {
         this.gestor = gestor;
     }
-    // React enviará un POST a http://tu-servidor/api/lotes/vender
     @PostMapping("/vender")
-    public ResponseEntity<String> procesarVenta(@RequestBody VentaRequestDTO datosEntrada) {
-       // el framework cuendo se realiza la peticion, convierte el json en VentaRequestDTO
-        // Si el frontend manda basura, devolvemos error 400 Bad Request
-        if (datosEntrada.identificacion() < 0 || datosEntrada.monto() <= 0) {
-            return ResponseEntity.badRequest().body("Datos de venta inválidos");
-        }
-        try {
-            LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
-            gestor.VenderLote(dto, datosEntrada.monto());
-            // 4. Respuesta Exitosa:
-            // Informamos a React que todo salió bien con el código HTTP 200 Ok.
-            return ResponseEntity.ok("Venta registrada exitosamente");
-        } catch (Exception e) {
-            // 5. Manejo de Errores de Negocio:
-            // Si la entidad Lote lanza error (ej: ya estaba vendido), mandamos 409 Conflict [Historial].
-            // o no se encontro ese lote en la bd
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
+    public void procesarVenta(@RequestBody VentaRequestDTO datosEntrada) {
+        LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
+        gestor.VenderLote(dto, datosEntrada.monto());
     }
     @PostMapping("/reservar")
-    public ResponseEntity<String> reservarUnLote(@RequestBody ReservarRequestDTO datosEntrada) {
-        if (datosEntrada.identificacion() < 0) {
-            return ResponseEntity.badRequest().body("Datos de venta inválidos");
-        }
-        try {
-            LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
-            gestor.ReservarLote(dto);
-            return ResponseEntity.ok("Reserva registrada exitosamente");
-        } catch (Exception e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
+    public void reservarUnLote(@RequestBody ReservarRequestDTO datosEntrada) {
+        LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
+        gestor.ReservarLote(dto);
     }
     @PostMapping("/registrar")
-    public ResponseEntity<String> crearUnLote(@RequestBody CrearRequestDTO datosEntrada) {
-        if (datosEntrada.identificacion() < 0 || datosEntrada.superficie() <= 0) {
-            return ResponseEntity.badRequest().body("Datos de venta inválidos");
-        }
-        try {
-            LoteDTO lote = new LoteDTO(datosEntrada.identificacion(), datosEntrada.superficie(), datosEntrada.nc(), datosEntrada.parque() );
-           gestor.crearLote(lote);
-            return ResponseEntity.ok("Lote registrado exitosamente");
-        } catch (Exception e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
+    public void crearUnLote(@RequestBody CrearRequestDTO datosEntrada) {
+        LoteDTO lote = new LoteDTO(datosEntrada.identificacion(), datosEntrada.superficie(), datosEntrada.nc(), datosEntrada.parque());
+        gestor.crearLote(lote);
     }
     @PostMapping("/cancelarReserva")//este es por si no cumplio y se le quita el lote
-    public ResponseEntity<String> cancelarReserva(@RequestBody AnularReservaRequestDTO datosEntrada) {
-        if (datosEntrada.identificacion() < 0) {
-            return ResponseEntity.badRequest().body("Datos de venta inválidos");
-        }
-        try {
-            LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
-            gestor.cancelarReserva(dto);
-            return ResponseEntity.ok("Reserva cancelada exitosamente");
-        } catch (Exception e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
+    public void cancelarReserva(@RequestBody AnularReservaRequestDTO datosEntrada) {
+        LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
+        gestor.cancelarReserva(dto);
     }
     @GetMapping("/disponibles")
     public ResponseEntity<List<LoteDTO>> listarDisponibles()  {
-        List<LoteDTO> lista = null;
-        try {
-            lista = gestor.LotesDisponibles();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return ResponseEntity.ok(lista); // Retorna 200 OK con la lista [Historial]
+        List<LoteDTO>  lista = gestor.LotesDisponibles();
+        return ResponseEntity.ok(lista);
     }
     @GetMapping("/vendidos")
     public ResponseEntity<List<LoteDTO>> listarVendidos()  {
-        List<LoteDTO> lista = null;
-        try {
-            lista = gestor.LotesVendidos();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        List<LoteDTO>    lista = gestor.LotesVendidos();
         return ResponseEntity.ok(lista);
     }
     @GetMapping("/reservados")
     public ResponseEntity<List<LoteDTO>> listarReservados()  {
-        List<LoteDTO> lista = null;
-        try {
-            lista = gestor.LotesReservados();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        List<LoteDTO> lista=  gestor.LotesReservados();
         return ResponseEntity.ok(lista);
     }
     @GetMapping("/nuevos")
     public ResponseEntity<List<LoteDTO>> listarLotesDeParqueNuevo()  {
-        List<LoteDTO> lista = null;
-        try {
-            lista = gestor.LotesDeParqueNuevo();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        List<LoteDTO> lista = gestor.LotesDeParqueNuevo();
         return ResponseEntity.ok(lista);
     }
     @GetMapping("/viejos")
     public ResponseEntity<List<LoteDTO>> listarLotesDeParqueViejo()  {
-        List<LoteDTO> lista = null;
-        try {
-            lista = gestor.LotesDeParqueViejo();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        List<LoteDTO> lista = gestor.LotesDeParqueViejo();
         return ResponseEntity.ok(lista);
     }
 }

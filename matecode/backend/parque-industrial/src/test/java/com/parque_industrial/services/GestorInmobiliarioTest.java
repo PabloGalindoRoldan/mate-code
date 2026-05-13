@@ -13,49 +13,49 @@ public class GestorInmobiliarioTest {
     // lotes id 1,2 y 3vendidos -- 4,5 y 6 reservados-- 7,8 y 9 disponibles
 
     @Test
-    public void testCrearLote() throws Exception {
+    public void testCrearLote()  {
         LoteDTO lote = new LoteDTO(10, 500.00, "N/A", "nuevo");
         this.gestor.crearLote(lote);
         assertEquals(fake.getLote().getIdentificacion(), 10);
         assertEquals(fake.getLote().getSuperficie(), 500.00);
     }
     @Test
-    public void testReservarLote() throws Exception {
+    public void testReservarLote()  {
         LoteDTO lote= fake.buscarLotePorID(7); // lote id 7 disponible
         this.gestor.ReservarLote(lote);
         assertEquals(fake.getLote().getEstado(), Lote.RESERVADO);
     }
     @Test
-    public void testCancelarReservaLote()throws Exception{
+    public void testCancelarReservaLote(){
         LoteDTO lote= fake.buscarLotePorID(4); // lote id 4 reservado
         this.gestor.cancelarReserva(lote);
         assertEquals(fake.getLote().getEstado(), Lote.DISPONIBLE);
     }
     @Test
-    public void testVenderLote()throws Exception{
+    public void testVenderLote(){
         LoteDTO lote= fake.buscarLotePorID(4); // lote id 4 reservado
         this.gestor.VenderLote(lote, 500.0);
         assertEquals(fake.getLote().getEstado(), Lote.VENDIDO);
     }
     @Test
-    public void testListarDisponibles() throws Exception {
+    public void testListarDisponibles()  {
         assertEquals(3, this.gestor.LotesDisponibles().size());
     }
 
     @Test
-    public void testListarReservados() throws Exception {
+    public void testListarReservados()  {
         assertEquals(3, this.gestor.LotesReservados().size());
     }
     @Test
-    public void testListarLotesVendidos() throws Exception {
+    public void testListarLotesVendidos()  {
         assertEquals(3, this.gestor.LotesVendidos().size());
     }
     @Test
-    public void testListarLotesDeParqueNuevo() throws Exception {
+    public void testListarLotesDeParqueNuevo()  {
         assertEquals(6, this.gestor.LotesDeParqueNuevo().size());
     }
     @Test
-    public void testListarLotesDeParqueViejo() throws Exception {
+    public void testListarLotesDeParqueViejo()  {
         assertEquals(3, this.gestor.LotesDeParqueViejo().size());
     }
 
