@@ -1,6 +1,7 @@
 package com.parque_industrial.services;
 
 import com.parque_industrial.dto.auth.LoginRequest;
+import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.RegisterRequest;
 import com.parque_industrial.entities.Empresa;
 import com.parque_industrial.entities.Rol;
@@ -21,8 +22,19 @@ public class AuthService {
         this.empresaDAO = empresaDAO;
     }
 
-    public void login(LoginRequest request) {
-        // TODO: implementar autenticación
+    public LoginResponse login(LoginRequest request) {
+        LoginResponse response;
+        try {
+            response = usuarioDAO.buscarLoginPorNombreUsuario(request.nombreUsuario());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Usuario o contraseña incorrectos");
+        }
+
+        if (!response.contrasena().equals(request.password())) {
+            throw new IllegalArgumentException("Usuario o contraseña incorrectos");
+        }
+
+        return response;
     }
 
     @Transactional

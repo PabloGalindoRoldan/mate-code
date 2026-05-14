@@ -1,5 +1,7 @@
 package com.parque_industrial.controllers;
 
+import com.parque_industrial.dto.auth.LoginRequest;
+import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.RegisterRequest;
 import com.parque_industrial.services.AuthService;
 
@@ -20,10 +22,10 @@ public class LoginController {
         this.authService = authService;
     }
 
-    // @PostMapping("/iniciarSesion")
-    // public login(@RequestBody LoginRequest request) { //el request
-    // return authService.login(request);
-    // }
+    @PostMapping("/iniciarSesion")
+    public LoginResponse login(@RequestBody LoginRequest request) { //el request
+        return authService.login(request);
+    }
 
     /*
      * Esto le llegaria algo como:

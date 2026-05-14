@@ -1,4 +1,4 @@
 package com.parque_industrial.dto.auth;
 
-public class LoginRequest {
+public record LoginRequest (String nombreUsuario, String password) {
 }
