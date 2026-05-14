@@ -32,7 +32,7 @@ public class LoteJDBCTest {
     @Test
     @Transactional // Esto asegura que la prueba se ejecute en una transacción y se haga rollback al final
     public void testCrearLote() throws Exception {
-        Lote lote = new Lote(10, 200.0);
+        Lote lote = new Lote(10, 200.0,"N/A", "nuevo");
         jdbc.crearLote(lote);
         assertEquals(lote.getIdentificacion() , jdbc.buscarLotePorID(10).identificacion());
     }
