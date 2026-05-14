@@ -5,14 +5,17 @@ import com.parque_industrial.persistence.dtos.LoteDTO;
 import java.util.List;
 
 public interface DAOInmobiliario {
-    public void crearLote(Lote lote) throws Exception;
-    public void venderLote(Lote lote) throws Exception;
-    public void reservarLote(Lote lote) throws Exception;
-    public LoteDTO buscarLotePorID(int identificacion) throws Exception;
-    public void cancelarReserva(Lote lote) throws Exception;
-    public List<LoteDTO> LotesDisponibles() throws Exception;
-    public List<LoteDTO> LotesVendidos() throws Exception;
-    public List<LoteDTO> LotesReservados() throws Exception;
+    public void crearLote(Lote lote) ;
+    public void venderLote(Lote lote);
+    public void reservarLote(Lote lote);
+    public LoteDTO buscarLotePorID(int identificacion) ;
+    public void cancelarReserva(Lote lote) ;
+    public List<LoteDTO> LotesDisponibles();
+    public List<LoteDTO> LotesVendidos() ;
+    public List<LoteDTO> LotesReservados() ;
+    public List<LoteDTO> LotesNuevos();
+    public List<LoteDTO> LotesViejos();
+
 }
 // la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
 
