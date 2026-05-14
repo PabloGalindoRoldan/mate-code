@@ -19,8 +19,6 @@ public class GlobalExceptionHandler {
                         400
                 );
 
-        return ResponseEntity
-                .badRequest()
-                .body(error);
+        return ResponseEntity.badRequest().body(error);
     }
 }
