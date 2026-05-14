@@ -96,8 +96,8 @@ export default function MapPanel() {
             <Map
                 ref={mapRef}
                 initialViewState={{
-                    longitude: -62.964,
-                    latitude: -40.840,
+                    longitude: -62.966,
+                    latitude: -40.838,
                     zoom: 15.4,
                     pitch: 45
                 }}
