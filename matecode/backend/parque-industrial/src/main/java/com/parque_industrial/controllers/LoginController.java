@@ -5,6 +5,8 @@ import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.RegisterRequest;
 import com.parque_industrial.services.AuthService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController // esta clase va a recibir requests HTTP y devolver respuestas HTTP
 // esto permite q spring la registre, escuche endopoints, etc
 
-@RequestMapping("/login") // ruta base
+@RequestMapping("/auth") // ruta base
 public class LoginController {
 
     private final AuthService authService;
@@ -22,9 +24,15 @@ public class LoginController {
         this.authService = authService;
     }
 
-    @PostMapping("/iniciarSesion")
-    public LoginResponse login(@RequestBody LoginRequest request) { //el request
-        return authService.login(request);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        try {
+            LoginResponse response = authService.login(request);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            // Returns 401 Unauthorized
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 
     /*
@@ -34,9 +42,14 @@ public class LoginController {
      * deberia devolver algo?
      */
 
-    @PostMapping("/registrarse") // si llega un POST a /register, este metodo se ejecuta
-    public void registerRepresenteEmpresa(@RequestBody RegisterRequest request) {
-        authService.registerRepresenteEmpresa(request);
+    @PostMapping("/register")
+    public ResponseEntity<String> registerRepresentanteEmpresa(@RequestBody RegisterRequest request) {
+        try {
+            authService.registerRepresenteEmpresa(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito"); // 201 Created
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
+        }
     }
 
     // @PostMapping("/registrarse") //si llega un POST a /register, este metodo se
