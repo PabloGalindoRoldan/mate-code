@@ -4,7 +4,26 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     color: var(--gris1);
-    gap: 80px;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.adminTitle {
+    padding: 2rem;
+}
+
+.botonAtras {
+    width: 5vw;
+    padding: 0.5rem;
+    background-color: var(--verde3);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
