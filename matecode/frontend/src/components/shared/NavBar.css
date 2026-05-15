@@ -73,3 +73,35 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
+
+/* Container for the logged-in elements */
+.navUserSection {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Spaces out the avatar badge and the logout button */
+}
+
+/* The circular initials avatar badge */
+.userAvatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--gris2);
+    /* Nice professional blue base, change as preferred */
+    color: var(--verde1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    user-select: none;
+}
+
+/* Hover effects for the avatar badge link */
+.userAvatar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
