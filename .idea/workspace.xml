@@ -5,66 +5,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="ns">
-      <change afterPath="$PROJECT_DIR$/matecode/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/AdminSistemaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/EmpresaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/ProyectoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/UsuarioController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/explicacion.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/usuario/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/JdbcUsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/UsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/persistence/TestConexion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/assets/data/parqueIndustrialMap.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/EmpresaRadicadaBody.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/EmpresaRadicadaBody.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/InfoPanel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/InfoPanel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapMenu.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapMenu.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapPanel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapPanel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuEmpresa.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuEmpresa.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuParque.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuParque.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/ParqueBody.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/ParqueBody.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/StatisticsPanel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/StatisticsPanel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/AdministradorParqueView.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/AdministradorParqueView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/EmpresaRadicadaView.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/EmpresaRadicadaView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/declarations.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/tmp/empresaInfo.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/.idea/matecode.iml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/.idea/matecode.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/assets/LogoMateCode.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/assets/MateCode.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/components/shared/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/NavBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Consumos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/dtos/ConsumosDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/ConsumosJDBC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/EmpresaJDBC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/ConsumosDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorConsumos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/DAOEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/DAOEmpresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorEmpresa.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotChats">
+    <option name="panelChat">
+      <chat>
+        <option name="activeSessionId" value="0e31c9bd-f4a0-4616-906f-7e9533ef012e" />
+        <option name="sessions">
+          <session>
+            <option name="chatType" value="PANEL" />
+            <option name="id" value="348c1ab4-2b03-4cbe-a8b1-dcc6acda232a" />
+            <option name="modeId" value="Ask" />
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+            <option name="status" value="Completed" />
+            <option name="targetType" value="LOCAL" />
+          </session>
+          <session>
+            <option name="chatType" value="PANEL" />
+            <option name="id" value="0e31c9bd-f4a0-4616-906f-7e9533ef012e" />
+            <option name="modeId" value="Ask" />
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+            <option name="targetType" value="LOCAL" />
+          </session>
+        </option>
+        <option name="type" value="PANEL" />
+      </chat>
+    </option>
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/augus_r4ret8/IdeaProjects/mate-code" value="3DVUOaXGMdepGADYYngEDNqbGJo" />
+    </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="agent-panel" value="Auto" />
+      <entry key="chat-panel" value="Auto" />
+    </selectedModels>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -96,6 +93,20 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="3DVUOaXGMdepGADYYngEDNqbGJo" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="Ask" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="LOCAL" />
+      </template>
+    </option>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -125,7 +136,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging nro23-AdministracionDeLotes",
+    "git-widget-placeholder": "nro102-GenerarReporteEmpresa",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/augus_r4ret8/IdeaProjects/mate-code",
     "project.structure.last.edited": "Modules",
@@ -139,6 +150,9 @@
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial" />
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\main\java" />
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\test" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.parque_industrial.services" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.LoteTest">
@@ -265,9 +279,28 @@
     <option name="localTasksCounter" value="3" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="loteTest listo, se testeo la clase lote" />
     <MESSAGE value="ns" />
     <option name="LAST_COMMIT_MESSAGE" value="ns" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
