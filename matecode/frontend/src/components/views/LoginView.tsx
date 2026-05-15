@@ -28,7 +28,28 @@ export default function LoginView() {
         setIsSubmitting(false);
 
         if (result.success) {
-            navigate('/empresa-radicada');
+            // Since context stored it in sessionStorage, we read it to grab the role instantly
+            const storedUserRaw = sessionStorage.getItem('user');
+            if (storedUserRaw) {
+                const userDetails = JSON.parse(storedUserRaw);
+                // Route dynamically depending on the user's role
+                switch (userDetails.rol) {
+                    case 'ADMINISTRADOR_SISTEMA':
+                        navigate('/admin');
+                        break;
+                    case 'ADMINISTRADOR_PARQUE':
+                        navigate('/parque');
+                        break;
+                    case 'REPRESENTANTE_EMPRESA':
+                        navigate('/empresa-radicada');
+                        break;
+                    default:
+                        navigate('/'); // Global fallback
+                        break;
+                }
+            } else {
+                navigate('/');
+            }
         } else {
             setErrorMsg(result.message || 'Ocurrió un error inesperado.');
         }
@@ -56,7 +77,7 @@ export default function LoginView() {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            disabled={isSubmitting} // Good practice to disable during fetch
+                            disabled={isSubmitting}
                         />
                     </div>
                     <button type="submit" disabled={isSubmitting}>
