@@ -75,4 +75,18 @@ public class AuthService {
                 empresa);
         usuarioDAO.guardar(usuario);
     }
+
+    public void registerAdministradorParque(RegisterRequest request) {
+
+        Usuario usuario = new Usuario(
+                request.nombre(),
+                request.apellido(),
+                request.email(),
+                request.nombreUsuario(),
+                request.cuitUsuario(),
+                Rol.ADMINISTRADOR_PARQUE,
+                request.password());
+        usuarioDAO.guardar(usuario);
+    }
+
 }
