@@ -13,6 +13,7 @@ import AdministradorParqueView from './components/views/AdministradorParqueView'
 function App() {
 
   return (
+
     <BrowserRouter basename="/mate-code">
       <Routes>
         <Route path="/" element={<Landing />} />

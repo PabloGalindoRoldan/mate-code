@@ -85,7 +85,7 @@ export default function RegisterView() {
         setIsLoading(true);
         try {
             // Note: Strip CUIT hyphens here if your backend requires only numbers
-            const response = await api.post('/login/registrarse', formData);
+            const response = await api.post('/auth/register', formData);
             if (response.status === 200 || response.status === 201) {
                 setIsSubmitted(true);
             }

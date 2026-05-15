@@ -72,6 +72,18 @@
     background-color: var(--gris2);
 }
 
+.form-error-message {
+    color: #d93025;
+    background-color: #fce8e6;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #fdada2;
+    width: 100%;
+}
+
 @media (max-width: 768px) {
     .loginForm {
         width: 80vw;
