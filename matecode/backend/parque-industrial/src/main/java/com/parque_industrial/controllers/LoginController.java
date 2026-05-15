@@ -52,13 +52,12 @@ public class LoginController {
         }
     }
 
-    // @PostMapping("/registrarse") //si llega un POST a /register, este metodo se
-    // ejecuta
-    // public void registerAdministradorParque(@RequestBody RegisterRequest request)
-    // {
-    // authService.registerAdministradorParque(request);
-    // }
-    //
+     @PostMapping("/registerAdminParque")
+     public void registerAdministradorParque(@RequestBody RegisterRequest request)
+     {
+     authService.registerAdministradorParque(request);
+     }
+
     // public void registerAdministradorSistema(@RequestBody RegisterRequest
     // request) {
     // authService.registerAdministradorSistema(request);
