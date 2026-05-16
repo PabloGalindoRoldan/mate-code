@@ -4,58 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="ns">
-      <change afterPath="$PROJECT_DIR$/matecode/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/AdminSistemaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/EmpresaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/ProyectoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/UsuarioController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/explicacion.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/usuario/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/JdbcUsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/UsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/persistence/TestConexion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/assets/data/parqueIndustrialMap.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/EmpresaRadicadaBody.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/EmpresaRadicadaBody.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/InfoPanel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/InfoPanel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapMenu.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapMenu.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapPanel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapPanel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MapProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuEmpresa.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuEmpresa.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuParque.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/MenuParque.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/ParqueBody.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/ParqueBody.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/StatisticsPanel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/StatisticsPanel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/AdministradorParqueView.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/AdministradorParqueView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/EmpresaRadicadaView.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/components/views/EmpresaRadicadaView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/src/declarations.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/frontend/tmp/empresaInfo.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/.idea/matecode.iml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/.idea/matecode.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/assets/LogoMateCode.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/assets/MateCode.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/components/shared/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/components/shared/NavBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/tsconfig.json" afterDir="false" />
+    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="inverti las dependencias y corregi la estructura">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +20,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -100,40 +55,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor": "Run",
-    "JUnit.GestorInmobiliarioTest.testCrearLote.executor": "Run",
-    "JUnit.GestorInmobiliarioTest.testReservarLote.executor": "Run",
-    "JUnit.GestorInmobiliarioTest.testReservarLoteReservado.executor": "Run",
-    "JUnit.GestorInmobiliarioTest.testReservarLoteVendido.executor": "Run",
-    "JUnit.GestorInmobiliarioTest.testVenderLote.executor": "Run",
-    "JUnit.GestorInmobiliarioTest.testVenderLoteVendido.executor": "Run",
-    "JUnit.LoteTest.executor": "Run",
-    "JUnit.LoteTest.testCancelarReservaLoteDisponibleLanzaExcepcion.executor": "Run",
-    "JUnit.LoteTest.testCancelarReservaLoteReservado.executor": "Run",
-    "JUnit.LoteTest.testCancelarReservaLoteVendidoLanzaExcepcion.executor": "Run",
-    "JUnit.LoteTest.testMontoVentaNegativoLanzaExcepcion.executor": "Run",
-    "JUnit.LoteTest.testNoSePuedeReservarLoteVendido.executor": "Run",
-    "JUnit.LoteTest.testReservarLoteDisponible.executor": "Run",
-    "JUnit.LoteTest.testReservarLoteReservado.executor": "Run",
-    "JUnit.LoteTest.testSuperficeNegativa.executor": "Run",
-    "JUnit.LoteTest.testVenderLoteDisponible.executor": "Run",
-    "JUnit.LoteTest.testVenderLoteReservado.executor": "Run",
-    "JUnit.LoteTest.testVenderLoteVendido.executor": "Run",
-    "JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging nro23-AdministracionDeLotes",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/augus_r4ret8/IdeaProjects/mate-code",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.25136238",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GestorInmobiliarioTest.testCrearLote.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GestorInmobiliarioTest.testReservarLote.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GestorInmobiliarioTest.testReservarLoteReservado.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GestorInmobiliarioTest.testReservarLoteVendido.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GestorInmobiliarioTest.testVenderLote.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GestorInmobiliarioTest.testVenderLoteVendido.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testCancelarReservaLoteDisponibleLanzaExcepcion.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testCancelarReservaLoteReservado.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testCancelarReservaLoteVendidoLanzaExcepcion.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testMontoVentaNegativoLanzaExcepcion.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testNoSePuedeReservarLoteVendido.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testReservarLoteDisponible.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testReservarLoteReservado.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testSuperficeNegativa.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testVenderLoteDisponible.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testVenderLoteReservado.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testVenderLoteVendido.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ParqueIndustrialApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nro90-invertirDependenciasProyectos&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/augus_r4ret8/IdeaProjects/mate-code&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.25136238&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial" />
@@ -141,23 +97,7 @@
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\test" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LoteTest">
-    <configuration name="GestorInmobiliarioTest.testCancelarReservaLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="parque-industrial" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.parque_industrial.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
-      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
-      <option name="METHOD_NAME" value="testCancelarReservaLote" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Spring Boot.ParqueIndustrialApplication">
     <configuration name="GestorInmobiliarioTest.testCrearLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parque-industrial" />
       <extension name="coverage">
@@ -221,13 +161,39 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ParqueIndustrialApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="DB_PASSWORD" value="VaZCZynLpJuEMobJGXKBKcziBBeZFzwS" />
+        <env name="DB_URL" value="jdbc:mysql://viaduct.proxy.rlwy.net:33128/railway" />
+        <env name="DB_USERNAME" value="root" />
+      </envs>
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="parque-industrial" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.parque_industrial.ParqueIndustrialApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
+      <item itemvalue="JUnit.GestorInmobiliarioTest.testVenderLote" />
+      <item itemvalue="JUnit.LoteTest" />
+      <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
+      <item itemvalue="Spring Boot.ParqueIndustrialApplication" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ParqueIndustrialApplication" />
         <item itemvalue="JUnit.LoteTest" />
         <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
         <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
         <item itemvalue="JUnit.GestorInmobiliarioTest.testVenderLote" />
-        <item itemvalue="JUnit.GestorInmobiliarioTest.testCancelarReservaLote" />
       </list>
     </recent_temporary>
   </component>
@@ -262,12 +228,21 @@
       <option name="project" value="LOCAL" />
       <updated>1778531159924</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="inverti las dependencias y corregi la estructura">
+      <option name="closed" value="true" />
+      <created>1778692974258</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1778692974258</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="loteTest listo, se testeo la clase lote" />
     <MESSAGE value="ns" />
-    <option name="LAST_COMMIT_MESSAGE" value="ns" />
+    <MESSAGE value="inverti las dependencias y corregi la estructura" />
+    <option name="LAST_COMMIT_MESSAGE" value="inverti las dependencias y corregi la estructura" />
   </component>
 </project>
