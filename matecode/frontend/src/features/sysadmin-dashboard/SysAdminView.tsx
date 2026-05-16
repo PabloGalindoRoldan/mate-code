@@ -1,6 +1,6 @@
-import Footer from '../shared/Footer';
-import NavBar from '../shared/NavBar';
-import SysAdminBody from '../shared/SysAdminBody';
+import Footer from '../../ui/footer/Footer';
+import NavBar from '../../ui/navBar/NavBar';
+import SysAdminBody from './SysAdminBody';
 
 export default function SysAdminView() {
     return (

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../context/AuthContext';
-import Footer from '../shared/Footer';
-import NavBar from '../shared/NavBar';
+import Footer from '../../ui/footer/Footer';
+import NavBar from '../../ui/navBar/NavBar';
 import './LoginView.css';
 
 export default function LoginView() {

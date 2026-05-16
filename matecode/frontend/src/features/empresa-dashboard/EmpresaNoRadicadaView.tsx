@@ -1,6 +1,6 @@
 import "./EmpresaNoRadicadaView.css";
-import NavBar from "../shared/NavBar";
-import Footer from "../shared/Footer";
+import NavBar from "../../ui/navBar/NavBar";
+import Footer from "../../ui/footer/Footer";
 
 export default function EmpresaNoRadicadaView() {
     return (

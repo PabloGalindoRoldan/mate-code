@@ -1,6 +1,6 @@
 import './SysAdminBody.css';
 import { useState } from 'react';
-import RegisterAdminView from '../views/RegisterAdminView';
+import RegisterAdminView from './RegisterAdminView';
 import { ChevronLeft } from "lucide-react";
 
 export default function SysAdminBody() {

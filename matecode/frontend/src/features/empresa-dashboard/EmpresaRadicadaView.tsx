@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Settings, ChevronLeft } from "lucide-react";
-import EmpresaRadicadaBody from "../shared/EmpresaRadicadaBody";
-import Footer from "../shared/Footer";
-import NavBar from "../shared/NavBar";
-import MenuEmpresa from "../shared/MenuEmpresa";
+import EmpresaRadicadaBody from "./EmpresaRadicadaBody";
+import Footer from "../../ui/footer/Footer";
+import NavBar from "../../ui/navBar/NavBar";
+import MenuEmpresa from "./MenuEmpresa";
 import "./EmpresaRadicadaView.css";
 import data from "../../../tmp/empresaInfo.json";
 
