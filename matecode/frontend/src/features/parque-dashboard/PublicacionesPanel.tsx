@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Trash2, Calendar, Image, FileText } from "lucide-react";
-import initialData from "../../../tmp/publicaciones.json";
+import API from '../../api/axios';
 import "./PublicacionesPanel.css";
 
 interface Publicacion {
@@ -13,8 +13,9 @@ interface Publicacion {
 }
 
 export default function PublicacionesPanel() {
-    const [publicaciones, setPublicaciones] = useState<Publicacion[]>(initialData.publicaciones);
+    const [publicaciones, setPublicaciones] = useState<Publicacion[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     // Form States
     const [titulo, setTitulo] = useState("");
@@ -22,6 +23,21 @@ export default function PublicacionesPanel() {
     const [alt, setAlt] = useState("");
     const [contenido, setContenido] = useState("");
     const [error, setError] = useState("");
+
+    const fetchPublicaciones = async () => {
+        try {
+            const res = await API.get<Publicacion[]>('/api/publicaciones');
+            setPublicaciones(res.data);
+        } catch (err) {
+            console.error("Error fetching data:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchPublicaciones();
+    }, []);
 
     const handleOpenForm = () => {
         setIsFormOpen(true);
@@ -36,37 +52,57 @@ export default function PublicacionesPanel() {
         setContenido("");
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!titulo.trim() || !contenido.trim()) {
             setError("El título y el contenido son obligatorios.");
             return;
         }
 
-        const nuevaPublicacion: Publicacion = {
-            id: Date.now(),
+        const payload = {
             titulo: titulo.trim(),
             imagen: imagen.trim() || "https://images.pexels.com/photos/257700/pexels-photo-257700.jpeg",
             alt: alt.trim() || `Imagen de ${titulo}`,
-            contenido: contenido.trim(),
-            fechaCreacion: new Date().toLocaleDateString("es-AR")
+            contenido: contenido.trim()
         };
 
-        setPublicaciones([nuevaPublicacion, ...publicaciones]);
-        handleCloseForm();
-    };
-
-    const handleDelete = (id: number) => {
-        if (window.confirm("¿Estás seguro de que deseas eliminar esta publicación?")) {
-            setPublicaciones(publicaciones.filter(pub => pub.id !== id));
+        try {
+            // Interceptor handles the sessionStorage token implicitly here
+            const res = await API.post<Publicacion>('/api/publicaciones', payload);
+            setPublicaciones([res.data, ...publicaciones]);
+            handleCloseForm();
+        } catch (err: any) {
+            // Fallback checking for custom backend error structure or standard status message
+            const serverMsg = err.response?.data?.message || "No se pudo guardar la publicación. Verifica permisos.";
+            setError(serverMsg);
         }
     };
+
+    const handleDelete = async (id: number) => {
+        if (!window.confirm("¿Estás seguro de que deseas eliminar esta publicación?")) return;
+
+        try {
+            await API.delete(`/api/publicaciones/${id}`);
+            setPublicaciones(publicaciones.filter(pub => pub.id !== id));
+        } catch (err) {
+            alert("Error al intentar eliminar la publicación. Verifica tus credenciales.");
+        }
+    };
+
+    const formatFecha = (fechaStr?: any) => {
+        if (!fechaStr) return "Reciente";
+        if (Array.isArray(fechaStr)) {
+            return `${fechaStr[2]}/${fechaStr[1]}/${fechaStr[0]}`;
+        }
+        return new Date(fechaStr).toLocaleDateString("es-AR");
+    };
+
+    if (loading) return <div style={{ padding: "20px" }}>Cargando panel de gestión...</div>;
 
     return (
         <div className="publicacionesPanel">
             {!isFormOpen ? (
                 <>
-                    {/* DASHBOARD HISTORY VIEW */}
                     <div className="panelHeader">
                         <div>
                             <h2>Gestión de Publicaciones</h2>
@@ -101,7 +137,7 @@ export default function PublicacionesPanel() {
                                             <td className="pubTruncatedCell">{pub.contenido}</td>
                                             <td className="pubDateCell">
                                                 <div className="dateBadge">
-                                                    <Calendar size={14} /> {pub.fechaCreacion || "15/05/2026"}
+                                                    <Calendar size={14} /> {formatFecha(pub.fechaCreacion)}
                                                 </div>
                                             </td>
                                             <td className="pubActionsCell">
@@ -121,7 +157,6 @@ export default function PublicacionesPanel() {
                     </div>
                 </>
             ) : (
-                /* CREATION FORM VIEW */
                 <div className="formViewContainer">
                     <div className="formHeader">
                         <h3>Crear Nuevo Comunicado</h3>
