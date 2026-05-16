@@ -27,6 +27,24 @@ public class Usuario {
         this.rol = rol;
         this.empresa = empresa;
     }
+    public Usuario(String nombre, String apellido, String email, String nombreUsuario,
+                   String cuit, Rol rol, String contraseña) {
+        validar(nombre);
+        validar(apellido);
+        validarEmail(email);
+        validarUsuario(nombreUsuario);
+        validarContraseña(contraseña);
+        validarCuit(cuit);
+
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.nombreUsuario = nombreUsuario;
+        this.contraseña = contraseña;
+        this.cuit = cuit;
+        this.rol = rol;
+        this.empresa = null;
+    }
 
 
     private void validar(String texto) { // Renombrado a 'texto' para ser más genérico

@@ -1,0 +1,43 @@
+.loginContainer {
+    padding: 2rem;
+}
+
+.botonera {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botonBotonera {
+    background-color: var(--verde3);
+    border: none;
+    color: white;
+    padding: 0.55rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+    min-width: 8rem;
+}
+
+.botonBotonera:hover {
+    background-color: var(--verde2);
+}
+
+.error-text {
+    color: #de9494c0;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: block;
+    font-weight: 500;
+}
+
+.input-error {
+    border: 2px solid var(--gris1) !important;
+    background-color: #f7f7f7c0;
+}
+
+.successCard {
+    text-align: center;
+    padding: 2rem;
+}

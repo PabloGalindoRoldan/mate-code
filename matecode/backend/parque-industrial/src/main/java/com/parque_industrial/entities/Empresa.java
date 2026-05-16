@@ -8,7 +8,6 @@ public class Empresa {
     private String identificacion; // era un cuit no? al igual que el representante empresa
     private String actividadPrincipal;
     private boolean esRadicada;
-    private List<Usuario> representantes;//una empresa puede tener varios representantes
     private List<Lote> lote; // una empresa creo q podia tener mas de un lote o ninguno, por eso puse un list, si no es asi cambiarlo
     private Proyecto proyecto;//una emprsa puedo
 
@@ -18,7 +17,6 @@ public class Empresa {
         this.identificacion = identificacion;
         this.actividadPrincipal = actividadPrincipal;
         this.esRadicada = esRadicada;
-        this.representantes = new ArrayList<>();
     }
     private void validarActividad(String actividadPrincipal) {
         if(actividadPrincipal == null || actividadPrincipal.isBlank()){
@@ -38,15 +36,8 @@ public class Empresa {
         this.lote.add(lote);
     }
 
-    public void agregarRepresentante(Usuario representante){
-        this.representantes.add(representante);
-    }
     public void crearProyecto(Proyecto proyecto){
         this.proyecto = proyecto;
-    }
-
-    public Collection<Usuario> getRepresentantes() {
-        return representantes;
     }
 
     public String getIdentificacion() {

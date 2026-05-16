@@ -1,6 +1,8 @@
 package com.parque_industrial.persistence.empresa;
 
 import com.parque_industrial.entities.Empresa;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,10 +21,14 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
                 INSERT INTO empresas (cuit, razon_social, es_radicada)
                 VALUES (?, ?, ?)
                 """;
+        try{
         jdbcTemplate.update(sql,
                 empresa.getIdentificacion(),
                 empresa.getActividadPrincipal(),
                 empresa.isEsRadicada()
         );
+        } catch (DataAccessException e) {
+            throw new IllegalArgumentException(e.getRootCause().getMessage());
+        }
     }
 }
