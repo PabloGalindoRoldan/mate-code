@@ -34,7 +34,10 @@ public class SecurityConfig {
                 // 3. Configure route protections
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/auth/**").permitAll() // Login & Register are free
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/auth/registerAdminParque").hasRole("ADMINISTRADOR_PARQUE") // Login & Register are free
+                        .requestMatchers("/auth/registerExtraRepresentanteEmpresa").hasRole("REPRESENTANTE_EMPRESA")
                         .anyRequest().authenticated()) // All other endpoints require a token
 
                 // 4. Kill default interactive login prompts

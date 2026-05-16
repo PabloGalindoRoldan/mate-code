@@ -56,12 +56,24 @@ public class LoginController {
      public ResponseEntity<String> registerAdministradorParque(@RequestBody RegisterRequest request)
      {
          try {
-     authService.registerAdministradorParque(request);
+     authService.registerAdministradorParque(request); //Razon social y cuitEmpresa son null
              return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito"); // 201 Created
          } catch (IllegalArgumentException e) {
              return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
          }
      }
+
+
+    @PostMapping("/registerExtraRepresentanteEmpresa")
+    public ResponseEntity<String> registerUsuarioEmpresaExistente(@RequestBody RegisterRequest request)
+    {
+        try {
+            authService.registerUsuarioEmpresaExistente(request); //cuitEmpresa son null
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito"); // 201 Created
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
+        }
+    }
 
     // public void registerAdministradorSistema(@RequestBody RegisterRequest
     // request) {

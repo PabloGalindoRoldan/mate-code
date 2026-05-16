@@ -31,4 +31,23 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
             throw new IllegalArgumentException(e.getRootCause().getMessage());
         }
     }
+
+
+    public boolean existeEmpresa(String cuit) {
+        String sql = "SELECT COUNT(*) FROM empresas WHERE cuit = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, cuit);
+        return count != null && count == 1;
+    }
+
+//    public Empresa buscarEmpresaPorCuit(String cuit) {
+//        String sql = "SELECT * from empresas WHERE cuit = ?";
+//        Empresa empresa = null;
+//        try {
+//            empresa = jdbcTemplate.queryForObject(sql, new EmpresaRowMapper(), cuit);
+//        } catch (DataAccessException e) {
+//            throw new IllegalArgumentException("Empresa no encontrada");
+//        }
+//        return empresa;
+//    }
+
 }
