@@ -20,7 +20,7 @@ public class ConsumosJDBC implements ConsumosDAO {
     }
 // Consumos:{id(PK)(AUTO), mes, año, luz, gas, agua, residuos, cant_empleados, cant_vehiculos, cuit_empresa(FK)}
     @Override
-    public void cargarConsumosDeEmpresa(int cuitEmpresa, ConsumosDTO consumosDTO) {
+    public void cargarConsumosDeEmpresa(ConsumosDTO consumosDTO) {
         String sql = "insert into Consumos (año, mes, luz,  gas, agua, residuos, cant_empleados, cant_vehiculos, cuit_empresa) values (?, ?, ?, ?, ?, ?, ?, ?,?)";
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();

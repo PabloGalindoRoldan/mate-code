@@ -5,7 +5,7 @@ import com.parque_industrial.persistence.dtos.ConsumosDTO;
 import java.util.List;
 
 public interface ConsumosDAO {
-    public void cargarConsumosDeEmpresa(int cuitEmpresa,ConsumosDTO consumosDTO);
+    public void cargarConsumosDeEmpresa(ConsumosDTO consumosDTO);
 
     public void asignarCantVheiculos(int cuitEmoresa, int cant);
     public void asignarCantEmpleados(int cuitEmoresa, int cant);

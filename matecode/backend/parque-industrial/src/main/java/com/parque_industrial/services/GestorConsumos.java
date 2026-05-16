@@ -9,8 +9,8 @@ public class GestorConsumos {
     public GestorConsumos(ConsumosDAO dao) {
         this.dao = dao;
     }
-    public void crearConsumos(int cuit, ConsumosDTO consumosDTO) {
-        dao.cargarConsumosDeEmpresa(cuit, consumosDTO);
+    public void registrarConsumos(ConsumosDTO consumosDTO) {
+        dao.cargarConsumosDeEmpresa(consumosDTO);
     }
      public void asignarCantVheiculos(int cuitEmoresa, int cant) {
          if (cant < 0 ) {
