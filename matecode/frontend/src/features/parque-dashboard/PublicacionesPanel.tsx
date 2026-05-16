@@ -61,7 +61,7 @@ export default function PublicacionesPanel() {
 
         const payload = {
             titulo: titulo.trim(),
-            imagen: imagen.trim() || "https://images.pexels.com/photos/257700/pexels-photo-257700.jpeg",
+            imagen: imagen?.trim() || "https://images.pexels.com/photos/29207335/pexels-photo-29207335.jpeg",
             alt: alt.trim() || `Imagen de ${titulo}`,
             contenido: contenido.trim()
         };

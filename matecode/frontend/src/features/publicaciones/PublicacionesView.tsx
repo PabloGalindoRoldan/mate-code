@@ -35,7 +35,7 @@ export default function PublicacionesView() {
                     {publicaciones.length === 0 ? (
                         <p>No hay novedades disponibles en este momento.</p>
                     ) : (
-                        publicaciones.map((pub) => (
+                        publicaciones.slice(0, 6).map((pub) => (
                             <PublicacionesTarjeta className="PublicacionTarjeta" key={pub.id} {...pub} />
                         ))
                     )}
