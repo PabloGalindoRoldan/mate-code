@@ -34,8 +34,14 @@ public class SecurityConfig {
                 // 3. Configure route protections
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/auth/**").permitAll() // Login & Register are free
-                        .anyRequest().authenticated()) // All other endpoints require a token
+                        .requestMatchers("/auth/**").permitAll() // Login y Registro públicos
+
+                        // Permite que cualquiera (sin token) vea las publicaciones en la Landing
+                        .requestMatchers(HttpMethod.GET, "/api/publicaciones/**").permitAll()
+
+                        // Cualquier otra acción (como POST /api/publicaciones o DELETE) requerirá estar
+                        // autenticado
+                        .anyRequest().authenticated())
 
                 // 4. Kill default interactive login prompts
                 .formLogin(AbstractHttpConfigurer::disable)

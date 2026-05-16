@@ -52,16 +52,15 @@ public class LoginController {
         }
     }
 
-     @PostMapping("/registerAdminParque")
-     public ResponseEntity<String> registerAdministradorParque(@RequestBody RegisterRequest request)
-     {
-         try {
-     authService.registerAdministradorParque(request);
-             return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito"); // 201 Created
-         } catch (IllegalArgumentException e) {
-             return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
-         }
-     }
+    @PostMapping("/registerAdminParque")
+    public ResponseEntity<String> registerAdministradorParque(@RequestBody RegisterRequest request) {
+        try {
+            authService.registerAdministradorParque(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito"); // 201 Created
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
+        }
+    }
 
     // public void registerAdministradorSistema(@RequestBody RegisterRequest
     // request) {
