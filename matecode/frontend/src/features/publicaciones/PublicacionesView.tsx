@@ -1,7 +1,7 @@
 import React from 'react';
 import PublicacionesTarjeta from './PublicacionesTarjeta';
 import './PublicacionesView.css';
-import data from '../../../../frontend/tmp/publicaciones.json';
+import data from '../../../tmp/publicaciones.json';
 
 interface Publicacion {
     id: number;

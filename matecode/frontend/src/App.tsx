@@ -1,14 +1,14 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router';
-import Landing from './components/views/Landing';
-import SysAdminView from './components/views/SysAdminView';
-import LoginView from './components/views/LoginView';
-import RegisterView from './components/views/RegisterView';
-import ContactoView from './components/views/ContactoView';
-import EmpresaNoRadicadaView from './components/views/EmpresaNoRadicadaView';
-import EmpresaRadicadaView from './components/views/EmpresaRadicadaView';
-import AdministradorParqueView from './components/views/AdministradorParqueView';
-import ProtectedRoute from './components/shared/ProtectedRoute'; // <-- Import the wrapper
+import Landing from './features/landing/Landing';
+import SysAdminView from './features/sysadmin-dashboard/SysAdminView';
+import LoginView from './features/auth/LoginView';
+import RegisterView from './features/auth/RegisterView';
+import ContactoView from './features/landing/ContactoView';
+import EmpresaNoRadicadaView from './features/empresa-dashboard/EmpresaNoRadicadaView';
+import EmpresaRadicadaView from './features/empresa-dashboard/EmpresaRadicadaView';
+import AdministradorParqueView from './features/parque-dashboard/AdministradorParqueView';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
   return (

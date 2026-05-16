@@ -1,13 +1,13 @@
-import NavBar from "../shared/NavBar";
-import Footer from "../shared/Footer";
-import ParqueBody from "../shared/ParqueBody"
-import MenuParque from "../shared/MenuParque";
+import NavBar from "../../ui/navBar/NavBar";
+import Footer from "../../ui/footer/Footer";
+import ParqueBody from "./ParqueBody"
+import MenuParque from "./MenuParque";
 import { useState } from "react";
 import { Settings, ChevronLeft } from "lucide-react";
 import data from "../../../tmp/empresaInfo.json";
 import "./AdministradorParqueView.css";
-import "./EmpresaRadicadaView.css";
-import { MapProvider } from "../shared/MapProvider";
+import "../empresa-dashboard/EmpresaRadicadaView.css";
+import { MapProvider } from "./MapProvider";
 
 
 export default function AdministradorParqueView() {

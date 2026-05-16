@@ -6,8 +6,10 @@
     align-items: center;
     min-height: 100vh;
     width: 100%;
+    max-width: 100%;
     padding: 40px 20px;
     background-color: white;
+    box-sizing: border-box;
 }
 
 .publicacionesView>h2 {

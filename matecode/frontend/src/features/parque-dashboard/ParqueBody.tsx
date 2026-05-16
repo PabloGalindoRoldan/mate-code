@@ -1,5 +1,6 @@
 import MapPanel from "./MapPanel";
 import "./ParqueBody.css";
+import PublicacionesPanel from "./PublicacionesPanel";
 
 
 export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boolean, activeTab: string }) {
@@ -13,7 +14,7 @@ export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boole
                 {activeTab === "map" && <MapPanel />}
                 {activeTab === "messages" && <p>Mensajes - Esta sección está en construcción.</p>}
                 {activeTab === "companies" && <p>Empresas - Esta sección está en construcción.</p>}
-                {activeTab === "others" && <p>Otros - Esta sección está en construcción.</p>}
+                {activeTab === "publications" && <PublicacionesPanel />}
                 {activeTab === "reports" && <p>Reportes - Esta sección está en construcción.</p>}
                 {activeTab === "settings" && <p>Configuración - Esta sección está en construcción.</p>}
             </div>

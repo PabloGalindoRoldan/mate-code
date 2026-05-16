@@ -1,0 +1,270 @@
+.publicacionesPanel {
+    width: 100%;
+    background-color: transparent;
+    padding: 5rem 2rem;
+    box-sizing: border-box;
+    min-height: calc(100vh - 80px);
+}
+
+.panelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.panelHeader h2 {
+    font-size: 1.6rem;
+    color: var(--gris1, #1e293b);
+    margin: 0 0 4px 0;
+}
+
+.panelSubtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.btnNuevaPublicacion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #3b82f6;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btnNuevaPublicacion:hover {
+    background-color: #2563eb;
+}
+
+/* Data Table Grid Settings */
+.tableWrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e2e8f0;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.publicacionesTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.publicacionesTable th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.publicacionesTable td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.pubTitleCell {
+    width: 25%;
+}
+
+.pubTruncatedCell {
+    width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 320px;
+    /* Forces uniform ellipsis clip across lines */
+    color: #64748b;
+}
+
+.pubDateCell {
+    width: 15%;
+}
+
+.dateBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.pubActionsCell {
+    width: 10%;
+    text-align: center;
+}
+
+.actionsColumnHeader {
+    text-align: center;
+}
+
+.btnActionDelete {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btnActionDelete:hover {
+    color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.emptyTableMessage {
+    text-align: center;
+    color: #94a3b8;
+    padding: 40px !important;
+}
+
+/* Dashboard Input Form Layouts */
+.formViewContainer {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.formHeader {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 15px;
+}
+
+.formHeader h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.35rem;
+    color: #1e293b;
+}
+
+.formHeader p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.panelForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panelFormGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.panelFormGroup label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #334155;
+}
+
+.panelFormGroup input,
+.panelFormGroup textarea {
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #334155;
+    transition: border-color 0.15s ease;
+}
+
+.panelFormGroup input:focus,
+.panelFormGroup textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+.formRowGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.formErrorMessage {
+    background-color: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.formActionsBar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 20px;
+}
+
+.btnFormCancel {
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.btnFormCancel:hover {
+    background-color: #f8fafc;
+}
+
+.btnFormSubmit {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.btnFormSubmit:hover {
+    background-color: #16a34a;
+}
+
+/* Small Responsive Tweaks */
+@media (max-width: 640px) {
+    .formRowGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .panelHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}

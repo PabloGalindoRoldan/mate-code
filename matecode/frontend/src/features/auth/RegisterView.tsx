@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import NavBar from '../../ui/navBar/NavBar';
+import Footer from '../../ui/footer/Footer';
 import api from '../../api/axios';
-import Alert from '../shared/Alert';
+import Alert from '../../ui/alert/Alert';
 import './RegisterView.css';
 import { useNavigate } from 'react-router';
 
-export default function RegisterAdminView() {
+export default function RegisterView() {
     const [formData, setFormData] = useState({
         nombreUsuario: '', nombre: '', apellido: '', email: '',
-        cuitUsuario: '', password: '', confirmarPassword: ''
+        cuitUsuario: '', razonSocialEmpresa: '', cuitEmpresa: '',
+        password: '', confirmarPassword: ''
     });
 
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -42,11 +45,11 @@ export default function RegisterAdminView() {
         }
     };
 
-    //Validaciones
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
         let isValid = true;
 
+        // 1. Check for empty fields
         Object.keys(formData).forEach((key) => {
             const value = formData[key as keyof typeof formData];
             if (!value || value.trim() === '') {
@@ -55,12 +58,14 @@ export default function RegisterAdminView() {
             }
         });
 
+        // 2. Email Format Validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (formData.email && !emailRegex.test(formData.email)) {
             newErrors.email = "Formato de email no válido";
             isValid = false;
         }
 
+        // 3. Password Match Check
         if (formData.password !== formData.confirmarPassword) {
             setError("Las contraseñas no coinciden");
             isValid = false;
@@ -78,7 +83,8 @@ export default function RegisterAdminView() {
 
         setIsLoading(true);
         try {
-            const response = await api.post('/auth/registerAdminParque', formData);
+            // Note: Strip CUIT hyphens here if your backend requires only numbers
+            const response = await api.post('/auth/register', formData);
             if (response.status === 200 || response.status === 201) {
                 setIsSubmitted(true);
             }
@@ -95,49 +101,56 @@ export default function RegisterAdminView() {
         { label: 'Apellido', name: 'apellido', type: 'text' },
         { label: 'Email', name: 'email', type: 'email' },
         { label: 'CUIT Usuario', name: 'cuitUsuario', type: 'text' },
+        { label: 'Razon Social de la Empresa', name: 'razonSocialEmpresa', type: 'text' },
+        { label: 'CUIT de la Empresa', name: 'cuitEmpresa', type: 'text' },
         { label: 'Contraseña', name: 'password', type: 'password' },
         { label: 'Confirmar Contraseña', name: 'confirmarPassword', type: 'password' },
     ];
 
     return (
-        <div className="adminLoginContainer">
-            {isSubmitted ? (
-                <div className="successCard">
-                    <Alert type="success" message="¡Registro exitoso! Ya podés iniciar sesión." />
-                    <div className="botonera">
-                        <button className="botonBotonera" onClick={() => navigate('/login')}>Iniciar sesión</button>
-                        <button className="botonBotonera" onClick={() => navigate('/')}>Home</button>
+        <div className="loginView">
+            <NavBar />
+            <div className="loginContainer">
+                {isSubmitted ? (
+                    <div className="successCard">
+                        <Alert type="success" message="¡Registro exitoso! Ya podés iniciar sesión." />
+                        <div className="botonera">
+                            <button className="botonBotonera" onClick={() => navigate('/login')}>Iniciar sesión</button>
+                            <button className="botonBotonera" onClick={() => navigate('/')}>Home</button>
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div className="form-wrapper">
-                    <form className="loginForm" onSubmit={handleSubmit} noValidate>
-                        {error && <Alert type="error" message={error} />}
+                ) : (
+                    <div className="form-wrapper">
+                        <form className="loginForm" onSubmit={handleSubmit} noValidate>
+                            {error && <Alert type="error" message={error} />}
 
-                        {fields.map((field) => (
-                            <div className="form-group" key={field.name}>
-                                <label htmlFor={field.name}>{field.label}</label>
-                                <input
-                                    id={field.name}
-                                    className={formErrors[field.name] ? 'input-error' : ''}
-                                    type={field.type}
-                                    name={field.name}
-                                    value={(formData as any)[field.name]}
-                                    onChange={handleChange}
-                                    disabled={isLoading}
-                                    autoComplete="off"
-                                />
-                                {formErrors[field.name] && (
-                                    <span className="error-text">{formErrors[field.name]}</span>
-                                )}
-                            </div>
-                        ))}
-                        <button type="submit" disabled={isLoading}>
-                            {isLoading ? "Procesando..." : "Registrar Administrador de Parque"}
-                        </button>
-                    </form>
-                </div>
-            )}
+                            {fields.map((field) => (
+                                <div className="form-group" key={field.name}>
+                                    <label htmlFor={field.name}>{field.label}</label>
+                                    <input
+                                        id={field.name}
+                                        className={formErrors[field.name] ? 'input-error' : ''}
+                                        type={field.type}
+                                        name={field.name}
+                                        value={(formData as any)[field.name]}
+                                        onChange={handleChange}
+                                        disabled={isLoading}
+                                        autoComplete="off"
+                                    />
+                                    {formErrors[field.name] && (
+                                        <span className="error-text">{formErrors[field.name]}</span>
+                                    )}
+                                </div>
+                            ))}
+
+                            <button type="submit" disabled={isLoading}>
+                                {isLoading ? "Procesando..." : "Registrarse"}
+                            </button>
+                        </form>
+                    </div>
+                )}
+            </div>
+            <Footer />
         </div>
     );
 }
