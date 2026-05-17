@@ -1,10 +1,9 @@
 package com.parque_industrial.controllers;
 
-import com.parque_industrial.entities.ProyectoPreliminar;
-import com.parque_industrial.entities.ProyectoDefinitivo;
+import com.parque_industrial.dto.proyecto.ProyectoDefinitivoRequest;
+import com.parque_industrial.dto.proyecto.ProyectoPreliminarRequest;
 import com.parque_industrial.services.ProyectoService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,69 +11,127 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/proyectos")
 public class ProyectoController {
 
-    private final ProyectoService proyectoService;
+    private final ProyectoService service;
 
-    public ProyectoController(
-            ProyectoService proyectoService) {
-
-        this.proyectoService = proyectoService;
+    public ProyectoController(ProyectoService service) {
+        this.service = service;
     }
+
+    // -------- PRELIMINAR --------
 
     @PostMapping("/preliminar")
-    public ResponseEntity<String>
-    crearProyectoPreliminar(
-            @RequestBody ProyectoPreliminar proyecto) {
+    public ResponseEntity<?> crearPreliminar(
+            @RequestBody ProyectoPreliminarRequest request)
+            throws Exception {
 
-        try {
-            proyectoService
-                    .crearProyectoPreliminar(proyecto);
-
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body("Proyecto preliminar creado con éxito");
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+        service.crearProyectoPreliminar(request);
+        return ResponseEntity.ok("Creado");
     }
 
-    @PutMapping("/preliminar/aprobar")
-    public ResponseEntity<String>
-    aprobarProyectoPreliminar(
-            @RequestBody ProyectoPreliminar proyecto) {
+    @PutMapping("/preliminar/{id}/enviar-revision")
+    public ResponseEntity<?> enviarPreliminar(
+            @PathVariable String id)
+            throws Exception {
 
-        try {
-            proyectoService
-                    .aprobarProyectoPreliminar(proyecto);
-
-            return ResponseEntity.ok(
-                    "Proyecto aprobado");
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+        service.enviarPreliminarARevision(id);
+        return ResponseEntity.ok("Enviado a revisión");
     }
 
-    @PutMapping("/preliminar/rechazar")
-    public ResponseEntity<String>
-    rechazarProyectoPreliminar(
-            @RequestBody ProyectoPreliminar proyecto) {
+    @PutMapping("/preliminar/{id}/aprobar")
+    public ResponseEntity<?> aprobarPreliminar(@PathVariable String id)
+            throws Exception {
 
-        try {
-            proyectoService
-                    .rechazarProyectoPreliminar(proyecto);
+        service.aprobarPreliminar(id);
+        return ResponseEntity.ok("Aprobado");
+    }
 
-            return ResponseEntity.ok(
-                    "Proyecto rechazado");
+    @PutMapping("/preliminar/{id}/rechazar")
+    public ResponseEntity<?> rechazarPreliminar(@PathVariable String id)
+            throws Exception {
 
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+        service.rechazarPreliminar(id);
+        return ResponseEntity.ok("Rechazado");
+    }
+
+    @PutMapping("/preliminar/{id}/rectificar")
+    public ResponseEntity<?> rectificarPreliminar(@PathVariable String id)
+            throws Exception {
+
+        service.rectificarPreliminar(id);
+        return ResponseEntity.ok("Rectificado");
+    }
+
+    // -------- DEFINITIVO --------
+
+    @PostMapping("/preliminar/{id}/definitivo")
+    public ResponseEntity<?> crearDefinitivo(
+            @PathVariable String id,
+            @RequestBody ProyectoDefinitivoRequest request)
+            throws Exception {
+
+        service.crearDefinitivoDesdePreliminar(id, request);
+        return ResponseEntity.ok("Definitivo creado");
+    }
+
+    @PutMapping("/definitivo/{id}/enviar-revision")
+    public ResponseEntity<?> enviarDefinitivo(@PathVariable String id)
+            throws Exception {
+
+        service.enviarDefinitivoARevision(id);
+        return ResponseEntity.ok("Enviado a revisión");
+    }
+
+    @PutMapping("/definitivo/{id}/aprobar")
+    public ResponseEntity<?> aprobarDefinitivo(@PathVariable String id)
+            throws Exception {
+
+        service.aprobarDefinitivo(id);
+        return ResponseEntity.ok("Aprobado");
+    }
+
+    @PutMapping("/definitivo/{id}/rechazar")
+    public ResponseEntity<?> rechazarDefinitivo(@PathVariable String id)
+            throws Exception {
+
+        service.rechazarDefinitivo(id);
+        return ResponseEntity.ok("Rechazado");
+    }
+
+    @PutMapping("/definitivo/{id}/rectificar")
+    public ResponseEntity<?> rectificarDefinitivo(@PathVariable String id)
+            throws Exception {
+
+        service.rectificarDefinitivo(id);
+        return ResponseEntity.ok("Rectificado");
+    }
+
+    // -------- CONSULTAS --------
+
+    @GetMapping("/preliminar")
+    public ResponseEntity<?> listarPreliminar(@RequestParam String estado)
+            throws Exception {
+
+        return ResponseEntity.ok(service.listarPreliminares(estado));
+    }
+
+    @GetMapping("/definitivo")
+    public ResponseEntity<?> listarDefinitivo(@RequestParam String estado)
+            throws Exception {
+
+        return ResponseEntity.ok(service.listarDefinitivos(estado));
+    }
+
+    @GetMapping("/preliminar/{id}/estado")
+    public ResponseEntity<?> estadoPreliminar(@PathVariable String id)
+            throws Exception {
+
+        return ResponseEntity.ok(service.estadoPreliminar(id));
+    }
+
+    @GetMapping("/definitivo/{id}/estado")
+    public ResponseEntity<?> estadoDefinitivo(@PathVariable String id)
+            throws Exception {
+
+        return ResponseEntity.ok(service.estadoDefinitivo(id));
     }
 }

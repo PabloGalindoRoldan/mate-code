@@ -43,6 +43,8 @@ public class ProyectoDefinitivo extends Proyecto {
 
     @Override
     public void listoParaRevision() throws Exception {
+        validar();
+        validarFechas(fechaInicioObra, fechaFinObra);
         this.estado = PENDIENTE;
     }
 
