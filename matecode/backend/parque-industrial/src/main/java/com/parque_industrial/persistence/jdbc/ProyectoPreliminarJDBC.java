@@ -2,11 +2,13 @@ package com.parque_industrial.persistence.jdbc;
 
 import com.parque_industrial.entities.ProyectoPreliminar;
 import com.parque_industrial.services.DAOProyectos;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class ProyectoPreliminarJDBC implements DAOProyectos<ProyectoPreliminar> {
 
     private final Connection connection;
