@@ -14,7 +14,8 @@
 }
 
 .empresaRadicadaBody.shrunk {
-    max-width: calc(100vw - 260px);
+    max-width: calc(100vw - 160px);
+    height: auto;
 }
 
 .empresaRadicadaBody.full {

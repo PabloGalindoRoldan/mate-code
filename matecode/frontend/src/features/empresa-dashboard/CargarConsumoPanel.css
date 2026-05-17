@@ -1,0 +1,137 @@
+.cargarConsumoPanel {
+    margin: 2rem;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    width: 40vw;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.panel-header h2 {
+    color: #30332D;
+    margin-bottom: 4px;
+}
+
+.panel-header p {
+    color: #75944d;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+/* Forzamos el formulario a tener exactamente 2 columnas */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #30332D;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    background-color: #8cc63f;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: #75944d;
+}
+
+.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.historial-section {
+    margin-top: 40px;
+    width: 100%;
+    /* Asegura que la sección use el ancho del panel */
+}
+
+/* ESCUDO ANTI-EXPANSIÓN: Contenedor que absorbe el ancho sobrante de la tabla */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    /* Si la tabla es más ancha, el scroll se queda acá adentro */
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.historial-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    /* Evita que las columnas se amontonen demasiado si la pantalla se achica */
+}
+
+.historial-table th,
+.historial-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+    /* Mantiene los datos prolijos en una sola línea */
+}
+
+.historial-table th {
+    background-color: #30332D;
+    color: white;
+}
+
+.alert {
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: #fde8e8;
+    color: #9b1c1c;
+}
+
+.alert-success {
+    background-color: #def7ec;
+    color: #03543f;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cargarConsumoPanel {
+        width: 100%;
+    }
+}
