@@ -7,8 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import java.util.List;
 
@@ -41,6 +41,16 @@ public class SecurityConfig {
 
                         // EXPLICITADO: La mensajería requiere autenticación obligatoria (Cualquier ROL)
                         .requestMatchers("/api/mensajes/**").authenticated()
+
+                        // --- ENDPOINTS DE CONSUMOS (REFACTORIZADO Y BLINDADO) ---
+
+                        // El reporte global es exclusivo para los administradores del parque industrial
+                        .requestMatchers("/api/consumos/reporte-global/**").hasRole("ADMIN_PARQUE")
+
+                        // Agrupamos la ruta exacta y sus sub-rutas para el rol REPRESENTANTE_EMPRESA.
+                        // Esto cubre tanto el POST a '/api/consumos' como el GET a
+                        // '/api/consumos/historial'.
+                        .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
 
                         // Cualquier otra acción del sistema requerirá estar autenticado
                         .anyRequest().authenticated())

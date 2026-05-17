@@ -51,9 +51,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (jwtUtil.isTokenValid(jwt, username)) {
                     String rol = jwtUtil.extractRol(jwt);
 
-                    // Spring Security expects roles to be prefixed with "ROLE_" usually,
-                    // but you can pass your raw enum string directly like this:
-                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(rol);
+                    // VALIDACIÓN COMPATIBLE: Asegura el prefijo "ROLE_" exigido por .hasRole()
+                    // Si por algún motivo el string del token ya dice "ROLE_ADMIN", lo usa directo.
+                    // Si dice "REPRESENTANTE_EMPRESA", lo transforma en
+                    // "ROLE_REPRESENTANTE_EMPRESA".
+                    String formattedRole = rol.startsWith("ROLE_") ? rol : "ROLE_" + rol;
+
+                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(formattedRole);
 
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             username,

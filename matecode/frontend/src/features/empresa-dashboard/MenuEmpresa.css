@@ -46,5 +46,7 @@
 @media (max-width: 768px) {
     .menu-sidebar {
         width: 160px;
+        height: 100%;
+        box-sizing: border-box;
     }
 }
