@@ -2,6 +2,7 @@ import "./EmpresaRadicadaBody.css";
 import InfoPanel from "./InfoPanel";
 import StatisticsPanel from "./StatisticsPanel";
 import CargarConsumoPanel from "./CargarConsumoPanel";
+import MensajeriaPanel from "../mensajeria/MensajeriaPanel";
 
 
 export default function EmpresaRadicadaBody(params: { empresaInfo: any, isMenuOpen: boolean, activeTab: string }) {
@@ -14,7 +15,7 @@ export default function EmpresaRadicadaBody(params: { empresaInfo: any, isMenuOp
             {activeTab === "info" && <InfoPanel empresaInfo={empresaInfo} />}
             {activeTab === "info" && <StatisticsPanel empresaInfo={empresaInfo} />}
             {activeTab === "consumos" && <CargarConsumoPanel />}
-            {activeTab === "messages" && <p>Mensajes - Esta sección está en construcción.</p>}
+            {activeTab === "messages" && <MensajeriaPanel />}
             {activeTab === "settings" && <p>Configuración - Esta sección está en construcción.</p>}
         </div>
     );

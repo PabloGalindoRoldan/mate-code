@@ -44,22 +44,14 @@ public class LoginController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerRepresentanteEmpresa(@RequestBody RegisterRequest request) {
-        try {
-            authService.registerRepresenteEmpresa(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito"); // 201 Created
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
-        }
+        authService.registerRepresenteEmpresa(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito");
     }
 
     @PostMapping("/registerAdminParque")
     public ResponseEntity<String> registerAdministradorParque(@RequestBody RegisterRequest request) {
-        try {
-            authService.registerAdministradorParque(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito"); // 201 Created
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
-        }
+        authService.registerAdministradorParque(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito");
     }
 
     // public void registerAdministradorSistema(@RequestBody RegisterRequest

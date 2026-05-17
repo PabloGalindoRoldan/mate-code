@@ -3,6 +3,7 @@ package com.parque_industrial.persistence.usuario;
 import com.parque_industrial.dto.auth.EmpresaResponse;
 import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.UsuarioResponse;
+import com.parque_industrial.entities.Rol;
 import com.parque_industrial.entities.Usuario;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class UsuarioDAOJDBC implements UsuarioDAO {
@@ -35,12 +37,79 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                     usuario.getContraseña(),
                     usuario.getCuit(),
                     usuario.getRol().name(),
-                    // Safeguard: check if company exists before trying to extract its
-                    // identification CUIT
                     usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
         } catch (DataAccessException e) {
             throw new IllegalArgumentException(e.getRootCause().getMessage());
         }
+    }
+
+    @Override
+    public Optional<Usuario> buscarPorNombreUsuario(String nombreUsuario) {
+        String sql = "SELECT nombre, apellido, email, nombre_usuario, cuit, rol, contrasena FROM usuarios WHERE nombre_usuario = ?";
+
+        try {
+            Usuario usuario = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String email = rs.getString("email");
+                String username = rs.getString("nombre_usuario");
+                String cuit = rs.getString("cuit");
+                String contrasena = rs.getString("contrasena");
+                Rol rol = Rol.REPRESENTANTE_EMPRESA; // Valor por defecto en caso de que el rol sea nulo o no válido -
+                                                     // No debería pasar si la base de datos está bien, pero es una
+                                                     // medida de seguridad adicional para evitar excepciones. Si el rol
+                                                     // es nulo o no coincide con ningún valor del enum, se asignará
+                                                     // REPRESENTANTE_EMPRESA por defecto.
+                String rolString = rs.getString("rol");
+                if (rolString != null) {
+                    try {
+                        rol = Rol.valueOf(rolString);
+                    } catch (IllegalArgumentException e) {
+
+                    }
+                }
+
+                return new Usuario(
+                        nombre,
+                        apellido,
+                        email,
+                        username,
+                        cuit,
+                        rol,
+                        contrasena);
+            }, nombreUsuario);
+
+            return Optional.ofNullable(usuario);
+        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+            return Optional.empty();
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Error al buscar usuario por nombre de usuario", e);
+        }
+    }
+
+    @Override
+    public List<UsuarioResponse> obtenerTodasLasEmpresas() {
+        String sql = "SELECT nombre_usuario, nombre, apellido, email, cuit FROM usuarios WHERE rol = 'REPRESENTANTE_EMPRESA'";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new UsuarioResponse(
+                rs.getString("nombre_usuario"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("email"),
+                rs.getString("cuit")));
+    }
+
+    @Override
+    public List<UsuarioResponse> obtenerTodosLosUsuariosMenos(String usernameActual) {
+        String sql = "SELECT nombre_usuario, nombre, apellido, email, cuit, rol FROM usuarios WHERE nombre_usuario != ?";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new UsuarioResponse(
+                rs.getString("nombre_usuario"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("email"),
+                rs.getString("cuit")), usernameActual);
     }
 
     @Override
@@ -63,18 +132,11 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
             throw new IllegalArgumentException("Usuario o contraseña incorrectos");
         }
 
-        // La primera fila tiene los datos del usuario y empresa (si existe)
         Map<String, Object> first = rows.get(0);
-
-        // Initialize as null. It will remain null for non-corporate administrators
-        // (ADMINISTRADOR_PARQUE, ADMINISTRADOR_SISTEMA)
         EmpresaResponse empresaResponse = null;
 
-        // Only build the Empresa response if the user actually has a linked company
-        // record
         if (first.get("empresa_cuit") != null) {
             List<UsuarioResponse> representantes = rows.stream()
-                    // Extra safety: make sure we drop rows where left-joined fields are null
                     .filter(row -> row.get("rep_usuario") != null)
                     .map(row -> new UsuarioResponse(
                             (String) row.get("rep_usuario"),
@@ -99,7 +161,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 (String) first.get("cuit"),
                 (String) first.get("rol"),
                 (String) first.get("contrasena"),
-                empresaResponse, // Safely null for non-corporate users
+                empresaResponse,
                 null);
     }
 }

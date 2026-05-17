@@ -49,7 +49,6 @@ export default function RegisterView() {
         const newErrors: Record<string, string> = {};
         let isValid = true;
 
-        // 1. Check for empty fields
         Object.keys(formData).forEach((key) => {
             const value = formData[key as keyof typeof formData];
             if (!value || value.trim() === '') {
@@ -58,14 +57,12 @@ export default function RegisterView() {
             }
         });
 
-        // 2. Email Format Validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (formData.email && !emailRegex.test(formData.email)) {
             newErrors.email = "Formato de email no válido";
             isValid = false;
         }
 
-        // 3. Password Match Check
         if (formData.password !== formData.confirmarPassword) {
             setError("Las contraseñas no coinciden");
             isValid = false;
@@ -122,8 +119,6 @@ export default function RegisterView() {
                 ) : (
                     <div className="form-wrapper">
                         <form className="loginForm" onSubmit={handleSubmit} noValidate>
-                            {error && <Alert type="error" message={error} />}
-
                             {fields.map((field) => (
                                 <div className="form-group" key={field.name}>
                                     <label htmlFor={field.name}>{field.label}</label>
@@ -143,6 +138,7 @@ export default function RegisterView() {
                                 </div>
                             ))}
 
+                            {error && <Alert type="error" message={error} />}
                             <button type="submit" disabled={isLoading}>
                                 {isLoading ? "Procesando..." : "Registrarse"}
                             </button>

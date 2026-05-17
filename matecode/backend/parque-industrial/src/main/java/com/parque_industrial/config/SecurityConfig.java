@@ -39,8 +39,10 @@ public class SecurityConfig {
                         // Permite que cualquiera (sin token) vea las publicaciones en la Landing
                         .requestMatchers(HttpMethod.GET, "/api/publicaciones/**").permitAll()
 
-                        // Cualquier otra acción (como POST /api/publicaciones o DELETE) requerirá estar
-                        // autenticado
+                        // EXPLICITADO: La mensajería requiere autenticación obligatoria (Cualquier ROL)
+                        .requestMatchers("/api/mensajes/**").authenticated()
+
+                        // Cualquier otra acción del sistema requerirá estar autenticado
                         .anyRequest().authenticated())
 
                 // 4. Kill default interactive login prompts
@@ -48,8 +50,6 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 // 5. ATTACH THE JWT FILTER!
-                // This forces Spring to process our token filter before trying its default
-                // behaviors
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

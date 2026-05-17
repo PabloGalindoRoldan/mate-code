@@ -1,3 +1,4 @@
+import MensajeriaPanel from "../mensajeria/MensajeriaPanel";
 import MapPanel from "./MapPanel";
 import "./ParqueBody.css";
 import PublicacionesPanel from "./PublicacionesPanel";
@@ -12,7 +13,7 @@ export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boole
         <>
             <div className={`ParqueBodyContainer ${isMenuOpen ? "shrunk" : "full"}`}>
                 {activeTab === "map" && <MapPanel />}
-                {activeTab === "messages" && <p>Mensajes - Esta sección está en construcción.</p>}
+                {activeTab === "messages" && <MensajeriaPanel />}
                 {activeTab === "companies" && <p>Empresas - Esta sección está en construcción.</p>}
                 {activeTab === "publications" && <PublicacionesPanel />}
                 {activeTab === "reports" && <p>Reportes - Esta sección está en construcción.</p>}
