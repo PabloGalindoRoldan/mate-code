@@ -9,7 +9,6 @@
     display: flex;
     flex: 1;
     position: relative;
-    /* Add this */
     overflow-x: hidden;
 }
 
@@ -21,7 +20,6 @@
 
 .menu-open .content-area {
     margin-left: 260px;
-    /* Matches menu width */
 }
 
 .menu-toggle-btn {
@@ -49,13 +47,21 @@
     transform: scale(1.05);
 }
 
-/* Adjust button position when menu is open so it doesn't get covered */
 .menu-open .menu-toggle-btn {
     left: 275px;
-    /* Menu width (260px) + 15px gap */
 }
 
-/* Smooth transition for the content area */
 .content-area {
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+    .menu-open .content-area {
+        margin-left: 160px;
+    }
+
+    .menu-open .menu-toggle-btn {
+        left: 140px;
+    }
+
 }

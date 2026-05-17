@@ -172,7 +172,7 @@ export default function PublicacionesPanel() {
                                 type="text"
                                 value={titulo}
                                 onChange={(e) => setTitulo(e.target.value)}
-                                placeholder="Ej: Corte de agua programado sector norte"
+                                placeholder="Ej: Corte de calle por obras en Av. Principal"
                             />
                         </div>
 
