@@ -42,3 +42,9 @@
     background-color: var(--verde2);
     color: white;
 }
+
+@media (max-width: 768px) {
+    .menu-sidebar {
+        width: 160px;
+    }
+}

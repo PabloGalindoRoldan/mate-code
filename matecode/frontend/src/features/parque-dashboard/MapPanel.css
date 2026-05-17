@@ -69,3 +69,9 @@
     background-color: var(--verde2);
     transform: scale(1.05);
 }
+
+@media (max-width: 768px) {
+    .map-settings-menu-open {
+        right: 190px;
+    }
+}

@@ -242,7 +242,7 @@
 }
 
 .btnFormSubmit {
-    background-color: #22c55e;
+    background-color: var(--verde2);
     color: white;
     border: none;
     padding: 10px 22px;
