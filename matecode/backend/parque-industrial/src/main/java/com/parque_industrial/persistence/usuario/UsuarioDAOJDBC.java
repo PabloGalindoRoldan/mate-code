@@ -3,6 +3,7 @@ package com.parque_industrial.persistence.usuario;
 import com.parque_industrial.dto.auth.EmpresaResponse;
 import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.UsuarioResponse;
+import com.parque_industrial.entities.Empresa;
 import com.parque_industrial.entities.Rol;
 import com.parque_industrial.entities.Usuario;
 import org.springframework.dao.DataAccessException;
@@ -39,35 +40,54 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                     usuario.getRol().name(),
                     usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
         } catch (DataAccessException e) {
-            throw new IllegalArgumentException(e.getRootCause().getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
     @Override
     public Optional<Usuario> buscarPorNombreUsuario(String nombreUsuario) {
-        String sql = "SELECT nombre, apellido, email, nombre_usuario, cuit, rol, contrasena FROM usuarios WHERE nombre_usuario = ?";
+        // CORRECCIÓN: Agregamos LEFT JOIN con empresas para traer la razón social y el
+        // estado real
+        String sql = """
+                SELECT u.nombre, u.apellido, u.email, u.nombre_usuario, u.cuit, u.rol, u.contrasena, u.cuit_empresa,
+                       e.razon_social, e.es_radicada
+                FROM usuarios u
+                LEFT JOIN empresas e ON u.cuit_empresa = e.cuit
+                WHERE u.nombre_usuario = ?
+                """;
 
         try {
             Usuario usuario = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String email = rs.getString("email");
                 String username = rs.getString("nombre_usuario");
                 String cuit = rs.getString("cuit");
                 String contrasena = rs.getString("contrasena");
-                Rol rol = Rol.REPRESENTANTE_EMPRESA; // Valor por defecto en caso de que el rol sea nulo o no válido -
-                                                     // No debería pasar si la base de datos está bien, pero es una
-                                                     // medida de seguridad adicional para evitar excepciones. Si el rol
-                                                     // es nulo o no coincide con ningún valor del enum, se asignará
-                                                     // REPRESENTANTE_EMPRESA por defecto.
+
+                Rol rol = Rol.REPRESENTANTE_EMPRESA;
                 String rolString = rs.getString("rol");
                 if (rolString != null) {
                     try {
                         rol = Rol.valueOf(rolString);
                     } catch (IllegalArgumentException e) {
-
+                        // Mantiene el rol por defecto si no matchea
                     }
+                }
+
+                String cuitEmpresa = rs.getString("cuit_empresa");
+                Empresa empresa = null;
+                if (cuitEmpresa != null) {
+                    String razonSocial = rs.getString("razon_social");
+                    boolean esRadicada = rs.getBoolean("es_radicada");
+
+                    // Salvavidas por si la columna en la base de datos está vacía para registros
+                    // viejos
+                    if (razonSocial == null || razonSocial.isBlank()) {
+                        razonSocial = "Empresa Registrada";
+                    }
+
+                    empresa = new Empresa(cuitEmpresa, razonSocial, esRadicada);
                 }
 
                 return new Usuario(
@@ -77,7 +97,8 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                         username,
                         cuit,
                         rol,
-                        contrasena);
+                        contrasena,
+                        empresa);
             }, nombreUsuario);
 
             return Optional.ofNullable(usuario);
