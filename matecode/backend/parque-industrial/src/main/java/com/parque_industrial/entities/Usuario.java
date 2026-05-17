@@ -1,4 +1,5 @@
 package com.parque_industrial.entities;
+
 public class Usuario {
     private String nombre;
     private String apellido;
@@ -10,7 +11,7 @@ public class Usuario {
     private Empresa empresa;
 
     public Usuario(String nombre, String apellido, String email, String nombreUsuario,
-                   String cuit, Rol rol, String contraseña, Empresa empresa) {
+            String cuit, Rol rol, String contraseña, Empresa empresa) {
         validar(nombre);
         validar(apellido);
         validarEmail(email);
@@ -27,8 +28,9 @@ public class Usuario {
         this.rol = rol;
         this.empresa = empresa;
     }
+
     public Usuario(String nombre, String apellido, String email, String nombreUsuario,
-                   String cuit, Rol rol, String contraseña) {
+            String cuit, Rol rol, String contraseña) {
         validar(nombre);
         validar(apellido);
         validarEmail(email);
@@ -46,7 +48,6 @@ public class Usuario {
         this.empresa = null;
     }
 
-
     private void validar(String texto) { // Renombrado a 'texto' para ser más genérico
         if (texto == null || texto.isBlank()) {
             throw new IllegalArgumentException("El campo no puede ser nulo ni estar vacío");
@@ -54,7 +55,7 @@ public class Usuario {
     }
 
     private void validarEmail(String email) {
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";//esto lo saque de un repo q mando el profe
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";// esto lo saque de un repo q mando el profe
         if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("El email no puede ser nulo ni estar vacío");
         }
@@ -62,24 +63,26 @@ public class Usuario {
             throw new IllegalArgumentException("El formato del email no es válido");
         }
     }
-    private void validarUsuario(String Usuario){
+
+    private void validarUsuario(String Usuario) {
 
     }
-    private void validarContraseña(String contraseña){
+
+    private void validarContraseña(String contraseña) {
 
     }
-    private void validarCuit(String cuit)  {
+
+    private void validarCuit(String cuit) {
         if (cuit == null || cuit.isBlank()) {
             throw new IllegalArgumentException("El CUIT no puede estar vacío.");
         }
-        //  formato  debe ser XX-XXXXXXXX-X
+        // formato debe ser XX-XXXXXXXX-X
         // Esto valida que sean 2 dígitos, un guion, 8 dígitos, un guion y 1 dígito.
         String regexCuit = "^\\d{2}-\\d{8}-\\d{1}$";
         if (!cuit.matches(regexCuit)) {
             throw new IllegalArgumentException("El formato del CUIT es inválido. Debe ser XX-XXXXXXXX-X.");
         }
     }
-
 
     public String getNombre() {
         return nombre;
