@@ -7,8 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import java.util.List;
 
@@ -38,15 +38,31 @@ public class SecurityConfig {
                         .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/auth/registerAdminParque").hasRole("ADMINISTRADOR_PARQUE") // Login & Register are free
                         .requestMatchers("/auth/registerExtraRepresentanteEmpresa").hasRole("REPRESENTANTE_EMPRESA")
-                        .anyRequest().authenticated()) // All other endpoints require a token
+                        // Permite que cualquiera (sin token) vea las publicaciones en la Landing
+                        .requestMatchers(HttpMethod.GET, "/api/publicaciones/**").permitAll()
+
+                        // EXPLICITADO: La mensajería requiere autenticación obligatoria (Cualquier ROL)
+                        .requestMatchers("/api/mensajes/**").authenticated()
+
+                        // --- ENDPOINTS DE CONSUMOS (REFACTORIZADO Y BLINDADO) ---
+
+                        // El reporte global es exclusivo para los administradores del parque industrial
+                        .requestMatchers("/api/consumos/reporte-global/**").hasRole("ADMIN_PARQUE")
+
+                        // Agrupamos la ruta exacta y sus sub-rutas para el rol REPRESENTANTE_EMPRESA.
+                        // Esto cubre tanto el POST a '/api/consumos' como el GET a
+                        // '/api/consumos/historial'.
+                        .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
+
+                        // Cualquier otra acción del sistema requerirá estar autenticado
+                        .anyRequest().authenticated())
+
 
                 // 4. Kill default interactive login prompts
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 // 5. ATTACH THE JWT FILTER!
-                // This forces Spring to process our token filter before trying its default
-                // behaviors
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

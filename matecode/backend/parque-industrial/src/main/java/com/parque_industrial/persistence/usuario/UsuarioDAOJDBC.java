@@ -3,6 +3,8 @@ package com.parque_industrial.persistence.usuario;
 import com.parque_industrial.dto.auth.EmpresaResponse;
 import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.UsuarioResponse;
+import com.parque_industrial.entities.Empresa;
+import com.parque_industrial.entities.Rol;
 import com.parque_industrial.entities.Usuario;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class UsuarioDAOJDBC implements UsuarioDAO {
@@ -35,12 +38,99 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                     usuario.getContraseña(),
                     usuario.getCuit(),
                     usuario.getRol().name(),
-                    // Safeguard: check if company exists before trying to extract its
-                    // identification CUIT
                     usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
         } catch (DataAccessException e) {
-            throw new IllegalArgumentException(e.getRootCause().getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
+    }
+
+    @Override
+    public Optional<Usuario> buscarPorNombreUsuario(String nombreUsuario) {
+        // CORRECCIÓN: Agregamos LEFT JOIN con empresas para traer la razón social y el
+        // estado real
+        String sql = """
+                SELECT u.nombre, u.apellido, u.email, u.nombre_usuario, u.cuit, u.rol, u.contrasena, u.cuit_empresa,
+                       e.razon_social, e.es_radicada
+                FROM usuarios u
+                LEFT JOIN empresas e ON u.cuit_empresa = e.cuit
+                WHERE u.nombre_usuario = ?
+                """;
+
+        try {
+            Usuario usuario = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String email = rs.getString("email");
+                String username = rs.getString("nombre_usuario");
+                String cuit = rs.getString("cuit");
+                String contrasena = rs.getString("contrasena");
+
+                Rol rol = Rol.REPRESENTANTE_EMPRESA;
+                String rolString = rs.getString("rol");
+                if (rolString != null) {
+                    try {
+                        rol = Rol.valueOf(rolString);
+                    } catch (IllegalArgumentException e) {
+                        // Mantiene el rol por defecto si no matchea
+                    }
+                }
+
+                String cuitEmpresa = rs.getString("cuit_empresa");
+                Empresa empresa = null;
+                if (cuitEmpresa != null) {
+                    String razonSocial = rs.getString("razon_social");
+                    boolean esRadicada = rs.getBoolean("es_radicada");
+
+                    // Salvavidas por si la columna en la base de datos está vacía para registros
+                    // viejos
+                    if (razonSocial == null || razonSocial.isBlank()) {
+                        razonSocial = "Empresa Registrada";
+                    }
+
+                    empresa = new Empresa(cuitEmpresa, razonSocial, esRadicada);
+                }
+
+                return new Usuario(
+                        nombre,
+                        apellido,
+                        email,
+                        username,
+                        cuit,
+                        rol,
+                        contrasena,
+                        empresa);
+            }, nombreUsuario);
+
+            return Optional.ofNullable(usuario);
+        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+            return Optional.empty();
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Error al buscar usuario por nombre de usuario", e);
+        }
+    }
+
+    @Override
+    public List<UsuarioResponse> obtenerTodasLasEmpresas() {
+        String sql = "SELECT nombre_usuario, nombre, apellido, email, cuit FROM usuarios WHERE rol = 'REPRESENTANTE_EMPRESA'";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new UsuarioResponse(
+                rs.getString("nombre_usuario"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("email"),
+                rs.getString("cuit")));
+    }
+
+    @Override
+    public List<UsuarioResponse> obtenerTodosLosUsuariosMenos(String usernameActual) {
+        String sql = "SELECT nombre_usuario, nombre, apellido, email, cuit, rol FROM usuarios WHERE nombre_usuario != ?";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new UsuarioResponse(
+                rs.getString("nombre_usuario"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("email"),
+                rs.getString("cuit")), usernameActual);
     }
 
     @Override
@@ -63,18 +153,11 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
             throw new IllegalArgumentException("Usuario o contraseña incorrectos");
         }
 
-        // La primera fila tiene los datos del usuario y empresa (si existe)
         Map<String, Object> first = rows.get(0);
-
-        // Initialize as null. It will remain null for non-corporate administrators
-        // (ADMINISTRADOR_PARQUE, ADMINISTRADOR_SISTEMA)
         EmpresaResponse empresaResponse = null;
 
-        // Only build the Empresa response if the user actually has a linked company
-        // record
         if (first.get("empresa_cuit") != null) {
             List<UsuarioResponse> representantes = rows.stream()
-                    // Extra safety: make sure we drop rows where left-joined fields are null
                     .filter(row -> row.get("rep_usuario") != null)
                     .map(row -> new UsuarioResponse(
                             (String) row.get("rep_usuario"),
@@ -99,7 +182,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 (String) first.get("cuit"),
                 (String) first.get("rol"),
                 (String) first.get("contrasena"),
-                empresaResponse, // Safely null for non-corporate users
+                empresaResponse,
                 null);
     }
 }

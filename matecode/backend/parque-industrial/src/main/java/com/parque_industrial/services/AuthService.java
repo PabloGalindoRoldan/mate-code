@@ -26,7 +26,7 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest request) {
-        // 1. Fetch user data (Assuming this method returns user details or entity)
+        // 1. Fetch user data
         LoginResponse userDetails;
         try {
             userDetails = usuarioDAO.buscarLoginPorNombreUsuario(request.nombreUsuario());
@@ -34,15 +34,18 @@ public class AuthService {
             throw new IllegalArgumentException("Usuario o contraseña incorrectos");
         }
 
-        // 2. Validate Password (Reminder: Plan to add BCrypt soon!)
+        // 2. Validate Password
         if (!userDetails.contrasena().equals(request.password())) {
             throw new IllegalArgumentException("Usuario o contraseña incorrectos");
         }
 
-        // 3. Generate the token
-        String token = jwtUtil.generateToken(userDetails.nombreUsuario(), userDetails.rol());
+        // 3. El identificador del token vuelve a ser SIEMPRE el nombre de usuario único
+        String subjectIdentifier = userDetails.nombreUsuario();
 
-        // 4. Return the complete package to the controller
+        // 4. Generate the token
+        String token = jwtUtil.generateToken(subjectIdentifier, userDetails.rol());
+
+        // 5. Return the complete package to the controller
         return new LoginResponse(
                 userDetails.nombreUsuario(),
                 userDetails.nombre(),
@@ -77,7 +80,6 @@ public class AuthService {
     }
 
     public void registerAdministradorParque(RegisterRequest request) {
-
         Usuario usuario = new Usuario(
                 request.nombre(),
                 request.apellido(),
