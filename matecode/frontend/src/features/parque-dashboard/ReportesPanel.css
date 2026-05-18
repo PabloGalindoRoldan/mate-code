@@ -1,0 +1,323 @@
+.reportes-panel {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.reportes-header h2 {
+    color: #30332D;
+    margin: 0 0 4px 0;
+}
+
+.reportes-header p {
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 24px 0;
+}
+
+/* Tabs Estilo de navegación interna limpia */
+.reportes-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 24px;
+}
+
+.tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: #75944d;
+}
+
+.tab-btn.active {
+    color: #8cc63f;
+    border-bottom-color: #8cc63f;
+}
+
+/* Layout del cuerpo de Reportes */
+.reportes-content-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .reportes-content-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tarjeta Izquierda: Controles */
+.controls-card {
+    background-color: #f9fbf7;
+    border: 1px solid #e2ebd5;
+    padding: 20px;
+    border-radius: 6px;
+    height: fit-content;
+}
+
+.controls-card h3 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #30332D;
+    margin-bottom: 16px;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+.control-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #30332D;
+    margin-bottom: 8px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+}
+
+.export-btn {
+    width: 100%;
+    background-color: #8cc63f;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.export-btn:hover {
+    background-color: #75944d;
+}
+
+/* Tarjeta Derecha: Previsualización */
+.preview-card {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.preview-section h3 {
+    margin-top: 0;
+    color: #30332D;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.section-desc {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Grid de Mini Cajas de Estadísticas */
+.stats-grid-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stat-box {
+    padding: 14px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-box .stat-val {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.stat-box .stat-lbl {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.stat-box.green {
+    background-color: #eefbf5;
+    color: #1bc47d;
+}
+
+.stat-box.red {
+    background-color: #fff1f2;
+    color: #f43f5e;
+}
+
+.stat-box.orange {
+    background-color: #fff7ed;
+    color: #ea580c;
+}
+
+.stat-box.normal {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+/* Barra de Progreso */
+.progress-section {
+    margin-bottom: 24px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.progress-bar-bg {
+    background-color: #f3f4f6;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background-color: #8cc63f;
+    height: 100%;
+    border-radius: 4px;
+}
+
+/* Sección de advertencias de integración (Modelado del Back) */
+.pending-integration-notice {
+    background-color: #fffbeb;
+    border: 1px solid #fef3c7;
+    padding: 14px;
+    border-radius: 6px;
+    margin-top: 16px;
+}
+
+.pending-integration-notice.info-blue {
+    background-color: #eff6ff;
+    border-color: #dbeafe;
+    color: #1e40af;
+}
+
+.notice-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #b45309;
+    margin-bottom: 8px;
+}
+
+.pending-integration-notice.info-blue .notice-title {
+    color: #1e40af;
+}
+
+.pending-integration-notice ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 13px;
+    color: #78350f;
+    line-height: 1.5;
+}
+
+/* Estilos de tabla mock */
+.reporte-mock-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.reporte-mock-table th,
+.reporte-mock-table td {
+    padding: 10px;
+    font-size: 14px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.reporte-mock-table th {
+    background-color: #30332D;
+    color: white;
+}
+
+/* Estado Vacío / Marcador de posición */
+.placeholder-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.warning-icon {
+    color: #d97706;
+    margin-bottom: 12px;
+}
+
+.mock-wireframe-box {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    background-color: #fafafa;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Animación simple de transición */
+.animate-fade {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

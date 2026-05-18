@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import api from "../../api/axios"; // Ajustá la ruta según cómo esté exportado tu cliente de Axios
+import api from "../../api/axios";
 import "./CargarConsumoPanel.css";
+import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importación del spinner unificado
 
 interface ConsumoHistorial {
     id: number;
@@ -15,7 +16,7 @@ interface ConsumoHistorial {
 }
 
 export default function CargarConsumoPanel() {
-    // 1. Estado del Formulario (Arrancamos apuntando al mes/año actual en 2026)
+    // 1. Estado del Formulario
     const [formData, setFormData] = useState({
         mes: new Date().getMonth() + 1,
         ano: 2026,
@@ -27,19 +28,21 @@ export default function CargarConsumoPanel() {
     });
 
     const [historial, setHistorial] = useState<ConsumoHistorial[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingHistorial, setLoadingHistorial] = useState<boolean>(true); // Spinner para la tabla
+    const [loading, setLoading] = useState<boolean>(false); // Spinner para el botón submit
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
     // 2. Cargar el historial apenas se monta el componente
     const cargarHistorial = async () => {
         try {
+            setLoadingHistorial(true);
             const response = await api.get("/api/consumos/historial");
             setHistorial(response.data);
 
-            // Opcional: Si hay datos previos, aplicamos el "arrastre de datos" para facilitar la carga
+            // Opcional: Arrastre de datos para facilitar la carga si hay registros previos
             if (response.data.length > 0) {
-                const ultimo = response.data[0]; // Ya viene ordenado descendente desde el DAO
+                const ultimo = response.data[0];
                 setFormData(prev => ({
                     ...prev,
                     empleados: String(ultimo.empleados),
@@ -48,6 +51,8 @@ export default function CargarConsumoPanel() {
             }
         } catch (err: any) {
             console.error("Error cargando historial:", err);
+        } finally {
+            setLoadingHistorial(false);
         }
     };
 
@@ -67,7 +72,6 @@ export default function CargarConsumoPanel() {
         setError(null);
         setSuccess(null);
 
-        // Parseo seguro de inputs a tipos numéricos correctos
         const payload = {
             mes: Number(formData.mes),
             ano: Number(formData.ano),
@@ -80,9 +84,9 @@ export default function CargarConsumoPanel() {
 
         try {
             const response = await api.post("/api/consumos", payload);
-            setSuccess(response.data); // Mensaje del backend
+            setSuccess(response.data);
 
-            // Limpiamos las variables de consumo pero conservamos empleados/vehículos (arrastre)
+            // Limpiamos las variables de consumo pero conservamos empleados/vehículos
             setFormData(prev => ({
                 ...prev,
                 gas: "",
@@ -93,7 +97,6 @@ export default function CargarConsumoPanel() {
             // Refrescamos la tabla inferior con el nuevo registro
             cargarHistorial();
         } catch (err: any) {
-            // Capturamos el mensaje de error provisto por el GlobalExceptionHandler del Backend
             const msg = err.response?.data || "Ocurrió un error al registrar el consumo.";
             setError(typeof msg === "string" ? msg : "El período ya se encuentra declarado.");
         } finally {
@@ -117,7 +120,7 @@ export default function CargarConsumoPanel() {
                 <div className="form-grid">
                     <div className="form-group">
                         <label htmlFor="mes">Mes</label>
-                        <select id="mes" name="mes" value={formData.mes} onChange={handleChange}>
+                        <select id="mes" name="mes" value={formData.mes} onChange={handleChange} disabled={loading}>
                             {Array.from({ length: 12 }, (_, i) => (
                                 <option key={i + 1} value={i + 1}>
                                     {new Date(2026, i).toLocaleString("es-AR", { month: "long" })}
@@ -128,7 +131,7 @@ export default function CargarConsumoPanel() {
 
                     <div className="form-group">
                         <label htmlFor="ano">Año</label>
-                        <select id="ano" name="ano" value={formData.ano} onChange={handleChange}>
+                        <select id="ano" name="ano" value={formData.ano} onChange={handleChange} disabled={loading}>
                             <option value={2026}>2026</option>
                             <option value={2027}>2027</option>
                         </select>
@@ -136,27 +139,27 @@ export default function CargarConsumoPanel() {
 
                     <div className="form-group">
                         <label htmlFor="luz">Electricidad (kWh)</label>
-                        <input type="number" id="luz" name="luz" step="0.01" required value={formData.luz} onChange={handleChange} placeholder="0.00" />
+                        <input type="number" id="luz" name="luz" step="0.01" required value={formData.luz} onChange={handleChange} placeholder="0.00" disabled={loading} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="gas">Gas (m³)</label>
-                        <input type="number" id="gas" name="gas" step="0.01" required value={formData.gas} onChange={handleChange} placeholder="0.00" />
+                        <input type="number" id="gas" name="gas" step="0.01" required value={formData.gas} onChange={handleChange} placeholder="0.00" disabled={loading} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="agua">Agua (m³)</label>
-                        <input type="number" id="agua" name="agua" step="0.01" required value={formData.agua} onChange={handleChange} placeholder="0.00" />
+                        <input type="number" id="agua" name="agua" step="0.01" required value={formData.agua} onChange={handleChange} placeholder="0.00" disabled={loading} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="empleados">Nº de Empleados</label>
-                        <input type="number" id="empleados" name="empleados" required value={formData.empleados} onChange={handleChange} placeholder="0" />
+                        <input type="number" id="empleados" name="empleados" required value={formData.empleados} onChange={handleChange} placeholder="0" disabled={loading} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="vehiculos">Vehículos en Uso</label>
-                        <input type="number" id="vehiculos" name="vehiculos" required value={formData.vehiculos} onChange={handleChange} placeholder="0" />
+                        <input type="number" id="vehiculos" name="vehiculos" required value={formData.vehiculos} onChange={handleChange} placeholder="0" disabled={loading} />
                     </div>
                 </div>
 
@@ -168,38 +171,45 @@ export default function CargarConsumoPanel() {
             {/* Historial Declarado */}
             <section className="historial-section">
                 <h3>Historial de Declaraciones</h3>
-                {historial.length === 0 ? (
-                    <p className="no-data">No se registran consumos declarados previamente.</p>
-                ) : (
-                    <div className="table-responsive">
-                        <table className="historial-table">
-                            <thead>
-                                <tr>
-                                    <th>Período</th>
-                                    <th>Electricidad</th>
-                                    <th>Gas</th>
-                                    <th>Agua</th>
-                                    <th>Empleados</th>
-                                    <th>Vehículos</th>
-                                    <th>Fecha Carga</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {historial.map((c) => (
-                                    <tr key={c.id}>
-                                        <td><strong>{c.mes}/{c.ano}</strong></td>
-                                        <td>{c.luz} kWh</td>
-                                        <td>{c.gas} m³</td>
-                                        <td>{c.agua} m³</td>
-                                        <td>{c.empleados}</td>
-                                        <td>{c.vehiculos}</td>
-                                        <td>{new Date(c.fechaCarga).toLocaleDateString("es-AR")}</td>
+
+                <div style={{ position: "relative", minHeight: "150px" }}>
+                    {loadingHistorial ? (
+                        <div style={{ padding: "40px 0" }}>
+                            <LoadingSpinner text="Sincronizando historial de declaraciones..." />
+                        </div>
+                    ) : historial.length === 0 ? (
+                        <p className="no-data">No se registran consumos declarados previamente.</p>
+                    ) : (
+                        <div className="table-responsive">
+                            <table className="historial-table">
+                                <thead>
+                                    <tr>
+                                        <th>Período</th>
+                                        <th>Electricidad</th>
+                                        <th>Gas</th>
+                                        <th>Agua</th>
+                                        <th>Empleados</th>
+                                        <th>Vehículos</th>
+                                        <th>Fecha Carga</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
+                                </thead>
+                                <tbody>
+                                    {historial.map((c) => (
+                                        <tr key={c.id}>
+                                            <td><strong>{c.mes}/{c.ano}</strong></td>
+                                            <td>{c.luz} kWh</td>
+                                            <td>{c.gas} m³</td>
+                                            <td>{c.agua} m³</td>
+                                            <td>{c.empleados}</td>
+                                            <td>{c.vehiculos}</td>
+                                            <td>{new Date(c.fechaCarga).toLocaleDateString("es-AR")}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
             </section>
         </div>
     );
