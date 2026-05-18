@@ -34,59 +34,29 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
-
-    /*
-     * Esto le llegaria algo como:
-     * "email": "german@mail.com",
-     * "password": "1234"
-     * deberia devolver algo?
-     */
+//    @PostMapping("/login")
+//    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+//        LoginResponse response = authService.login(request);
+//        return ResponseEntity.ok(response);
+//    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerRepresentanteEmpresa(@RequestBody RegisterRequest request) {
-        try {
-            authService.registerRepresenteEmpresa(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito"); // 201 Created
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
-        }
+        authService.registerRepresenteEmpresa(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito");
     }
 
-     @PostMapping("/registerAdminParque")
-     public ResponseEntity<String> registerAdministradorParque(@RequestBody RegisterRequest request)
-     {
-         try {
-     authService.registerAdministradorParque(request); //Razon social y cuitEmpresa son null
-             return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito"); // 201 Created
-         } catch (IllegalArgumentException e) {
-             return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
-         }
-     }
-
+    @PostMapping("/registerAdminParque")
+    public ResponseEntity<String> registerAdministradorParque(@RequestBody RegisterRequest request) {
+        authService.registerAdministradorParque(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito");
+    }
 
     @PostMapping("/registerExtraRepresentanteEmpresa")
-    public ResponseEntity<String> registerUsuarioEmpresaExistente(@RequestBody RegisterRequest request)
-    {
-        try {
-            authService.registerUsuarioEmpresaExistente(request); //cuitEmpresa son null
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito"); // 201 Created
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request
-        }
+    public ResponseEntity<String> registerUsuarioEmpresaExistente(@RequestBody RegisterRequest request) { // se le puede mandar los daots del registro comun menos la razon social q se puede no mandar
+        authService.registerUsuarioEmpresaExistente(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito");
     }
 
-    // public void registerAdministradorSistema(@RequestBody RegisterRequest
-    // request) {
-    // authService.registerAdministradorSistema(request);
-    // }
-} // 500 INTERNAL SERVER ERROR
+}
 
-// LoginResponse
-// RegisterResponse
-/*
- * login,
- * logout,
- * refresh token,
- * registro,
- * reset password.
- */

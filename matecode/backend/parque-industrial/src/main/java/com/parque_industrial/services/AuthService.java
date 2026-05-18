@@ -96,7 +96,7 @@ public class AuthService {
         if (!empresaDAO.existeEmpresa(request.cuitEmpresa())) {
             throw new IllegalArgumentException("La empresa con CUIT " + request.cuitEmpresa() + " no existe");
         }
-        Empresa empresa = new Empresa(request.cuitEmpresa(), null, false); // Solo necesitamos el CUIT para asociar al usuario
+        Empresa empresa = new Empresa(request.cuitEmpresa(), "no es importante", false); // Solo necesitamos el CUIT para asociar al usuario
         Usuario usuario = new Usuario(
                 request.nombre(),
                 request.apellido(),

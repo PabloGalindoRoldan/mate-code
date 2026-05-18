@@ -20,14 +20,12 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
                 INSERT INTO empresas (cuit, razon_social, es_radicada)
                 VALUES (?, ?, ?)
                 """;
-        try {
+
             jdbcTemplate.update(sql,
                     empresa.getIdentificacion(),
                     empresa.getRazonSocial(),
                     empresa.isEsRadicada());
-        } catch (DataAccessException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+
     }
 
 
