@@ -6,6 +6,7 @@ import "./MapPanel.css";
 import mapData from "../../assets/data/parqueIndustrialMap2.json";
 import { useMap } from "./MapProvider";
 import MapMenu from "./MapMenu";
+import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importamos tu nuevo loader
 
 export default function MapPanel() {
     const mapRef = useRef<MapRef>(null);
@@ -16,6 +17,9 @@ export default function MapPanel() {
 
     const [isInteracting, setIsInteracting] = useState(false);
     const [hoveredId, setHoveredId] = useState<string | number | null>(null);
+
+    // Estado para controlar el delay de inicialización/renderizado del mapa
+    const [isLoading, setIsLoading] = useState(true);
 
     const styleBase = "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
     const styleSatelite = "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json";
@@ -41,7 +45,6 @@ export default function MapPanel() {
     useEffect(() => {
         let animationFrame: number;
         const rotate = () => {
-            // Solo rota si NO hay interacción y la rotación está habilitada
             if (!isInteracting && rotationEnabled && mapRef.current) {
                 const map = mapRef.current.getMap();
                 map.setBearing(map.getBearing() + 0.08);
@@ -52,7 +55,7 @@ export default function MapPanel() {
         return () => cancelAnimationFrame(animationFrame);
     }, [isInteracting, rotationEnabled]);
 
-    // Handlers de interacción corregidos
+    // Handlers de interacción
     const startInteraction = useCallback(() => setIsInteracting(true), []);
     const stopInteraction = useCallback(() => setIsInteracting(false), []);
 
@@ -83,10 +86,23 @@ export default function MapPanel() {
     }, []);
 
     return (
-        <div className="mapContainer">
+        <div className="mapContainer" style={{ position: "relative" }}>
+            {/* Si está cargando el render, clavamos el spinner inline centrado en el contenedor del mapa */}
+            {isLoading && (
+                <div style={{
+                    position: "absolute",
+                    top: 0, left: 0, width: "100%", height: "100%",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    backgroundColor: "#ffffff", zIndex: 10
+                }}>
+                    <LoadingSpinner text="Cargando mapa de lotes..." />
+                </div>
+            )}
+
             <button
                 className={`map-settings-btn ${isMapMenuOpen ? "map-settings-menu-open" : ""}`}
                 onClick={() => setIsMapMenuOpen(!isMapMenuOpen)}
+                style={{ zIndex: 11 }} // Lo subimos un nivel por encima del loading
             >
                 {isMapMenuOpen ? <ChevronRight size={20} /> : <MapIcon size={20} />}
             </button>
@@ -96,24 +112,27 @@ export default function MapPanel() {
             <Map
                 ref={mapRef}
                 initialViewState={{
-                    longitude: -62.966,
-                    latitude: -40.838,
-                    zoom: 15.4,
+                    longitude: -62.963,
+                    latitude: -40.840,
+                    zoom: 15.3,
                     pitch: 45
                 }}
                 mapStyle={isSatellite ? styleSatelite : styleBase}
                 style={{ width: "100%", height: "100%" }}
                 interactiveLayerIds={["lotes-fill"]}
 
+                // Desactivamos el loading cuando MapLibre termine de renderizar la primera vista estable
+                onIdle={() => setIsLoading(false)}
+
                 // Eventos de Mouse
                 onMouseDown={startInteraction}
                 onMouseUp={stopInteraction}
 
-                // Eventos Táctiles (Celulares/Tablets)
+                // Eventos Táctiles
                 onTouchStart={startInteraction}
                 onTouchEnd={stopInteraction}
 
-                // Eventos de Cámara (Por si se mueve con teclado o gestos complejos)
+                // Eventos de Cámara
                 onMoveStart={startInteraction}
                 onMoveEnd={stopInteraction}
 

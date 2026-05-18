@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Plus, Trash2, Calendar, Image, FileText } from "lucide-react";
 import API from '../../api/axios';
 import "./PublicacionesPanel.css";
+import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importamos tu spinner unificado
 
 interface Publicacion {
     id: number;
@@ -16,6 +17,7 @@ export default function PublicacionesPanel() {
     const [publicaciones, setPublicaciones] = useState<Publicacion[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false); // Estado para deshabilitar el botón al guardar
 
     // Form States
     const [titulo, setTitulo] = useState("");
@@ -52,7 +54,7 @@ export default function PublicacionesPanel() {
         setContenido("");
     };
 
-    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!titulo.trim() || !contenido.trim()) {
             setError("El título y el contenido son obligatorios.");
@@ -66,15 +68,18 @@ export default function PublicacionesPanel() {
             contenido: contenido.trim()
         };
 
+        setSubmitting(true);
+        setError("");
+
         try {
-            // Interceptor handles the sessionStorage token implicitly here
             const res = await API.post<Publicacion>('/api/publicaciones', payload);
             setPublicaciones([res.data, ...publicaciones]);
             handleCloseForm();
         } catch (err: any) {
-            // Fallback checking for custom backend error structure or standard status message
             const serverMsg = err.response?.data?.message || "No se pudo guardar la publicación. Verifica permisos.";
             setError(serverMsg);
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -97,8 +102,6 @@ export default function PublicacionesPanel() {
         return new Date(fechaStr).toLocaleDateString("es-AR");
     };
 
-    if (loading) return <div style={{ padding: "20px" }}>Cargando panel de gestión...</div>;
-
     return (
         <div className="publicacionesPanel">
             {!isFormOpen ? (
@@ -108,52 +111,58 @@ export default function PublicacionesPanel() {
                             <h2>Gestión de Publicaciones</h2>
                             <p className="panelSubtitle">Crea y administra las novedades del parque que se muestran en el Inicio.</p>
                         </div>
-                        <button className="btnNuevaPublicacion" onClick={handleOpenForm}>
+                        <button className="btnNuevaPublicacion" onClick={handleOpenForm} disabled={loading}>
                             <Plus size={18} /> Nueva Publicación
                         </button>
                     </div>
 
-                    <div className="tableWrapper">
-                        <table className="publicacionesTable">
-                            <thead>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Contenido Resumido</th>
-                                    <th>Fecha</th>
-                                    <th className="actionsColumnHeader">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {publicaciones.length === 0 ? (
+                    <div className="tableWrapper" style={{ position: "relative", minHeight: "200px" }}>
+                        {loading ? (
+                            <div style={{ padding: "60px 0" }}>
+                                <LoadingSpinner text="Cargando listado de novedades..." />
+                            </div>
+                        ) : (
+                            <table className="publicacionesTable">
+                                <thead>
                                     <tr>
-                                        <td colSpan={4} className="emptyTableMessage">
-                                            No hay publicaciones creadas todavía.
-                                        </td>
+                                        <th>Título</th>
+                                        <th>Contenido Resumido</th>
+                                        <th>Fecha</th>
+                                        <th className="actionsColumnHeader">Acciones</th>
                                     </tr>
-                                ) : (
-                                    publicaciones.map((pub) => (
-                                        <tr key={pub.id}>
-                                            <td className="pubTitleCell"><strong>{pub.titulo}</strong></td>
-                                            <td className="pubTruncatedCell">{pub.contenido}</td>
-                                            <td className="pubDateCell">
-                                                <div className="dateBadge">
-                                                    <Calendar size={14} /> {formatFecha(pub.fechaCreacion)}
-                                                </div>
-                                            </td>
-                                            <td className="pubActionsCell">
-                                                <button
-                                                    className="btnActionDelete"
-                                                    onClick={() => handleDelete(pub.id)}
-                                                    title="Eliminar publicación"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
+                                </thead>
+                                <tbody>
+                                    {publicaciones.length === 0 ? (
+                                        <tr>
+                                            <td colSpan={4} className="emptyTableMessage">
+                                                No hay publicaciones creadas todavía.
                                             </td>
                                         </tr>
-                                    ))
-                                )}
-                            </tbody>
-                        </table>
+                                    ) : (
+                                        publicaciones.map((pub) => (
+                                            <tr key={pub.id}>
+                                                <td className="pubTitleCell"><strong>{pub.titulo}</strong></td>
+                                                <td className="pubTruncatedCell">{pub.contenido}</td>
+                                                <td className="pubDateCell">
+                                                    <div className="dateBadge">
+                                                        <Calendar size={14} /> {formatFecha(pub.fechaCreacion)}
+                                                    </div>
+                                                </td>
+                                                <td className="pubActionsCell">
+                                                    <button
+                                                        className="btnActionDelete"
+                                                        onClick={() => handleDelete(pub.id)}
+                                                        title="Eliminar publicación"
+                                                    >
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        )}
                     </div>
                 </>
             ) : (
@@ -173,6 +182,7 @@ export default function PublicacionesPanel() {
                                 value={titulo}
                                 onChange={(e) => setTitulo(e.target.value)}
                                 placeholder="Ej: Corte de calle por obras en Av. Principal"
+                                disabled={submitting}
                             />
                         </div>
 
@@ -184,6 +194,7 @@ export default function PublicacionesPanel() {
                                     value={imagen}
                                     onChange={(e) => setImagen(e.target.value)}
                                     placeholder="https://images.pexels.com/..."
+                                    disabled={submitting}
                                 />
                             </div>
 
@@ -194,6 +205,7 @@ export default function PublicacionesPanel() {
                                     value={alt}
                                     onChange={(e) => setAlt(e.target.value)}
                                     placeholder="Ej: Maquinaria trabajando en calle"
+                                    disabled={submitting}
                                 />
                             </div>
                         </div>
@@ -205,15 +217,30 @@ export default function PublicacionesPanel() {
                                 onChange={(e) => setContenido(e.target.value)}
                                 rows={6}
                                 placeholder="Escribe de manera detallada las novedades que las empresas y visitantes necesitan saber..."
+                                disabled={submitting}
                             />
                         </div>
 
                         <div className="formActionsBar">
-                            <button type="button" className="btnFormCancel" onClick={handleCloseForm}>
+                            <button
+                                type="button"
+                                className="btnFormCancel"
+                                onClick={handleCloseForm}
+                                disabled={submitting}
+                            >
                                 Cancelar
                             </button>
-                            <button type="submit" className="btnFormSubmit">
-                                Publicar en Inicio
+                            <button
+                                type="submit"
+                                className="btnFormSubmit"
+                                disabled={submitting}
+                                style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}
+                            >
+                                {submitting ? (
+                                    <>Enviando...</>
+                                ) : (
+                                    <>Publicar en Inicio</>
+                                )}
                             </button>
                         </div>
                     </form>

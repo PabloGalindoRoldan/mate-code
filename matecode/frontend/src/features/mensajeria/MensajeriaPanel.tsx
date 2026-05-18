@@ -4,6 +4,7 @@ import { mensajeriaApi } from "../../api/axios";
 import API from "../../api/axios";
 import { Send, User, Megaphone } from "lucide-react";
 import "./MensajeriaPanel.css";
+import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importamos tu nuevo componente
 
 interface Conversacion {
     contactoUsername: string;
@@ -35,15 +36,35 @@ export default function MensajeriaPanel() {
     const [chatActivo, setChatActivo] = useState<string | null>(null);
     const [mensajes, setMensajes] = useState<Mensaje[]>([]);
     const [nuevoMensaje, setNuevoMensaje] = useState("");
+
+    // Control de carga del panel lateral (conversaciones y contactos)
+    const [sidebarLoading, setSidebarLoading] = useState(true);
+    // Control de carga del historial del chat central
     const [loading, setLoading] = useState(false);
 
     const mensajesEndRef = useRef<HTMLDivElement>(null);
 
+    // Carga inicial del panel
     useEffect(() => {
-        cargarConversaciones();
-        cargarContactosDisponibles();
+        const inicializarMensajeria = async () => {
+            setSidebarLoading(true);
+            try {
+                // Ejecutamos ambas promesas en paralelo para acelerar el renderizado inicial
+                await Promise.all([
+                    cargarConversaciones(),
+                    cargarContactosDisponibles()
+                ]);
+            } catch (error) {
+                console.error("Error al inicializar mensajería", error);
+            } finally {
+                setSidebarLoading(false);
+            }
+        };
+
+        inicializarMensajeria();
     }, []);
 
+    // Pooling de actualización cada 5 segundos
     useEffect(() => {
         const interval = setInterval(() => {
             cargarConversaciones();
@@ -55,30 +76,30 @@ export default function MensajeriaPanel() {
         return () => clearInterval(interval);
     }, [chatActivo]);
 
+    // Auto-scroll al final del chat cuando entran nuevos mensajes
+    useEffect(() => {
+        if (!loading) {
+            mensajesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [mensajes, loading]);
+
     const cargarConversaciones = async () => {
         try {
             const data = await mensajeriaApi.getConversaciones() as Conversacion[];
 
-            // Mapeamos primero para guardar el orden original en el que vinieron desde el backend
             const conIndice = data.map((item, index) => ({ item, index }));
 
             conIndice.sort((a, b) => {
                 const fechaA = new Date(a.item.fechaUltimoMensaje).getTime();
                 const fechaB = new Date(b.item.fechaUltimoMensaje).getTime();
 
-                // Si las fechas son distintas, ordenamos por fecha (descendiente)
                 if (fechaB !== fechaA) {
                     return fechaB - fechaA;
                 }
-
-                // SI LAS FECHAS SON IGUALES: Desempatamos.
-                // Si el backend te trae lo más viejo primero, acá invertimos usando el índice original
                 return b.index - a.index;
             });
 
-            // Volvemos a extraer solo el objeto de la conversación
             const conversacionesOrdenadas = conIndice.map(objeto => objeto.item);
-
             setConversaciones(conversacionesOrdenadas);
         } catch (error) {
             console.error("Error cargando conversaciones", error);
@@ -98,7 +119,6 @@ export default function MensajeriaPanel() {
         setLoading(true);
         try {
             const data = await mensajeriaApi.getHistorial(contactoUsername);
-            // PUNTO 1 (REVERTIDO): No invertimos el array. data viene en orden cronológico (viejos arriba).
             setMensajes(data);
         } catch (error) {
             console.error("Error cargando historial", error);
@@ -110,7 +130,6 @@ export default function MensajeriaPanel() {
     const actualizarHistorialSilencioso = async (contactoUsername: string) => {
         try {
             const data = await mensajeriaApi.getHistorial(contactoUsername);
-            // PUNTO 1 (REVERTIDO): No invertimos el array.
             setMensajes(data);
         } catch (error) {
             console.error("Error en segundo plano", error);
@@ -131,7 +150,7 @@ export default function MensajeriaPanel() {
         e.target.value = "";
     };
 
-    const handleEnviar = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleEnviar = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!nuevoMensaje.trim() || !chatActivo) return;
 
@@ -146,10 +165,8 @@ export default function MensajeriaPanel() {
 
         try {
             await mensajeriaApi.enviarMensaje(chatActivo, mensajeTemporal.contenido);
-
             const historialActualizado = await mensajeriaApi.getHistorial(chatActivo);
             setMensajes(historialActualizado);
-
             cargarConversaciones();
         } catch (error) {
             console.error("Error al enviar mensaje", error);
@@ -158,7 +175,8 @@ export default function MensajeriaPanel() {
 
     return (
         <div className="mensajeria-container">
-            <div className="mensajeria-sidebar">
+            {/* --- SIDEBAR IZQUIERDO --- */}
+            <div className="mensajeria-sidebar" style={{ position: "relative" }}>
                 <h3>Mensajería interna</h3>
 
                 <div className="nuevo-chat-selector">
@@ -174,7 +192,11 @@ export default function MensajeriaPanel() {
                 </div>
 
                 <div className="conversaciones-list">
-                    {conversaciones.length === 0 ? (
+                    {sidebarLoading ? (
+                        <div style={{ padding: "40px 0" }}>
+                            <LoadingSpinner text="Cargando contactos..." />
+                        </div>
+                    ) : conversaciones.length === 0 ? (
                         <p className="no-chats">No hay chats iniciados. Elige un contacto arriba.</p>
                     ) : (
                         conversaciones.map((c) => (
@@ -189,8 +211,6 @@ export default function MensajeriaPanel() {
                                 <div className="info">
                                     <div className="info-header">
                                         <h4>{c.contactoUsername === "TODOS" ? "Difusión General" : (c.contactoNombre || c.contactoUsername)}</h4>
-
-                                        {/* PUNTO 2: Indicador visual (puntito rojo) si tiene mensajes sin leer */}
                                         {c.mensajesSinLeer > 0 && <span className="unread-dot" title={`${c.mensajesSinLeer} sin leer`} />}
                                     </div>
                                     <p className="truncate">{c.ultimoMensaje}</p>
@@ -201,6 +221,7 @@ export default function MensajeriaPanel() {
                 </div>
             </div>
 
+            {/* --- CUERPO CENTRAL DE LA VENTANA DE CHAT --- */}
             <div className="chat-window">
                 {chatActivo ? (
                     <>
@@ -214,9 +235,15 @@ export default function MensajeriaPanel() {
                             </h3>
                         </div>
 
-                        <div className="chat-messages">
-                            {loading && mensajes.length === 0 ? (
-                                <p className="chat-state">Cargando mensajes...</p>
+                        <div className="chat-messages" style={{ position: "relative" }}>
+                            {loading ? (
+                                <div style={{
+                                    position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+                                    display: "flex", alignItems: "center", justifyContent: "center",
+                                    backgroundColor: "rgba(255, 255, 255, 0.7)"
+                                }}>
+                                    <LoadingSpinner text="Abriendo conversación..." />
+                                </div>
                             ) : (
                                 mensajes.map((m, idx) => {
                                     const esMio = m.emisorUsername === user?.nombreUsuario;
@@ -228,8 +255,6 @@ export default function MensajeriaPanel() {
                                     );
                                 })
                             )}
-
-                            {/* PUNTO 1 (REVERTIDO): Marcador inferior para el scroll automático */}
                             <div ref={mensajesEndRef} />
                         </div>
 

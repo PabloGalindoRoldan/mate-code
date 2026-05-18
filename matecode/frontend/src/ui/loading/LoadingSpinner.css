@@ -1,0 +1,64 @@
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* Caso 1: Ocupa toda la pantalla (ideal para cambios de ruta o carga inicial de la app) */
+.loading-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85);
+    /* Fondo blanco semi-transparente */
+    z-index: 9999;
+    /* Por encima de NavBars y Sidebars */
+}
+
+/* Caso 2: Se adapta al contenedor donde lo metas (ideal para meter dentro de ParqueBody o tablas) */
+.loading-container.inline {
+    width: 100%;
+    min-height: 250px;
+    /* Le da una altura mínima elegante para que no colapse el div */
+    background-color: transparent;
+}
+
+/* Contenido interno */
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Animación del Icono */
+.spinner-icon {
+    color: var(--verde1);
+    /* Tu verde principal corporativo */
+    animation: spin-animation 1s linear infinite;
+}
+
+/* Texto de Carga */
+.loading-text {
+    color: #a2aab4;
+    /* Tu gris oscuro */
+    font-size: 15px;
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Keyframes nativos para asegurar que gire a 360 grados */
+@keyframes spin-animation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
