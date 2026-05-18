@@ -34,8 +34,10 @@ public class SecurityConfig {
                 // 3. Configure route protections
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/auth/**").permitAll() // Login y Registro públicos
-
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/auth/registerAdminParque").hasRole("ADMINISTRADOR_PARQUE") // Login & Register are free
+                        .requestMatchers("/auth/registerExtraRepresentanteEmpresa").hasRole("REPRESENTANTE_EMPRESA")
                         // Permite que cualquiera (sin token) vea las publicaciones en la Landing
                         .requestMatchers(HttpMethod.GET, "/api/publicaciones/**").permitAll()
 
@@ -54,6 +56,7 @@ public class SecurityConfig {
 
                         // Cualquier otra acción del sistema requerirá estar autenticado
                         .anyRequest().authenticated())
+
 
                 // 4. Kill default interactive login prompts
                 .formLogin(AbstractHttpConfigurer::disable)

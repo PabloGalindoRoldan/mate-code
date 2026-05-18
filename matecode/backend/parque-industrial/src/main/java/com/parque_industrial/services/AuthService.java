@@ -60,6 +60,7 @@ public class AuthService {
 
     @Transactional
     public void registerRepresenteEmpresa(RegisterRequest request) {
+        // Validar que las contraseñas coincidan antes de hacer cualquier cosa
         if (!request.password().equals(request.confirmarPassword())) {
             throw new IllegalArgumentException("Las contraseñas no coinciden");
         }
@@ -89,4 +90,24 @@ public class AuthService {
                 request.password());
         usuarioDAO.guardar(usuario);
     }
+
+    public void registerUsuarioEmpresaExistente(RegisterRequest request) {
+
+        if (!empresaDAO.existeEmpresa(request.cuitEmpresa())) {
+            throw new IllegalArgumentException("La empresa con CUIT " + request.cuitEmpresa() + " no existe");
+        }
+        Empresa empresa = new Empresa(request.cuitEmpresa(), "no es importante", false); // Solo necesitamos el CUIT para asociar al usuario
+        Usuario usuario = new Usuario(
+                request.nombre(),
+                request.apellido(),
+                request.email(),
+                request.nombreUsuario(),
+                request.cuitUsuario(),
+                Rol.REPRESENTANTE_EMPRESA,
+                request.password(),
+                empresa);
+        usuarioDAO.guardar(usuario);
+    }
+
+
 }

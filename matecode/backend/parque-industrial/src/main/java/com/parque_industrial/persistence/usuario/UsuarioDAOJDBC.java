@@ -29,7 +29,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 INSERT INTO usuarios (nombre, apellido, email, nombre_usuario, contrasena, cuit, rol, cuit_empresa)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
-        try {
+
             jdbcTemplate.update(sql,
                     usuario.getNombre(),
                     usuario.getApellido(),
@@ -39,9 +39,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                     usuario.getCuit(),
                     usuario.getRol().name(),
                     usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
-        } catch (DataAccessException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+
     }
 
     @Override
@@ -55,8 +53,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 LEFT JOIN empresas e ON u.cuit_empresa = e.cuit
                 WHERE u.nombre_usuario = ?
                 """;
-
-        try {
+        try{
             Usuario usuario = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
@@ -104,8 +101,6 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
             return Optional.ofNullable(usuario);
         } catch (org.springframework.dao.EmptyResultDataAccessException e) {
             return Optional.empty();
-        } catch (DataAccessException e) {
-            throw new RuntimeException("Error al buscar usuario por nombre de usuario", e);
         }
     }
 
