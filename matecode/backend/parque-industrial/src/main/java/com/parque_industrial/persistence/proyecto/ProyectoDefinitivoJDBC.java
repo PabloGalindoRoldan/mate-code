@@ -1,13 +1,12 @@
-package com.parque_industrial.persistence.jdbc;
+package com.parque_industrial.persistence.proyecto;
 
 import com.parque_industrial.entities.ProyectoDefinitivo;
-import com.parque_industrial.services.DAOProyectos;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProyectoDefinitivoJDBC implements DAOProyectos<ProyectoDefinitivo> {
+public class ProyectoDefinitivoJDBC implements ProyectoDAO<ProyectoDefinitivo> {
 
     private final Connection connection;
 

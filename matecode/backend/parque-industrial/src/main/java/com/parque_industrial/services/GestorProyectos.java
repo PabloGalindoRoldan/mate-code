@@ -2,8 +2,8 @@ package com.parque_industrial.services;
 
 import com.parque_industrial.entities.ProyectoDefinitivo;
 import com.parque_industrial.entities.ProyectoPreliminar;
-import com.parque_industrial.persistence.jdbc.ProyectoDefinitivoJDBC;
-import com.parque_industrial.persistence.jdbc.ProyectoPreliminarJDBC;
+import com.parque_industrial.persistence.proyecto.ProyectoDefinitivoJDBC;
+import com.parque_industrial.persistence.proyecto.ProyectoPreliminarJDBC;
 
 import java.sql.Connection;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.parque_industrial.controllers.dtos.lote;
+package com.parque_industrial.dto.lote;
 
 public record AnularReservaRequestDTO(int identificacion) {
 }

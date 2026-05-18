@@ -1,4 +1,4 @@
-package com.parque_industrial.controllers.dtos.empresa;
+package com.parque_industrial.dto.empresa;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

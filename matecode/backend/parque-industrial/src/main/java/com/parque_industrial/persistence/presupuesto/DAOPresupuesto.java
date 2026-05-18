@@ -1,4 +1,4 @@
-package com.parque_industrial.services;
+package com.parque_industrial.persistence.presupuesto;
 
 import com.parque_industrial.entities.PartidaPresupuestaria;
 

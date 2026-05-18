@@ -1,17 +1,18 @@
 package com.parque_industrial.services;
 
 import com.parque_industrial.entities.Lote;
-import com.parque_industrial.persistence.dtos.LoteDTO;
+import com.parque_industrial.dto.lote.LoteDTO;
+import com.parque_industrial.persistence.lote.LoteDAO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakeDaoInmobiliario implements DAOInmobiliario{
+public class FakeLoteDAO implements LoteDAO {
     private Lote lote;
     private List<LoteDTO> listLotes;
 
-    public FakeDaoInmobiliario() {
+    public FakeLoteDAO() {
         this.listLotes = new ArrayList<>();
         asignarLotes();
     }

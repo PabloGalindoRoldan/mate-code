@@ -1,6 +1,5 @@
 package com.parque_industrial.entities;
 
-import com.parque_industrial.persistence.dtos.LoteDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

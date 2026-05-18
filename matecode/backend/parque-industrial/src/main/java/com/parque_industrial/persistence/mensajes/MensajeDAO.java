@@ -1,6 +1,6 @@
 package com.parque_industrial.persistence.mensajes;
 
-import com.parque_industrial.controllers.dtos.mensaje.ConversacionDTO;
+import com.parque_industrial.dto.mensajes.ConversacionDTO;
 import com.parque_industrial.entities.Mensaje;
 import java.util.List;
 
