@@ -3,6 +3,7 @@ package com.parque_industrial.persistence.jdbc;
 import com.parque_industrial.persistence.dtos.ConsumosDTO;
 import com.parque_industrial.services.ConsumosDAO;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class ConsumosJDBC implements ConsumosDAO {
     private final DataSource conecction;
     public ConsumosJDBC(DataSource conecction) {
@@ -21,21 +22,22 @@ public class ConsumosJDBC implements ConsumosDAO {
 // Consumos:{id(PK)(AUTO), mes, año, luz, gas, agua, residuos, cant_empleados, cant_vehiculos, cuit_empresa(FK)}
     @Override
     public void cargarConsumosDeEmpresa(ConsumosDTO consumosDTO) {
-        String sql = "insert into Consumos (año, mes, luz,  gas, agua, residuos, cant_empleados, cant_vehiculos, cuit_empresa) values (?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String sql = "insert into Consumos (cuit_empresa, año, mes, luz,  gas, agua, residuos, cant_empleados, cant_vehiculos) values (?, ?, ?, ?, ?, ?, ?, ?,?)";
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();
         Connection conn = null;
             conn = DataSourceUtils.getConnection(this.conecction);
             try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setInt(1, ano);
-                ps.setInt(2, mes);
-                ps.setFloat(3, consumosDTO.luz());
-                ps.setFloat(4, consumosDTO.gas());
-                ps.setFloat(5, consumosDTO.agua());
-                ps.setInt(6, consumosDTO.residuos());
-                ps.setInt(7, consumosDTO.cantEmpleados());
-                ps.setInt(7, consumosDTO.cantVehiculos());
-                ps.setInt(8, consumosDTO.idEmpresa());
+                ps.setLong(1, consumosDTO.idEmpresa());
+                ps.setInt(2, ano);
+                ps.setInt(3, mes);
+                ps.setFloat(4, consumosDTO.luz());
+                ps.setFloat(5, consumosDTO.gas());
+                ps.setFloat(6, consumosDTO.agua());
+                ps.setInt(7, consumosDTO.residuos());
+                ps.setInt(8, consumosDTO.cantEmpleados());
+                ps.setInt(9, consumosDTO.cantVehiculos());
+
                 ps.executeUpdate();
             }catch (SQLException exception){
                 throw  new IllegalArgumentException("Error al acceder a Railway:" + exception.getMessage());
@@ -45,7 +47,7 @@ public class ConsumosJDBC implements ConsumosDAO {
         }
 
     @Override
-    public void asignarCantEmpleados(int cuitEmoresa, int cant) {
+    public void asignarCantEmpleados(long cuitEmoresa, int cant)  {
         String sql = "update Consumos set cant_empleados = ? where cuit_empresa = ? and año = ? and mes = ?";
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();
@@ -53,7 +55,7 @@ public class ConsumosJDBC implements ConsumosDAO {
         conn = DataSourceUtils.getConnection(this.conecction);
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, cant);
-            ps.setInt(2, cuitEmoresa);
+            ps.setLong(2, cuitEmoresa);
             ps.setInt(3, ano);
             ps.setInt(4, mes);
             ps.executeUpdate();
@@ -66,7 +68,7 @@ public class ConsumosJDBC implements ConsumosDAO {
     }
 
     @Override
-    public void asignarCantVheiculos(int cuitEmoresa, int cant) {
+    public void asignarCantVheiculos(long cuitEmoresa, int cant) {
         String sql = "update Consumos set cant_vehiculos = ? where cuit_empresa = ? and año = ? and mes = ?";
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();
@@ -74,7 +76,7 @@ public class ConsumosJDBC implements ConsumosDAO {
         conn = DataSourceUtils.getConnection(this.conecction);
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, cant);
-            ps.setInt(2, cuitEmoresa);
+            ps.setLong(2, cuitEmoresa);
             ps.setInt(3, ano);
             ps.setInt(4, mes);
             ps.executeUpdate();
@@ -87,7 +89,7 @@ public class ConsumosJDBC implements ConsumosDAO {
     }
 
     @Override
-    public void asignarConsumoGas(int cuitEmoresa, float gas) {
+    public void asignarConsumoGas(long cuitEmoresa, float gas) {
         String sql = "update Consumos set gas = ? where cuit_empresa = ? and año = ? and mes = ?";
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();
@@ -95,7 +97,7 @@ public class ConsumosJDBC implements ConsumosDAO {
         conn = DataSourceUtils.getConnection(this.conecction);
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setFloat(1, gas);
-            ps.setInt(2, cuitEmoresa);
+            ps.setLong(2, cuitEmoresa);
             ps.setInt(3, ano);
             ps.setInt(4, mes);
             ps.executeUpdate();
@@ -108,7 +110,7 @@ public class ConsumosJDBC implements ConsumosDAO {
     }
 
     @Override
-    public void asignarConsumoLuz(int cuitEmoresa, float luz) {
+    public void asignarConsumoLuz(long cuitEmoresa, float luz) {
         String sql = "update Consumos set luz = ? where cuit_empresa = ? and año = ? and mes = ?";
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();
@@ -116,7 +118,7 @@ public class ConsumosJDBC implements ConsumosDAO {
         conn = DataSourceUtils.getConnection(this.conecction);
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setFloat(1, luz);
-            ps.setInt(2, cuitEmoresa);
+            ps.setLong(2, cuitEmoresa);
             ps.setInt(3, ano);
             ps.setInt(4, mes);
             ps.executeUpdate();
@@ -128,9 +130,29 @@ public class ConsumosJDBC implements ConsumosDAO {
         }
     }
 
+    @Override
+    public void asignarConsumoAgua(long cuitEmoresa, float agua) {
+        String sql = "update Consumos set agua = ? where cuit_empresa = ? and año = ? and mes = ?";
+        int ano = LocalDate.now().getYear();
+        int mes = LocalDate.now().getMonthValue();
+        Connection conn = null;
+        conn = DataSourceUtils.getConnection(this.conecction);
+        try(PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setFloat(1, agua);
+            ps.setLong(2, cuitEmoresa);
+            ps.setInt(3, ano);
+            ps.setInt(4, mes);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("Error al acceder a Railway:" + e.getMessage());
+        } finally {
+            DataSourceUtils.releaseConnection(conn, this.conecction);
+        }
+    }
+
 
     @Override
-    public void asignarConsumoResiduos(int cuitEmoresa, int kilosResiduos) {
+    public void asignarConsumoResiduos(long cuitEmoresa, int kilosResiduos) {
         String sql = "update Consumos set residuos = ? where cuit_empresa = ? and año = ? and mes = ?";
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();
@@ -138,7 +160,7 @@ public class ConsumosJDBC implements ConsumosDAO {
         conn = DataSourceUtils.getConnection(this.conecction);
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, kilosResiduos);
-            ps.setInt(2, cuitEmoresa);
+            ps.setLong(2, cuitEmoresa);
             ps.setInt(3, ano);
             ps.setInt(4, mes);
             ps.executeUpdate();
@@ -168,7 +190,7 @@ public class ConsumosJDBC implements ConsumosDAO {
                             res.getInt("residuos"),
                             res.getInt("cant_empleados"),
                             res.getInt("cant_vehiculos"),
-                            res.getInt("cuit_empresa"))
+                            res.getLong("cuit_empresa"))
                     );
                 }
                 return listaConsumos;
@@ -181,14 +203,14 @@ public class ConsumosJDBC implements ConsumosDAO {
     }
 
     @Override
-    public List<ConsumosDTO> generarReporteConsumoTotalEmpresa(String cuitEmpresa) {
+    public List<ConsumosDTO> generarReporteConsumoTotalEmpresa(long cuitEmpresa) {
         String sql = "select * from Consumos where cuit_empresa = ?";
         List<ConsumosDTO> listaConsumos = new ArrayList<>();
         Connection conn = null;
         try{
             conn = DataSourceUtils.getConnection(this.conecction);
             try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setString(1, cuitEmpresa);
+                ps.setLong(1, cuitEmpresa);
                 ResultSet res = ps.executeQuery();
                 while(res.next()){
                     listaConsumos.add(new ConsumosDTO(res.getInt("id"),
@@ -200,7 +222,7 @@ public class ConsumosJDBC implements ConsumosDAO {
                             res.getInt("residuos"),
                             res.getInt("cant_empleados"),
                             res.getInt("cant_vehiculos"),
-                            res.getInt("cuit_empresa"))
+                            res.getLong("cuit_empresa"))
                     );
                 }
                 return listaConsumos;
@@ -213,7 +235,7 @@ public class ConsumosJDBC implements ConsumosDAO {
     }
 
     @Override
-    public ConsumosDTO generarReporteConsumoEmpresa(String cuitEmpresa) {
+    public ConsumosDTO generarReporteConsumoEmpresa(long cuitEmpresa) {
         int ano = LocalDate.now().getYear();
         int mes = LocalDate.now().getMonthValue();
         String sql = "select * from Consumos where cuitEmpresa = ? and año = ? and mes = ?";
@@ -221,7 +243,7 @@ public class ConsumosJDBC implements ConsumosDAO {
         try{
             conn = DataSourceUtils.getConnection(this.conecction);
             try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setString(1, cuitEmpresa);
+                ps.setLong(1, cuitEmpresa);
                 ps.setInt(2, ano);
                 ps.setInt(3, mes);
                 ResultSet res = ps.executeQuery();
@@ -235,7 +257,7 @@ public class ConsumosJDBC implements ConsumosDAO {
                             res.getInt("residuos"),
                             res.getInt("cant_empleados"),
                             res.getInt("cant_vehiculos"),
-                            res.getInt("cuit_empresa")
+                            res.getLong("cuit_empresa")
                     );
                 }
                 else {

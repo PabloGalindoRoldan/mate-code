@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="ns">
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/ConsumosController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/dtos/consumos/AsignarAguaRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/dtos/consumos/AsignarCantEmpleadosRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/dtos/consumos/AsignarCantVehiculosRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/dtos/consumos/AsignarGasRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/dtos/consumos/AsignarLuzRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/dtos/consumos/AsignarResiduosRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/dtos/consumos/CrearRequestDTO.java" afterDir="false" />
+    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/persistence/ConsumosJDBCTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Consumos.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Consumos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/dtos/ConsumosDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/dtos/ConsumosDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/ConsumosJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/jdbc/ConsumosJDBC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/ConsumosDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/ConsumosDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorConsumos.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorConsumos.java" afterDir="false" />
@@ -26,7 +23,7 @@
   <component name="CopilotChats">
     <option name="panelChat">
       <chat>
-        <option name="activeSessionId" value="0e31c9bd-f4a0-4616-906f-7e9533ef012e" />
+        <option name="activeSessionId" value="dd90f08b-5986-4458-83d6-6ffa2a345895" />
         <option name="sessions">
           <session>
             <option name="chatType" value="PANEL" />
@@ -40,6 +37,14 @@
           <session>
             <option name="chatType" value="PANEL" />
             <option name="id" value="0e31c9bd-f4a0-4616-906f-7e9533ef012e" />
+            <option name="modeId" value="Ask" />
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+            <option name="targetType" value="LOCAL" />
+          </session>
+          <session>
+            <option name="chatType" value="PANEL" />
+            <option name="id" value="dd90f08b-5986-4458-83d6-6ffa2a345895" />
             <option name="modeId" value="Ask" />
             <option name="modelType" value="builtin_family" />
             <option name="modelValue" value="auto" />
@@ -65,8 +70,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -117,6 +122,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.ConsumosJDBCTest.executor": "Run",
+    "JUnit.ConsumosJDBCTest.insertarConsumo.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testCrearLote.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testReservarLote.executor": "Run",
@@ -159,19 +166,45 @@
       <recent name="com.parque_industrial.services" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LoteTest">
-    <configuration name="GestorInmobiliarioTest.testCancelarReservaLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ConsumosJDBCTest.insertarConsumo">
+    <configuration name="ConsumosJDBCTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parque-industrial" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.parque_industrial.services.*" />
+          <option name="PATTERN" value="com.parque_industrial.persistence.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
-      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
-      <option name="METHOD_NAME" value="testCancelarReservaLote" />
+      <option name="PACKAGE_NAME" value="com.parque_industrial.persistence" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.persistence.ConsumosJDBCTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <envs>
+        <env name="DB_URL" value="jdbc:mysql://root:FtAcYUVAsZndlHEqSzxdhDUfFrTNPbok@mysql.railway.internal:3306/railway" />
+        <env name="DB_USERNAME" value="root" />
+        <env name="DB_PASSWORD" value="FtAcYUVAsZndlHEqSzxdhDUfFrTNPbok " />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConsumosJDBCTest.insertarConsumo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parque-industrial" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.persistence.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.parque_industrial.persistence" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.persistence.ConsumosJDBCTest" />
+      <option name="METHOD_NAME" value="insertarConsumo" />
       <option name="TEST_OBJECT" value="method" />
+      <envs>
+        <env name="DB_URL" value="jdbc:mysql://root:FtAcYUVAsZndlHEqSzxdhDUfFrTNPbok@mysql.railway.internal:3306/railway" />
+        <env name="DB_USERNAME" value="root" />
+        <env name="DB_PASSWORD" value="FtAcYUVAsZndlHEqSzxdhDUfFrTNPbok" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -187,22 +220,6 @@
       <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
       <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
       <option name="METHOD_NAME" value="testCrearLote" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GestorInmobiliarioTest.testVenderLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="parque-industrial" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.parque_industrial.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
-      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
-      <option name="METHOD_NAME" value="testVenderLote" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -239,13 +256,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.ConsumosJDBCTest" />
+      <item itemvalue="JUnit.ConsumosJDBCTest.insertarConsumo" />
+      <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
+      <item itemvalue="JUnit.LoteTest" />
+      <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ConsumosJDBCTest.insertarConsumo" />
+        <item itemvalue="JUnit.ConsumosJDBCTest" />
         <item itemvalue="JUnit.LoteTest" />
         <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
         <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
-        <item itemvalue="JUnit.GestorInmobiliarioTest.testVenderLote" />
-        <item itemvalue="JUnit.GestorInmobiliarioTest.testCancelarReservaLote" />
       </list>
     </recent_temporary>
   </component>
@@ -288,7 +312,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778882359806</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Consumos y sus correspondientes terminado faltaria testear">
+      <option name="closed" value="true" />
+      <created>1778891293423</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778891293423</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -306,7 +338,8 @@
     <MESSAGE value="loteTest listo, se testeo la clase lote" />
     <MESSAGE value="ns" />
     <MESSAGE value="falta el controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="falta el controller" />
+    <MESSAGE value="Consumos y sus correspondientes terminado faltaria testear" />
+    <option name="LAST_COMMIT_MESSAGE" value="Consumos y sus correspondientes terminado faltaria testear" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

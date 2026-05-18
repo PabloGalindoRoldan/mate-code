@@ -9,8 +9,8 @@ public record ConsumosDTO(int id,
                           int residuos,
                           int cantEmpleados,
                           int cantVehiculos,
-                          int idEmpresa) {
-        public ConsumosDTO(float luz, float gas, float agua, int residuos, int cantEmpleados, int cantVehiculos, int idEmpresa) {
+                          long idEmpresa) {
+        public ConsumosDTO(float luz, float gas, float agua, int residuos, int cantEmpleados, int cantVehiculos, long idEmpresa) {
             //le pongo cero xq la bd le asigna el id automaticamente y el año y mes se asignan al momento de cargar el consumo
             this(0, 0, 0, luz, gas, agua, residuos, cantEmpleados, cantVehiculos, idEmpresa);
         }

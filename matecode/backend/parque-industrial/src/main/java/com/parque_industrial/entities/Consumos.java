@@ -10,9 +10,9 @@ public class Consumos {
     private int residuos;
     private int cantEmpleados;
     private int cantVehiculos;
-    private int idEmpresa;
+    private long idEmpresa;
 
-    public Consumos(float luz, float gas, float agua, int residuos, int cantEmpleados, int cantVehiculos, int idEmpresa) {
+    public Consumos(float luz, float gas, float agua, int residuos, int cantEmpleados, int cantVehiculos, long idEmpresa) {
         validarLuz(luz);
         validarGas(gas);
         validarAgua(agua);
@@ -96,7 +96,7 @@ public class Consumos {
         return cantVehiculos;
     }
 
-    public int getIdEmpresa() {
+    public long getIdEmpresa() {
         return idEmpresa;
     }
 
