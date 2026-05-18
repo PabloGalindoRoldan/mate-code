@@ -1,4 +1,4 @@
-package com.parque_industrial.controllers.dtos.mensaje;
+package com.parque_industrial.dto.mensajes;
 
 public class EnviarMensajeRequest {
     private String receptorUsername;

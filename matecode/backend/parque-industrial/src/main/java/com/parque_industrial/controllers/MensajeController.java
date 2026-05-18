@@ -1,7 +1,7 @@
 package com.parque_industrial.controllers;
 
-import com.parque_industrial.controllers.dtos.mensaje.ConversacionDTO;
-import com.parque_industrial.controllers.dtos.mensaje.EnviarMensajeRequest;
+import com.parque_industrial.dto.mensajes.ConversacionDTO;
+import com.parque_industrial.dto.mensajes.EnviarMensajeRequest;
 import com.parque_industrial.dto.auth.UsuarioResponse;
 import com.parque_industrial.entities.Mensaje;
 import com.parque_industrial.services.GestorMensajeria;

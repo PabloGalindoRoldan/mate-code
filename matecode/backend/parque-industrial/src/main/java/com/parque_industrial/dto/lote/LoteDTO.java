@@ -1,4 +1,4 @@
-package com.parque_industrial.persistence.dtos;
+package com.parque_industrial.dto.lote;
 import com.parque_industrial.entities.Lote;
 
 import java.time.LocalDate;

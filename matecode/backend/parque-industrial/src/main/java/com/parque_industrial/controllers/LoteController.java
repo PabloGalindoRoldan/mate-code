@@ -1,10 +1,10 @@
 package com.parque_industrial.controllers;
 
-import com.parque_industrial.controllers.dtos.lote.CrearRequestDTO;
-import com.parque_industrial.controllers.dtos.lote.ReservarRequestDTO;
-import com.parque_industrial.controllers.dtos.lote.VentaRequestDTO;
-import com.parque_industrial.controllers.dtos.lote.AnularReservaRequestDTO;
-import com.parque_industrial.persistence.dtos.LoteDTO;
+import com.parque_industrial.dto.lote.CrearRequestDTO;
+import com.parque_industrial.dto.lote.ReservarRequestDTO;
+import com.parque_industrial.dto.lote.VentaRequestDTO;
+import com.parque_industrial.dto.lote.AnularReservaRequestDTO;
+import com.parque_industrial.dto.lote.LoteDTO;
 import com.parque_industrial.services.GestorInmobiliario;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.parque_industrial.controllers;
 
-import com.parque_industrial.controllers.dtos.empresa.CargarConsumoRequest;
+import com.parque_industrial.dto.empresa.CargarConsumoRequest;
 import com.parque_industrial.dto.empresa.ConsumoResponseDTO;
 import com.parque_industrial.entities.Usuario;
 import com.parque_industrial.persistence.usuario.UsuarioDAO;

@@ -1,6 +1,6 @@
 package com.parque_industrial.services;
 
-import com.parque_industrial.controllers.dtos.empresa.CargarConsumoRequest;
+import com.parque_industrial.dto.empresa.CargarConsumoRequest;
 import com.parque_industrial.dto.empresa.ConsumoResponseDTO;
 import java.util.List;
 

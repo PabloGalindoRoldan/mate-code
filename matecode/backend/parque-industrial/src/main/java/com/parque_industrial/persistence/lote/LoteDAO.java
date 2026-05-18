@@ -1,10 +1,10 @@
-package com.parque_industrial.services;
+package com.parque_industrial.persistence.lote;
 import com.parque_industrial.entities.Lote;
-import com.parque_industrial.persistence.dtos.LoteDTO;
+import com.parque_industrial.dto.lote.LoteDTO;
 
 import java.util.List;
 
-public interface DAOInmobiliario {
+public interface LoteDAO {
     public void crearLote(Lote lote) ;
     public void venderLote(Lote lote);
     public void reservarLote(Lote lote);

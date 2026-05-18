@@ -1,14 +1,14 @@
 package com.parque_industrial.services;
 
 import com.parque_industrial.entities.Lote;
-import com.parque_industrial.persistence.dtos.LoteDTO;
+import com.parque_industrial.dto.lote.LoteDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GestorInmobiliarioTest {
-    private FakeDaoInmobiliario fake = new FakeDaoInmobiliario();
+    private FakeLoteDAO fake = new FakeLoteDAO();
     private GestorInmobiliario gestor = new GestorInmobiliario(fake);
     // lotes id 1,2 y 3vendidos -- 4,5 y 6 reservados-- 7,8 y 9 disponibles
 

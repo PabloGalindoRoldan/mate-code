@@ -1,26 +1,25 @@
 package com.parque_industrial.persistence;
 
 import com.parque_industrial.entities.Lote;
-import com.parque_industrial.persistence.dtos.LoteDTO;
-import com.parque_industrial.persistence.jdbc.LoteJDBC;
+import com.parque_industrial.dto.lote.LoteDTO;
+import com.parque_industrial.persistence.lote.LoteDAOJDBC;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 // Variable de Entorno de TestLote  : DB_URL=jdbc:mysql://root:VCRqgvrYHmBogQSHuCFfHoejJaHuiBzp@yamabiko.proxy.rlwy.net:36494/railway;DB_USERNAME=root;DB_PASSWORD=VCRqgvrYHmBogQSHuCFfHoejJaHuiBzp
 
 @SpringBootTest
-public class LoteJDBCTest {
+public class LoteDAOJDBCTest {
     @Autowired
     private DataSource dataSource;
     @Autowired
-    private LoteJDBC jdbc;
+    private LoteDAOJDBC jdbc;
   // datos que se encuentran en la bd, no cambian ya que luego de cada test se hace un rollback
 /*  id	    superficie	    estado	        fechaVenta	    montoVenta
     1	    500	            disponible		                    0

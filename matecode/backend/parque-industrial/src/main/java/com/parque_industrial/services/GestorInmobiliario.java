@@ -1,6 +1,7 @@
 package com.parque_industrial.services;
 import com.parque_industrial.entities.Lote;
-import com.parque_industrial.persistence.dtos.LoteDTO;
+import com.parque_industrial.dto.lote.LoteDTO;
+import com.parque_industrial.persistence.lote.LoteDAO;
 import org.springframework.stereotype.Service; // Importar la anotación @Service
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,8 +9,8 @@ import java.util.List;
 @Service // Indicar que esta clase es un servicio Spring
 @Transactional
 public class GestorInmobiliario{
-    private DAOInmobiliario dao;
-    public GestorInmobiliario(DAOInmobiliario dao) {
+    private LoteDAO dao;
+    public GestorInmobiliario(LoteDAO dao) {
         this.dao = dao;
     }
     // la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla

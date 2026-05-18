@@ -1,10 +1,10 @@
-package com.parque_industrial.services;
+package com.parque_industrial.persistence.inventario;
 
 import com.parque_industrial.entities.Elemento;
 
 import java.util.List;
 
-public interface DAOInventario {
+public interface InventarioDAO {
     public void agregarElemento(Elemento elemento);
     public void eliminarElemento(Elemento elemento);
     public List<Elemento> elementos();

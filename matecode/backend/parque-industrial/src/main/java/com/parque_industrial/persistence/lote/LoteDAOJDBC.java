@@ -1,7 +1,6 @@
-package com.parque_industrial.persistence.jdbc;
+package com.parque_industrial.persistence.lote;
 import com.parque_industrial.entities.Lote;
-import com.parque_industrial.persistence.dtos.LoteDTO;
-import com.parque_industrial.services.DAOInmobiliario;
+import com.parque_industrial.dto.lote.LoteDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
@@ -13,7 +12,7 @@ import org.springframework.jdbc.datasource.DataSourceUtils; // Importar DataSour
 
 @Repository
 @Transactional
-public class LoteJDBC implements DAOInmobiliario {
+public class LoteDAOJDBC implements LoteDAO {
     // columnas de lote
     private final String ID = "id";
     private final String SUPERFICIE = "superficie";
@@ -32,7 +31,7 @@ public class LoteJDBC implements DAOInmobiliario {
     private final String VENDIDO= "vendido";
 
     private final DataSource conecction;
-    public LoteJDBC(DataSource conecction) {
+    public LoteDAOJDBC(DataSource conecction) {
         this.conecction = conecction;
     }
 

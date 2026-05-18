@@ -1,9 +1,9 @@
-package com.parque_industrial.services;
+package com.parque_industrial.persistence.proyecto;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface DAOProyectos<T> {
+public interface ProyectoDAO<T> {
 
     // GUARDAR
     void guardar(T proyecto) throws SQLException;
