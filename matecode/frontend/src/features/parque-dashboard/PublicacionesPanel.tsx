@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Plus, Trash2, Calendar, Image, FileText } from "lucide-react";
 import API from '../../api/axios';
 import "./PublicacionesPanel.css";
-import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importamos tu spinner unificado
+import LoadingSpinner from "../../ui/loading/LoadingSpinner";
+import ConfirmAlert from "../../ui/confirmAlert/confirmAlert";
 
 interface Publicacion {
     id: number;
@@ -17,7 +18,7 @@ export default function PublicacionesPanel() {
     const [publicaciones, setPublicaciones] = useState<Publicacion[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [submitting, setSubmitting] = useState(false); // Estado para deshabilitar el botón al guardar
+    const [submitting, setSubmitting] = useState(false);
 
     // Form States
     const [titulo, setTitulo] = useState("");
@@ -25,6 +26,10 @@ export default function PublicacionesPanel() {
     const [alt, setAlt] = useState("");
     const [contenido, setContenido] = useState("");
     const [error, setError] = useState("");
+
+    // ConfirmAlert States
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [selectedPubId, setSelectedPubId] = useState<number | null>(null);
 
     const fetchPublicaciones = async () => {
         try {
@@ -83,14 +88,24 @@ export default function PublicacionesPanel() {
         }
     };
 
-    const handleDelete = async (id: number) => {
-        if (!window.confirm("¿Estás seguro de que deseas eliminar esta publicación?")) return;
+    // Abre el modal de confirmación y guarda el ID de la publicación elegida
+    const triggerDeleteAlert = (id: number) => {
+        setSelectedPubId(id);
+        setIsAlertOpen(true);
+    };
+
+    // Ejecuta la eliminación real si el usuario confirma en el modal
+    const handleConfirmDelete = async () => {
+        if (selectedPubId === null) return;
 
         try {
-            await API.delete(`/api/publicaciones/${id}`);
-            setPublicaciones(publicaciones.filter(pub => pub.id !== id));
+            await API.delete(`/api/publicaciones/${selectedPubId}`);
+            setPublicaciones(publicaciones.filter(pub => pub.id !== selectedPubId));
         } catch (err) {
             alert("Error al intentar eliminar la publicación. Verifica tus credenciales.");
+        } finally {
+            setIsAlertOpen(false);
+            setSelectedPubId(null);
         }
     };
 
@@ -151,7 +166,7 @@ export default function PublicacionesPanel() {
                                                 <td className="pubActionsCell">
                                                     <button
                                                         className="btnActionDelete"
-                                                        onClick={() => handleDelete(pub.id)}
+                                                        onClick={() => triggerDeleteAlert(pub.id)}
                                                         title="Eliminar publicación"
                                                     >
                                                         <Trash2 size={16} />
@@ -245,6 +260,20 @@ export default function PublicacionesPanel() {
                         </div>
                     </form>
                 </div>
+            )}
+
+            {/* Renderizado condicional del componente de alerta customizado */}
+            {isAlertOpen && (
+                <ConfirmAlert
+                    isOpen={isAlertOpen}
+                    title="¿Eliminar publicación?"
+                    message="Esta acción no se puede deshacer. La novedad dejará de mostrarse inmediatamente en la página principal."
+                    onConfirm={handleConfirmDelete}
+                    onCancel={() => {
+                        setIsAlertOpen(false);
+                        setSelectedPubId(null);
+                    }}
+                />
             )}
         </div>
     );

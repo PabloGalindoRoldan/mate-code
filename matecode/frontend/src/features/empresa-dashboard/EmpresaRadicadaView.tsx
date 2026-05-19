@@ -8,18 +8,25 @@ import "./EmpresaRadicadaView.css";
 
 export default function EmpresaRadicadaView() {
     const [empresa, setEmpresa] = useState<any>(null);
+    const [usuario, setUsuario] = useState<any>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("info");
 
     useEffect(() => {
-        // Recuperamos el string del sessionStorage (ajustá la clave "user" si usás otra)
+        // Recuperamos el string del sessionStorage usando la clave "user"
         const sessionUser = sessionStorage.getItem("user");
         if (sessionUser) {
             try {
                 const parsedUser = JSON.parse(sessionUser);
-                // Extraemos el objeto 'empresa' anidado que me mostraste
-                if (parsedUser && parsedUser.empresa) {
-                    setEmpresa(parsedUser.empresa);
+
+                if (parsedUser) {
+                    // Guardamos el usuario completo (contiene nombre, apellido, cuit, nombreUsuario, etc.)
+                    setUsuario(parsedUser);
+
+                    // Extraemos y guardamos la empresa anidada
+                    if (parsedUser.empresa) {
+                        setEmpresa(parsedUser.empresa);
+                    }
                 }
             } catch (err) {
                 console.error("Error al parsear el usuario del sessionStorage", err);
@@ -44,11 +51,11 @@ export default function EmpresaRadicadaView() {
             <div className="main-layout">
                 <MenuEmpresa isOpen={isMenuOpen} setActiveTab={setActiveTab} activeTab={activeTab} />
                 <main className="content-area">
-                    {/* Pasamos los datos directos de la sesión */}
                     <EmpresaRadicadaBody
                         empresa={empresa}
                         isMenuOpen={isMenuOpen}
                         activeTab={activeTab}
+                        usuario={usuario}
                     />
                 </main>
             </div>

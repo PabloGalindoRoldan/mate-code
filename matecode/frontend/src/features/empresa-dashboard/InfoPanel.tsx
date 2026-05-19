@@ -25,9 +25,10 @@ interface ConsumoData {
 
 interface InfoPanelProps {
     empresa: any;
+    usuario: any; // Objeto directo del usuario logueado en la sesión activa
 }
 
-export default function InfoPanel({ empresa }: InfoPanelProps) {
+export default function InfoPanel({ empresa, usuario }: InfoPanelProps) {
     // Estados para la lógica asíncrona de los gráficos
     const [consumos, setConsumos] = useState<ConsumoData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -165,20 +166,18 @@ export default function InfoPanel({ empresa }: InfoPanelProps) {
                         <strong className="card-value">{empresa?.cuit || "No disponible"}</strong>
                     </div>
 
-                    {/* --- BLOQUE OPERADOR --- */}
+                    {/* --- BLOQUE OPERADOR (Directo de la sesión activa) --- */}
                     <div className="info-card">
                         <span className="card-label">Contacto Administrativo</span>
                         <strong className="card-value">
-                            {empresa?.representantes?.[0]
-                                ? `${empresa.representantes[0].nombre} ${empresa.representantes[0].apellido}`
-                                : "No asignado"}
+                            {usuario ? `${usuario.nombre} ${usuario.apellido}` : "No asignado"}
                         </strong>
                     </div>
 
                     <div className="info-card">
                         <span className="card-label">CUIT del Operador</span>
                         <strong className="card-value">
-                            {empresa?.representantes?.[0]?.cuit || "No disponible"}
+                            {usuario?.cuit || "No disponible"}
                         </strong>
                     </div>
 
@@ -186,14 +185,14 @@ export default function InfoPanel({ empresa }: InfoPanelProps) {
                     <div className="info-card">
                         <span className="card-label">Cuenta de Usuario</span>
                         <strong className="card-value" style={{ color: "var(--verde2)" }}>
-                            @{empresa?.representantes?.[0]?.nombreUsuario || "No disponible"}
+                            {usuario ? `@${usuario.nombreUsuario}` : "No disponible"}
                         </strong>
                     </div>
 
                     <div className="info-card">
                         <span className="card-label">Correo Electrónico</span>
                         <strong className="card-value">
-                            {empresa?.representantes?.[0]?.email || "No disponible"}
+                            {usuario?.email || "No disponible"}
                         </strong>
                     </div>
                 </div>
