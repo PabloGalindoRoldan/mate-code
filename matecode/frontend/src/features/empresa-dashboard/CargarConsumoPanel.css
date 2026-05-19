@@ -108,23 +108,6 @@
     color: white;
 }
 
-.alert {
-    padding: 12px;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    font-weight: 500;
-}
-
-.alert-danger {
-    background-color: #fde8e8;
-    color: #9b1c1c;
-}
-
-.alert-success {
-    background-color: #def7ec;
-    color: #03543f;
-}
-
 /* RESPONSIVE DESIGN */
 @media (max-width: 640px) {
     .form-grid {

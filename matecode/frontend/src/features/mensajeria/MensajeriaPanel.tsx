@@ -4,7 +4,7 @@ import { mensajeriaApi } from "../../api/axios";
 import API from "../../api/axios";
 import { Send, User, Megaphone } from "lucide-react";
 import "./MensajeriaPanel.css";
-import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importamos tu nuevo componente
+import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 
 interface Conversacion {
     contactoUsername: string;
