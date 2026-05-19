@@ -15,7 +15,7 @@ export default function SysAdminBody() {
             {!registrar ? <h2 className="adminTitle">Vista de administrador del Sistema</h2> : ""}
             {registrar ? <button className="menu-toggle-btn" onClick={handleClick}><ChevronLeft /></button> : ""}
             {!registrar ? (
-                <button onClick={handleClick} className="buttonRegistrarseLanding">
+                <button onClick={handleClick} className="buttonRegistrarAdmin">
                     Crear Nuevo Administrador de Parque
                 </button>
             ) : (

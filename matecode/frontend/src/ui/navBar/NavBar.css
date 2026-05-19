@@ -1,58 +1,65 @@
+/* NavBar.css */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
     height: 80px;
-    color: #30332D;
     background-color: var(--verde1);
+    color: #30332D;
     width: 100%;
-    margin: 0;
     box-sizing: border-box;
+}
+
+.logo a {
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    letter-spacing: 1px;
 }
 
 .buttonList {
     display: flex;
-    gap: 1rem;
-    align-items: end;
-    justify-content: end;
+    gap: 1.5rem;
+    align-items: center;
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .navButtonContacto {
     background-color: transparent;
     border: none;
-    color: var(--gris1);
+    color: rgba(255, 255, 255, 0.85);
     padding: 0.5rem 1rem;
-    border-radius: 6px;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     font-weight: 500;
-    position: relative;
 }
 
 .navButtonContacto:hover {
-    color: var(--gris2);
-    transform: translateY(-2px);
+    color: #ffffff;
 }
 
 .navButtonIngresar {
     background-color: transparent;
-    border: 2px solid var(--gris1);
-    color: var(--gris1);
-    padding: 0.5rem 1rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+    padding: 0.5rem 1.25rem;
     border-radius: 6px;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     font-weight: 500;
 }
 
 .navButtonIngresar:hover {
-    background-color: var(--gris1);
-    color: var(--verde1);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
 }
+
 
 .navButtonRegistrarse {
     background-color: var(--gris1);
@@ -74,15 +81,13 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Container for the logged-in elements */
+
 .navUserSection {
     display: flex;
     align-items: center;
-    gap: 15px;
-    /* Spaces out the avatar badge and the logout button */
+    gap: 16px;
 }
 
-/* The circular initials avatar badge */
 .userAvatar {
     width: 40px;
     height: 40px;
@@ -100,8 +105,55 @@
     user-select: none;
 }
 
-/* Hover effects for the avatar badge link */
 .userAvatar:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.navbar.navbar-transparent {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Modificamos los elementos internos del navbar SOLO cuando está en modo transparente */
+.navbar-transparent .logo a {
+    color: #ffffff;
+}
+
+.navbar-transparent .navButtonContacto {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.navbar-transparent .navButtonContacto:hover {
+    color: #ffffff;
+}
+
+.navbar-transparent .navButtonIngresar {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}
+
+.navbar-transparent .navButtonIngresar:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.navbar-transparent .userAvatar {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    color: var(--verde1);
+}
+
+.navbar-transparent .navButtonRegistrarse {
+    background-color: var(--verde1);
+    border: 1.5px solid var(--verde1);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.navbar-transparent .navButtonRegistrarse:hover {
+    background-color: var(--verde2);
+    border-color: var(--verde2);
+    box-shadow: 0 4px 12px rgba(140, 198, 63, 0.25);
 }

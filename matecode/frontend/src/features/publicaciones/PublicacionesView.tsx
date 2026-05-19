@@ -1,3 +1,4 @@
+// PublicacionesView.tsx
 import React from 'react';
 import PublicacionesTarjeta from './PublicacionesTarjeta';
 import API from '../../api/axios';
@@ -27,20 +28,42 @@ export default function PublicacionesView() {
             });
     }, []);
 
+    // Renderiza 3 tarjetas falsas con animación de carga
+    const renderSkeletons = () => (
+        <div className="publicacionesContainer">
+            {[1, 2, 3].map((n) => (
+                <div className="pub-skeleton-card" key={n}>
+                    <div className="pub-skeleton-img shimmer"></div>
+                    <div className="pub-skeleton-info">
+                        <div className="pub-skeleton-title shimmer"></div>
+                        <div className="pub-skeleton-text shimmer"></div>
+                        <div className="pub-skeleton-text shimmer" style={{ width: '80%' }}></div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+
     return (
-        <div className="publicacionesView">
-            <h2>{loading ? "Cargando Publicaciones..." : "Publicaciones"}</h2>
-            {!loading && (
+        <section className="publicacionesSection">
+            <div className="publicacionesHeader">
+                <h2>Publicaciones y Novedades</h2>
+                <div className="publicacionesHeader__line"></div>
+            </div>
+
+            {loading ? (
+                renderSkeletons()
+            ) : publicaciones.length === 0 ? (
+                <div className="publicacionesNoData">
+                    <p>No hay novedades disponibles en este momento.</p>
+                </div>
+            ) : (
                 <div className="publicacionesContainer">
-                    {publicaciones.length === 0 ? (
-                        <p>No hay novedades disponibles en este momento.</p>
-                    ) : (
-                        publicaciones.slice(0, 6).map((pub) => (
-                            <PublicacionesTarjeta className="PublicacionTarjeta" key={pub.id} {...pub} />
-                        ))
-                    )}
+                    {publicaciones.slice(0, 6).map((pub) => (
+                        <PublicacionesTarjeta key={pub.id} {...pub} />
+                    ))}
                 </div>
             )}
-        </div>
+        </section>
     );
 }
