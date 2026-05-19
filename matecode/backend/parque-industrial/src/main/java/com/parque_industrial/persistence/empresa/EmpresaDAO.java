@@ -1,5 +1,6 @@
 package com.parque_industrial.persistence.empresa;
 
+import com.parque_industrial.dto.empresa.EmpresaDTO;
 import com.parque_industrial.entities.Empresa;
 import com.parque_industrial.entities.Usuario;
 
@@ -10,16 +11,12 @@ public interface EmpresaDAO {
 
     boolean existeEmpresa(String cuit);
 
-//    public List<Empresa> empresasRadicadas();
-//
-//    public List<Empresa> empresasNoRedicadas();
-//
-//    public List<Empresa> empresas();
-//
-//    public void asignarRepresentante(Usuario representanteEmpresa);
-//
-//    public void cargarEmpresasRadicadas(List<Empresa> empresas); // este es el metodo para cargar las empresas ya
-//    // existentes, cargar su respectivo lote
+    public List<EmpresaDTO> empresasRadicadas();
+    public List<EmpresaDTO> empresasNoRedicadas();
+    public List<EmpresaDTO> empresas();
+    public EmpresaDTO buscarEmpresaPorCuit(String cuit);
+    public void asignarLote(String cuit, Integer idLote);
+
 }
 
 
