@@ -1,0 +1,73 @@
+.configuracionPanel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.configuracion-sections-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.configuracion-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card-header h3 {
+    margin: 0 0 4px 0;
+    color: #1e293b;
+    font-size: 1.2rem;
+}
+
+.card-header p {
+    margin: 0 0 20px 0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.form-grid-settings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.submit-settings-btn {
+    background-color: var(--verde1);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-settings-btn:hover {
+    background-color: var(--verde2);
+}
+
+.submit-settings-btn:disabled {
+    background-color: var(--verde3);
+    cursor: not-allowed;
+}
+
+.placeholder-card {
+    border-style: dashed;
+    background: #f8fafc;
+    min-height: 200px;
+}
+
+.placeholder-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}

@@ -2,12 +2,13 @@
     width: 260px;
     background-color: var(--gris1);
     color: white;
-    height: calc(100vh - 100px);
+    height: 100%;
     position: absolute;
     left: 0;
     transition: transform 0.3s ease;
     z-index: 100;
     padding-top: 20px;
+    box-sizing: border-box;
 }
 
 .menu-sidebar.closed {
