@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.7)),
-        url('https://images.pexels.com/photos/257700/pexels-photo-257700.jpeg') no-repeat center center/cover;
+        url("../../assets/images/background.jpeg") no-repeat center center/cover;
 }
 
 .loginContainer {

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '../../ui/navBar/NavBar';
 import Footer from '../../ui/footer/Footer';
@@ -72,7 +73,7 @@ export default function RegisterView() {
         return isValid;
     };
 
-    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null);
 
@@ -80,7 +81,6 @@ export default function RegisterView() {
 
         setIsLoading(true);
         try {
-            // Note: Strip CUIT hyphens here if your backend requires only numbers
             const response = await api.post('/auth/register', formData);
             if (response.status === 200 || response.status === 201) {
                 setIsSubmitted(true);
@@ -98,49 +98,63 @@ export default function RegisterView() {
         { label: 'Apellido', name: 'apellido', type: 'text' },
         { label: 'Email', name: 'email', type: 'email' },
         { label: 'CUIT Usuario', name: 'cuitUsuario', type: 'text' },
-        { label: 'Razon Social de la Empresa', name: 'razonSocialEmpresa', type: 'text' },
+        { label: 'Razón Social de la Empresa', name: 'razonSocialEmpresa', type: 'text' },
         { label: 'CUIT de la Empresa', name: 'cuitEmpresa', type: 'text' },
         { label: 'Contraseña', name: 'password', type: 'password' },
         { label: 'Confirmar Contraseña', name: 'confirmarPassword', type: 'password' },
     ];
 
     return (
-        <div className="loginView">
-            <NavBar />
-            <div className="loginContainer">
+        <div className="reg-view-main">
+            <NavBar variant="solid" />
+
+            <div className="reg-view-container">
                 {isSubmitted ? (
-                    <div className="successCard">
-                        <Alert type="success" message="¡Registro exitoso! Ya podés iniciar sesión." />
-                        <div className="botonera">
-                            <button className="botonBotonera" onClick={() => navigate('/login')}>Iniciar sesión</button>
-                            <button className="botonBotonera" onClick={() => navigate('/')}>Home</button>
+                    <div className="reg-success-card">
+                        <Alert type="success" message="¡Registro exitoso! Su solicitud ha sido enviada correctamente." />
+                        <div className="reg-success-actions">
+                            <button className="reg-btn-action-primary" onClick={() => navigate('/login')}>Iniciar sesión</button>
+                            <button className="reg-btn-action-secondary" onClick={() => navigate('/')}>Ir al Inicio</button>
                         </div>
                     </div>
                 ) : (
-                    <div className="form-wrapper">
-                        <form className="loginForm" onSubmit={handleSubmit} noValidate>
-                            {fields.map((field) => (
-                                <div className="form-group" key={field.name}>
-                                    <label htmlFor={field.name}>{field.label}</label>
-                                    <input
-                                        id={field.name}
-                                        className={formErrors[field.name] ? 'input-error' : ''}
-                                        type={field.type}
-                                        name={field.name}
-                                        value={(formData as any)[field.name]}
-                                        onChange={handleChange}
-                                        disabled={isLoading}
-                                        autoComplete="off"
-                                    />
-                                    {formErrors[field.name] && (
-                                        <span className="error-text">{formErrors[field.name]}</span>
-                                    )}
-                                </div>
-                            ))}
+                    <div className="reg-form-card">
+                        <div className="reg-form-header">
+                            <h2>Solicitud de Registro</h2>
+                            <p>Complete los datos del representante y de la firma radicada</p>
+                        </div>
 
-                            {error && <Alert type="error" message={error} />}
-                            <button type="submit" disabled={isLoading}>
-                                {isLoading ? "Procesando..." : "Registrarse"}
+                        <form className="reg-form-element" onSubmit={handleSubmit} noValidate>
+                            {/* Eliminamos el grid complejo, ahora es una lista limpia */}
+                            <div className="reg-form-stack">
+                                {fields.map((field) => (
+                                    <div className="reg-form-group" key={field.name}>
+                                        <label className="reg-form-label" htmlFor={field.name}>{field.label}</label>
+                                        <input
+                                            id={field.name}
+                                            className={`reg-form-input ${formErrors[field.name] ? 'reg-input-has-error' : ''}`}
+                                            type={field.type}
+                                            name={field.name}
+                                            value={(formData as any)[field.name]}
+                                            onChange={handleChange}
+                                            disabled={isLoading}
+                                            autoComplete="off"
+                                        />
+                                        {formErrors[field.name] && (
+                                            <span className="reg-error-text-span">{formErrors[field.name]}</span>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+
+                            {error && (
+                                <div className="reg-alert-wrapper">
+                                    <Alert type="error" message={error} />
+                                </div>
+                            )}
+
+                            <button className="reg-submit-btn-form" type="submit" disabled={isLoading}>
+                                {isLoading ? "Procesando..." : "Enviar Registro"}
                             </button>
                         </form>
                     </div>
