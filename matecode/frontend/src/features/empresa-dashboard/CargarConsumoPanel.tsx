@@ -16,16 +16,33 @@ interface ConsumoHistorial {
 }
 
 export default function CargarConsumoPanel() {
-    // 1. Estado del Formulario
+
+    const añoActual = new Date().getFullYear();
+    const opcionesAños = Array.from({ length: 3 }, (_, i) => añoActual - 2 + i);
     const [formData, setFormData] = useState({
         mes: new Date().getMonth() + 1,
-        ano: 2026,
+        ano: añoActual,
         gas: "",
         luz: "",
         agua: "",
         empleados: "",
         vehiculos: "",
     });
+
+    const MESES = [
+        { valor: 1, nombre: "enero" },
+        { valor: 2, nombre: "febrero" },
+        { valor: 3, nombre: "marzo" },
+        { valor: 4, nombre: "abril" },
+        { valor: 5, nombre: "mayo" },
+        { valor: 6, nombre: "junio" },
+        { valor: 7, nombre: "julio" },
+        { valor: 8, nombre: "agosto" },
+        { valor: 9, nombre: "septiembre" },
+        { valor: 10, nombre: "octubre" },
+        { valor: 11, nombre: "noviembre" },
+        { valor: 12, nombre: "diciembre" }
+    ];
 
     const [historial, setHistorial] = useState<ConsumoHistorial[]>([]);
     const [loadingHistorial, setLoadingHistorial] = useState<boolean>(true); // Spinner para la tabla
@@ -121,9 +138,9 @@ export default function CargarConsumoPanel() {
                     <div className="form-group">
                         <label htmlFor="mes">Mes</label>
                         <select id="mes" name="mes" value={formData.mes} onChange={handleChange} disabled={loading}>
-                            {Array.from({ length: 12 }, (_, i) => (
-                                <option key={i + 1} value={i + 1}>
-                                    {new Date(2026, i).toLocaleString("es-AR", { month: "long" })}
+                            {MESES.map(({ valor, nombre }) => (
+                                <option key={valor} value={valor}>
+                                    {nombre}
                                 </option>
                             ))}
                         </select>
@@ -132,8 +149,11 @@ export default function CargarConsumoPanel() {
                     <div className="form-group">
                         <label htmlFor="ano">Año</label>
                         <select id="ano" name="ano" value={formData.ano} onChange={handleChange} disabled={loading}>
-                            <option value={2026}>2026</option>
-                            <option value={2027}>2027</option>
+                            {opcionesAños.map(ano => (
+                                <option key={ano} value={ano}>
+                                    {ano}
+                                </option>
+                            ))}
                         </select>
                     </div>
 

@@ -8,8 +8,8 @@
             }
 
             .alert-success {
-                background-color: #d4edda;
-                color: #43A047;
+                background-color: #e0f0e4;
+                color: var(--verde3);
                 border: 1px solid #c3e6cb;
             }
 
