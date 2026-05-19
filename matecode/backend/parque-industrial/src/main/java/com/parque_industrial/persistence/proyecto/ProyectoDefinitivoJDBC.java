@@ -23,7 +23,7 @@ public class ProyectoDefinitivoJDBC implements ProyectoDAO<ProyectoDefinitivo> {
 
         PreparedStatement stmt = connection.prepareStatement(sql);
 
-        stmt.setString(1, p.getIdentificacion());
+        stmt.setString(1, p.getCuitEmpresaAsociada());
         stmt.setString(2, p.getActividadPrincipal());
         stmt.setString(3, p.getReferente());
         stmt.setInt(4, p.getSuperficieRequerida());
@@ -96,7 +96,7 @@ public class ProyectoDefinitivoJDBC implements ProyectoDAO<ProyectoDefinitivo> {
         stmt.setBoolean(9, p.isViabilidadFinanciera());
         stmt.setString(10, p.getInformeAmbiental());
 
-        stmt.setString(11, p.getIdentificacion());
+        stmt.setString(11, p.getCuitEmpresaAsociada());
 
         stmt.executeUpdate();
     }

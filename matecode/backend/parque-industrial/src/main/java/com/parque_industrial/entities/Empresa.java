@@ -8,7 +8,6 @@ public class Empresa {
     private String razonSocial;
     private boolean esRadicada;
     private List<Lote> lote; // Inicializada para evitar NullPointerException
-    private Proyecto proyecto;
 
     // Constructor adaptado a las columnas reales de tu BDD
     public Empresa(String identificacion, String razonSocial, boolean esRadicada) {
@@ -40,9 +39,6 @@ public class Empresa {
         this.lote.add(lote);
     }
 
-    public void crearProyecto(Proyecto proyecto) {
-        this.proyecto = proyecto;
-    }
 
     // Getters y Setters
     public String getIdentificacion() {
@@ -65,9 +61,6 @@ public class Empresa {
         this.esRadicada = esRadicada;
     }
 
-    public Proyecto getProyecto() {
-        return proyecto;
-    }
 
     public List<Lote> getLote() {
         return lote;

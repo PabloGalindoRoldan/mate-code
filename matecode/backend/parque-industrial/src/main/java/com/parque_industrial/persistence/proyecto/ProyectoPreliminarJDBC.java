@@ -21,7 +21,7 @@ public class ProyectoPreliminarJDBC implements ProyectoDAO<ProyectoPreliminar> {
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setString(1, p.getIdentificacion());
+        stmt.setString(1, p.getCuitEmpresaAsociada());
         stmt.setString(2, p.getActividadPrincipal());
         stmt.setString(3, p.getReferente());
         stmt.setInt(4, p.getSuperficieRequerida());
@@ -81,7 +81,7 @@ public class ProyectoPreliminarJDBC implements ProyectoDAO<ProyectoPreliminar> {
         stmt.setDouble(4, p.getEnergiaRequerida());
         stmt.setInt(5, p.getPersonalAOcupar());
         stmt.setString(6, p.getEstado());
-        stmt.setString(7, p.getIdentificacion());
+        stmt.setString(7, p.getCuitEmpresaAsociada());
 
         stmt.executeUpdate();
     }
