@@ -23,6 +23,7 @@ public class GestorProyectos{
     // -------------------- CREAR --------------------
 
     public void crearProyectoPreliminar(ProyectoPreliminar proyecto) throws Exception {
+      // recibe un dao, lo transforma y despues lo guarda.
         preliminarDAO.guardar(proyecto);
     }
 
