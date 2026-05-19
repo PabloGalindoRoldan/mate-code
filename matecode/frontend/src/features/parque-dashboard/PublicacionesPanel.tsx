@@ -3,7 +3,7 @@ import { Plus, Trash2, Calendar, Image, FileText } from "lucide-react";
 import API from '../../api/axios';
 import "./PublicacionesPanel.css";
 import LoadingSpinner from "../../ui/loading/LoadingSpinner";
-import ConfirmAlert from "../../ui/confirmAlert/confirmAlert";
+import ConfirmAlert from "../../ui/confirmAlert/ConfirmAlert";
 
 interface Publicacion {
     id: number;
