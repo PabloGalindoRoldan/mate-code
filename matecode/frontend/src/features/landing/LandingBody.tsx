@@ -1,10 +1,36 @@
 // LandingBody.tsx
+import { useState, useEffect } from "react";
 import "./LandingBody.css";
 import { useNavigate } from "react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 export default function LandingBody() {
     const navigate = useNavigate();
+    const [opacity, setOpacity] = useState(1);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScroll = window.scrollY;
+            const heroHeight = window.innerHeight;
+
+            // Calcula la opacidad: disminuye a medida que scrolleas.
+            // Desaparecerá por completo antes de llegar a la mitad del Hero (heroHeight / 2)
+            const newOpacity = Math.max(0, 1 - (currentScroll / (heroHeight / 2.5)));
+            setOpacity(newOpacity);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        // Limpiamos el evento cuando el componente se desmonta
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const handleScrollDown = () => {
+        window.scrollTo({
+            top: window.innerHeight,
+            behavior: "smooth"
+        });
+    };
 
     return (
         <section className="landingBodySection">
@@ -23,6 +49,15 @@ export default function LandingBody() {
                 <button className="buttonRegistrarseLanding" onClick={() => navigate("/register")}>
                     Solicitar Registro
                 </button>
+            </div>
+
+            <div
+                className={`scrollIndicatorLanding ${opacity === 0 ? 'hidden' : ''}`}
+                style={{ opacity: opacity }}
+                onClick={handleScrollDown}
+                aria-label="Scrollear hacia abajo"
+            >
+                <ChevronDown size={32} color="var(--verde1)" />
             </div>
         </section>
     );
