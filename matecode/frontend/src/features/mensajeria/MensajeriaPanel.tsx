@@ -76,12 +76,11 @@ export default function MensajeriaPanel() {
         return () => clearInterval(interval);
     }, [chatActivo]);
 
-    // Auto-scroll al final del chat cuando entran nuevos mensajes
     useEffect(() => {
         if (!loading) {
             mensajesEndRef.current?.scrollIntoView({ behavior: "smooth" });
         }
-    }, [mensajes, loading]);
+    }, [loading]);
 
     const cargarConversaciones = async () => {
         try {
