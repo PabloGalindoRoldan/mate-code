@@ -6,7 +6,7 @@ public abstract class Proyecto {
    public static final String RECHAZADO = "rechazado";
     public static final String RECTIFICADO = "rectificado";
     public static final String BORRADOR = "borrador";
-    protected String identificacion;// seria la misma que de la empresa, el cuit
+    protected String cuitEmpresaAsociada;// seria la misma que de la empresa, el cuit
     protected String actividadPrincipal;
     protected String referente;
     protected int superficieRequerida;
@@ -14,8 +14,9 @@ public abstract class Proyecto {
     protected int personalAOcupar;
     protected String estado;
 
-    public Proyecto(String identificacion, String actividadPrincipal, String referente, int superficieRequerida, double energiaRequerida, int personalAOcupar) {
-        this.identificacion = identificacion;
+    public Proyecto(String cuitEmpresaAsociada, String actividadPrincipal, String referente, int superficieRequerida, double energiaRequerida, int personalAOcupar) {
+        validarCuit(cuitEmpresaAsociada);
+        this.cuitEmpresaAsociada = cuitEmpresaAsociada;
         this.actividadPrincipal = actividadPrincipal;
         this.referente = referente;
         this.superficieRequerida = superficieRequerida;
@@ -47,7 +48,7 @@ public abstract class Proyecto {
     // quien deba aprobar rechazar un proyecto debe ser un admin
 
     public void validar() throws Exception{
-        if (identificacion == null || identificacion.isBlank()) {
+        if (cuitEmpresaAsociada == null || cuitEmpresaAsociada.isBlank()) {
             throw new Exception("La identificación del proyecto no puede estar vacía");
         }
         if (actividadPrincipal == null || actividadPrincipal.isBlank()) {
@@ -67,9 +68,20 @@ public abstract class Proyecto {
         }
     }
 
+    private void validarCuit(String cuit) {
+        if (cuit == null || cuit.isBlank()) {
+            throw new IllegalArgumentException("El CUIT no puede estar vacío.");
+        }
+        // formato debe ser XX-XXXXXXXX-X
+        // Esto valida que sean 2 dígitos, un guion, 8 dígitos, un guion y 1 dígito.
+        String regexCuit = "^\\d{2}-\\d{8}-\\d{1}$";
+        if (!cuit.matches(regexCuit)) {
+            throw new IllegalArgumentException("El formato del CUIT es inválido. Debe ser XX-XXXXXXXX-X.");
+        }
+    }
 
-    public String getIdentificacion() {
-        return identificacion;
+    public String getCuitEmpresaAsociada() {
+        return cuitEmpresaAsociada;
     }
 
     public String getActividadPrincipal() {

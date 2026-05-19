@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api/axios";
 import "./CargarConsumoPanel.css";
-import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importación del spinner unificado
+import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 
 interface ConsumoHistorial {
     id: number;
