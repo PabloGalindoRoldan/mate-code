@@ -7,7 +7,7 @@ public class Empresa {
     private String identificacion; // CUIT de la empresa (XX-XXXXXXXX-X)
     private String razonSocial;
     private boolean esRadicada;
-    private List<Lote> lote; // Inicializada para evitar NullPointerException
+    private Integer idlote; // Inicializada para evitar NullPointerException
 
     // Constructor adaptado a las columnas reales de tu BDD
     public Empresa(String identificacion, String razonSocial, boolean esRadicada) {
@@ -16,7 +16,15 @@ public class Empresa {
         this.identificacion = identificacion;
         this.razonSocial = razonSocial;
         this.esRadicada = esRadicada;
-        this.lote = new ArrayList<>(); // Asegura que la lista empiece vacía y no en null
+    }
+
+    public Empresa(String identificacion, String razonSocial, boolean esRadicada, Integer idlote) {
+        validarCuit(identificacion);
+        validarRazonSocial(razonSocial);
+        this.identificacion = identificacion;
+        this.razonSocial = razonSocial;
+        this.esRadicada = esRadicada;
+        this.idlote = idlote;
     }
 
     private void validarRazonSocial(String razonSocial) {
@@ -35,8 +43,8 @@ public class Empresa {
         }
     }
 
-    public void asignarLote(Lote lote) {
-        this.lote.add(lote);
+    public void asignarLote(int lote) {
+        this.idlote= lote;
     }
 
 
@@ -62,7 +70,7 @@ public class Empresa {
     }
 
 
-    public List<Lote> getLote() {
-        return lote;
+    public Integer getLote() {
+        return idlote;
     }
 }

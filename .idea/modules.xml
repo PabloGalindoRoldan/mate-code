@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mate-code.iml" filepath="$PROJECT_DIR$/.idea/mate-code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/matecode/backend/parque-industrial/parque-industrial.iml" filepath="$PROJECT_DIR$/matecode/backend/parque-industrial/parque-industrial.iml" />
     </modules>
   </component>
 </project>
