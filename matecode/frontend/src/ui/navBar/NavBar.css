@@ -17,6 +17,11 @@
     font-weight: 800;
     cursor: pointer;
     letter-spacing: 1px;
+    transition: all 0.5s ease;
+}
+
+.logo a:hover {
+    filter: drop-shadow(0px 3px 10px rgba(255, 255, 255, 0.6));
 }
 
 .buttonList {
