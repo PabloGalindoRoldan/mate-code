@@ -1,7 +1,7 @@
+// LoginView.tsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../context/AuthContext';
-import Footer from '../../ui/footer/Footer';
 import NavBar from '../../ui/navBar/NavBar';
 import './LoginView.css';
 
@@ -14,7 +14,7 @@ export default function LoginView() {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: SubmitEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setErrorMsg('');
 
@@ -28,11 +28,9 @@ export default function LoginView() {
         setIsSubmitting(false);
 
         if (result.success) {
-            // Since context stored it in sessionStorage, we read it to grab the role instantly
             const storedUserRaw = sessionStorage.getItem('user');
             if (storedUserRaw) {
                 const userDetails = JSON.parse(storedUserRaw);
-                // Route dynamically depending on the user's role
                 switch (userDetails.rol) {
                     case 'ADMINISTRADOR_SISTEMA':
                         navigate('/admin');
@@ -44,7 +42,7 @@ export default function LoginView() {
                         navigate('/empresa-radicada');
                         break;
                     default:
-                        navigate('/'); // Global fallback
+                        navigate('/');
                         break;
                 }
             } else {
@@ -56,10 +54,17 @@ export default function LoginView() {
     };
 
     return (
-        <div className="loginView">
-            <NavBar />
+        <div className="loginViewWrapper">
+            {/* Sincronizado con la barra transparente del landing */}
+            <NavBar variant="transparent" />
+
             <div className="loginContainer">
-                <form className="loginForm" onSubmit={handleSubmit as any}>
+                <form className="loginForm" onSubmit={handleSubmit}>
+                    <div className="loginHeader">
+                        <h2>Iniciar Sesión</h2>
+                        <p>Ingresá tus credenciales para acceder al sistema</p>
+                    </div>
+
                     <div className="form-group">
                         <label htmlFor="username">Nombre de Usuario</label>
                         <input
@@ -67,9 +72,11 @@ export default function LoginView() {
                             id="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            disabled={isSubmitting} // Good practice to disable during fetch
+                            disabled={isSubmitting}
+                            placeholder="Tu nombre de usuario"
                         />
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="password">Contraseña</label>
                         <input
@@ -78,11 +85,14 @@ export default function LoginView() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             disabled={isSubmitting}
+                            placeholder="••••••••"
                         />
                     </div>
-                    <button type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Ingresando...' : 'Ingresar'}
+
+                    <button className="loginSubmitButton" type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Ingresando...' : 'Ingresar al Portal'}
                     </button>
+
                     {errorMsg && (
                         <div className="form-error-message">
                             {errorMsg}
@@ -90,7 +100,6 @@ export default function LoginView() {
                     )}
                 </form>
             </div>
-            <Footer />
         </div>
     );
 }

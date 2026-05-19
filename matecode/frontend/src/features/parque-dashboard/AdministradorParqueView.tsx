@@ -17,8 +17,6 @@ export default function AdministradorParqueView() {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const [activeTab, setActiveTab] = useState("map");
 
-
-
     return (
         <MapProvider>
             <div className={`empresaRadicadaView ${isMenuOpen ? "menu-open" : "menu-closed"}`}>

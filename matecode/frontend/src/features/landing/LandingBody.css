@@ -1,57 +1,106 @@
+/* LandingBody.css */
 .landingBodySection {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 50px 20px;
-    height: calc(100vh - 80px);
-    width: 100%;
-    background-color: white;
-    color: var(--gris1);
-    box-sizing: border-box;
+    padding: 40px 20px;
+    text-align: center;
+    color: #ffffff;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.heroTextContent {
+    margin-bottom: 32px;
 }
 
 .tituloLanding {
-    font-size: 3rem;
-    margin-bottom: 20px;
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .subtituloLanding {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--verde1);
+    /* Tu color verde como acento de marca */
+    margin: 0 0 16px 0;
+}
+
+.descripcionLanding {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .botoneraLanding {
     display: flex;
-    gap: 20px;
+    gap: 16px;
 }
 
 .buttonIngresarLanding {
     background-color: var(--verde1);
     border: none;
-    color: var(--gris1);
-    padding: 0.75rem 1.5rem;
+    color: #ffffff;
+    padding: 0.85rem 2rem;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(140, 198, 63, 0.3);
 }
 
 .buttonIngresarLanding:hover {
     background-color: var(--verde2);
+    transform: translateY(-2px);
 }
 
 .buttonRegistrarseLanding {
-    background-color: var(--gris1);
-    border: none;
-    color: var(--verde1);
-    padding: 0.75rem 1.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    padding: 0.85rem 2rem;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    font-size: 1rem;
     font-weight: 500;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
 }
 
 .buttonRegistrarseLanding:hover {
-    background-color: var(--gris2);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 600px) {
+    .tituloLanding {
+        font-size: 2.75rem;
+    }
+
+    .subtituloLanding {
+        font-size: 1.3rem;
+    }
+
+    .botoneraLanding {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .buttonIngresarLanding,
+    .buttonRegistrarseLanding {
+        width: 100%;
+        justify-content: center;
+    }
 }

@@ -1,19 +1,18 @@
 package com.parque_industrial.dto.empresa;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.Year;
 
 public class CargarConsumoRequest {
 
-    @NotNull(message = "El mes es obligatorio")
     @Min(value = 1, message = "El mes debe ser entre 1 y 12")
     @Max(value = 12, message = "El mes debe ser entre 1 y 12")
     private int mes;
 
-    @NotNull(message = "El año es obligatorio")
-    @Min(value = 2026, message = "El año no puede ser menor a 2026")
     private int ano;
 
     @NotNull(message = "El consumo de gas es obligatorio")
@@ -34,8 +33,14 @@ public class CargarConsumoRequest {
     @Min(value = 0, message = "La cantidad de vehículos no puede ser negativa")
     private int vehiculos;
 
-    // Constructor vacío para Jackson (Deserialización JSON)
+    // Constructor vacío para Jackson
     public CargarConsumoRequest() {
+    }
+
+    @AssertTrue(message = "El año debe ser el actual o hasta dos años anteriores")
+    public boolean isAnoValido() {
+        int anoActual = Year.now().getValue();
+        return this.ano >= (anoActual - 2) && this.ano <= anoActual;
     }
 
     // Getters y Setters

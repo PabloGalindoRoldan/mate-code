@@ -1,10 +1,21 @@
-.landingSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+/* Landing.css */
+.landingPageContainer {
     width: 100%;
     min-height: 100vh;
-    background-color: var(--verde1);
-    box-sizing: border-box;
+    background-color: #f8f9fa;
+    /* Fondo gris muy claro para el área de contenido */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Envolvemos la Navbar y el Body para que compartan la imagen de fondo */
+.heroSectionWrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Traemos la lógica de la imagen aleatoria directo al fondo con un overlay oscuro */
+    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.7)),
+        url('https://images.pexels.com/photos/257700/pexels-photo-257700.jpeg') no-repeat center center/cover;
 }
