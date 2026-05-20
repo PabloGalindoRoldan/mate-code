@@ -45,7 +45,7 @@ export default function NavBar({ variant = "solid" }: NavBarProps) {
             <div className="userAvatar" onClick={handleDashboardRedirect} title="Ir al panel de control">
               {getInitials()}
             </div>
-            <button className="navButtonRegistrarse" onClick={() => { logout(); navigate('/'); }}>
+            <button className="navButtonCerrarSesion" onClick={() => { logout(); navigate('/'); }}>
               Cerrar Sesión
             </button>
           </li>

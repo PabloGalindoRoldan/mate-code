@@ -36,7 +36,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/auth/registerAdminParque").hasRole("ADMINISTRADOR_PARQUE") // Login & Register are free
+                        .requestMatchers("/auth/registerAdminParque").hasRole("ADMINISTRADOR_PARQUE") // Login &
+                                                                                                      // Register are
+                                                                                                      // free
                         .requestMatchers("/auth/registerExtraRepresentanteEmpresa").hasRole("REPRESENTANTE_EMPRESA")
                         // Permite que cualquiera (sin token) vea las publicaciones en la Landing
                         .requestMatchers(HttpMethod.GET, "/api/publicaciones/**").permitAll()
@@ -44,8 +46,12 @@ public class SecurityConfig {
                         // EXPLICITADO: La mensajería requiere autenticación obligatoria (Cualquier ROL)
                         .requestMatchers("/api/mensajes/**").authenticated()
 
-                        // --- ENDPOINTS DE CONSUMOS (REFACTORIZADO Y BLINDADO) ---
+                        // --- ENDPOINTS DE INVENTARIO (BLINDADO) ---
+                        // Aseguramos que el ABM completo de inventario responda únicamente a
+                        // ADMINISTRADOR_PARQUE
+                        .requestMatchers("/api/inventario", "/api/inventario/**").hasRole("ADMINISTRADOR_PARQUE")
 
+                        // --- ENDPOINTS DE CONSUMOS (REFACTORIZADO Y BLINDADO) ---
                         // El reporte global es exclusivo para los administradores del parque industrial
                         .requestMatchers("/api/consumos/reporte-global/**").hasRole("ADMIN_PARQUE")
 
@@ -56,7 +62,6 @@ public class SecurityConfig {
 
                         // Cualquier otra acción del sistema requerirá estar autenticado
                         .anyRequest().authenticated())
-
 
                 // 4. Kill default interactive login prompts
                 .formLogin(AbstractHttpConfigurer::disable)

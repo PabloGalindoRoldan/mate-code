@@ -3,6 +3,8 @@ import MapPanel from "./MapPanel";
 import PublicacionesPanel from "./PublicacionesPanel";
 import ReportesPanel from "./ReportesPanel";
 import "./ParqueBody.css";
+import LoadingSpinner from "../../ui/loading/LoadingSpinner";
+import InventarioPanel from "./InventarioPanel";
 
 export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boolean, activeTab: string }) {
 
@@ -12,10 +14,12 @@ export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boole
         <div className={`ParqueBodyContainer ${isMenuOpen ? "shrunk" : "full"}`}>
             {activeTab === "map" && <MapPanel />}
             {activeTab === "messages" && <MensajeriaPanel />}
-            {activeTab === "companies" && <p>Empresas - Esta sección está en construcción.</p>}
+            {activeTab === "companies" && <LoadingSpinner text="Empresas - Esta sección está en construcción." />}
             {activeTab === "publications" && <PublicacionesPanel />}
             {activeTab === "reports" && <ReportesPanel />}
-            {activeTab === "settings" && <p>Configuración - Esta sección está en construcción.</p>}
+            {activeTab === "inventory" && <InventarioPanel />}
+            {activeTab === "budget" && <LoadingSpinner text="Gestión de Presupuesto - Esta sección está en construcción." />}
+            {activeTab === "settings" && <LoadingSpinner text="Configuración - Esta sección está en construcción." />}
         </div>
     );
 }

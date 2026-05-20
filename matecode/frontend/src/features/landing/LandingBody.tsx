@@ -1,4 +1,3 @@
-// LandingBody.tsx
 import { useState, useEffect } from "react";
 import "./LandingBody.css";
 import { useNavigate } from "react-router";
@@ -12,16 +11,12 @@ export default function LandingBody() {
         const handleScroll = () => {
             const currentScroll = window.scrollY;
             const heroHeight = window.innerHeight;
-
-            // Calcula la opacidad: disminuye a medida que scrolleas.
-            // Desaparecerá por completo antes de llegar a la mitad del Hero (heroHeight / 2)
             const newOpacity = Math.max(0, 1 - (currentScroll / (heroHeight / 2.5)));
             setOpacity(newOpacity);
         };
 
         window.addEventListener("scroll", handleScroll);
 
-        // Limpiamos el evento cuando el componente se desmonta
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
@@ -44,7 +39,7 @@ export default function LandingBody() {
             </div>
             <div className="botoneraLanding">
                 <button className="buttonIngresarLanding" onClick={() => navigate("/login")}>
-                    Ingresar al Portal <ArrowRight size={16} />
+                    Ingresar al Portal <ArrowRight size={"16"} />
                 </button>
                 <button className="buttonRegistrarseLanding" onClick={() => navigate("/register")}>
                     Solicitar Registro
@@ -57,7 +52,7 @@ export default function LandingBody() {
                 onClick={handleScrollDown}
                 aria-label="Scrollear hacia abajo"
             >
-                <ChevronDown size={32} color="var(--verde1)" />
+                <ChevronDown size={"40"} color="var(--verde1)" />
             </div>
         </section>
     );
