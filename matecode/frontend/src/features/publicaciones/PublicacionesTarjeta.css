@@ -180,6 +180,7 @@
     overflow-y: auto;
     padding-right: 8px;
     max-height: 35vh;
+    word-wrap: break-word;
 }
 
 .pub-modal-scroll-text p {
