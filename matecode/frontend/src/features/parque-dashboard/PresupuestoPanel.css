@@ -1,0 +1,161 @@
+.presupuesto-panel {
+    padding: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.presupuesto-panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 1rem;
+}
+
+.presupuesto-panel .subtitle-ley {
+    font-size: 0.85rem;
+    color: #888;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.presupuesto-panel .header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.presupuesto-panel .select-year {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.budget-error-banner {
+    background-color: #fdf2f2;
+    border: 1px solid #f8b4b4;
+    color: #9b1c1c;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.presupuesto-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.presupuesto-table th {
+    background-color: #f8f9fa;
+    color: var(--gris1);
+    padding: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.presupuesto-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Fila de Partida Principal (Fondo diferenciado para jerarquía) */
+.row-partida-principal {
+    background-color: #f9fafb;
+    font-weight: 500;
+}
+
+.badge-ff {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.txt-comprometido {
+    color: #b45309;
+}
+
+.cell-disponible {
+    color: var(--verde2);
+}
+
+.cell-disponible.negative {
+    color: #dc2626;
+}
+
+.cell-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-action-budget {
+    padding: 0.4rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-action-budget.mod {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.btn-action-budget.mod:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-action-budget.gasto {
+    background-color: #eef2ff;
+    color: #4f46e5;
+}
+
+.btn-action-budget.gasto:hover {
+    background-color: #e0e7ff;
+}
+
+/* Modal y Ajustes de Botones con el Verde Temático */
+.budget-modal {
+    max-width: 550px !important;
+}
+
+.modal-partida-info {
+    background-color: #f3f4f6;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.modal-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.btn-confirm-budget {
+    background-color: var(--verde2);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-confirm-budget:hover {
+    filter: brightness(0.9);
+}
