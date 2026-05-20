@@ -53,12 +53,17 @@ public class SecurityConfig {
 
                         // --- ENDPOINTS DE CONSUMOS (REFACTORIZADO Y BLINDADO) ---
                         // El reporte global es exclusivo para los administradores del parque industrial
-                        .requestMatchers("/api/consumos/reporte-global/**").hasRole("ADMIN_PARQUE")
+                        .requestMatchers("/api/consumos/reporte-global/**").hasRole("ADMINISTRADOR_PARQUE")
 
                         // Agrupamos la ruta exacta y sus sub-rutas para el rol REPRESENTANTE_EMPRESA.
                         // Esto cubre tanto el POST a '/api/consumos' como el GET a
                         // '/api/consumos/historial'.
                         .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
+
+                        // --- ENDPOINTS DE PRESUPUESTO Y BALANCES (LEY 5763) ---
+                        // El libro de estados, afectaciones y reestructuraciones contables son
+                        // exclusivas
+                        .requestMatchers("/api/presupuesto", "/api/presupuesto/**").hasRole("ADMINISTRADOR_PARQUE")
 
                         // Cualquier otra acción del sistema requerirá estar autenticado
                         .anyRequest().authenticated())
