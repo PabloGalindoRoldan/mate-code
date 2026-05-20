@@ -1,13 +1,17 @@
 package com.parque_industrial.persistence.inventario;
 
 import com.parque_industrial.entities.Elemento;
-
 import java.util.List;
+import java.util.Optional;
 
 public interface InventarioDAO {
-    public void agregarElemento(Elemento elemento);
-    public void eliminarElemento(Elemento elemento);
-    public List<Elemento> elementos();
-    public void cambiarDisponibilidad(Elemento elemento);
+    Elemento guardar(Elemento elemento);
+
+    Optional<Elemento> buscarPorId(Integer id);
+
+    List<Elemento> listarTodos();
+
+    List<Elemento> listarActivos();
+
+    void actualizar(Elemento elemento);
 }
-// la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
