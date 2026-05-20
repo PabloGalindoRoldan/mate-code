@@ -87,7 +87,7 @@
 
 .navButtonCerrarSesion {
     background-color: var(--gris1);
-    border: 2px solid var(--gris1);
+    border: none;
     color: var(--verde1);
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -179,6 +179,19 @@
     border-color: var(--verde2);
     box-shadow: 0 4px 12px rgba(140, 198, 63, 0.25);
 }
+
+.navbar-transparent .navButtonCerrarSesion {
+    background-color: var(--verde1);
+    border: none;
+    color: white;
+}
+
+.navbar-transparent .navButtonCerrarSesion:hover {
+    background-color: var(--verde2);
+    border-color: var(--verde2);
+    box-shadow: 0 4px 12px rgba(140, 198, 63, 0.25);
+}
+
 
 @media (max-width: 768px) {
 

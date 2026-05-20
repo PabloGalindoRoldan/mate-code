@@ -10,6 +10,7 @@ interface Publicacion {
     imagen: string;
     alt: string;
     contenido: string;
+    fechaCreacion: Date;
 }
 
 export default function PublicacionesView() {

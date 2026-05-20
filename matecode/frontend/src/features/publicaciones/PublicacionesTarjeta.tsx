@@ -8,9 +8,10 @@ interface PublicacionTarjetaProps {
     titulo: string;
     contenido: string;
     className?: string;
+    fechaCreacion: Date;
 }
 
-export default function PublicacionesTarjeta({ imagen, alt, titulo, contenido, className }: PublicacionTarjetaProps) {
+export default function PublicacionesTarjeta({ imagen, alt, titulo, contenido, className, fechaCreacion }: PublicacionTarjetaProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
@@ -23,6 +24,7 @@ export default function PublicacionesTarjeta({ imagen, alt, titulo, contenido, c
                     <img src={imagen} alt={alt} loading="lazy" />
                 </div>
                 <div className="publicacionTarjeta__contenido">
+                    <span className="publicacionTarjeta__fecha">{new Date(fechaCreacion).toLocaleDateString()}</span>
                     <h3>{titulo}</h3>
                     <p>{contenido}</p>
                     <div className="publicacionTarjeta__footer">
@@ -42,6 +44,7 @@ export default function PublicacionesTarjeta({ imagen, alt, titulo, contenido, c
                         </div>
 
                         <div className="pub-modal-body">
+                            <span className="pub-modal-fecha">{new Date(fechaCreacion).toLocaleDateString()}</span>
                             <h2>{titulo}</h2>
                             <div className="pub-modal-scroll-text">
                                 {contenido.split('\n').map((paragraph, index) => (
