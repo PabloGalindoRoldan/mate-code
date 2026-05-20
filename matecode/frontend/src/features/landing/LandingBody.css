@@ -110,61 +110,12 @@
 .scrollIndicatorLanding {
     position: absolute;
     bottom: 24px;
-    /* Separación del borde inferior de la pantalla */
     left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    animation: bounceIndicator 2s infinite;
-    z-index: 5;
-}
-
-/* Pequeño feedback al pasar el mouse por encima */
-.scrollIndicatorLanding:hover {
-    opacity: 0.8;
-}
-
-/* Animación de rebote orgánico */
-@keyframes bounceIndicator {
-
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-        transform: translateX(-50%) translateY(0);
-    }
-
-    40% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-
-    60% {
-        transform: translateX(-50%) translateY(-4px);
-    }
-}
-
-@media (max-height: 500px) {
-    .scrollIndicatorLanding {
-        display: none;
-    }
-}
-
-/* --- INDICADOR DE SCROLL --- */
-
-.scrollIndicatorLanding {
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Añadimos 'opacity' a la transición para que el cambio de renderizado no sea brusco */
     transition: transform 0.2s ease, opacity 0.1s linear;
     animation: bounceIndicator 2s infinite;
     z-index: 5;
@@ -186,7 +137,6 @@
     50%,
     80%,
     100% {
-        /* Mantenemos el translateX(-50%) para que no rompa el centrado al rebotar */
         transform: translateX(-50%) translateY(0);
     }
 
