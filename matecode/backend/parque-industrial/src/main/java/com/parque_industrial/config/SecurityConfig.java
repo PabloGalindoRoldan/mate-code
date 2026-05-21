@@ -60,6 +60,9 @@ public class SecurityConfig {
                         // '/api/consumos/historial'.
                         .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
 
+
+                        .requestMatchers("/api/lotes/**").permitAll()
+
                         // Cualquier otra acción del sistema requerirá estar autenticado
                         .anyRequest().authenticated())
 

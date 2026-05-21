@@ -1,57 +1,59 @@
 package com.parque_industrial.services;
+
 import com.parque_industrial.entities.Lote;
-import com.parque_industrial.dto.lote.LoteDTO;
 import com.parque_industrial.persistence.lote.LoteDAO;
-import org.springframework.stereotype.Service; // Importar la anotación @Service
-import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
-@Service // Indicar que esta clase es un servicio Spring
-@Transactional
-public class GestorInmobiliario{
-    private LoteDAO dao;
-    public GestorInmobiliario(LoteDAO dao) {
-        this.dao = dao;
-    }
-    // la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
-    public void crearLote(LoteDTO lote) {
-        Lote lote1 = new Lote(lote.identificacion(), lote.superficie(), lote.nc(), lote.parque());
-        dao.crearLote(lote1);
-    }
-    public void ReservarLote(LoteDTO lote)  {
-        Lote lote1 = lote.entidad();
-        lote1.reservar();
-        dao.reservarLote(lote1);
-    }
-    public void cancelarReserva(LoteDTO lote)  {
-        Lote lote1 = lote.entidad();
-        lote1.cancelarReserva();
-        dao.cancelarReserva(lote1);
-    }
-    public void VenderLote(LoteDTO lote, double montoVenta)   {
-        Lote lote1 = lote.entidad();
-        lote1.vender(montoVenta);
-        dao.venderLote(lote1);
-    }
-    public LoteDTO buscarLote(int identificacion)  {
-        return dao.buscarLotePorID(identificacion) ;
+
+@Service
+public class GestorInmobiliario {
+
+    private final LoteDAO loteDAO;
+
+    public GestorInmobiliario(LoteDAO loteDAO) {
+        this.loteDAO = loteDAO;
     }
 
-    public List<LoteDTO> LotesDisponibles()  {
-       return dao.LotesDisponibles();
+    public void reservarLote(int id) {
+        Lote lote = buscar(id);
+        lote.reservar();
+        loteDAO.actualizar(lote);
     }
 
-    public List<LoteDTO> LotesVendidos() {
-        return dao.LotesVendidos();
-    }
-    public List<LoteDTO> LotesReservados()  {
-        return dao.LotesReservados();
-    }
-    public List<LoteDTO> LotesDeParqueNuevo() {
-        return dao.LotesNuevos();
-    }
-    public List<LoteDTO> LotesDeParqueViejo() {
-        return dao.LotesViejos();
+    public void cancelarReserva(int id) {
+
+        Lote lote = buscar(id);
+
+        lote.cancelarReserva();
+
+        loteDAO.actualizar(lote);
     }
 
+    public void venderLote(int id, BigDecimal monto, LocalDate fecha) {
+
+        Lote lote = buscar(id);
+
+        lote.vender(monto, fecha);
+
+        loteDAO.actualizar(lote);
+    }
+
+    public List<Lote> listarLotes() {
+        return loteDAO.buscarTodos();
+    }
+
+    public Lote buscar(int id) {
+
+        Lote lote = loteDAO.buscarPorID(id);
+
+        if (lote == null) {
+            throw new IllegalArgumentException("No existe el lote");
+        }
+
+        return lote;
+    }
 }
