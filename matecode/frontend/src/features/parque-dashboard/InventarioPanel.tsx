@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Trash2, Plus, RefreshCw, AlertTriangle } from "lucide-react";
 import API from "../../api/axios"; // Ajustá la ruta según dónde tengas guardado tu archivo de Axios
-import LoadingSpinner from "../../ui/loading/LoadingSpinner"; // Importación de tu Spinner
+import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 import "./InventarioPanel.css";
 
 interface ElementoResponse {
     id: number;
     nombre: string;
     categoria: string;
+    detalle: string;
     activo: boolean;
     bajaRazonCategoria: string | null;
     bajaObservacion: string | null;
@@ -21,6 +22,7 @@ export default function InventarioPanel() {
     // Filtro y Formulario de Alta
     const [soloActivos, setSoloActivos] = useState(true);
     const [nuevoNombre, setNuevoNombre] = useState("");
+    const [nuevoDetalle, setNuevoDetalle] = useState("");
     const [nuevaCategoria, setNuevaCategoria] = useState("MAQUINARIA_PESADA");
 
     // Estado del Modal de Baja
@@ -32,7 +34,6 @@ export default function InventarioPanel() {
         setLoading(true);
         setError(null);
         try {
-            // Pasamos los query params de forma limpia usando la configuración de Axios
             const response = await API.get<ElementoResponse[]>("/api/inventario", {
                 params: { soloActivos }
             });
@@ -56,10 +57,12 @@ export default function InventarioPanel() {
         try {
             await API.post("/api/inventario", {
                 nombre: nuevoNombre,
-                categoria: nuevaCategoria
+                categoria: nuevaCategoria,
+                detalle: nuevoDetalle
             });
 
             setNuevoNombre("");
+            setNuevoDetalle("");
             cargarInventario();
         } catch (err: any) {
             const msg = err.response?.data || "Error al crear el elemento.";
@@ -127,6 +130,16 @@ export default function InventarioPanel() {
                         <option value="OTROS">Otros</option>
                     </select>
                 </div>
+                <div className="form-group">
+                    <label htmlFor="detalle">Detalle</label>
+                    <input
+                        id="detalle"
+                        type="text"
+                        placeholder="Ej: Modelo XYZ, Capacidad 1000L..."
+                        value={nuevoDetalle}
+                        onChange={(e) => setNuevoDetalle(e.target.value)}
+                    />
+                </div>
                 <button type="submit" className="btn-registrarElemento">
                     <Plus size={18} /> Registrar
                 </button>
@@ -154,6 +167,7 @@ export default function InventarioPanel() {
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Categoría</th>
+                            <th>Detalle</th>
                             <th>Estado</th>
                             <th>Detalles de Baja</th>
                             <th>Acciones</th>
@@ -174,6 +188,7 @@ export default function InventarioPanel() {
                                         <td><strong>#{item.id}</strong></td>
                                         <td>{item.nombre}</td>
                                         <td><span className={`badge cat-${item.categoria.toLowerCase()}`}>{item.categoria}</span></td>
+                                        <td>{item.detalle}</td>
                                         <td>
                                             <span className={`status-dot ${item.activo ? "active" : "inactive"}`}></span>
                                             {item.activo ? "Disponible" : "De Baja"}
@@ -214,7 +229,6 @@ export default function InventarioPanel() {
                 </table>
             </div>
 
-            {/* Modal de Baja Lógica */}
             {elementoSeleccionado && (
                 <div className="modal-overlay">
                     <div className="modal-content">
