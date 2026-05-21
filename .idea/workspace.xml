@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="inverti las dependencias y corregi la estructura">
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/lote/CambiarEstadoRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/EmpresaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/EmpresaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAOJDBC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorInmobiliario.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorInmobiliario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/FakeLoteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/FakeLoteDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/GestorInmobiliarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/GestorInmobiliarioTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,6 +87,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.GestorInmobiliarioTest.testCambiarEstado.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testCrearLote.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testReservarLote.executor": "Run",
@@ -137,8 +131,8 @@
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\test" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ParqueIndustrialApplication">
-    <configuration name="GestorInmobiliarioTest.testCrearLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.GestorInmobiliarioTest.testCambiarEstado">
+    <configuration name="GestorInmobiliarioTest.testCambiarEstado" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parque-industrial" />
       <extension name="coverage">
         <pattern>
@@ -148,13 +142,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
       <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
-      <option name="METHOD_NAME" value="testCrearLote" />
+      <option name="METHOD_NAME" value="testCambiarEstado" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GestorInmobiliarioTest.testVenderLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GestorInmobiliarioTest.testReservarLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parque-industrial" />
       <extension name="coverage">
         <pattern>
@@ -164,7 +158,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
       <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
-      <option name="METHOD_NAME" value="testVenderLote" />
+      <option name="METHOD_NAME" value="testReservarLote" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -221,19 +215,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
-      <item itemvalue="JUnit.GestorInmobiliarioTest.testVenderLote" />
+      <item itemvalue="JUnit.GestorInmobiliarioTest.testCambiarEstado" />
+      <item itemvalue="JUnit.GestorInmobiliarioTest.testReservarLote" />
       <item itemvalue="JUnit.LoteTest" />
       <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
       <item itemvalue="Spring Boot.ParqueIndustrialApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testCambiarEstado" />
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testReservarLote" />
         <item itemvalue="Spring Boot.ParqueIndustrialApplication" />
         <item itemvalue="JUnit.LoteTest" />
         <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
-        <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
-        <item itemvalue="JUnit.GestorInmobiliarioTest.testVenderLote" />
       </list>
     </recent_temporary>
   </component>
@@ -276,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778692974258</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="inverti las dependencias y corregi la estructura">
+      <option name="closed" value="true" />
+      <created>1779371551277</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1779371551277</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

@@ -41,6 +41,20 @@ public class GestorInmobiliarioTest {
     public void testListarDisponibles()  {
         assertEquals(3, this.gestor.LotesDisponibles().size());
     }
+    @Test
+    public void testCambiarEstado(){
+        this.gestor.CambiarEstadoLote(4,Lote.DISPONIBLE );
+        LoteDTO lote= fake.buscarLotePorID(4); // lote id 4 reservado
+        assertEquals(fake.getLote().getEstado(), Lote.DISPONIBLE);
+
+        this.gestor.CambiarEstadoLote(4,Lote.VENDIDO );
+        LoteDTO lote2= fake.buscarLotePorID(4); // lote id 4 reservado
+        assertEquals(fake.getLote().getEstado(), Lote.VENDIDO);
+
+        this.gestor.CambiarEstadoLote(4,Lote.RESERVADO );
+        LoteDTO lote3= fake.buscarLotePorID(4); // lote id 4 reservado
+        assertEquals(fake.getLote().getEstado(), Lote.RESERVADO);
+    }
 
     @Test
     public void testListarReservados()  {

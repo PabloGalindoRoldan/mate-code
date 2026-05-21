@@ -38,6 +38,11 @@ public class FakeLoteDAO implements LoteDAO {
     }
 
     @Override
+    public void cambiarEstadoLote(Lote lote) {
+        this.lote = lote;
+    }
+
+    @Override
     public LoteDTO buscarLotePorID(int identificacion){
         return listLotes.stream().filter(loteDTO->  loteDTO.identificacion() == identificacion).findFirst().get();
     }
