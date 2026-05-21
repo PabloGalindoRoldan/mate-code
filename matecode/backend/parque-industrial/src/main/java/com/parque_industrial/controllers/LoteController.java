@@ -1,10 +1,6 @@
 package com.parque_industrial.controllers;
 
-import com.parque_industrial.dto.lote.CrearRequestDTO;
-import com.parque_industrial.dto.lote.ReservarRequestDTO;
-import com.parque_industrial.dto.lote.VentaRequestDTO;
-import com.parque_industrial.dto.lote.AnularReservaRequestDTO;
-import com.parque_industrial.dto.lote.LoteDTO;
+import com.parque_industrial.dto.lote.*;
 import com.parque_industrial.services.GestorInmobiliario;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +14,13 @@ public class LoteController {
     public LoteController(GestorInmobiliario gestor) {
         this.gestor = gestor;
     }
-    @PostMapping("/vender")
+    @PostMapping("/vender")//si el lote no esta Reservado lanza excepcion
     public void procesarVenta(@RequestBody VentaRequestDTO datosEntrada) {
-        LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
-        gestor.VenderLote(dto, datosEntrada.monto());
+        gestor.VenderLote(datosEntrada.identificacion(), datosEntrada.monto());
     }
-    @PostMapping("/reservar")
+    @PostMapping("/reservar")//si el lote no es disponible lanza excepcion
     public void reservarUnLote(@RequestBody ReservarRequestDTO datosEntrada) {
-        LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
-        gestor.ReservarLote(dto);
+        gestor.ReservarLote(datosEntrada.identificacion());
     }
     @PostMapping("/registrar")
     public void crearUnLote(@RequestBody CrearRequestDTO datosEntrada) {
@@ -35,9 +29,15 @@ public class LoteController {
     }
     @PostMapping("/cancelarReserva")//este es por si no cumplio y se le quita el lote
     public void cancelarReserva(@RequestBody AnularReservaRequestDTO datosEntrada) {
-        LoteDTO dto = gestor.buscarLote(datosEntrada.identificacion());
-        gestor.cancelarReserva(dto);
+        gestor.cancelarReserva(datosEntrada.identificacion()); // este si no esta reservado lanza exepcion
     }
+    @PostMapping("/CambiarEstado")
+    public void marcarComoDisponible(@RequestBody CambiarEstadoRequest datosEntrada) {
+        gestor.CambiarEstadoLote(datosEntrada.identificacion(),datosEntrada.estado());
+        // este le cambia el estado al lote sin importar que eseado tenia antes
+    }
+
+
     @GetMapping("/disponibles")
     public ResponseEntity<List<LoteDTO>> listarDisponibles()  {
         List<LoteDTO>  lista = gestor.LotesDisponibles();

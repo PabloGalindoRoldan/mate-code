@@ -18,21 +18,27 @@ public class GestorInmobiliario{
         Lote lote1 = new Lote(lote.identificacion(), lote.superficie(), lote.nc(), lote.parque());
         dao.crearLote(lote1);
     }
-    public void ReservarLote(LoteDTO lote)  {
-        Lote lote1 = lote.entidad();
+    public void ReservarLote(int lote)  {
+        Lote lote1 = dao.buscarLotePorID(lote).entidad();
         lote1.reservar();
         dao.reservarLote(lote1);
     }
-    public void cancelarReserva(LoteDTO lote)  {
-        Lote lote1 = lote.entidad();
+    public void cancelarReserva(int lote)  {
+        Lote lote1 = dao.buscarLotePorID(lote).entidad();
         lote1.cancelarReserva();
         dao.cancelarReserva(lote1);
     }
-    public void VenderLote(LoteDTO lote, double montoVenta)   {
-        Lote lote1 = lote.entidad();
+    public void VenderLote(int lote, double montoVenta)   {
+        Lote lote1 = dao.buscarLotePorID(lote).entidad();
         lote1.vender(montoVenta);
         dao.venderLote(lote1);
     }
+    public void CambiarEstadoLote(int lote, String estado){
+        Lote lot = dao.buscarLotePorID(lote).entidad();
+        lot.cambiarEstado(estado);
+        dao.cambiarEstadoLote(lot);
+    }
+
     public LoteDTO buscarLote(int identificacion)  {
         return dao.buscarLotePorID(identificacion) ;
     }

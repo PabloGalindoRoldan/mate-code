@@ -5,19 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="inverti las dependencias y corregi la estructura">
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/AsignarRepresentanteRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/CrearRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/EmpresaDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/lote/CambiarEstadoRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/EmpresaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/EmpresaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Empresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Lote.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorEmpresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/lote/LoteDAOJDBC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorInmobiliario.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorInmobiliario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/GestorInmobiliarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/GestorInmobiliarioTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +51,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -121,16 +118,19 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ParqueIndustrialApplication.executor": "Run",
-    "git-widget-placeholder": "nro135-EmpresaJDBC",
+    "git-widget-placeholder": "nro150AgregarFuncionalidadesEmpresa",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/augus_r4ret8/IdeaProjects/mate-code",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.25136238",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.parque_industrial.dto.lote" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial" />
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\main\java" />

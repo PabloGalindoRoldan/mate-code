@@ -96,6 +96,23 @@ public class LoteDAOJDBC implements LoteDAO {
     }
 
     @Override
+    public void cambiarEstadoLote(Lote lote) {
+        String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + "' WHERE " + ID + " = ? ";
+        Connection conn = null;
+        try{
+            conn = DataSourceUtils.getConnection(this.conecction);
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setInt(1, lote.getIdentificacion());
+                ps.executeUpdate();
+            }
+        }catch (SQLException exception){
+            throw  new IllegalArgumentException("Error al acceder a Railway:" + exception.getMessage());
+        } finally {
+            DataSourceUtils.releaseConnection(conn, this.conecction);
+        }
+    }
+
+    @Override
     public void cancelarReserva(Lote lote)   {
         String sql = "UPDATE Lote SET " + ESTADO + " = '" + DISPONIBLE + "' WHERE " + ID + " = ? ";
         Connection conn = null;

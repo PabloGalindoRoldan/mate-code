@@ -22,19 +22,19 @@ public class GestorInmobiliarioTest {
     @Test
     public void testReservarLote()  {
         LoteDTO lote= fake.buscarLotePorID(7); // lote id 7 disponible
-        this.gestor.ReservarLote(lote);
+        this.gestor.ReservarLote(7);
         assertEquals(fake.getLote().getEstado(), Lote.RESERVADO);
     }
     @Test
     public void testCancelarReservaLote(){
+        this.gestor.cancelarReserva(4);
         LoteDTO lote= fake.buscarLotePorID(4); // lote id 4 reservado
-        this.gestor.cancelarReserva(lote);
         assertEquals(fake.getLote().getEstado(), Lote.DISPONIBLE);
     }
     @Test
     public void testVenderLote(){
+        this.gestor.VenderLote(4, 500.0);
         LoteDTO lote= fake.buscarLotePorID(4); // lote id 4 reservado
-        this.gestor.VenderLote(lote, 500.0);
         assertEquals(fake.getLote().getEstado(), Lote.VENDIDO);
     }
     @Test

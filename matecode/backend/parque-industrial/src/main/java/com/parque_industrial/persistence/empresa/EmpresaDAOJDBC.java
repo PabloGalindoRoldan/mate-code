@@ -41,7 +41,7 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
 
     @Override
     public List<EmpresaDTO> empresasRadicadas() {
-        String sql = "SELECT * FROM empresas WHERE es_radicada = 1";
+        String sql = "SELECT * FROM empresas WHERE es_radicada = 0";
         List<EmpresaDTO> empresas = jdbcTemplate.query(sql, (rs, rowNum) -> {
             EmpresaDTO empresa = new EmpresaDTO(
                     rs.getString("identificacion"),
@@ -56,7 +56,7 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
 
     @Override
     public List<EmpresaDTO> empresasNoRedicadas() {
-        String sql = "SELECT * FROM empresas WHERE es_radicada = 0";
+        String sql = "SELECT * FROM empresas WHERE es_radicada = 1";
         List<EmpresaDTO> empresas = jdbcTemplate.query(sql, (rs, rowNum) -> {
             EmpresaDTO empresa = new EmpresaDTO(
                     rs.getString("identificacion"),
@@ -106,9 +106,9 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
     @Override
     @Transactional
     public void asignarLote(String cuit, Integer idLote) {
-        String sql = "UPDATE empresas SET idlote = ? WHERE cuit = ?";
+        String sql = "UPDATE empresas SET idlote = ?, es_radicada = 0 WHERE cuit = ?";
         jdbcTemplate.update(sql, idLote, cuit);
-      String sql2= "UPDATE Lote SET estado= reservado WHERE id = ?";
+      String sql2= "UPDATE Lote SET estado= vendido WHERE id = ?";
       jdbcTemplate.update(sql2, idLote);
     }
 

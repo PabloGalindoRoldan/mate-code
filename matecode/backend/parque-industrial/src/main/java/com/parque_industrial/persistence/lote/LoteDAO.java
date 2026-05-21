@@ -8,6 +8,7 @@ public interface LoteDAO {
     public void crearLote(Lote lote) ;
     public void venderLote(Lote lote);
     public void reservarLote(Lote lote);
+    public void cambiarEstadoLote(Lote lote);
     public LoteDTO buscarLotePorID(int identificacion) ;
     public void cancelarReserva(Lote lote) ;
     public List<LoteDTO> LotesDisponibles();

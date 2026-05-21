@@ -86,6 +86,10 @@ public class Lote {
             throw new IllegalArgumentException("El parque debe ser nuevo o viejo");
         }
     }
+    public void marcarComoDisponible(){
+        this.estado = DISPONIBLE;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -114,4 +118,12 @@ public class Lote {
         return montoVenta;
     }
 
+    public void cambiarEstado(String e) {
+        if(e.equals(DISPONIBLE) || e.equals(RESERVADO) || e.equals(VENDIDO)){
+            this.estado = e;
+        } else {
+            throw new IllegalArgumentException("El estado debe ser disponible, reservado o vendido");
+        }
+
+    }
 }
