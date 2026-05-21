@@ -1,12 +1,18 @@
 package com.parque_industrial.persistence.presupuesto;
 
-import com.parque_industrial.entities.PartidaPresupuestaria;
+import com.parque_industrial.dto.presupuesto.BalancePartidaDTO;
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface DAOPresupuesto {
-    public void crearPartidaPresupuestaria(PartidaPresupuestaria partidaPresupuestaria);
-    public double montoGastado(); // puede servir para un reporte?
-    }
+    List<BalancePartidaDTO> obtenerBalancePresupuestario(int ejercicioFiscal);
 
+    BigDecimal obtenerSaldoDisponiblePartida(int presupuestoId);
 
-// la interfaz es para invertir la dependencia, despues en jdbc tendriamos que implementarla
+    void registrarModificacionPresupuestaria(int presupuestoId, String tipo, BigDecimal monto, String justificacion);
 
+    void registrarFaseGasto(int presupuestoId, java.sql.Date fecha, String tipoComp, String nroComp, String desc,
+            String fase, BigDecimal monto);
+
+    String obtenerCodigoPartidaPorPresupuestoId(int presupuestoId);
+}

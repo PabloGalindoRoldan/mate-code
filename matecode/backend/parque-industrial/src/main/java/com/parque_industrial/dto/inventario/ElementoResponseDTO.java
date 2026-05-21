@@ -6,6 +6,7 @@ public class ElementoResponseDTO {
     private Integer id;
     private String nombre;
     private String categoria;
+    private String detalle;
     private boolean activo;
     private String bajaRazonCategoria;
     private String bajaObservacion;
@@ -19,6 +20,7 @@ public class ElementoResponseDTO {
         this.id = elemento.getId();
         this.nombre = elemento.getNombre();
         this.categoria = elemento.getCategoria().name();
+        this.detalle = elemento.getDetalle();
         this.activo = elemento.isActivo();
         this.bajaRazonCategoria = (elemento.getBajaRazonCategoria() != null) ? elemento.getBajaRazonCategoria().name()
                 : null;
@@ -40,6 +42,14 @@ public class ElementoResponseDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
     }
 
     public String getCategoria() {

@@ -5,6 +5,7 @@ import ReportesPanel from "./ReportesPanel";
 import "./ParqueBody.css";
 import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 import InventarioPanel from "./InventarioPanel";
+import PresupuestoPanel from "./PresupuestoPanel";
 
 export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boolean, activeTab: string }) {
 
@@ -18,7 +19,7 @@ export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boole
             {activeTab === "publications" && <PublicacionesPanel />}
             {activeTab === "reports" && <ReportesPanel />}
             {activeTab === "inventory" && <InventarioPanel />}
-            {activeTab === "budget" && <LoadingSpinner text="Gestión de Presupuesto - Esta sección está en construcción." />}
+            {activeTab === "budget" && <PresupuestoPanel />}
             {activeTab === "settings" && <LoadingSpinner text="Configuración - Esta sección está en construcción." />}
         </div>
     );
