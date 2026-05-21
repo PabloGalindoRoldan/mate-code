@@ -1,0 +1,23 @@
+.empresaRadicadaBody {
+    background-color: #ffffff;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--gris1);
+    width: 100%;
+    box-sizing: border-box;
+    transition:
+        max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.empresaRadicadaBody.shrunk {
+    max-width: calc(100vw - 160px);
+}
+
+.empresaRadicadaBody.full {
+    max-width: 100vw;
+    margin-left: 0;
+}

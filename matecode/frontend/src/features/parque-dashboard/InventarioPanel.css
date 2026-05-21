@@ -1,0 +1,302 @@
+.inventario-panel {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+    padding-top: 70px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.75rem;
+}
+
+.panel-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.btn-registrarElemento {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--verde2);
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btn-registrarElemento:hover {
+    background-color: var(--verde3);
+}
+
+
+
+.btn-refresh {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.btn-refresh:hover {
+    background-color: #f5f5f5;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Formulario de Alta */
+.alta-form {
+    display: flex;
+    gap: 1rem;
+    background-color: #f8f9fa;
+    padding: 1.25rem;
+    border-radius: 8px;
+    align-items: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input,
+.form-group select,
+.modal-form-group select,
+.modal-form-group textarea {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.btn-submit {
+    background-color: #2b6cb0;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    height: 38px;
+}
+
+.btn-submit:hover {
+    background-color: #2c5282;
+}
+
+/* Filtros */
+.filters-bar {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+/* Tabla */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.inventario-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.inventario-table th {
+    background-color: #edf2f7;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+}
+
+.inventario-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.row-inactive {
+    background-color: #fafafa;
+    color: #a0aec0;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.status-dot.active {
+    background-color: #48bb78;
+}
+
+.status-dot.inactive {
+    background-color: #e53e3e;
+}
+
+.badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.cat-infraestructura {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+.cat-maquinaria {
+    background-color: #feebc8;
+    color: #c05621;
+}
+
+.cat-herramienta {
+    background-color: #e2fbf5;
+    color: #008a63;
+}
+
+.cat-tecnologia {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+}
+
+.cat-maquinaria-pesada {
+    background-color: #feebc8;
+    color: #c05621;
+}
+
+.cat-herramientas-manuales {
+    background-color: #e2fbf5;
+    color: #008a63;
+}
+
+.cat-equipo-informatico {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: #e53e3e;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 4px;
+}
+
+.btn-delete:hover {
+    background-color: #fff5f5;
+}
+
+/* Modales */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.warning-icon {
+    color: #dd6b20;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.modal-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.btn-cancel {
+    background: #e2e8f0;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-confirm-baja {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-confirm-baja:hover {
+    background: #c53030;
+}

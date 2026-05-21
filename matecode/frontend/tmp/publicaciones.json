@@ -1,0 +1,46 @@
+{
+    "publicaciones": [
+        {
+            "id": 1,
+            "titulo": "Publicación 1",
+            "imagen": "https://images.pexels.com/photos/36763393/pexels-photo-36763393.jpeg",
+            "alt": "Imagen de la publicación 1",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 2,
+            "titulo": "Publicación 2",
+            "imagen": "https://images.pexels.com/photos/33971235/pexels-photo-33971235.jpeg",
+            "alt": "Imagen de la publicación 2",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 3,
+            "titulo": "Publicación 3",
+            "imagen": "https://images.pexels.com/photos/29126572/pexels-photo-29126572.jpeg",
+            "alt": "Imagen de la publicación 3",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 4,
+            "titulo": "Publicación 4",
+            "imagen": "https://images.pexels.com/photos/8624734/pexels-photo-8624734.jpeg",
+            "alt": "Imagen de la publicación 4",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 5,
+            "titulo": "Publicación 5",
+            "imagen": "https://images.pexels.com/photos/29243214/pexels-photo-29243214.jpeg",
+            "alt": "Imagen de la publicación 5",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        },
+        {
+            "id": 6,
+            "titulo": "Publicación 6",
+            "imagen": "https://images.pexels.com/photos/37193108/pexels-photo-37193108.jpeg",
+            "alt": "Imagen de la publicación 6",
+            "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
+        }
+    ]
+}

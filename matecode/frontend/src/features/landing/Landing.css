@@ -1,0 +1,17 @@
+.landingPageContainer {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+.heroSectionWrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.7)),
+        url('../../assets/images/background.jpeg') no-repeat center center/cover;
+}

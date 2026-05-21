@@ -1,0 +1,198 @@
+/* RegisterView.css */
+
+.reg-view-main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    /* Fondo gris claro tradicional */
+}
+
+.reg-view-container {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Tarjeta contenedora con un ancho máximo óptimo para lectura en 1 columna */
+.reg-form-card {
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eef0ed;
+}
+
+.reg-form-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f1f2f0;
+    padding-bottom: 1rem;
+}
+
+.reg-form-header h2 {
+    font-size: 1.65rem;
+    color: var(--gris1);
+    margin: 0 0 6px 0;
+    font-weight: 700;
+}
+
+.reg-form-header p {
+    font-size: 0.9rem;
+    color: #757872;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.reg-form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Contenedor vertical unificado */
+.reg-form-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.reg-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.reg-form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gris1);
+}
+
+.reg-form-input {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #c8cbc5;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--gris1);
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.reg-form-input:focus {
+    outline: none;
+    border-color: var(--verde1);
+    box-shadow: 0 0 0 3px rgba(140, 198, 63, 0.15);
+}
+
+.reg-form-input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* Modificadores de error */
+.reg-input-has-error {
+    border-color: #c63f3f !important;
+    background-color: #fffcfc;
+}
+
+.reg-error-text-span {
+    color: #c63f3f;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.reg-alert-wrapper {
+    margin-top: 0.25rem;
+}
+
+/* Botón de envío */
+.reg-submit-btn-form {
+    width: 100%;
+    padding: 0.85rem;
+    background-color: var(--verde1);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.reg-submit-btn-form:hover:not(:disabled) {
+    background-color: var(--verde2);
+}
+
+.reg-submit-btn-form:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Pantalla de Éxito */
+.reg-success-card {
+    background-color: #ffffff;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #eef0ed;
+}
+
+.reg-success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.reg-btn-action-primary {
+    background-color: var(--verde1);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.reg-btn-action-primary:hover {
+    background-color: var(--verde2);
+}
+
+.reg-btn-action-secondary {
+    background-color: #f1f2f0;
+    color: var(--gris1);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.reg-btn-action-secondary:hover {
+    background-color: #e2e4e0;
+}
+
+/* Ajustes Mobile estándar */
+@media (max-width: 540px) {
+    .reg-form-card {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .reg-success-actions {
+        flex-direction: column;
+    }
+}

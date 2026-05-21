@@ -1,0 +1,176 @@
+.dashboardUnificado {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    background-color: #fcfcfc;
+    border-radius: 12px;
+
+    /* CONTROL DE OVERFLOW: Evita superar los 100vh - 80px */
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Ficha Institucional */
+.profile-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+    flex-shrink: 0;
+    /* Impide que la ficha colapse si el gráfico pide espacio */
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.profile-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #30332D;
+    /* --gris1 */
+}
+
+.badge-radicada {
+    background-color: rgba(140, 198, 63, 0.15);
+    color: #75944d;
+    /* --verde2 */
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* CAMBIO AQUÍ: Forzamos 2 columnas simétricas, generando automáticamente 3 filas */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+    background-color: #f9fbf7;
+    border-left: 4px solid #8cc63f;
+    /* --verde1 */
+    border-radius: 0 6px 6px 0;
+}
+
+.card-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #777;
+}
+
+.card-value {
+    font-size: 15px;
+    color: #30332D;
+    word-break: break-all;
+    /* Evita que correos largos ensanchen la grilla */
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 8px 0;
+    flex-shrink: 0;
+}
+
+/* Métricas Sección */
+.metrics-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+    flex-shrink: 0;
+    /* Asegura que mantenga sus dimensiones en pantallas cortas */
+}
+
+.metrics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.metrics-title h3 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    color: #30332D;
+}
+
+.metrics-title p {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #30332D;
+}
+
+.filter-group select {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 350px;
+    width: 100%;
+}
+
+/* Contenedores de Estado */
+.chart-status-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    /* Igualamos la altura al chart-wrapper para evitar saltos bruscos en el layout */
+    color: #666;
+    font-size: 14px;
+    background-color: #fafafa;
+    border-radius: 6px;
+    border: 1px dashed #ddd;
+}
+
+.error-box {
+    background-color: #fdf2f2;
+    color: #9b1c1c;
+    border-color: #f8b4b4;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 640px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+        /* Una sola columna en celulares para que no quede todo apretado */
+    }
+
+    .dashboardUnificado {
+        max-height: none;
+        /* Dejamos scroll natural en el móvil */
+    }
+}
