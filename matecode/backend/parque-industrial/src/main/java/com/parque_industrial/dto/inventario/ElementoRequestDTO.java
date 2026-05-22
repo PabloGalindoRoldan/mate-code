@@ -5,13 +5,16 @@ import com.parque_industrial.entities.CategoriaInventario;
 public class ElementoRequestDTO {
     private String nombre;
     private CategoriaInventario categoria;
+    private String detalle;
 
     public ElementoRequestDTO() {
     }
 
-    public ElementoRequestDTO(String nombre, CategoriaInventario categoria) {
+    public ElementoRequestDTO(String nombre, CategoriaInventario categoria, String detalle) {
         this.nombre = nombre;
         this.categoria = categoria;
+        this.detalle = detalle;
+
     }
 
     public String getNombre() {
@@ -28,5 +31,13 @@ public class ElementoRequestDTO {
 
     public void setCategoria(CategoriaInventario categoria) {
         this.categoria = categoria;
+    }
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
     }
 }

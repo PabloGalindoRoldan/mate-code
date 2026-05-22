@@ -25,7 +25,7 @@ public class InventarioServiceImpl implements InventarioService {
     @Transactional
     public ElementoResponseDTO crearElemento(ElementoRequestDTO request) {
         // Mapeamos el DTO de entrada a nuestra entidad de negocio
-        Elemento nuevoElemento = new Elemento(request.getNombre(), request.getCategoria());
+        Elemento nuevoElemento = new Elemento(request.getNombre(), request.getCategoria(), request.getDetalle());
 
         // Persistimos mediante el DAO nativo
         Elemento elementoGuardado = inventarioDAO.guardar(nuevoElemento);
