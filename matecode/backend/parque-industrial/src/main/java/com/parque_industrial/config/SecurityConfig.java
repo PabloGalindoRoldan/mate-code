@@ -60,6 +60,8 @@ public class SecurityConfig {
                         // '/api/consumos/historial'.
                         .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
 
+
+                        .requestMatchers("/api/lotes/**").hasRole("ADMINISTRADOR_PARQUE")
                         // --- ENDPOINTS DE PRESUPUESTO Y BALANCES (LEY 5763) ---
                         // El libro de estados, afectaciones y reestructuraciones contables son
                         // exclusivas
