@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import Map, { Source, Layer, Popup, type MapRef } from "react-map-gl/maplibre";
 import {
-    Map as MapIcon, ChevronRight, Building2, Info, CalendarDays, Users, Truck, X, Maximize2, Zap, Droplet, Flame
+    Map as MapIcon, ChevronRight, Building2, Info, CalendarDays, Users, Truck, X, Zap, Droplet, Flame
 } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapPanel.css";
