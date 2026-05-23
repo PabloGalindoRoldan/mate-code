@@ -1,18 +1,21 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import Map, { Source, Layer, Popup, type MapRef } from "react-map-gl/maplibre";
-import { Map as MapIcon, ChevronRight, Building2, Info, CheckCircle2, XCircle } from "lucide-react";
+import {
+    Map as MapIcon, ChevronRight, Building2, Info, CalendarDays, Users, Truck, X, Maximize2, Zap, Droplet, Flame
+} from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapPanel.css";
 import { useMap } from "./MapProvider";
 import MapMenu from "./MapMenu";
 import LoadingSpinner from "../../ui/loading/LoadingSpinner";
-import { lotesApi, empresasApi } from "../../api/axios";
+import { lotesApi, empresasApi, consumosApi } from "../../api/axios";
 
 interface EmpresaDTO {
     identificacion: string;
     razonSocial: string;
     esRadicada: boolean;
     idlote: number;
+    [key: string]: any;
 }
 
 interface PopupInfo {
@@ -22,24 +25,31 @@ interface PopupInfo {
     featureId: number | undefined;
 }
 
-// Reusable pure function to match map features to database companies
+interface ModalData {
+    properties: any;
+    activeEmpresa: EmpresaDTO | undefined;
+}
+
+interface ConsumoRecord {
+    id?: number;
+    mes: number;
+    ano: number;
+    luz?: { source: string; parsedValue: number } | number;
+    agua?: { source: string; parsedValue: number } | number;
+    gas?: { source: string; parsedValue: number } | number;
+    empleados?: number;
+    vehiculos?: number;
+    [key: string]: any;
+}
+
 function findLinkedEmpresa(featureId: string | number | undefined, empresas: EmpresaDTO[]): EmpresaDTO | undefined {
     if (!empresas.length) return undefined;
-
     return empresas.find(emp => {
         if (emp.idlote === undefined || emp.idlote === null) return false;
-
-        // 1. Direct match with top-level feature ID (as Number)
-        if (featureId !== undefined && featureId !== null && Number(featureId) === Number(emp.idlote)) {
-            return true;
-        }
-
-        // 2. Direct match with top-level feature ID (as String)
-        if (featureId !== undefined && featureId !== null && String(featureId).trim() === String(emp.idlote).trim()) {
-            return true;
-        }
-
-        return false;
+        const idLoteNum = Number(emp.idlote);
+        const featIdNum = Number(featureId);
+        if (!isNaN(featIdNum) && !isNaN(idLoteNum) && featIdNum === idLoteNum) return true;
+        return String(featureId).trim() === String(emp.idlote).trim();
     });
 }
 
@@ -55,7 +65,6 @@ function getPolygonCentroid(geometry: any): [number, number] {
         if (!Array.isArray(points) || points.length === 0) return [0, 0];
 
         let totalLng = 0, totalLat = 0, validCount = 0;
-
         for (let i = 0; i < points.length; i++) {
             const pt = points[i];
             if (pt && typeof pt[0] === "number" && typeof pt[1] === "number" && !isNaN(pt[0]) && !isNaN(pt[1])) {
@@ -64,7 +73,6 @@ function getPolygonCentroid(geometry: any): [number, number] {
                 validCount++;
             }
         }
-
         if (validCount === 0) return [0, 0];
         return [totalLng / validCount, totalLat / validCount];
     } catch (error) {
@@ -72,6 +80,24 @@ function getPolygonCentroid(geometry: any): [number, number] {
         return [0, 0];
     }
 }
+
+const NOMBRE_MESES = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
+
+const LABELS_MAP: Record<string, string> = {
+    sup: "Superficie (m²)",
+    tipo: "Tipo de Poligono",
+    estado: "Estado de ocupacion del lote",
+    parque: "Parque Nuevo o Viejo",
+    nc: "Nomenclatura Catastral",
+    lote: "Número de Lote",
+    identificacion: "CUIT",
+    razonSocial: "Razón Social",
+    esRadicada: "Está Radicada",
+    idlote: "Número de Lote"
+};
 
 export default function MapPanel() {
     const mapRef = useRef<MapRef>(null);
@@ -84,11 +110,13 @@ export default function MapPanel() {
     const [hoveredId, setHoveredId] = useState<string | number | null>(null);
     const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
 
+    // Diccionario de ventanas abiertas indexadas por ID de lote/feature para permitir multi-ventana
+    const [openModals, setOpenModals] = useState<Record<string | number, ModalData>>({});
+
     const [mapData, setMapData] = useState<any>(null);
     const [empresas, setEmpresas] = useState<EmpresaDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Fetch initial layers and corporate entities
     useEffect(() => {
         const controller = new AbortController();
         setIsLoading(true);
@@ -112,13 +140,11 @@ export default function MapPanel() {
         return () => controller.abort();
     }, []);
 
-    // DERIVED STATE: Dynamically compute the active company on render without using a useEffect hook
     const activeEmpresa = useMemo(() => {
         if (!popupInfo) return undefined;
         return findLinkedEmpresa(popupInfo.featureId, empresas);
     }, [popupInfo, empresas]);
 
-    // Mapbox Map rotation loop
     useEffect(() => {
         let animationFrame: number;
         const rotate = () => {
@@ -200,8 +226,23 @@ export default function MapPanel() {
         ["case", ["==", ["get", "estado"], "infraestructura"], ["literal", showStreets], true]
     ];
 
+    const openExtendedPanel = (loteId: string | number, properties: any, empresa: EmpresaDTO | undefined) => {
+        setOpenModals(prev => ({
+            ...prev,
+            [loteId]: { properties, activeEmpresa: empresa }
+        }));
+    };
+
+    const closeExtendedPanel = (loteId: string | number) => {
+        setOpenModals(prev => {
+            const updated = { ...prev };
+            delete updated[loteId];
+            return updated;
+        });
+    };
+
     return (
-        <div className="mapContainer" style={{ position: "relative" }}>
+        <div className="mapContainer" style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
             {(isLoading || !mapData) && (
                 <div style={{
                     position: "absolute",
@@ -281,7 +322,7 @@ export default function MapPanel() {
                                     ["==", ["match", ["get", "tipo"], "lote", true, false], true]
                                 ] as any}
                                 layout={{
-                                    "text-field": ["get", "lote"],
+                                    "text-field": ["id"],
                                     "text-size": 10,
                                     "text-anchor": "center",
                                     "text-justify": "center",
@@ -308,40 +349,38 @@ export default function MapPanel() {
                                 <div className="popup-wrapper">
                                     <header className="popup-header">
                                         <Info size={16} />
-                                        <h3>Detalle del Lote {popupInfo.properties.lote}</h3>
+                                        <h3>Lote {popupInfo.featureId}</h3>
                                     </header>
 
                                     <div className="popup-body">
-                                        <section className="popup-section">
-                                            <p><strong>Estado:</strong> <span className={`status-badge ${popupInfo.properties.estado}`}>{popupInfo.properties.estado}</span></p>
-                                            <p><strong>Sector:</strong> {popupInfo.properties.parque === "nuevo" ? "Parque Nuevo" : "Parque Viejo"}</p>
-                                            {popupInfo.properties.sup && (
-                                                <p><strong>Superficie:</strong> {popupInfo.properties.sup} m²</p>
-                                            )}
-                                            {popupInfo.properties.nc != "N/A" && (
-                                                <p><strong>N.C.:</strong> {popupInfo.properties.nc}</p>
-                                            )}
-                                        </section>
+                                        <p><strong>Estado:</strong> <span className={`status-badge ${popupInfo.properties.estado}`}>{popupInfo.properties.estado}</span></p>
+
+                                        {/* Nuevos datos agregados al cuerpo del popup */}
+                                        {popupInfo.properties.sup && (
+                                            <p><strong>Superficie:</strong> {popupInfo.properties.sup} m²</p>
+                                        )}
+
+                                        {popupInfo.properties.nc && popupInfo.properties.nc.trim().toUpperCase() !== "N/A" && (
+                                            <p><strong>NC:</strong> {popupInfo.properties.nc}</p>
+                                        )}
 
                                         {activeEmpresa ? (
-                                            <section className="popup-section empresa-details">
-                                                <h4><Building2 size={14} /> Información Empresarial</h4>
-                                                <p><strong>Razón Social:</strong> {activeEmpresa.razonSocial}</p>
-                                                <p><strong>CUIT:</strong> {activeEmpresa.identificacion}</p>
-                                                <p className="radicada-status">
-                                                    <strong>Radicada:</strong>{" "}
-                                                    {activeEmpresa.esRadicada ? (
-                                                        <span className="text-success"><CheckCircle2 size={12} /> Sí</span>
-                                                    ) : (
-                                                        <span className="text-danger"><XCircle size={12} /> No</span>
-                                                    )}
-                                                </p>
-                                            </section>
+                                            <p><strong>Empresa:</strong> {activeEmpresa.razonSocial}</p>
                                         ) : (
                                             popupInfo.properties.estado === "ocupado" && (
-                                                <p className="no-empresa-warning">No se encontraron datos de la firma asociada.</p>
+                                                <p className="no-empresa-warning">Ocupado (Sin firma vinculada)</p>
                                             )
                                         )}
+
+                                        <button
+                                            className="popup-ver-mas-btn"
+                                            onClick={() => {
+                                                const idKey = popupInfo.featureId ?? popupInfo.properties.lote;
+                                                openExtendedPanel(idKey, popupInfo.properties, activeEmpresa);
+                                            }}
+                                        >
+                                            Ver más detalles
+                                        </button>
                                     </div>
                                 </div>
                             </Popup>
@@ -349,6 +388,227 @@ export default function MapPanel() {
                     </>
                 )}
             </Map>
+
+            {/* --- RENDERIZADO DE VENTANAS MÚLTIPLES --- */}
+            {Object.entries(openModals).map(([loteId, data], index) => (
+                <ModalPanel
+                    key={loteId}
+                    loteId={loteId}
+                    data={data}
+                    index={index}
+                    onClose={closeExtendedPanel}
+                />
+            ))}
+        </div>
+    );
+}
+
+// --- SUBCOMPONENTE DE EXPEDIENTE FLOTANTE INDEPENDIENTE ---
+interface ModalPanelProps {
+    loteId: string | number;
+    data: ModalData;
+    index: number;
+    onClose: (loteId: string | number) => void;
+}
+
+function ModalPanel({ loteId, data, index, onClose }: ModalPanelProps) {
+    const [position, setPosition] = useState({ x: 60 + index * 25, y: 80 + index * 25 });
+    const [isDragging, setIsDragging] = useState(false);
+    const dragStart = useRef({ x: 0, y: 0 });
+
+    const [ultimoConsumo, setUltimoConsumo] = useState<ConsumoRecord | null>(null);
+    const [isConsumosLoading, setIsConsumosLoading] = useState(false);
+
+    useEffect(() => {
+        if (!data.activeEmpresa?.identificacion) {
+            setUltimoConsumo(null);
+            return;
+        }
+
+        const controller = new AbortController();
+        setIsConsumosLoading(true);
+
+        consumosApi.getHistorialPorEmpresa(data.activeEmpresa.identificacion)
+            .then((historial: ConsumoRecord[]) => {
+                if (historial && historial.length > 0) {
+                    const ordenado = [...historial].sort((a, b) => {
+                        if (a.ano !== b.ano) return b.ano - a.ano;
+                        return b.mes - a.mes;
+                    });
+                    setUltimoConsumo(ordenado[0]);
+                } else {
+                    setUltimoConsumo(null);
+                }
+            })
+            .catch((err) => {
+                console.error(`Error consultando consumos de la empresa en lote ${loteId}:`, err);
+                setUltimoConsumo(null);
+            })
+            .finally(() => {
+                setIsConsumosLoading(false);
+            });
+
+        return () => controller.abort();
+    }, [data.activeEmpresa?.identificacion, loteId]);
+
+    // --- Lógica del arrastre individual ---
+    const handleMouseDown = (e: React.MouseEvent) => {
+        // Evitamos que el arrastre empiece si se hace click en el botón de cerrar
+        if ((e.target as HTMLElement).closest("button")) return;
+        e.stopPropagation();
+
+        setIsDragging(true);
+        dragStart.current = {
+            x: e.clientX - position.x,
+            y: e.clientY - position.y
+        };
+    };
+
+    const handleMouseMove = useCallback((e: MouseEvent) => {
+        if (!isDragging) return;
+        setPosition({
+            x: e.clientX - dragStart.current.x,
+            y: e.clientY - dragStart.current.y
+        });
+    }, [isDragging]);
+
+    const handleMouseUp = useCallback(() => {
+        setIsDragging(false);
+    }, []);
+
+    useEffect(() => {
+        if (isDragging) {
+            window.addEventListener("mousemove", handleMouseMove);
+            window.addEventListener("mouseup", handleMouseUp);
+        }
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
+        };
+    }, [isDragging, handleMouseMove, handleMouseUp]);
+
+    const getLuzValue = (record: ConsumoRecord) => typeof record.luz === "object" ? record.luz.parsedValue : record.luz;
+    const getAguaValue = (record: ConsumoRecord) => typeof record.agua === "object" ? record.agua.parsedValue : record.agua;
+    const getGasValue = (record: ConsumoRecord) => typeof record.gas === "object" ? record.gas.parsedValue : record.gas;
+
+    return (
+        <div
+            className="draggable-modal-panel"
+            // Capturamos cualquier mousedown dentro del cuerpo del modal para que tampoco mueva el mapa
+            onMouseDown={(e) => e.stopPropagation()}
+            style={{
+                position: "absolute",
+                left: `${position.x}px`,
+                top: `${position.y}px`,
+                zIndex: 12 + index,
+                cursor: isDragging ? "grabbing" : "default"
+            }}
+        >
+            <header
+                className="modal-panel-header"
+                onMouseDown={handleMouseDown}
+                style={{ cursor: "grab" }}
+            >
+                <div className="modal-header-title">
+                    <Building2 size={16} />
+                    <span>Expediente Completo: Lote {loteId}</span>
+                </div>
+                <button className="close-modal-btn" onClick={() => onClose(loteId)}>
+                    <X size={16} />
+                </button>
+            </header>
+
+            <div className="modal-panel-body">
+                <section className="modal-data-section">
+                    <h4>Datos Técnicos del Lote</h4>
+                    <div className="modal-dynamic-grid">
+                        {Object.entries(data.properties)
+                            .filter(([key]) => key !== "lote")
+                            .map(([key, value]) => (
+                                <div key={key} className="data-box">
+                                    <span className="data-key">{LABELS_MAP[key] || key}:</span>
+                                    <span className="data-value">{String(value)}</span>
+                                </div>
+                            ))}
+                    </div>
+                </section>
+
+                <section className="modal-data-section">
+                    <h4>Ficha Completa de la Empresa</h4>
+                    {data.activeEmpresa ? (
+                        <div className="modal-dynamic-grid">
+                            {Object.entries(data.activeEmpresa).map(([key, value]) => (
+                                <div key={key} className="data-box">
+                                    <span className="data-key">
+                                        {LABELS_MAP[key] || key}
+                                    </span>
+                                    <span className="data-value">
+                                        {typeof value === "boolean"
+                                            ? (value ? "Sí" : "No")
+                                            : String(value ?? "N/A")}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-muted text-sm">Este lote no registra una empresa activa actualmente.</p>
+                    )}
+                </section>
+
+                <section className="modal-data-section">
+                    <h4>Último Balance de Consumos e Indicadores</h4>
+                    {isConsumosLoading ? (
+                        <p className="consumos-loading">Cargando mediciones desde la API...</p>
+                    ) : ultimoConsumo ? (
+                        <div className="modal-consumos-wrapper">
+                            <div className="modal-periodo-badge">
+                                <CalendarDays size={14} />
+                                <span>Período: {NOMBRE_MESES[ultimoConsumo.mes - 1]} / {ultimoConsumo.ano}</span>
+                            </div>
+
+                            <div className="modal-indicators-grid">
+                                <div className="indicator-card energy">
+                                    <Zap size={16} color="#fbff00" />
+                                    <div className="info">
+                                        <span className="title">Energía</span>
+                                        <span className="val">{getLuzValue(ultimoConsumo) ?? 0} kWh</span>
+                                    </div>
+                                </div>
+                                <div className="indicator-card water">
+                                    <Droplet size={16} color="#00bfff" />
+                                    <div className="info">
+                                        <span className="title">Agua Potable</span>
+                                        <span className="val">{getAguaValue(ultimoConsumo) ?? 0} m³</span>
+                                    </div>
+                                </div>
+                                <div className="indicator-card gas">
+                                    <Flame size={16} color="#ff6b35" />
+                                    <div className="info">
+                                        <span className="title">Gas Gasoducto</span>
+                                        <span className="val">{getGasValue(ultimoConsumo) ?? 0} m³</span>
+                                    </div>
+                                </div>
+                                <div className="indicator-card staff">
+                                    <Users size={16} color="#808080" />
+                                    <div className="info">
+                                        <span className="title">Nómina Personal</span>
+                                        <span className="val">{ultimoConsumo.empleados ?? 0} operarios</span>
+                                    </div>
+                                </div>
+                                <div className="indicator-card vehicles">
+                                    <Truck size={16} color="#ad11cc" />
+                                    <div className="info">
+                                        <span className="title">Flota Activa</span>
+                                        <span className="val">{ultimoConsumo.vehiculos ?? 0} unidades</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <p className="text-muted text-sm">No existen registros analíticos cargados para la firma en este periodo.</p>
+                    )}
+                </section>
+            </div>
         </div>
     );
 }

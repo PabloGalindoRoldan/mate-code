@@ -1,0 +1,399 @@
+/* ==========================================================================
+   EMPRESAS MANAGEMENT DASHBOARD PANEL STYLES (CORREGIDO)
+   ========================================================================== */
+
+.empresas-panel-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: #f8fafc;
+    height: auto;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 2rem;
+}
+
+.panel-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.panel-dashboard-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 300;
+    color: #30332D;
+}
+
+.refresh-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.refresh-action-btn:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+/* INPUT FILTERS DISPLAY SECTION */
+.filter-dashboard-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    border: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+    .filter-dashboard-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+.filter-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    /* Permite que los select no fuercen un ancho mínimo */
+}
+
+.filter-input-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+
+.filter-input-group select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 14px;
+    color: #334155;
+    outline: none;
+    cursor: pointer;
+    max-width: 100%;
+}
+
+.filter-input-group select:focus {
+    border-color: var(--verde1);
+    background-color: #ffffff;
+}
+
+/* KPI CARDS CONTAINER */
+.analytics-metrics-grid {
+    display: grid;
+    /* El truco del minmax(0, 1fr) rompe el comportamiento del min-content intrínseco del Grid */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+@media (max-width: 1024px) {
+    .analytics-metrics-grid {
+        grid-template-columns: 1fr;
+        /* Colapsa a una columna en tablets y mobile */
+    }
+}
+
+.metric-panel-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    min-width: 0;
+    /* Previene overflow interno */
+}
+
+.icon-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* Evita que el badge se deforme si el texto empuja */
+}
+
+.icon-badge.power {
+    color: #d9d506;
+}
+
+.icon-badge.staff {
+    color: #0284c7;
+}
+
+.metric-data {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    /* Permite truncar o ajustar textos largos */
+}
+
+.metric-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Si el título no entra, mete puntos suspensivos */
+}
+
+.metric-data h3 {
+    margin: 4px 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.metric-data h3 small {
+    font-size: 14px;
+    font-weight: 400;
+    color: #64748b;
+}
+
+.metric-subtitle {
+    margin: 0;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* VISUAL CHART BOX DISPLAY CONTAINER */
+.chart-visualization-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+}
+
+.chart-visualization-container h3,
+.management-table-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.chart-box-render {
+    height: 280px;
+    position: relative;
+    width: 100%;
+}
+
+/* ADMINISTRATIVE INVENTORY LEDGER DATATABLE */
+.management-table-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+    /* No permite que la tarjeta estire el panel */
+}
+
+.table-responsive-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+    /* Scroll suave en iOS */
+}
+
+.admin-companies-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+    /* Ayuda al navegador a calcular anchos fijos si el layout se rompe */
+    table-layout: auto;
+}
+
+.admin-companies-table th {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+    /* Mantiene prolijos los títulos */
+}
+
+.admin-companies-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.company-name-bold {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.lote-display-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #f1f5f9;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #475569;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* RADICACION TOGGLE COLOURED PILLS */
+.radicada-toggle-pill {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 100px;
+    letter-spacing: 0.02em;
+}
+
+.radicada-toggle-pill.true {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.radicada-toggle-pill.false {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+/* ACTION MATRIX BUTTONS layouts */
+.action-row-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Si los botones de acción no entran, bajan de renglón sin romper la celda */
+}
+
+.action-link-btn {
+    background: none;
+    border: none;
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.action-link-btn:hover {
+    text-decoration: underline;
+}
+
+.action-toggle-btn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    white-space: nowrap;
+}
+
+.action-toggle-btn.success {
+    background-color: var(--verde1);
+    color: white;
+}
+
+.action-toggle-btn.success:hover {
+    background-color: var(--verde2);
+}
+
+.action-toggle-btn.danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.action-toggle-btn.danger:hover {
+    background-color: #fca5a5;
+}
+
+/* INLINE MODAL FIELD EDITORS */
+.inline-lote-editor {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.inline-lote-editor input {
+    width: 70px;
+    padding: 4px 6px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.inline-lote-editor .btn-save {
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.inline-lote-editor .btn-cancel {
+    background-color: #64748b;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* GENERAL STATUS CONTAINER BLOCKS */
+.panel-loading-wrapper,
+.panel-error-card {
+    padding: 40px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.panel-error-card {
+    color: #b91c1c;
+    background-color: #fef2f2;
+    border-radius: 8px;
+    margin: 24px;
+}
