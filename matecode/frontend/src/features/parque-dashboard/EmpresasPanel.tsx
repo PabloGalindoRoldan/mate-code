@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { empresasApi, consumosApi } from '../../api/axios';
 import { Bar } from 'react-chartjs-2';
 import {
