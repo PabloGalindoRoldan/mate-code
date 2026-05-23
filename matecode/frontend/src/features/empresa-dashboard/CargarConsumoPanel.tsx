@@ -123,7 +123,7 @@ export default function CargarConsumoPanel() {
 
     return (
         <div className="cargarConsumoPanel">
-            <header className="panel-header">
+            <header className="panel-header panel-header-configuracion"> {/* CAMBIAR EL CSS PARA AGREGAR LA CLASE CORRESPONDIENTE A ESTE ELEMENTO*/}
                 <h2>Declaración Mensual de Consumos</h2>
                 <p>Cargue los registros métricos y de personal correspondientes a su empresa.</p>
             </header>

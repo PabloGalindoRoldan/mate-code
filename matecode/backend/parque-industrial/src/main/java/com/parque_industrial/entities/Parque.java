@@ -12,5 +12,4 @@ public class Parque {
     private GestorProyectos gestorProyectos;
     private List<Usuario> representantes;
     private List<Empresa> empresas;
-
 }

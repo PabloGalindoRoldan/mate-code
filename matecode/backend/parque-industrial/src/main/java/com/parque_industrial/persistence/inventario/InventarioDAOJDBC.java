@@ -28,7 +28,7 @@ public class InventarioDAOJDBC implements InventarioDAO {
 
     // Mapeador explícito agregando @NonNull en los parámetros heredados para saciar
     // al compilador
-    private final RowMapper<Elemento> elementRowMapper = new RowMapper<Elemento>() {
+    private final @NonNull RowMapper<Elemento> elementRowMapper = new RowMapper<Elemento>() {
         @Override
         public Elemento mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
             Elemento elemento = new Elemento();

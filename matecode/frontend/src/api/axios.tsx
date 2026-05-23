@@ -63,3 +63,17 @@ export const presupuestoApi = {
         return response.data;
     }
 };
+
+export const empresasApi = {
+    listarEmpresas: async (config = {}) => {
+        const response = await API.get('/api/empresas', config);
+        return response.data; // Returns List<EmpresaDTO>
+    }
+};
+
+export const lotesApi = {
+    getMapaLotes: async (config = {}) => {
+        const response = await API.get('/api/lotes', config);
+        return response.data;
+    }
+};

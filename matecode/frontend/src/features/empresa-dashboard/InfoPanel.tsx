@@ -33,7 +33,7 @@ export default function InfoPanel({ empresa, usuario }: InfoPanelProps) {
     const [consumos, setConsumos] = useState<ConsumoData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [selectedYear, setSelectedYear] = useState<string>("All");
+    const [selectedYear, setSelectedYear] = useState<string>("Todos");
 
     // 1. Efecto para buscar el historial real de consumos
     useEffect(() => {
@@ -58,12 +58,12 @@ export default function InfoPanel({ empresa, usuario }: InfoPanelProps) {
     // 2. Extraer los años únicos disponibles dinámicamente
     const availableYears = useMemo(() => {
         const years = consumos.map((c) => String(c.ano));
-        return ["All", ...Array.from(new Set(years))];
+        return ["Todos", ...Array.from(new Set(years))];
     }, [consumos]);
 
     // 3. Filtrar consumos según el año elegido en el select
     const filteredConsumos = useMemo(() => {
-        return selectedYear === "All"
+        return selectedYear === "Todos"
             ? consumos
             : consumos.filter((c) => String(c.ano) === selectedYear);
     }, [consumos, selectedYear]);
