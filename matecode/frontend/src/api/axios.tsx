@@ -64,16 +64,45 @@ export const presupuestoApi = {
     }
 };
 
+export const lotesApi = {
+    getMapaLotes: async (config = {}) => {
+        const response = await API.get('/api/lotes', config);
+        return response.data;
+    }
+};
+
+export const consumosApi = {
+    // Fetches the entire park's consumption logs for a given calendar year
+    getReporteGlobal: async (ano: number) => {
+        const response = await API.get(`/api/consumos/reporte-global/${ano}`);
+        return response.data; // Returns List<ConsumoResponseDTO>
+    },
+
+    // Fetches the entire consumption history for a specific enterprise by its CUIT
+    getHistorialPorEmpresa: async (cuit: string) => {
+        // Apunta al endpoint de administración pasándole el CUIT en la URL
+        const response = await API.get(`/api/consumos/historial/${cuit}`);
+        return response.data; // Returns List<ConsumoRecord> o List<ConsumoResponseDTO>
+    }
+};
+
 export const empresasApi = {
     listarEmpresas: async (config = {}) => {
         const response = await API.get('/api/empresas', config);
         return response.data; // Returns List<EmpresaDTO>
-    }
-};
+    },
 
-export const lotesApi = {
-    getMapaLotes: async (config = {}) => {
-        const response = await API.get('/api/lotes', config);
+    // Links a physical plot asset (idLote) to an enterprise CUIT line
+    asignarLote: async (cuit: string, idlote: number | null) => {
+        const response = await API.post('/api/empresas/AsignarLote', { cuit, idlote });
+        return response.data;
+    },
+
+    // Optional handler placeholder: if your backend requires updating the full EmpresaDTO object 
+    // to toggle isRadicada, map it here. If you use a custom endpoint, align it accordingly:
+    actualizarEstadoRadicacion: async (cuit: string, radicada: boolean) => {
+        // Adjust endpoint signature according to backend expectations if different
+        const response = await API.put(`/api/empresas/${cuit}/radicacion`, { radicada });
         return response.data;
     }
 };

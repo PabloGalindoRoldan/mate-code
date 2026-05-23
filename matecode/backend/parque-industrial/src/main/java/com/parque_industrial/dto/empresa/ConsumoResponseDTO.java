@@ -12,7 +12,7 @@ public class ConsumoResponseDTO {
     private BigDecimal agua;
     private int empleados;
     private int vehiculos;
-    private String fechaCarga; // La pasamos como String formateado para que React la dibuje fácil
+    private String fechaCarga;
 
     // Constructor rápido a partir de la Entidad
     public ConsumoResponseDTO(Consumo consumo) {

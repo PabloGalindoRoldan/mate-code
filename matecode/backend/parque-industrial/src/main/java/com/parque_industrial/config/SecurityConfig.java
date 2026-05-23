@@ -50,6 +50,7 @@ public class SecurityConfig {
 
                         // --- ENDPOINTS DE CONSUMOS ---
                         .requestMatchers("/api/consumos/reporte-global/**").hasRole("ADMINISTRADOR_PARQUE")
+                        .requestMatchers(HttpMethod.GET, "/api/consumos/historial/*").hasRole("ADMINISTRADOR_PARQUE")
                         .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
 
                         // --- ENDPOINTS DE LOTES ---
