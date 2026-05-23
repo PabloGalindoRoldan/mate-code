@@ -132,7 +132,7 @@ export default function ConfiguracionPanel({ empresa }: ConfiguracionPanelProps)
 
     return (
         <div className="configuracionPanel">
-            <header className="panel-header">
+            <header className="panel-header panel-header-configuracion">
                 <h2>Configuración del Sistema</h2>
                 <p>Gestión interna de credenciales, accesos y parámetros de la organización.</p>
             </header>

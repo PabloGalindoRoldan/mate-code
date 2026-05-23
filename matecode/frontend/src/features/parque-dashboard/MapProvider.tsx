@@ -17,6 +17,8 @@ interface MapContextType {
     setShowDisponible: (val: boolean) => void;
     showOcupado: boolean;
     setShowOcupado: (val: boolean) => void;
+    showLabels: boolean;
+    setShowLabels: (val: boolean) => void;
 }
 
 const MapContext = createContext<MapContextType | undefined>(undefined);
@@ -30,6 +32,7 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
     const [showStreets, setShowStreets] = useState(true);
     const [showDisponible, setShowDisponible] = useState(false);
     const [showOcupado, setShowOcupado] = useState(false);
+    const [showLabels, setShowLabels] = useState(false);
 
     return (
         <MapContext.Provider
@@ -41,7 +44,8 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
                 showViejo, setShowViejo,
                 showStreets, setShowStreets,
                 showDisponible, setShowDisponible,
-                showOcupado, setShowOcupado
+                showOcupado, setShowOcupado,
+                showLabels, setShowLabels
             }}
         >
             {children}

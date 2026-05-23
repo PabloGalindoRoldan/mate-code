@@ -16,6 +16,8 @@ interface MapMenuProps {
     setShowDisponible: (val: boolean) => void;
     showOcupado: boolean;
     setShowOcupado: (val: boolean) => void;
+    showLabels: boolean;
+    setShowLabels: (val: boolean) => void;
 }
 
 export default function MapMenu({
@@ -25,7 +27,8 @@ export default function MapMenu({
     showNuevo, setShowNuevo,
     showViejo, setShowViejo,
     showStreets, setShowStreets,
-    showOcupado, setShowOcupado
+    showOcupado, setShowOcupado,
+    showLabels, setShowLabels
 }: MapMenuProps) {
 
     const ToggleRow = (label: string, value: boolean, setter: (v: boolean) => void) => (
@@ -46,6 +49,7 @@ export default function MapMenu({
                 {ToggleRow("Auto Rotación", rotationEnabled, setRotationEnabled)}
                 {ToggleRow("Vista Satélite", isSatellite, setIsSatellite)}
                 <hr style={{ opacity: 0.1, margin: "10px 0" }} />
+                {ToggleRow("Numeracion", showLabels, setShowLabels)}
                 {ToggleRow("Nuevo", showNuevo, setShowNuevo)}
                 {ToggleRow("Viejo", showViejo, setShowViejo)}
                 {ToggleRow("Calles", showStreets, setShowStreets)}

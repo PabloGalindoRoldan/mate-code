@@ -75,3 +75,189 @@
         right: 190px;
     }
 }
+
+/* ==========================================
+   MAPLIBRE POPUP CORE OVERRIDES
+   ========================================== */
+
+/* The outer container */
+.lote-info-popup {
+    z-index: 50;
+    max-width: 280px !important;
+}
+
+/* Overriding Maplibre's default white box */
+.lote-info-popup .maplibregl-popup-content {
+    background: #ffffff;
+    padding: 0;
+    /* Let our wrapper handle internal padding */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+        0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+}
+
+/* Custom close button styling */
+.lote-info-popup .maplibregl-popup-close-button {
+    color: #94a3b8;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 0 12px 0 8px;
+    transition: background-color 0.2s, color 0.2s;
+    outline: none;
+}
+
+.lote-info-popup .maplibregl-popup-close-button:hover {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+/* Aligning the speech-bubble tip color with our backgrounds */
+.lote-info-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+    border-bottom-color: var(--verde1);
+    /* Matches header color if anchored top */
+}
+
+.lote-info-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+    border-top-color: #ffffff;
+    /* Matches body footer color if anchored bottom */
+}
+
+.lote-info-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+    border-right-color: #ffffff;
+}
+
+.lote-info-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+    border-left-color: #ffffff;
+}
+
+/* ==========================================
+   POPUP INTERNAL CONTENT STYLING
+   ========================================== */
+
+.popup-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.popup-header {
+    background: var(--verde1);
+    color: #ffffff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.popup-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.popup-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #ffffff;
+}
+
+.popup-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.popup-section p {
+    margin: 0;
+    font-size: 13px;
+    color: #475569;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed #f1f5f9;
+    padding-bottom: 4px;
+}
+
+.popup-section p strong {
+    color: #1e293b;
+    font-weight: 500;
+}
+
+/* Status Badges */
+.status-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+}
+
+.status-badge.disponible {
+    background-color: #ecfdf5;
+    color: #059669;
+}
+
+.status-badge.ocupado {
+    background-color: #fff1f2;
+    color: #e11d48;
+}
+
+.status-badge.infraestructura {
+    background-color: #f8fafc;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+}
+
+/* Corporate Metadata Section */
+.empresa-details {
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.empresa-details h4 {
+    margin: 0 0 6px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Radicada indicators */
+.radicada-status span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.text-success {
+    color: #16a34a;
+}
+
+.text-danger {
+    color: #dc2626;
+}
+
+/* Warnings */
+.no-empresa-warning {
+    margin: 4px 0 0 0;
+    font-size: 12px;
+    color: #d97706;
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+    padding: 8px 10px;
+    border-radius: 6px;
+    line-height: 1.4;
+}

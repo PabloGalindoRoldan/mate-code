@@ -46,8 +46,9 @@ public class EmpresaController {
         EmpresaDTO empresa = gestor.buscarEmpresaPorCuit(cuit);
         return ResponseEntity.ok(empresa);
     }
+
     @PostMapping("/AsignarLote")
-    public void AsignarLote(@RequestBody AsignarLoteRequestDTO datosEntrada){
+    public void AsignarLote(@RequestBody AsignarLoteRequestDTO datosEntrada) {
         gestor.asignarLoteAEmpresa(datosEntrada.cuit(), datosEntrada.idlote());
     }
 }
