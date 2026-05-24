@@ -38,11 +38,10 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
     public List<EmpresaDTO> empresasRadicadas() {
         String sql = "SELECT cuit, razon_social, es_radicada, idlote FROM empresas WHERE es_radicada = 1";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new EmpresaDTO(
-                rs.getString("cuit"), // MAPEADO: columna real de la BDD
-                rs.getString("razon_social"), // MAPEADO: columna real de la BDD
-                rs.getBoolean("es_radicada"), // MAPEADO: columna real de la BDD
-                rs.getObject("idlote") != null ? rs.getInt("idlote") : null // Evita que devuelva 0 si es NULL
-        ));
+                rs.getString("cuit"),
+                rs.getString("razon_social"),
+                rs.getBoolean("es_radicada"),
+                rs.getObject("idlote") != null ? rs.getInt("idlote") : null));
     }
 
     @Override

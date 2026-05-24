@@ -7,6 +7,7 @@ import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 import InventarioPanel from "./InventarioPanel";
 import PresupuestoPanel from "./PresupuestoPanel";
 import EmpresasPanel from "./EmpresasPanel";
+// import MapPanelDebug from "./MapPanelDebug";
 
 export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boolean, activeTab: string }) {
 
