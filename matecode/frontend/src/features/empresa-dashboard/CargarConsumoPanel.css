@@ -118,3 +118,7 @@
         width: 100%;
     }
 }
+
+.alert-danger {
+    color: rgb(226, 66, 66);
+}

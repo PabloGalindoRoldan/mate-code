@@ -1,5 +1,6 @@
 package com.parque_industrial.services;
 
+import com.parque_industrial.dto.auth.ChangePasswordRequest;
 import com.parque_industrial.dto.auth.LoginRequest;
 import com.parque_industrial.config.JwtUtil;
 import com.parque_industrial.dto.auth.LoginResponse;
@@ -96,7 +97,8 @@ public class AuthService {
         if (!empresaDAO.existeEmpresa(request.cuitEmpresa())) {
             throw new IllegalArgumentException("La empresa con CUIT " + request.cuitEmpresa() + " no existe");
         }
-        Empresa empresa = new Empresa(request.cuitEmpresa(), "no es importante", false); // Solo necesitamos el CUIT para asociar al usuario
+        Empresa empresa = new Empresa(request.cuitEmpresa(), "no es importante", false); // Solo necesitamos el CUIT
+                                                                                         // para asociar al usuario
         Usuario usuario = new Usuario(
                 request.nombre(),
                 request.apellido(),
@@ -109,5 +111,28 @@ public class AuthService {
         usuarioDAO.guardar(usuario);
     }
 
+    @Transactional
+    public void changePassword(
+            String username,
+            ChangePasswordRequest request) {
+
+        if (!request.newPassword().equals(request.confirmPassword())) {
+            throw new IllegalArgumentException(
+                    "Las nuevas contraseñas no coinciden");
+        }
+
+        Usuario usuario = usuarioDAO
+                .buscarPorNombreUsuario(username)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        if (!usuario.getContraseña().equals(request.currentPassword())) {
+            throw new IllegalArgumentException(
+                    "La contraseña actual es incorrecta");
+        }
+
+        usuarioDAO.actualizarPassword(
+                username,
+                request.newPassword());
+    }
 
 }

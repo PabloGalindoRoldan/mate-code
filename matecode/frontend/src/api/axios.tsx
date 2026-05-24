@@ -104,5 +104,33 @@ export const empresasApi = {
         // Adjust endpoint signature according to backend expectations if different
         const response = await API.put(`/api/empresas/${cuit}/radicacion`, { radicada });
         return response.data;
+    },
+
+    ocuparLote: async (cuit: string, idlote: number | null) => {
+        const response = await API.post('/api/empresas/ocupar', {
+            cuit,
+            idlote
+        });
+
+        return response.data;
+    }
+
+};
+
+export const authApi = {
+
+    changePassword: async (data: {
+        currentPassword: string;
+        newPassword: string;
+        confirmPassword: string;
+    }) => {
+
+        const response = await API.post(
+            '/auth/change-password',
+            data
+        );
+
+        return response.data;
     }
 };
+

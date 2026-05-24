@@ -3,11 +3,11 @@ import MapPanel from "./MapPanel";
 import PublicacionesPanel from "./PublicacionesPanel";
 import ReportesPanel from "./ReportesPanel";
 import "./ParqueBody.css";
-import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 import InventarioPanel from "./InventarioPanel";
 import PresupuestoPanel from "./PresupuestoPanel";
 import EmpresasPanel from "./EmpresasPanel";
-// import MapPanelDebug from "./MapPanelDebug";
+import SettingsPanel from "./SettingsPanel";
+
 
 export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boolean, activeTab: string }) {
 
@@ -22,7 +22,7 @@ export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boole
             {activeTab === "reports" && <ReportesPanel />}
             {activeTab === "inventory" && <InventarioPanel />}
             {activeTab === "budget" && <PresupuestoPanel />}
-            {activeTab === "settings" && <LoadingSpinner text="Configuración - Esta sección está en construcción." />}
+            {activeTab === "settings" && <SettingsPanel />}
         </div>
     );
 }

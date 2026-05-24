@@ -58,6 +58,7 @@ public class SecurityConfig {
 
                         // --- ENDPOINTS DE EMPRESAS ---
                         .requestMatchers(HttpMethod.GET, "/api/empresas", "/api/empresas/**").permitAll()
+                        .requestMatchers("/api/empresas/**").hasRole("ADMINISTRADOR_PARQUE")
 
                         // --- ENDPOINTS DE PRESUPUESTO Y BALANCES (LEY 5763) ---
                         .requestMatchers("/api/presupuesto", "/api/presupuesto/**").hasRole("ADMINISTRADOR_PARQUE")
