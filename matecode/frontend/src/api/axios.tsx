@@ -117,3 +117,20 @@ export const empresasApi = {
 
 };
 
+export const authApi = {
+
+    changePassword: async (data: {
+        currentPassword: string;
+        newPassword: string;
+        confirmPassword: string;
+    }) => {
+
+        const response = await API.post(
+            '/auth/change-password',
+            data
+        );
+
+        return response.data;
+    }
+};
+

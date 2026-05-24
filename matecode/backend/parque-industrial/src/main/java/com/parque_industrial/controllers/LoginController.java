@@ -1,5 +1,6 @@
 package com.parque_industrial.controllers;
 
+import com.parque_industrial.dto.auth.ChangePasswordRequest;
 import com.parque_industrial.dto.auth.LoginRequest;
 import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.RegisterRequest;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
 
 @RestController
 
@@ -63,6 +65,18 @@ public class LoginController {
                                                                                                           // mandar
         authService.registerUsuarioEmpresaExistente(request);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito");
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(
+            @RequestBody ChangePasswordRequest request,
+            Authentication authentication) {
+
+        authService.changePassword(
+                authentication.getName(),
+                request);
+
+        return ResponseEntity.ok("Contraseña actualizada correctamente");
     }
 
 }

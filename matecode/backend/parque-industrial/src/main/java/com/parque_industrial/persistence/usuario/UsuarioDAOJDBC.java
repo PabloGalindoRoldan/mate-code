@@ -180,4 +180,21 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 empresaResponse,
                 null);
     }
+
+    @Override
+    public void actualizarPassword(
+            String username,
+            String nuevaPassword) {
+
+        String sql = """
+                UPDATE usuarios
+                SET contrasena = ?
+                WHERE nombre_usuario = ?
+                """;
+
+        jdbcTemplate.update(
+                sql,
+                nuevaPassword,
+                username);
+    }
 }
