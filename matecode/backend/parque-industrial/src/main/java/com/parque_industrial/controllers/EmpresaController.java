@@ -3,6 +3,8 @@ package com.parque_industrial.controllers;
 import com.parque_industrial.dto.empresa.AsignarLoteRequestDTO;
 import com.parque_industrial.dto.empresa.CrearRequestDTO;
 import com.parque_industrial.dto.empresa.EmpresaDTO;
+import com.parque_industrial.dto.empresa.EstadoRadicacionDTO;
+import com.parque_industrial.dto.empresa.OcupacionLoteDTO;
 import com.parque_industrial.services.GestorEmpresa;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,4 +53,26 @@ public class EmpresaController {
     public void AsignarLote(@RequestBody AsignarLoteRequestDTO datosEntrada) {
         gestor.asignarLoteAEmpresa(datosEntrada.cuit(), datosEntrada.idlote());
     }
+
+    @PostMapping("/ocupar")
+    public ResponseEntity<Void> ocuparLote(@RequestBody OcupacionLoteDTO request) {
+        gestor.ocuparLote(
+                request.cuit(),
+                request.idlote());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{cuit}/radicacion")
+    public ResponseEntity<Void> actualizarRadicacion(
+            @PathVariable String cuit,
+            @RequestBody EstadoRadicacionDTO request) {
+
+        gestor.actualizarEstadoRadicacion(
+                cuit,
+                request.radicada());
+
+        return ResponseEntity.ok().build();
+    }
+
 }

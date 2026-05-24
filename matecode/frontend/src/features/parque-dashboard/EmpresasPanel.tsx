@@ -42,6 +42,8 @@ export default function EmpresasPanel() {
     const [consumos, setConsumos] = useState<ConsumoRecord[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [showEmpresasTable, setShowEmpresasTable] = useState<boolean>(false);
+
 
     // Active filters
     const [selectedCuit, setSelectedCuit] = useState<string>('ALL');
@@ -127,7 +129,7 @@ export default function EmpresasPanel() {
                 alert('ID de lote inválido');
                 return;
             }
-            await empresasApi.asignarLote(cuit, loteIdParsed);
+            await empresasApi.ocuparLote(cuit, loteIdParsed);
             setEmpresas(prev => prev.map(e => e.identificacion === cuit ? { ...e, idlote: loteIdParsed } : e));
             setEditingCuit(null);
             setNewLote('');
@@ -151,19 +153,50 @@ export default function EmpresasPanel() {
         const totalGas = filteredConsumos.reduce((acc, curr) => acc + (curr.gas || 0), 0);
         const totalWater = filteredConsumos.reduce((acc, curr) => acc + (curr.agua || 0), 0);
 
-        // Reference helper array for display strings
         const baseMonths = [
             'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
             'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
         ];
 
-        // Identify the last registered record within the current filtered array context
-        // (consumos are already pre-sorted chronologically in fetchData)
-        const lastRecord = filteredConsumos.length > 0 ? filteredConsumos[filteredConsumos.length - 1] : null;
+        let latestStaff = 0;
+        let latestVehicles = 0;
+        let activeMonthLabel = 'N/A';
 
-        const latestStaff = lastRecord ? (lastRecord.empleados || 0) : 0;
-        const latestVehicles = lastRecord ? (lastRecord.vehiculos || 0) : 0;
-        const activeMonthLabel = lastRecord ? baseMonths[lastRecord.mes - 1] : 'N/A';
+        if (filteredConsumos.length > 0) {
+
+            // Find latest chronological record
+            const latestRecord = filteredConsumos.reduce((latest, current) => {
+                if (
+                    current.ano > latest.ano ||
+                    (current.ano === latest.ano && current.mes > latest.mes)
+                ) {
+                    return current;
+                }
+                return latest;
+            });
+
+            const latestMonth = latestRecord.mes;
+            const latestYear = latestRecord.ano;
+
+            // Get ALL records from latest month/year
+            const latestMonthRecords = filteredConsumos.filter(c =>
+                c.mes === latestMonth &&
+                c.ano === latestYear
+            );
+
+            // Sum all companies
+            latestStaff = latestMonthRecords.reduce(
+                (acc, curr) => acc + (curr.empleados || 0),
+                0
+            );
+
+            latestVehicles = latestMonthRecords.reduce(
+                (acc, curr) => acc + (curr.vehiculos || 0),
+                0
+            );
+
+            activeMonthLabel = `${baseMonths[latestMonth - 1]} ${latestYear}`;
+        }
 
         return {
             totalPower,
@@ -376,72 +409,86 @@ export default function EmpresasPanel() {
 
             {/* DATA INVENTORY LISTING */}
             <section className="management-table-card">
-                <h3>Padrón Técnico de Firmas e Infraestructura Asignada</h3>
-                <div className="table-responsive-wrapper">
-                    <table className="admin-companies-table">
-                        <thead>
-                            <tr>
-                                <th>Razón Social</th>
-                                <th>CUIT</th>
-                                <th>Lote Vinculado</th>
-                                <th>Estatus Radicación</th>
-                                <th>Acciones Administrativas</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {empresas.map((emp) => (
-                                <tr key={emp.identificacion}>
-                                    <td className="company-name-bold">{emp.razonSocial}</td>
-                                    <td><code>{emp.identificacion}</code></td>
-                                    <td>
-                                        {editingCuit === emp.identificacion ? (
-                                            <div className="inline-lote-editor">
-                                                <input
-                                                    type="text"
-                                                    placeholder="N° Lote"
-                                                    value={newLote}
-                                                    onChange={(e) => setNewLote(e.target.value)}
-                                                />
-                                                <button className="btn-save" onClick={() => handleSaveLote(emp.identificacion)}>Guardar</button>
-                                                <button className="btn-cancel" onClick={() => setEditingCuit(null)}>X</button>
-                                            </div>
-                                        ) : (
-                                            <span className="lote-display-badge">
-                                                <Layers size={12} />{' '}
-                                                {emp.idlote !== null && emp.idlote !== undefined
-                                                    ? `Lote ${emp.idlote}`
-                                                    : 'Sin Lote Asignado'}
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td>
-                                        <span className={`radicada-toggle-pill ${emp.esRadicada ? 'true' : 'false'}`}>
-                                            {emp.esRadicada ? 'Radicada' : 'No Radicada'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div className="action-row-buttons">
-                                            {editingCuit !== emp.identificacion && (
-                                                <button className="action-link-btn" onClick={() => {
-                                                    setEditingCuit(emp.identificacion);
-                                                    setNewLote(emp.idlote !== null && emp.idlote !== undefined ? String(emp.idlote) : '');
-                                                }}>
-                                                    Modificar Lote
-                                                </button>
-                                            )}
-                                            <button
-                                                className={`action-toggle-btn ${emp.esRadicada ? 'danger' : 'success'}`}
-                                                onClick={() => handleToggleRadicacion(emp)}
-                                            >
-                                                {emp.esRadicada ? 'Cambiar a No Radicada' : 'Establecer Radicada'}
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="management-table-header">
+                    <h3>Administrar Asignacion de Lotes y Radicacion</h3>
+
+                    <button
+                        className="action-toggle-btn"
+                        onClick={() => setShowEmpresasTable(prev => !prev)}
+                    >
+                        {showEmpresasTable ? 'Ocultar' : 'Desplegar'}
+                    </button>
                 </div>
+                {showEmpresasTable && (
+                    <div className="table-responsive-wrapper">
+                        <table className="admin-companies-table">
+                            <thead>
+                                <tr>
+                                    <th>Razón Social</th>
+                                    <th>CUIT</th>
+                                    <th>Lote Vinculado</th>
+                                    <th>Estatus Radicación</th>
+                                    <th>Acciones Administrativas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {empresas.map((emp) => (
+                                    <tr
+                                        key={emp.identificacion}
+                                        className="company-row"
+                                    >
+                                        <td className="company-name-bold">{emp.razonSocial}</td>
+                                        <td><code>{emp.identificacion}</code></td>
+                                        <td>
+                                            {editingCuit === emp.identificacion ? (
+                                                <div className="inline-lote-editor">
+                                                    <input
+                                                        type="text"
+                                                        placeholder="N° Lote"
+                                                        value={newLote}
+                                                        onChange={(e) => setNewLote(e.target.value)}
+                                                    />
+                                                    <button className="btn-save" onClick={() => handleSaveLote(emp.identificacion)}>Guardar</button>
+                                                    <button className="btn-cancel" onClick={() => setEditingCuit(null)}>X</button>
+                                                </div>
+                                            ) : (
+                                                <span className="lote-display-badge">
+                                                    <Layers size={12} />{' '}
+                                                    {emp.idlote !== null && emp.idlote !== undefined
+                                                        ? `Lote ${emp.idlote}`
+                                                        : 'Sin Lote Asignado'}
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <span className={`radicada-toggle-pill ${emp.esRadicada ? 'true' : 'false'}`}>
+                                                {emp.esRadicada ? 'Radicada' : 'No Radicada'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div className="action-row-buttons">
+                                                {editingCuit !== emp.identificacion && (
+                                                    <button className="action-link-btn" onClick={() => {
+                                                        setEditingCuit(emp.identificacion);
+                                                        setNewLote(emp.idlote !== null && emp.idlote !== undefined ? String(emp.idlote) : '');
+                                                    }}>
+                                                        Modificar Lote
+                                                    </button>
+                                                )}
+                                                <button
+                                                    className={`action-toggle-btn ${emp.esRadicada ? 'danger' : 'success'}`}
+                                                    onClick={() => handleToggleRadicacion(emp)}
+                                                >
+                                                    {emp.esRadicada ? 'Cambiar a No Radicada' : 'Establecer Radicada'}
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </section>
         </div>
     );

@@ -328,7 +328,7 @@ export default function MapPanel() {
                 onMouseLeave={onMouseLeave}
                 onMouseEnter={onMouseEnter}
                 onClick={onMapClick}
-                onIdle={handleMapIdle} // Captura cuando el canvas termina de procesar el renderizado final
+                onIdle={handleMapIdle}
             >
                 {mapData && mapData.features && (
                     <>
@@ -362,7 +362,7 @@ export default function MapPanel() {
                                 type="symbol"
                                 filter={labelFilter as any}
                                 layout={{
-                                    "text-field": ["get", "lote"],
+                                    "text-field": ["to-string", ["id"]],
                                     "text-size": 10,
                                     "text-anchor": "center",
                                     "text-justify": "center",

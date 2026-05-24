@@ -4,6 +4,7 @@ import com.parque_industrial.entities.Lote;
 import com.parque_industrial.exceptions.DatabaseException;
 
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,72 +26,72 @@ import java.util.List;
 @Transactional
 public class LoteDAOJDBC implements LoteDAO {
 
-    private final DataSource connection;
+    private final @NonNull DataSource connection;
 
-    public LoteDAOJDBC(DataSource connection) {
+    public LoteDAOJDBC(@NonNull DataSource connection) {
         this.connection = connection;
     }
 
-//    @Override
-//    public void crear(Lote lote) {
-//
-//        String sql = """
-//                INSERT INTO lote(
-//                    id,
-//                    nro_lote,
-//                    superficie,
-//                    estado,
-//                    fecha_venta,
-//                    monto_venta,
-//                    nc,
-//                    parque
-//                )
-//                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-//                """;
-//
-//        Connection conn = null;
-//
-//        try {
-//
-//            conn = DataSourceUtils.getConnection(connection);
-//
-//            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-//
-//                ps.setInt(1, lote.getIdentificacion());
-//
-//                ps.setString(2, lote.getNroLote());
-//
-//                ps.setDouble(3, lote.getSuperficie());
-//
-//                ps.setString(4, lote.getEstado());
-//
-//                ps.setDate(5, lote.getFechaVentaSQL());
-//
-//                if (lote.getMontoVenta() == null) {
-//
-//                    ps.setNull(6, java.sql.Types.DOUBLE);
-//
-//                } else {
-//
-//                    ps.setDouble(6, lote.getMontoVenta());
-//                }
-//
-//                ps.setString(7, lote.getNc());
-//
-//                ps.setString(8, lote.getParque());
-//
-//                ps.executeUpdate();
-//            }
-//
-//        } catch (SQLException ex) {
-//
-//            throw new DatabaseException("Error al crear lote", ex);
-//
-//        } finally {
-//
-//            DataSourceUtils.releaseConnection(conn, connection);
-//        }
-//    }
+    // @Override
+    // public void crear(Lote lote) {
+    //
+    // String sql = """
+    // INSERT INTO lote(
+    // id,
+    // nro_lote,
+    // superficie,
+    // estado,
+    // fecha_venta,
+    // monto_venta,
+    // nc,
+    // parque
+    // )
+    // VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    // """;
+    //
+    // Connection conn = null;
+    //
+    // try {
+    //
+    // conn = DataSourceUtils.getConnection(connection);
+    //
+    // try (PreparedStatement ps = conn.prepareStatement(sql)) {
+    //
+    // ps.setInt(1, lote.getIdentificacion());
+    //
+    // ps.setString(2, lote.getNroLote());
+    //
+    // ps.setDouble(3, lote.getSuperficie());
+    //
+    // ps.setString(4, lote.getEstado());
+    //
+    // ps.setDate(5, lote.getFechaVentaSQL());
+    //
+    // if (lote.getMontoVenta() == null) {
+    //
+    // ps.setNull(6, java.sql.Types.DOUBLE);
+    //
+    // } else {
+    //
+    // ps.setDouble(6, lote.getMontoVenta());
+    // }
+    //
+    // ps.setString(7, lote.getNc());
+    //
+    // ps.setString(8, lote.getParque());
+    //
+    // ps.executeUpdate();
+    // }
+    //
+    // } catch (SQLException ex) {
+    //
+    // throw new DatabaseException("Error al crear lote", ex);
+    //
+    // } finally {
+    //
+    // DataSourceUtils.releaseConnection(conn, connection);
+    // }
+    // }
 
     @Override
     public void actualizar(Lote lote) {
@@ -222,6 +223,7 @@ public class LoteDAOJDBC implements LoteDAO {
         LocalDate fechaVenta = fechaSql != null ? fechaSql.toLocalDate() : null;
 
         BigDecimal montoVenta = rs.getBigDecimal("monto_venta");
-        return new Lote(rs.getInt("id"), rs.getString("nro_lote"), rs.getDouble("superficie"), rs.getString("estado"), fechaVenta, montoVenta, rs.getString("nc"), rs.getString("parque"), rs.getString("coordenadas"));
+        return new Lote(rs.getInt("id"), rs.getString("nro_lote"), rs.getDouble("superficie"), rs.getString("estado"),
+                fechaVenta, montoVenta, rs.getString("nc"), rs.getString("parque"), rs.getString("coordenadas"));
     }
 }

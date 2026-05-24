@@ -8,14 +8,11 @@ import com.parque_industrial.persistence.proyecto.ProyectoPreliminarJDBC;
 import java.sql.Connection;
 import java.util.List;
 
-public class GestorProyectos{
-    private final Connection connection;
-
+public class GestorProyectos {
     private final ProyectoPreliminarJDBC preliminarDAO;
     private final ProyectoDefinitivoJDBC definitivoDAO;
 
     public GestorProyectos(Connection connection) {
-        this.connection = connection;
         this.preliminarDAO = new ProyectoPreliminarJDBC(connection);
         this.definitivoDAO = new ProyectoDefinitivoJDBC(connection);
     }
@@ -23,7 +20,7 @@ public class GestorProyectos{
     // -------------------- CREAR --------------------
 
     public void crearProyectoPreliminar(ProyectoPreliminar proyecto) throws Exception {
-      // recibe un dao, lo transforma y despues lo guarda.
+        // recibe un dao, lo transforma y despues lo guarda.
         preliminarDAO.guardar(proyecto);
     }
 

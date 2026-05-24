@@ -1,7 +1,7 @@
 package com.parque_industrial.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 
 public class Empresa {
     private String identificacion; // CUIT de la empresa (XX-XXXXXXXX-X)
@@ -44,9 +44,8 @@ public class Empresa {
     }
 
     public void asignarLote(int lote) {
-        this.idlote= lote;
+        this.idlote = lote;
     }
-
 
     // Getters y Setters
     public String getIdentificacion() {
@@ -68,7 +67,6 @@ public class Empresa {
     public void setEsRadicada(boolean esRadicada) {
         this.esRadicada = esRadicada;
     }
-
 
     public Integer getLote() {
         return idlote;

@@ -29,7 +29,6 @@ public class LoginController {
             LoginResponse response = authService.login(request);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            // Returns 401 Unauthorized
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }

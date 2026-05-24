@@ -211,189 +211,342 @@
     width: 100%;
 }
 
-/* ADMINISTRATIVE INVENTORY LEDGER DATATABLE */
+/* ==========================================================================
+   MANAGEMENT TABLE — MODERNIZED
+   ========================================================================== */
+
 .management-table-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    max-width: 100%;
-    /* No permite que la tarjeta estire el panel */
+    background: linear-gradient(to bottom, #ffffff, #fcfcfd);
+    border-radius: 18px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.04),
+        0 1px 2px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
 }
+
+/* HEADER */
+
+.management-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.management-table-header h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 300;
+    color: #30332D;
+}
+
+/* TABLE WRAPPER */
 
 .table-responsive-wrapper {
     overflow-x: auto;
-    width: 100%;
-    display: block;
-    -webkit-overflow-scrolling: touch;
-    /* Scroll suave en iOS */
+    border-radius: 14px;
+    border: 1px solid #edf2f7;
+    background-color: white;
 }
+
+/* TABLE */
 
 .admin-companies-table {
     width: 100%;
-    border-collapse: collapse;
-    text-align: left;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 14px;
-    /* Ayuda al navegador a calcular anchos fijos si el layout se rompe */
-    table-layout: auto;
+    min-width: 960px;
 }
 
-.admin-companies-table th {
-    background-color: #f1f5f9;
+/* HEADER */
+
+.admin-companies-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background: #f8fafc;
     color: #475569;
-    font-weight: 600;
-    padding: 12px 16px;
-    border-bottom: 2px solid #e2e8f0;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    padding: 16px 18px;
+
+    border-bottom: 1px solid #e2e8f0;
     white-space: nowrap;
-    /* Mantiene prolijos los títulos */
 }
+
+/* ROWS */
+
+.admin-companies-table tbody tr {
+    transition:
+        background-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.admin-companies-table tbody tr:nth-child(even) {
+    background-color: #fcfcfd;
+}
+
+.admin-companies-table tbody tr:hover {
+    background-color: #f8fbff;
+    box-shadow: inset 3px 0 0 var(--verde1);
+}
+
+/* CELLS */
 
 .admin-companies-table td {
-    padding: 14px 16px;
+    padding: 18px;
     border-bottom: 1px solid #f1f5f9;
-    color: #334155;
     vertical-align: middle;
+    color: #334155;
 }
 
+/* COMPANY NAME */
+
 .company-name-bold {
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
     color: #0f172a;
+    letter-spacing: -0.01em;
 }
+
+/* CUIT */
+
+.admin-companies-table code {
+    background-color: #f1f5f9;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #334155;
+    font-family: 'SFMono-Regular', monospace;
+}
+
+/* LOT BADGE */
 
 .lote-display-badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    background-color: #f1f5f9;
-    padding: 4px 8px;
-    border-radius: 4px;
+    gap: 6px;
+
+    background: linear-gradient(to bottom,
+            #f8fafc,
+            #eef2f7);
+
+    border: 1px solid #dbe4ee;
+
+    padding: 7px 11px;
+    border-radius: 999px;
+
     font-size: 12px;
+    font-weight: 600;
     color: #475569;
-    font-weight: 500;
+
     white-space: nowrap;
 }
 
-/* RADICACION TOGGLE COLOURED PILLS */
+/* STATUS PILLS */
+
 .radicada-toggle-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 110px;
+
+    padding: 7px 12px;
+    border-radius: 999px;
+
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 100px;
-    letter-spacing: 0.02em;
+
+    border: 1px solid transparent;
 }
 
 .radicada-toggle-pill.true {
     background-color: #dcfce7;
-    color: #15803d;
+    color: #166534;
+    border-color: #bbf7d0;
 }
 
 .radicada-toggle-pill.false {
     background-color: #fef2f2;
     color: #b91c1c;
+    border-color: #fecaca;
 }
 
-/* ACTION MATRIX BUTTONS layouts */
+/* ACTIONS */
+
 .action-row-buttons {
     display: flex;
-    gap: 8px;
     align-items: center;
+    gap: 10px;
     flex-wrap: wrap;
-    /* Si los botones de acción no entran, bajan de renglón sin romper la celda */
 }
 
+/* TEXT BUTTON */
+
 .action-link-btn {
-    background: none;
     border: none;
+    background: none;
+
     color: #2563eb;
-    cursor: pointer;
-    font-weight: 500;
+
     font-size: 13px;
-    padding: 0;
-    white-space: nowrap;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.15s ease;
 }
 
 .action-link-btn:hover {
-    text-decoration: underline;
+    color: #1d4ed8;
 }
+
+/* PRIMARY ACTION BUTTON */
 
 .action-toggle-btn {
     border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
+
+    padding: 9px 14px;
+
+    border-radius: 10px;
+
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
+
     cursor: pointer;
-    transition: background-color 0.15s ease;
-    white-space: nowrap;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.action-toggle-btn:hover {
+    transform: translateY(-1px);
 }
 
 .action-toggle-btn.success {
-    background-color: var(--verde1);
+    background: linear-gradient(to bottom,
+            var(--verde1),
+            var(--verde2));
+
     color: white;
+
+    box-shadow:
+        0 4px 10px rgba(22, 163, 74, 0.18);
 }
 
 .action-toggle-btn.success:hover {
-    background-color: var(--verde2);
+    filter: brightness(1.03);
 }
 
 .action-toggle-btn.danger {
-    background-color: #fee2e2;
-    color: #b91c1c;
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
 }
 
 .action-toggle-btn.danger:hover {
-    background-color: #fca5a5;
+    background: #ffe4e6;
 }
 
-/* INLINE MODAL FIELD EDITORS */
+/* INLINE EDITOR */
+
 .inline-lote-editor {
     display: flex;
-    gap: 4px;
     align-items: center;
+    gap: 8px;
 }
 
 .inline-lote-editor input {
-    width: 70px;
-    padding: 4px 6px;
+    width: 90px;
+
+    padding: 8px 10px;
+
+    border-radius: 8px;
     border: 1px solid #cbd5e1;
-    border-radius: 4px;
+
+    background-color: #f8fafc;
+
     font-size: 13px;
+
+    outline: none;
+}
+
+.inline-lote-editor input:focus {
+    border-color: var(--verde1);
+    background-color: white;
+}
+
+.inline-lote-editor .btn-save,
+.inline-lote-editor .btn-cancel {
+    border: none;
+
+    padding: 8px 10px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .inline-lote-editor .btn-save {
     background-color: #16a34a;
     color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
+}
+
+.inline-lote-editor .btn-save:hover {
+    background-color: #15803d;
 }
 
 .inline-lote-editor .btn-cancel {
-    background-color: #64748b;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
+    background-color: #e2e8f0;
+    color: #334155;
 }
 
-/* GENERAL STATUS CONTAINER BLOCKS */
-.panel-loading-wrapper,
-.panel-error-card {
-    padding: 40px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 500;
+.inline-lote-editor .btn-cancel:hover {
+    background-color: #cbd5e1;
 }
 
-.panel-error-card {
-    color: #b91c1c;
-    background-color: #fef2f2;
-    border-radius: 8px;
-    margin: 24px;
+.company-row {
+    animation: fadeInRow 0.25s ease;
+}
+
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-companies-table td:nth-child(2),
+.admin-companies-table td:nth-child(3),
+.admin-companies-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+.admin-companies-table tbody tr:hover td {
+    color: #0f172a;
 }

@@ -6,7 +6,7 @@ import com.parque_industrial.dto.auth.UsuarioResponse;
 import com.parque_industrial.entities.Empresa;
 import com.parque_industrial.entities.Rol;
 import com.parque_industrial.entities.Usuario;
-import org.springframework.dao.DataAccessException;
+// import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
