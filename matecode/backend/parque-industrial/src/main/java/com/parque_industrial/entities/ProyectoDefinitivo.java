@@ -20,6 +20,7 @@ public class ProyectoDefinitivo extends Proyecto {
             throw new Exception("El informe ambiental no puede estar vacío");
         }
 
+        this.estado = PENDIENTE;
         this.fechaInicioObra = fechaInicioObra;
         this.fechaFinObra = fechaFinObra;
         this.viabilidadFinanciera = viabilidadFinanciera;

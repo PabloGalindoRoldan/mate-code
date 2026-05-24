@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProyectoService {
+public class GestorProyectos {
 
     private final ProyectoPreliminarJDBC preliminarDAO;
     private final ProyectoDefinitivoJDBC definitivoDAO;
 
-    public ProyectoService(
+    public GestorProyectos(
             ProyectoPreliminarJDBC preliminarDAO,
             ProyectoDefinitivoJDBC definitivoDAO) {
 
