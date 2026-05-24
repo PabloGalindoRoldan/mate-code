@@ -30,15 +30,15 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
-            jdbcTemplate.update(sql,
-                    usuario.getNombre(),
-                    usuario.getApellido(),
-                    usuario.getEmail(),
-                    usuario.getNombreUsuario(),
-                    usuario.getContraseña(),
-                    usuario.getCuit(),
-                    usuario.getRol().name(),
-                    usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
+        jdbcTemplate.update(sql,
+                usuario.getNombre(),
+                usuario.getApellido(),
+                usuario.getEmail(),
+                usuario.getNombreUsuario(),
+                usuario.getContraseña(),
+                usuario.getCuit(),
+                usuario.getRol().name(),
+                usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
 
     }
 
@@ -48,12 +48,12 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
         // estado real
         String sql = """
                 SELECT u.nombre, u.apellido, u.email, u.nombre_usuario, u.cuit, u.rol, u.contrasena, u.cuit_empresa,
-                       e.razon_social, e.es_radicada
+                        e.razon_social, e.es_radicada
                 FROM usuarios u
                 LEFT JOIN empresas e ON u.cuit_empresa = e.cuit
                 WHERE u.nombre_usuario = ?
                 """;
-        try{
+        try {
             Usuario usuario = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");

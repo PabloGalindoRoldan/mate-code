@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/auth/registerAdminParque").hasRole("ADMINISTRADOR_PARQUE")
+                        .requestMatchers("/auth/registerAdminParque").hasRole("ADMINISTRADOR_SISTEMA")
                         .requestMatchers("/auth/registerExtraRepresentanteEmpresa").hasRole("REPRESENTANTE_EMPRESA")
 
                         // Permite que cualquiera (sin token) vea las publicaciones en la Landing

@@ -10,6 +10,7 @@ import MapMenu from "./MapMenu";
 import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 import { lotesApi, empresasApi, consumosApi } from "../../api/axios";
 
+
 interface EmpresaDTO {
     identificacion: string;
     razonSocial: string;
@@ -109,23 +110,61 @@ export default function MapPanel() {
     const [isInteracting, setIsInteracting] = useState(false);
     const [hoveredId, setHoveredId] = useState<string | number | null>(null);
     const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
-
-    // Diccionario de ventanas abiertas indexadas por ID de lote/feature para permitir multi-ventana
     const [openModals, setOpenModals] = useState<Record<string | number, ModalData>>({});
-
     const [mapData, setMapData] = useState<any>(null);
     const [empresas, setEmpresas] = useState<EmpresaDTO[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
 
+    // Estados de control de carga
+    const [isApiLoading, setIsApiLoading] = useState(true);
+    const [isMapStyleLoaded, setIsMapStyleLoaded] = useState(false);
+
+    // El spinner global se mostrará hasta que ambas condiciones sean exitosas
+    const isGlobalLoading = useMemo(() => {
+        return isApiLoading || !isMapStyleLoaded;
+    }, [isApiLoading, isMapStyleLoaded]);
+
+    const dynamicColor: any = [
+        "case",
+        ["all", ["literal", showDisponible], ["==", ["get", "estado"], "disponible"]], "#76e3bb",
+        ["all", ["literal", showOcupado], ["==", ["get", "estado"], "ocupado"]], "#FF8B94",
+        ["all", ["literal", showStreets], ["==", ["get", "estado"], "infraestructura"]], "#808080",
+        "#8CC63F"
+    ];
+
+    const mapFilter: any = [
+        "all",
+        ["case", ["==", ["get", "parque"], "nuevo"], ["literal", showNuevo], true],
+        ["case", ["==", ["get", "parque"], "viejo"], ["literal", showViejo], true],
+        ["case", ["==", ["get", "estado"], "infraestructura"], ["literal", showStreets], true]
+    ];
+
+    const labelFilter = useMemo(() => {
+        return ["all", mapFilter, ["==", ["get", "tipo"], "lote"]];
+    }, [mapFilter]);
+
+    // Cada vez que cambie el estilo base (Satélite/Positron), reiniciamos el flag 
+    // para evitar un parpadeo brusco en la recarga de texturas
+    useEffect(() => {
+        setIsMapStyleLoaded(false);
+    }, [isSatellite]);
+
+    // Clean Fetch Context Lifecycle
     useEffect(() => {
         const controller = new AbortController();
-        setIsLoading(true);
+        setIsApiLoading(true);
 
         Promise.all([
             lotesApi.getMapaLotes({ signal: controller.signal }),
             empresasApi.listarEmpresas({ signal: controller.signal })
         ])
             .then(([geoJsonData, empresasData]) => {
+                // Inyección defensiva de ID numérico a nivel raíz por si tu backend no lo trae
+                if (geoJsonData && Array.isArray(geoJsonData.features)) {
+                    geoJsonData.features = geoJsonData.features.map((f: any) => ({
+                        ...f,
+                        id: f.id ?? f.properties?.lote ?? f.properties?.id
+                    }));
+                }
                 setMapData(geoJsonData);
                 setEmpresas(empresasData);
             })
@@ -134,10 +173,12 @@ export default function MapPanel() {
                 console.error("Error updating Map panel entities layers:", err);
             })
             .finally(() => {
-                setIsLoading(false);
+                setIsApiLoading(false);
             });
 
-        return () => controller.abort();
+        return () => {
+            controller.abort();
+        };
     }, []);
 
     const activeEmpresa = useMemo(() => {
@@ -145,16 +186,24 @@ export default function MapPanel() {
         return findLinkedEmpresa(popupInfo.featureId, empresas);
     }, [popupInfo, empresas]);
 
+    // Rotation Loop
     useEffect(() => {
         let animationFrame: number;
         const rotate = () => {
             if (!isInteracting && rotationEnabled && mapRef.current) {
-                const map = mapRef.current.getMap();
-                map.setBearing(map.getBearing() + 0.07);
+                try {
+                    const map = mapRef.current.getMap();
+                    if (map && typeof map.getBearing === "function") {
+                        map.setBearing(map.getBearing() + 0.07);
+                    }
+                } catch (e) { }
             }
             animationFrame = requestAnimationFrame(rotate);
         };
-        rotate();
+
+        if (rotationEnabled && !isInteracting) {
+            rotate();
+        }
         return () => cancelAnimationFrame(animationFrame);
     }, [isInteracting, rotationEnabled]);
 
@@ -211,21 +260,6 @@ export default function MapPanel() {
     const styleBase = "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
     const styleSatelite = "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json";
 
-    const dynamicColor: any = [
-        "case",
-        ["all", ["literal", showDisponible], ["==", ["get", "estado"], "disponible"]], "#76e3bb",
-        ["all", ["literal", showOcupado], ["==", ["get", "estado"], "ocupado"]], "#FF8B94",
-        ["all", ["literal", showStreets], ["==", ["get", "estado"], "infraestructura"]], "#808080",
-        "#8CC63F"
-    ];
-
-    const mapFilter: any = [
-        "all",
-        ["case", ["==", ["get", "parque"], "nuevo"], ["literal", showNuevo], true],
-        ["case", ["==", ["get", "parque"], "viejo"], ["literal", showViejo], true],
-        ["case", ["==", ["get", "estado"], "infraestructura"], ["literal", showStreets], true]
-    ];
-
     const openExtendedPanel = (loteId: string | number, properties: any, empresa: EmpresaDTO | undefined) => {
         setOpenModals(prev => ({
             ...prev,
@@ -241,14 +275,23 @@ export default function MapPanel() {
         });
     };
 
+    // Manejador del estado estable de renderizado
+    const handleMapIdle = useCallback(() => {
+        // Solo cuando los datos de la API ya impactaron en el mapa, 
+        // validamos que terminó de pintar los polígonos
+        if (mapData) {
+            setIsMapStyleLoaded(true);
+        }
+    }, [mapData]);
+
     return (
-        <div className="mapContainer" style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
-            {(isLoading || !mapData) && (
+        <div className="mapContainer" style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
+            {isGlobalLoading && (
                 <div style={{
                     position: "absolute",
                     top: 0, left: 0, width: "100%", height: "100%",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    backgroundColor: "#ffffff", zIndex: 10
+                    backgroundColor: "#ffffff", zIndex: 50
                 }}>
                     <LoadingSpinner text="Cargando mapa e información del parque..." />
                 </div>
@@ -269,12 +312,12 @@ export default function MapPanel() {
                 initialViewState={{
                     longitude: -62.963,
                     latitude: -40.840,
-                    zoom: 15.3,
+                    zoom: 15.5,
                     pitch: 45
                 }}
                 mapStyle={isSatellite ? styleSatelite : styleBase}
                 style={{ width: "100%", height: "100%" }}
-                interactiveLayerIds={["lotes-fill"]}
+                interactiveLayerIds={mapData ? ["lotes-fill"] : []}
                 onMouseDown={startInteraction}
                 onMouseUp={stopInteraction}
                 onTouchStart={startInteraction}
@@ -285,16 +328,17 @@ export default function MapPanel() {
                 onMouseLeave={onMouseLeave}
                 onMouseEnter={onMouseEnter}
                 onClick={onMapClick}
+                onIdle={handleMapIdle} // Captura cuando el canvas termina de procesar el renderizado final
             >
-                {mapData && (
+                {mapData && mapData.features && (
                     <>
                         <Source id="lotes-source" type="geojson" data={mapData}>
                             <Layer
                                 id="lotes-outline"
                                 type="line"
-                                filter={mapFilter}
+                                filter={mapFilter as any}
                                 paint={{
-                                    "line-color": dynamicColor,
+                                    "line-color": dynamicColor as any,
                                     "line-width": isSatellite ? 2 : 1.2,
                                     "line-opacity": 1
                                 }}
@@ -302,9 +346,9 @@ export default function MapPanel() {
                             <Layer
                                 id="lotes-fill"
                                 type="fill"
-                                filter={mapFilter}
+                                filter={mapFilter as any}
                                 paint={{
-                                    "fill-color": dynamicColor,
+                                    "fill-color": dynamicColor as any,
                                     "fill-opacity": [
                                         "case",
                                         ["boolean", ["feature-state", "hover"], false],
@@ -316,13 +360,9 @@ export default function MapPanel() {
                             <Layer
                                 id="lotes-text-labels"
                                 type="symbol"
-                                filter={[
-                                    "all",
-                                    mapFilter,
-                                    ["==", ["match", ["get", "tipo"], "lote", true, false], true]
-                                ] as any}
+                                filter={labelFilter as any}
                                 layout={{
-                                    "text-field": ["id"],
+                                    "text-field": ["get", "lote"],
                                     "text-size": 10,
                                     "text-anchor": "center",
                                     "text-justify": "center",
@@ -351,27 +391,15 @@ export default function MapPanel() {
                                         <Info size={16} />
                                         <h3>Lote {popupInfo.featureId}</h3>
                                     </header>
-
                                     <div className="popup-body">
                                         <p><strong>Estado:</strong> <span className={`status-badge ${popupInfo.properties.estado}`}>{popupInfo.properties.estado}</span></p>
-
-                                        {/* Nuevos datos agregados al cuerpo del popup */}
-                                        {popupInfo.properties.sup && (
-                                            <p><strong>Superficie:</strong> {popupInfo.properties.sup} m²</p>
-                                        )}
-
-                                        {popupInfo.properties.nc && popupInfo.properties.nc.trim().toUpperCase() !== "N/A" && (
-                                            <p><strong>NC:</strong> {popupInfo.properties.nc}</p>
-                                        )}
-
+                                        {popupInfo.properties.sup && <p><strong>Superficie:</strong> {popupInfo.properties.sup} m²</p>}
+                                        {popupInfo.properties.nc && popupInfo.properties.nc.trim().toUpperCase() !== "N/A" && <p><strong>NC:</strong> {popupInfo.properties.nc}</p>}
                                         {activeEmpresa ? (
                                             <p><strong>Empresa:</strong> {activeEmpresa.razonSocial}</p>
                                         ) : (
-                                            popupInfo.properties.estado === "ocupado" && (
-                                                <p className="no-empresa-warning">Ocupado (Sin firma vinculada)</p>
-                                            )
+                                            popupInfo.properties.estado === "ocupado" && <p className="no-empresa-warning">Ocupado (Sin firma vinculada)</p>
                                         )}
-
                                         <button
                                             className="popup-ver-mas-btn"
                                             onClick={() => {
@@ -389,7 +417,7 @@ export default function MapPanel() {
                 )}
             </Map>
 
-            {/* --- RENDERIZADO DE VENTANAS MÚLTIPLES --- */}
+            {/* Floating Modals */}
             {Object.entries(openModals).map(([loteId, data], index) => (
                 <ModalPanel
                     key={loteId}
@@ -403,7 +431,7 @@ export default function MapPanel() {
     );
 }
 
-// --- SUBCOMPONENTE DE EXPEDIENTE FLOTANTE INDEPENDIENTE ---
+// --- SUBCOMPONENT FLOATING PANEL (Mantener igual que antes) ---
 interface ModalPanelProps {
     loteId: string | number;
     data: ModalData;
@@ -451,9 +479,7 @@ function ModalPanel({ loteId, data, index, onClose }: ModalPanelProps) {
         return () => controller.abort();
     }, [data.activeEmpresa?.identificacion, loteId]);
 
-    // --- Lógica del arrastre individual ---
     const handleMouseDown = (e: React.MouseEvent) => {
-        // Evitamos que el arrastre empiece si se hace click en el botón de cerrar
         if ((e.target as HTMLElement).closest("button")) return;
         e.stopPropagation();
 
@@ -494,7 +520,6 @@ function ModalPanel({ loteId, data, index, onClose }: ModalPanelProps) {
     return (
         <div
             className="draggable-modal-panel"
-            // Capturamos cualquier mousedown dentro del cuerpo del modal para que tampoco mueva el mapa
             onMouseDown={(e) => e.stopPropagation()}
             style={{
                 position: "absolute",
