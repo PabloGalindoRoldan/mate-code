@@ -55,8 +55,6 @@ public abstract class Proyecto {
         this.estado = BORRADOR;
     }
 
-    public abstract void listoParaRevision() throws Exception;
-
     public void aprobar() {
         if (!PENDIENTE.equals(estado)) {
             throw new IllegalStateException(

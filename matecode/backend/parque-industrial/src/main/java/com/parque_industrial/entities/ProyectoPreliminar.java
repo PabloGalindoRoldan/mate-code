@@ -8,7 +8,6 @@ public class ProyectoPreliminar extends Proyecto {
         super();
     }
 
-    @Override
     public void listoParaRevision() throws Exception {
         validar();
         this.estado = PENDIENTE;
