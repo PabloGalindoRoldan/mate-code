@@ -2,7 +2,7 @@ package com.parque_industrial.services;
 
 import com.parque_industrial.dto.proyecto.CrearRequestDTO;
 import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
-import com.parque_industrial.dto.proyecto.ProyectosPorCuitDTO;
+import com.parque_industrial.dto.proyecto.ProyectosDTO;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface GestorProyectos {
 
     void crearProyectoDefinitivo(CrearRequestDefinitivoDTO request);
 
-    List<CrearRequestDefinitivoDTO> listarProyectos();
+    ProyectosDTO listarProyectos();
 
-    ProyectosPorCuitDTO listarProyectosPorCuit(String cuit);
+    ProyectosDTO listarProyectosPorCuit(String cuit);
 }

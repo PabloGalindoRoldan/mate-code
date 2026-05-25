@@ -2,7 +2,7 @@ package com.parque_industrial.services;
 
 import com.parque_industrial.dto.proyecto.CrearRequestDTO;
 import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
-import com.parque_industrial.dto.proyecto.ProyectosPorCuitDTO;
+import com.parque_industrial.dto.proyecto.ProyectosDTO;
 import com.parque_industrial.entities.ProyectoPreliminar;
 import com.parque_industrial.persistence.proyecto.ProyectoDefinitivoDAO;
 import com.parque_industrial.persistence.proyecto.ProyectoPreliminarDAO;
@@ -72,15 +72,17 @@ public class GestorProyectosImpl implements GestorProyectos {
     }
 
     @Override
-    public List<CrearRequestDefinitivoDTO> listarProyectos() {
-        return List.of();
+    public ProyectosDTO listarProyectos() {
+        List<CrearRequestDefinitivoDTO> definitivos = proyectoDefinitivoDAO.listarProyectos();
+        List<CrearRequestDTO> preliminares = proyectoPreliminarDAO.listarProyectos();
+        return new ProyectosDTO(definitivos, preliminares);
     }
 
     @Override
-    public ProyectosPorCuitDTO listarProyectosPorCuit(String cuit) {
+    public ProyectosDTO listarProyectosPorCuit(String cuit) {
         List<CrearRequestDefinitivoDTO> definitivos = proyectoDefinitivoDAO.listarDefinitivosPorCuit(cuit);
-        List<CrearRequestDTO> preliminares = proyectoPreliminarDAO.listarPreliminarePorCuit(cuit);
-        return new ProyectosPorCuitDTO(definitivos, preliminares);
+        List<CrearRequestDTO> preliminares = proyectoPreliminarDAO.listarPreliminarPorCuit(cuit);
+        return new ProyectosDTO(definitivos, preliminares);
     }
 
 

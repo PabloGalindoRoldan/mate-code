@@ -2,7 +2,7 @@ package com.parque_industrial.controllers;
 
 import com.parque_industrial.dto.proyecto.CrearRequestDTO;
 import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
-import com.parque_industrial.dto.proyecto.ProyectosPorCuitDTO;
+import com.parque_industrial.dto.proyecto.ProyectosDTO;
 import com.parque_industrial.services.GestorProyectos;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,9 +47,9 @@ public class ProyectoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CrearRequestDefinitivoDTO>> listarProyectos() {
+    public ResponseEntity<ProyectosDTO> listarProyectos() {
         try {
-            List<CrearRequestDefinitivoDTO> proyectos = gestorProyectos.listarProyectos();
+            ProyectosDTO proyectos = gestorProyectos.listarProyectos();
             return ResponseEntity.ok(proyectos);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
@@ -57,9 +57,9 @@ public class ProyectoController {
     }
 
     @PostMapping("/porCuit")
-    public ResponseEntity<ProyectosPorCuitDTO> listarProyectosPorCuit(@RequestBody String cuit) {
+    public ResponseEntity<ProyectosDTO> listarProyectosPorCuit(@RequestBody String cuit) {
         try {
-            ProyectosPorCuitDTO proyectos = gestorProyectos.listarProyectosPorCuit(cuit);
+            ProyectosDTO proyectos = gestorProyectos.listarProyectosPorCuit(cuit);
             return ResponseEntity.ok(proyectos);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);

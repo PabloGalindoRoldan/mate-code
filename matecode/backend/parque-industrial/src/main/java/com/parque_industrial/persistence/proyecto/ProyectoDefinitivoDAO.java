@@ -8,5 +8,6 @@ public interface ProyectoDefinitivoDAO {
 
     List<CrearRequestDefinitivoDTO> listarDefinitivosPorCuit(String cuit);
 
+    List<CrearRequestDefinitivoDTO> listarProyectos();
 }
 

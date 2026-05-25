@@ -9,4 +9,9 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO{
     public List<CrearRequestDefinitivoDTO> listarDefinitivosPorCuit(String cuit) {
         return List.of();
     }
+
+    @Override
+    public List<CrearRequestDefinitivoDTO> listarProyectos() {
+        return List.of();
+    }
 }

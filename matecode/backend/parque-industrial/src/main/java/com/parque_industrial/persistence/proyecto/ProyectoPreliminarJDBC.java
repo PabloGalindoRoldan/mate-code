@@ -3,6 +3,7 @@ package com.parque_industrial.persistence.proyecto;
 import com.parque_industrial.dto.proyecto.CrearRequestDTO;
 import com.parque_industrial.entities.ProyectoPreliminar;
 import com.parque_industrial.exceptions.DatabaseException;
+
 import javax.sql.DataSource;
 
 import org.springframework.stereotype.Repository;
@@ -23,18 +24,8 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
 
     @Override
     public void guardar(ProyectoPreliminar p) {
-        String sql = "INSERT INTO proyecto_preliminar (usuario_nombre, cuit_empresa, nombre, descripcion, actividad_principal, "
-                +
-                "actividad_secundaria, telefono, rubro, descripcion_servicio, persona_referente, materias_primas, " +
-                "destino_produccion, superficie_requerida, superficie_trabajo, superficie_deposito, " +
-                "superficie_cubierta, superficie_estacionamiento, tiene_planos, link_planos, energia_requerida, " +
-                "personal_a_ocupar, tension_alimentacion, potencia_instalada, agua_mensual, gas_mensual, " +
-                "residuos_tipo, residuos_cantidad, tratamiento_efluentes, tipo_empresa, direccion, " +
-                "pretension_traslado, emplazamiento_actual, tiempo_radicacion, balanza_publica, comedor, sum_coworking, estado) "
-                +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        String sql = "INSERT INTO proyecto_preliminar (usuario_nombre, cuit_empresa, nombre, descripcion, actividad_principal, " + "actividad_secundaria, telefono, rubro, descripcion_servicio, persona_referente, materias_primas, " + "destino_produccion, superficie_requerida, superficie_trabajo, superficie_deposito, " + "superficie_cubierta, superficie_estacionamiento, tiene_planos, link_planos, energia_requerida, " + "personal_a_ocupar, tension_alimentacion, potencia_instalada, agua_mensual, gas_mensual, " + "residuos_tipo, residuos_cantidad, tratamiento_efluentes, tipo_empresa, direccion, " + "pretension_traslado, emplazamiento_actual, tiempo_radicacion, balanza_publica, comedor, sum_coworking, estado) " + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, p.getUsuarioNombre());
             ps.setString(2, p.getCuitEmpresa());
@@ -50,60 +41,38 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
             ps.setString(12, p.getDestinoProduccion());
 
             // Manejo de valores numéricos (desplazados por el nuevo campo)
-            if (p.getSuperficieRequerida() != null)
-                ps.setDouble(13, p.getSuperficieRequerida());
-            else
-                ps.setNull(13, Types.DOUBLE);
-            if (p.getSuperficieTrabajo() != null)
-                ps.setDouble(14, p.getSuperficieTrabajo());
-            else
-                ps.setNull(14, Types.DOUBLE);
-            if (p.getSuperficieDeposito() != null)
-                ps.setDouble(15, p.getSuperficieDeposito());
-            else
-                ps.setNull(15, Types.DOUBLE);
-            if (p.getSuperficieCubierta() != null)
-                ps.setDouble(16, p.getSuperficieCubierta());
-            else
-                ps.setNull(16, Types.DOUBLE);
-            if (p.getSuperficieEstacionamiento() != null)
-                ps.setDouble(17, p.getSuperficieEstacionamiento());
-            else
-                ps.setNull(17, Types.DOUBLE);
+            if (p.getSuperficieRequerida() != null) ps.setDouble(13, p.getSuperficieRequerida());
+            else ps.setNull(13, Types.DOUBLE);
+            if (p.getSuperficieTrabajo() != null) ps.setDouble(14, p.getSuperficieTrabajo());
+            else ps.setNull(14, Types.DOUBLE);
+            if (p.getSuperficieDeposito() != null) ps.setDouble(15, p.getSuperficieDeposito());
+            else ps.setNull(15, Types.DOUBLE);
+            if (p.getSuperficieCubierta() != null) ps.setDouble(16, p.getSuperficieCubierta());
+            else ps.setNull(16, Types.DOUBLE);
+            if (p.getSuperficieEstacionamiento() != null) ps.setDouble(17, p.getSuperficieEstacionamiento());
+            else ps.setNull(17, Types.DOUBLE);
 
             ps.setString(18, p.getTienePlanos());
             ps.setString(19, p.getLinkPlanos());
 
-            if (p.getEnergiaRequerida() != null)
-                ps.setDouble(20, p.getEnergiaRequerida());
-            else
-                ps.setNull(20, Types.DOUBLE);
-            if (p.getPersonalAOcupar() != null)
-                ps.setInt(21, p.getPersonalAOcupar());
-            else
-                ps.setNull(21, Types.INTEGER);
+            if (p.getEnergiaRequerida() != null) ps.setDouble(20, p.getEnergiaRequerida());
+            else ps.setNull(20, Types.DOUBLE);
+            if (p.getPersonalAOcupar() != null) ps.setInt(21, p.getPersonalAOcupar());
+            else ps.setNull(21, Types.INTEGER);
 
             ps.setString(22, p.getTensionAlimentacion());
 
-            if (p.getPotenciaInstalada() != null)
-                ps.setDouble(23, p.getPotenciaInstalada());
-            else
-                ps.setNull(23, Types.DOUBLE);
-            if (p.getAguaMensual() != null)
-                ps.setDouble(24, p.getAguaMensual());
-            else
-                ps.setNull(24, Types.DOUBLE);
-            if (p.getGasMensual() != null)
-                ps.setDouble(25, p.getGasMensual());
-            else
-                ps.setNull(25, Types.DOUBLE);
+            if (p.getPotenciaInstalada() != null) ps.setDouble(23, p.getPotenciaInstalada());
+            else ps.setNull(23, Types.DOUBLE);
+            if (p.getAguaMensual() != null) ps.setDouble(24, p.getAguaMensual());
+            else ps.setNull(24, Types.DOUBLE);
+            if (p.getGasMensual() != null) ps.setDouble(25, p.getGasMensual());
+            else ps.setNull(25, Types.DOUBLE);
 
             ps.setString(26, p.getResiduosTipo());
 
-            if (p.getResiduosCantidad() != null)
-                ps.setDouble(27, p.getResiduosCantidad());
-            else
-                ps.setNull(27, Types.DOUBLE);
+            if (p.getResiduosCantidad() != null) ps.setDouble(27, p.getResiduosCantidad());
+            else ps.setNull(27, Types.DOUBLE);
 
             ps.setString(28, p.getTratamientoEfluentes());
             ps.setString(29, p.getTipoEmpresa());
@@ -119,8 +88,7 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next())
-                    p.setId(rs.getLong(1));
+                if (rs.next()) p.setId(rs.getLong(1));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Error al insertar proyecto preliminar", e);
@@ -132,24 +100,130 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
 
     @Override
     public Optional<ProyectoPreliminar> buscarPorId(Long id) {
-        /* TODO */ return Optional.empty();
+        /* TODO */
+        return Optional.empty();
     }
 
     @Override
     public List<ProyectoPreliminar> listarPorUsuario(String usuarioNombre) {
-        /* TODO */ return new ArrayList<>();
+        /* TODO */
+        return new ArrayList<>();
     }
 
     @Override
     public void actualizar(ProyectoPreliminar proyecto) {
-        /* TODO */ }
+        /* TODO */
+    }
 
     @Override
     public void eliminar(Long id) {
-        /* TODO */ }
+        /* TODO */
+    }
+
 
     @Override
-    public List<CrearRequestDTO> listarPreliminarePorCuit(String cuit) {
-        return List.of();
+    public List<CrearRequestDTO> listarProyectos() {
+
+        String sql = "SELECT * FROM proyecto_preliminar";
+
+        List<CrearRequestDTO> proyectos = new ArrayList<>();
+
+        try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()
+        ) {
+
+            while (rs.next()) {
+                proyectos.add(mapearDTO(rs));
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error al listar proyectos preliminares", e);
+        }
+
+        return proyectos;
+    }
+
+    @Override
+    public List<CrearRequestDTO> listarPreliminarPorCuit(String cuit) {
+
+        String sql = "SELECT * FROM proyecto_preliminar WHERE cuit_empresa = ?";
+
+        List<CrearRequestDTO> proyectos = new ArrayList<>();
+
+        try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, cuit);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    proyectos.add(mapearDTO(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error al listar proyectos preliminares", e);
+        }
+
+        return proyectos;
+    }
+
+
+
+    private CrearRequestDTO mapearDTO(ResultSet rs) throws SQLException {
+
+        CrearRequestDTO dto = new CrearRequestDTO();
+
+        dto.setUsuarioNombre(rs.getString("usuario_nombre"));
+        dto.setCuitEmpresa(rs.getString("cuit_empresa"));
+        dto.setNombre(rs.getString("nombre"));
+        dto.setDescripcion(rs.getString("descripcion"));
+        dto.setActividadPrincipal(rs.getString("actividad_principal"));
+        dto.setActividadSecundaria(rs.getString("actividad_secundaria"));
+        dto.setTelefono(rs.getString("telefono"));
+        dto.setRubro(rs.getString("rubro"));
+        dto.setDescripcionServicio(rs.getString("descripcion_servicio"));
+        dto.setPersonaReferente(rs.getString("persona_referente"));
+        dto.setMateriasPrimas(rs.getString("materias_primas"));
+        dto.setDestinoProduccion(rs.getString("destino_produccion"));
+
+        dto.setSuperficieRequerida((Double) rs.getObject("superficie_requerida"));
+        dto.setSuperficieTrabajo((Double) rs.getObject("superficie_trabajo"));
+        dto.setSuperficieDeposito((Double) rs.getObject("superficie_deposito"));
+        dto.setSuperficieCubierta((Double) rs.getObject("superficie_cubierta"));
+        dto.setSuperficieEstacionamiento((Double) rs.getObject("superficie_estacionamiento"));
+
+        dto.setTienePlanos(rs.getString("tiene_planos"));
+        dto.setLinkPlanos(rs.getString("link_planos"));
+
+        dto.setEnergiaRequerida((Double) rs.getObject("energia_requerida"));
+        dto.setPersonalAOcupar((Integer) rs.getObject("personal_a_ocupar"));
+
+        dto.setTensionAlimentacion(rs.getString("tension_alimentacion"));
+
+        dto.setPotenciaInstalada((Double) rs.getObject("potencia_instalada"));
+        dto.setAguaMensual((Double) rs.getObject("agua_mensual"));
+        dto.setGasMensual((Double) rs.getObject("gas_mensual"));
+
+        dto.setResiduosTipo(rs.getString("residuos_tipo"));
+        dto.setResiduosCantidad((Double) rs.getObject("residuos_cantidad"));
+
+        dto.setTratamientoEfluentes(rs.getString("tratamiento_efluentes"));
+        dto.setTipoEmpresa(rs.getString("tipo_empresa"));
+        dto.setDireccion(rs.getString("direccion"));
+
+        dto.setPretensionTraslado(rs.getString("pretension_traslado"));
+        dto.setEmplazamientoActual(rs.getString("emplazamiento_actual"));
+        dto.setTiempoRadicacion(rs.getString("tiempo_radicacion"));
+
+        dto.setBalanzaPublica(rs.getString("balanza_publica"));
+        dto.setComedor(rs.getString("comedor"));
+        dto.setSumCoworking(rs.getString("sum_coworking"));
+
+        dto.setEstado(rs.getString("estado"));
+
+        return dto;
     }
 }
