@@ -38,6 +38,7 @@ public class CrearRequestDTO {
     private String comedor;
     private String sumCoworking;
     private String estado;
+    private String cuitEmpresa;
 
     // Constructor vacío
     public CrearRequestDTO() {
@@ -332,4 +333,13 @@ public class CrearRequestDTO {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getCuitEmpresa() {
+        return cuitEmpresa;
+    }
+
+    public void setCuitEmpresa(String cuitEmpresa) {
+        this.cuitEmpresa = cuitEmpresa;
+    }
+
 }

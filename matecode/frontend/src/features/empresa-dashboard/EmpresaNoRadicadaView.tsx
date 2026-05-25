@@ -86,17 +86,25 @@ export default function EmpresaNoRadicadaView() {
             return;
         }
 
+        // Validación extra de seguridad para el CUIT
+        const cuit = user?.empresa?.cuit;
+        if (!cuit) {
+            alert("Error: No se pudo identificar el CUIT de su empresa. Por favor, contacte al administrador.");
+            return;
+        }
+
         try {
-            // 2. Preparar el objeto con el nombre de usuario desde el contexto
+            // 2. Preparar el objeto incluyendo el CUIT
             const payload = {
                 ...formData,
-                usuarioNombre: user?.nombreUsuario || "Anonimo"
+                usuarioNombre: user?.nombreUsuario || "Anonimo",
+                cuitEmpresa: cuit // <-- Agregado para el backend
             };
 
-            // 3. Llamada a la API de proyectos (Backend Spring)
+            // 3. Llamada a la API
             await proyectosApi.crearProyecto(payload);
 
-            // 4. Notificación visual mediante la API de mensajería
+            // 4. Notificación
             await mensajeriaApi.enviarMensaje(
                 user?.nombreUsuario || "",
                 `Sistema: Proyecto preliminar "${formData.nombre}" enviado exitosamente para evaluación.`
@@ -105,7 +113,7 @@ export default function EmpresaNoRadicadaView() {
             setEnviado(true);
             alert("¡Proyecto enviado correctamente!");
 
-            // 5. Limpiar borrador local
+            // 5. Limpiar borrador
             localStorage.removeItem("draft_proyecto_" + user?.nombreUsuario);
 
         } catch (error) {
@@ -118,7 +126,7 @@ export default function EmpresaNoRadicadaView() {
         <div className="empresaNoRadicadaView">
             <NavBar />
 
-            {/* Botón Mensajes Posición Absoluta */}
+
             <button
                 className="btn-flotante-mensajes"
                 onClick={() => setMensajesOpen(!mensajesOpen)}
@@ -130,6 +138,21 @@ export default function EmpresaNoRadicadaView() {
             <div className="empresaNoRadicadaBody">
                 {mensajesOpen ? (
                     <MensajeriaPanel />
+                ) : enviado ? (
+                    // VISTA DE ÉXITO
+                    <div className="mensaje-exito-container">
+                        <div className="card-exito">
+                            <h2>¡Proyecto enviado exitosamente!</h2>
+                            <p>El equipo técnico ya ha recibido tu solicitud y se encuentra en proceso de evaluación.</p>
+                            <p>Puedes seguir el estado de la revisión en la sección de <strong>Mensajes</strong>.</p>
+                            <button
+                                className="btn-ir-mensajes"
+                                onClick={() => setMensajesOpen(true)}
+                            >
+                                Ir a mis mensajes
+                            </button>
+                        </div>
+                    </div>
                 ) : (
                     <div className="formulario-container">
                         <header className="form-header">

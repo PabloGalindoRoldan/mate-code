@@ -21,7 +21,7 @@ export default function NavBar({ variant = "solid" }: NavBarProps) {
     switch (user.rol) {
       case 'ADMINISTRADOR_SISTEMA': navigate('/admin'); break;
       case 'ADMINISTRADOR_PARQUE': navigate('/parque'); break;
-      case 'REPRESENTANTE_EMPRESA': navigate('/empresa-radicada'); break;
+      case 'REPRESENTANTE_EMPRESA': user.empresa.esRadicada ? navigate('/empresa-radicada') : navigate('/nueva-empresa'); break;
       default: navigate('/'); break;
     }
   };

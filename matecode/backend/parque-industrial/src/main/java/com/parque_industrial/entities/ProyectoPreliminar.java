@@ -41,6 +41,7 @@ public class ProyectoPreliminar {
     private String comedor;
     private String sumCoworking;
     private String estado;
+    private String cuitEmpresa;
 
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
@@ -360,5 +361,13 @@ public class ProyectoPreliminar {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getCuitEmpresa() {
+        return cuitEmpresa;
+    }
+
+    public void setCuitEmpresa(String cuitEmpresa) {
+        this.cuitEmpresa = cuitEmpresa;
     }
 }
