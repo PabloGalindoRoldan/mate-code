@@ -16,8 +16,11 @@ export default function MenuParque(params: { isOpen: boolean, setActiveTab: (tab
                     <button className="menu-item" onClick={() => setActiveTab("companies")}>
                         Empresas
                     </button>
+                    <button className="menu-item" onClick={() => setActiveTab("projects")}>
+                        Proyectos
+                    </button>
                     <button className="menu-item" onClick={() => setActiveTab("publications")}>
-                        Administrar Publicaciones
+                        Publicaciones
                     </button>
                     <button className="menu-item" onClick={() => setActiveTab("reports")}>
                         Generar Reportes
