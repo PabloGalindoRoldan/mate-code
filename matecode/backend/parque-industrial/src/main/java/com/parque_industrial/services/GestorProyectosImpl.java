@@ -1,9 +1,12 @@
 package com.parque_industrial.services;
 
 import com.parque_industrial.dto.proyecto.CrearRequestDTO;
+import com.parque_industrial.entities.Proyecto;
 import com.parque_industrial.entities.ProyectoPreliminar;
 import com.parque_industrial.persistence.proyecto.ProyectoDAO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GestorProyectosImpl implements GestorProyectos {
@@ -17,7 +20,6 @@ public class GestorProyectosImpl implements GestorProyectos {
     @Override
     public void crearProyectoPreliminar(CrearRequestDTO dto) {
         ProyectoPreliminar entidad = new ProyectoPreliminar();
-
         entidad.setUsuarioNombre(dto.getUsuarioNombre());
         entidad.setCuitEmpresa(dto.getCuitEmpresa());
         entidad.setNombre(dto.getNombre());
@@ -59,4 +61,18 @@ public class GestorProyectosImpl implements GestorProyectos {
         entidad.setEstado(estado);
         proyectoDAO.guardar(entidad);
     }
+
+
+
+    @Override
+    public List<Proyecto> listarTodos() {
+        return proyectoDAO.listarTodos();
+    }
+
+    @Override
+    public List<Proyecto> listarPorCuitEmpresa(String cuit) {
+        return proyectoDAO.listarPorCuitEmpresa(cuit);
+    }
+
+
 }

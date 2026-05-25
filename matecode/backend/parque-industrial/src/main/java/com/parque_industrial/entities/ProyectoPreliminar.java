@@ -42,9 +42,10 @@ public class ProyectoPreliminar {
     private String sumCoworking;
     private String estado;
     private String cuitEmpresa;
-
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
+
+
 
     // Constructor vacío (necesario para frameworks de persistencia/mapeo)
     public ProyectoPreliminar() {
