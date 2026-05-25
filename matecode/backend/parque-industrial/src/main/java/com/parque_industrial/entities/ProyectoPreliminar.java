@@ -2,55 +2,17 @@ package com.parque_industrial.entities;
 
 import java.time.LocalDateTime;
 
-public class ProyectoPreliminar {
+public class ProyectoPreliminar extends Proyecto {
 
-    private Long id;
-    private String usuarioNombre;
-    private String nombre;
-    private String descripcion;
-    private String actividadPrincipal;
-    private String actividadSecundaria;
-    private String telefono;
-    private String rubro;
-    private String descripcionServicio;
-    private String personaReferente;
-    private String materiasPrimas;
-    private String destinoProduccion;
-    private Double superficieRequerida;
-    private Double superficieTrabajo;
-    private Double superficieDeposito;
-    private Double superficieCubierta;
-    private Double superficieEstacionamiento;
-    private String tienePlanos;
-    private String linkPlanos;
-    private Double energiaRequerida;
-    private Integer personalAOcupar;
-    private String tensionAlimentacion;
-    private Double potenciaInstalada;
-    private Double aguaMensual;
-    private Double gasMensual;
-    private String residuosTipo;
-    private Double residuosCantidad;
-    private String tratamientoEfluentes;
-    private String tipoEmpresa;
-    private String direccion;
-    private String pretensionTraslado;
-    private String emplazamientoActual;
-    private String tiempoRadicacion;
-    private String balanzaPublica;
-    private String comedor;
-    private String sumCoworking;
-    private String estado;
-    private String cuitEmpresa;
-    private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaActualizacion;
-
-
-
-    // Constructor vacío (necesario para frameworks de persistencia/mapeo)
     public ProyectoPreliminar() {
+        super();
     }
 
+    @Override
+    public void listoParaRevision() throws Exception {
+        validar();
+        this.estado = PENDIENTE;
+    }
     // Getters y Setters
     public Long getId() {
         return id;
