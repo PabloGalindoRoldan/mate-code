@@ -138,6 +138,7 @@ export const proyectosApi = {
     // Envía el formulario completo de proyecto al backend
     crearProyecto: async (data: {
         usuarioNombre: string;
+        cuitEmpresa: string;
         nombre: string;
         descripcion?: string;
         actividadPrincipal?: string;
@@ -153,7 +154,7 @@ export const proyectosApi = {
         superficieDeposito?: number;
         superficieCubierta?: number;
         superficieEstacionamiento?: number;
-        tienePlanos?: string; // 'SI' o 'NO'
+        tienePlanos?: string;
         linkPlanos?: string;
         energiaRequerida?: number;
         personalAOcupar?: number;

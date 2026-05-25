@@ -19,6 +19,7 @@ public class GestorProyectosImpl implements GestorProyectos {
         ProyectoPreliminar entidad = new ProyectoPreliminar();
 
         entidad.setUsuarioNombre(dto.getUsuarioNombre());
+        entidad.setCuitEmpresa(dto.getCuitEmpresa());
         entidad.setNombre(dto.getNombre());
         entidad.setDescripcion(dto.getDescripcion());
         entidad.setActividadPrincipal(dto.getActividadPrincipal());
