@@ -3,7 +3,6 @@ package com.parque_industrial.entities;
 import java.time.LocalDateTime;
 
 public class ProyectoPreliminar {
-
     private Long id;
     private String usuarioNombre;
     private String nombre;

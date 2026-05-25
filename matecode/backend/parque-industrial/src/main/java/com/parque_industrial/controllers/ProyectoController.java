@@ -54,21 +54,15 @@ public class ProyectoController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
-    }}
+    }
 
-//@GetMapping("/porCuit")
-//public ResponseEntity<ProyectosPorCuitDTO> listarProyectosPorCuit(@PathVariable String cuit) {
-//    try {
-//        List<ProyectosPorCuitDTO> proyectos = gestorProyectos.listarProyectosPorCuit(cuit);
-//        return ResponseEntity.ok(proyectos);
-//    } catch (Exception e) {
-//        return ResponseEntity.status(500).body(null);
-//    }
-//}
-
-//public record ProyectosPorCuitDTO(
-//        List<CrearRequestDefinitivoDTO> definitivos,
-//        List<CrearRequestDTO> preliminares
-//) {}
-
-
+    @PostMapping("/porCuit")
+    public ResponseEntity<ProyectosPorCuitDTO> listarProyectosPorCuit(@RequestBody String cuit) {
+        try {
+            ProyectosPorCuitDTO proyectos = gestorProyectos.listarProyectosPorCuit(cuit);
+            return ResponseEntity.ok(proyectos);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+}

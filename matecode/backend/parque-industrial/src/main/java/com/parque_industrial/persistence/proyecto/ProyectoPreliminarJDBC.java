@@ -1,5 +1,6 @@
 package com.parque_industrial.persistence.proyecto;
 
+import com.parque_industrial.dto.proyecto.CrearRequestDTO;
 import com.parque_industrial.entities.ProyectoPreliminar;
 import com.parque_industrial.exceptions.DatabaseException;
 import javax.sql.DataSource;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ProyectoPreliminarJDBC implements ProyectoDAO {
+public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
 
     private final DataSource dataSource;
 
@@ -146,4 +147,9 @@ public class ProyectoPreliminarJDBC implements ProyectoDAO {
     @Override
     public void eliminar(Long id) {
         /* TODO */ }
+
+    @Override
+    public List<CrearRequestDTO> listarPreliminarePorCuit(String cuit) {
+        return List.of();
+    }
 }

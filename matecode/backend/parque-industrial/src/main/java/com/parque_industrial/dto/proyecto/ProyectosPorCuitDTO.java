@@ -1,4 +1,8 @@
 package com.parque_industrial.dto.proyecto;
 
-public class ProyectosPorCuitDTO {
-}
+import java.util.List;
+
+public record ProyectosPorCuitDTO(
+        List<CrearRequestDefinitivoDTO> definitivos,
+        List<CrearRequestDTO> preliminares
+) {}

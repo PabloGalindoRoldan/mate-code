@@ -1,9 +1,11 @@
 package com.parque_industrial.services;
 
 import com.parque_industrial.dto.proyecto.CrearRequestDTO;
-import com.parque_industrial.entities.Proyecto;
+import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
+import com.parque_industrial.dto.proyecto.ProyectosPorCuitDTO;
 import com.parque_industrial.entities.ProyectoPreliminar;
-import com.parque_industrial.persistence.proyecto.ProyectoDAO;
+import com.parque_industrial.persistence.proyecto.ProyectoDefinitivoDAO;
+import com.parque_industrial.persistence.proyecto.ProyectoPreliminarDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +13,12 @@ import java.util.List;
 @Service
 public class GestorProyectosImpl implements GestorProyectos {
 
-    private final ProyectoDAO proyectoDAO;
+    private final ProyectoPreliminarDAO proyectoPreliminarDAO;
+    private final ProyectoDefinitivoDAO  proyectoDefinitivoDAO;
 
-    public GestorProyectosImpl(ProyectoDAO proyectoDAO) {
-        this.proyectoDAO = proyectoDAO;
+    public GestorProyectosImpl(ProyectoPreliminarDAO proyectoPreliminarDAO,  ProyectoDefinitivoDAO proyectoDefinitivoDAO ) {
+        this.proyectoPreliminarDAO = proyectoPreliminarDAO;
+        this.proyectoDefinitivoDAO = proyectoDefinitivoDAO;
     }
 
     @Override
@@ -59,20 +63,26 @@ public class GestorProyectosImpl implements GestorProyectos {
 
         String estado = (dto.getEstado() != null && !dto.getEstado().isEmpty()) ? dto.getEstado() : "en_revision";
         entidad.setEstado(estado);
-        proyectoDAO.guardar(entidad);
-    }
-
-
-
-    @Override
-    public List<Proyecto> listarTodos() {
-        return proyectoDAO.listarTodos();
+        proyectoPreliminarDAO.guardar(entidad);
     }
 
     @Override
-    public List<Proyecto> listarPorCuitEmpresa(String cuit) {
-        return proyectoDAO.listarPorCuitEmpresa(cuit);
+    public void crearProyectoDefinitivo(CrearRequestDefinitivoDTO request) {
+
     }
+
+    @Override
+    public List<CrearRequestDefinitivoDTO> listarProyectos() {
+        return List.of();
+    }
+
+    @Override
+    public ProyectosPorCuitDTO listarProyectosPorCuit(String cuit) {
+        List<CrearRequestDefinitivoDTO> definitivos = proyectoDefinitivoDAO.listarDefinitivosPorCuit(cuit);
+        List<CrearRequestDTO> preliminares = proyectoPreliminarDAO.listarPreliminarePorCuit(cuit);
+        return new ProyectosPorCuitDTO(definitivos, preliminares);
+    }
+
 
 
 }
