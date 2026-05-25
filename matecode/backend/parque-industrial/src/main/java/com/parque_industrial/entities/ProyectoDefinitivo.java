@@ -13,11 +13,6 @@ public class ProyectoDefinitivo extends Proyecto {
 
     public ProyectoDefinitivo() {
         super();
-    }
-
-    @Override
-    public void listoParaRevision() throws Exception {
-        validar();
         this.estado = PENDIENTE;
     }
 
@@ -45,24 +40,3 @@ public class ProyectoDefinitivo extends Proyecto {
         }
     }
 }
-//    @Override
-//    public void listoParaRevision() throws Exception {
-//        this.estado = PENDIENTE;
-//    }
-
-//    public LocalDate getFechaInicioObra() {
-//        return fechaCreacion;
-//    }
-//
-//    public LocalDate getFechaFinObra() {
-//        return fechaFinObra;
-//    }
-//
-//    public String getInformeAmbiental() {
-//        return informeAmbiental;
-//    }
-//
-//    public boolean isViabilidadFinanciera(){
-//        return viabilidadFinanciera;
-//    }
-//}
