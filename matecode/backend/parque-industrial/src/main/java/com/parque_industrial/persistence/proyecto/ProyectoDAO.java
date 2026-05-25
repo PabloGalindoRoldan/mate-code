@@ -1,22 +1,17 @@
 package com.parque_industrial.persistence.proyecto;
 
-import java.sql.SQLException;
+import com.parque_industrial.entities.ProyectoPreliminar;
 import java.util.List;
+import java.util.Optional;
 
-public interface ProyectoDAO<T> {
+public interface ProyectoDAO {
+    void guardar(ProyectoPreliminar proyecto);
 
-    // GUARDAR
-    void guardar(T proyecto) throws SQLException;
+    Optional<ProyectoPreliminar> buscarPorId(Long id);
 
-    // BUSCAR POR ID
-    T buscarPorId(String identificacion) throws SQLException;
+    List<ProyectoPreliminar> listarPorUsuario(String usuarioNombre);
 
-    // BUSCAR POR ESTADO
-    List<T> buscarPorEstado(String estado) throws SQLException;
+    void actualizar(ProyectoPreliminar proyecto);
 
-    // ACTUALIZAR
-    void actualizar(T proyecto) throws SQLException;
-
-    // ELIMINAR
-    void eliminar(String identificacion) throws SQLException;
+    void eliminar(Long id);
 }

@@ -1,10 +1,7 @@
-package com.parque_industrial.entities;
+package com.parque_industrial.dto.proyecto;
 
-import java.time.LocalDateTime;
+public class CrearRequestDTO {
 
-public class ProyectoPreliminar {
-
-    private Long id;
     private String usuarioNombre;
     private String nombre;
     private String descripcion;
@@ -42,22 +39,12 @@ public class ProyectoPreliminar {
     private String sumCoworking;
     private String estado;
 
-    private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaActualizacion;
-
-    // Constructor vacío (necesario para frameworks de persistencia/mapeo)
-    public ProyectoPreliminar() {
+    // Constructor vacío
+    public CrearRequestDTO() {
     }
 
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // Getters y Setters (necesarios para que el framework de serialización JSON los
+    // mapee)
     public String getUsuarioNombre() {
         return usuarioNombre;
     }
@@ -336,22 +323,6 @@ public class ProyectoPreliminar {
 
     public void setSumCoworking(String sumCoworking) {
         this.sumCoworking = sumCoworking;
-    }
-
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public LocalDateTime getFechaActualizacion() {
-        return fechaActualizacion;
-    }
-
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
-        this.fechaActualizacion = fechaActualizacion;
     }
 
     public String getEstado() {

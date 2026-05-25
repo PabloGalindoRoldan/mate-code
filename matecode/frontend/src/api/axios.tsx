@@ -134,3 +134,46 @@ export const authApi = {
     }
 };
 
+export const proyectosApi = {
+    // Envía el formulario completo de proyecto al backend
+    crearProyecto: async (data: {
+        usuarioNombre: string;
+        nombre: string;
+        descripcion?: string;
+        actividadPrincipal?: string;
+        actividadSecundaria?: string;
+        telefono?: string;
+        rubro?: string;
+        descripcionServicio?: string;
+        personaReferente?: string;
+        materiasPrimas?: string;
+        destinoProduccion?: string;
+        superficieRequerida?: number;
+        superficieTrabajo?: number;
+        superficieDeposito?: number;
+        superficieCubierta?: number;
+        superficieEstacionamiento?: number;
+        tienePlanos?: string; // 'SI' o 'NO'
+        linkPlanos?: string;
+        energiaRequerida?: number;
+        personalAOcupar?: number;
+        tensionAlimentacion?: string;
+        potenciaInstalada?: number;
+        aguaMensual?: number;
+        gasMensual?: number;
+        residuosTipo?: string;
+        residuosCantidad?: number;
+        tratamientoEfluentes?: string;
+        tipoEmpresa?: string;
+        direccion?: string;
+        pretensionTraslado?: string;
+        emplazamientoActual?: string;
+        tiempoRadicacion?: string;
+        balanzaPublica?: string;
+        comedor?: string;
+        sumCoworking?: string;
+    }) => {
+        const response = await API.post('/api/proyectos/crear', data);
+        return response.data;
+    }
+};

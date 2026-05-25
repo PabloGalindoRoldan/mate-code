@@ -7,6 +7,7 @@ import InventarioPanel from "./InventarioPanel";
 import PresupuestoPanel from "./PresupuestoPanel";
 import EmpresasPanel from "./EmpresasPanel";
 import SettingsPanel from "./SettingsPanel";
+import ProyectosPanel from "./ProyectosPanel";
 
 
 export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boolean, activeTab: string }) {
@@ -18,6 +19,7 @@ export default function ParqueBody(params: { empresaInfo: any, isMenuOpen: boole
             {activeTab === "map" && <MapPanel />}
             {activeTab === "messages" && <MensajeriaPanel />}
             {activeTab === "companies" && <EmpresasPanel />}
+            {activeTab === "projects" && <ProyectosPanel />}
             {activeTab === "publications" && <PublicacionesPanel />}
             {activeTab === "reports" && <ReportesPanel />}
             {activeTab === "inventory" && <InventarioPanel />}

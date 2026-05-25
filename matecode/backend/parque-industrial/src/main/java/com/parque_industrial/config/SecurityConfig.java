@@ -53,6 +53,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/consumos/historial/*").hasRole("ADMINISTRADOR_PARQUE")
                         .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
 
+                        // --- ENDPOINTS DE PROYECTOS ---
+                        .requestMatchers("/api/proyectos", "/api/proyectos/**").authenticated()
+
                         // --- ENDPOINTS DE LOTES ---
                         .requestMatchers("/api/lotes/**").hasRole("ADMINISTRADOR_PARQUE")
 
