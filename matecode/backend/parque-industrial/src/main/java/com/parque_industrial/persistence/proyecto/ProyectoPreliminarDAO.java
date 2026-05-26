@@ -10,11 +10,11 @@ public interface ProyectoPreliminarDAO {
 
     Optional<ProyectoPreliminar> buscarPorId(Long id);
 
-    List<ProyectoPreliminar> listarPorUsuario(String usuarioNombre);
+    //List<ProyectoPreliminar> listarPorUsuario(String usuarioNombre);
 
     void actualizar(ProyectoPreliminar proyecto);
 
-    void eliminar(Long id);
+    //void eliminar(Long id);
 
     List<CrearRequestDTO> listarPreliminarPorCuit(String cuit);
 

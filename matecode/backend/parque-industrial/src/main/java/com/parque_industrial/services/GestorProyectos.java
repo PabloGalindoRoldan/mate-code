@@ -14,4 +14,16 @@ public interface GestorProyectos {
     ProyectosDTO listarProyectos();
 
     ProyectosDTO listarProyectosPorCuit(String cuit);
+
+    void rectificarProyectoPreliminar(Integer proyectoId);
+
+    void aprobarProyectoPreliminar(Integer proyectoId);
+
+    void rechazarProyectoPreliminar(Integer proyectoId);
+
+    void rechazarProyectoDefinitivo(Integer proyectoId);
+
+    void rectificarProyectoDefinitivo(Integer proyectoId);
+
+    void aprobarProyectoDefinitivo(Integer proyectoId);
 }

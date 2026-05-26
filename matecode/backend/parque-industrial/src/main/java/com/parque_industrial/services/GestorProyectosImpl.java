@@ -218,6 +218,89 @@ public class GestorProyectosImpl implements GestorProyectos {
         return new ProyectosDTO(definitivos, preliminares);
     }
 
+    @Override
+    public void rectificarProyectoPreliminar(Integer proyectoId) {
+
+        ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                .buscarPorId(proyectoId.longValue())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+        proyecto.rectificar();
+
+        proyectoPreliminarDAO.actualizar(proyecto);
+    }
+
+
+    @Override
+    public void aprobarProyectoPreliminar(Integer proyectoId) {
+
+        ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                .buscarPorId(proyectoId.longValue())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+        proyecto.aprobar();
+
+        proyectoPreliminarDAO.actualizar(proyecto);
+    }
+
+
+
+    @Override
+    public void rechazarProyectoPreliminar(Integer proyectoId) {
+
+        ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                .buscarPorId(proyectoId.longValue())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+        proyecto.rechazar();
+
+        proyectoPreliminarDAO.actualizar(proyecto);
+    }
+
+
+
+    @Override
+    public void rechazarProyectoDefinitivo(Integer proyectoId) {
+
+        ProyectoDefinitivo proyecto = proyectoDefinitivoDAO
+                .buscarPorId(proyectoId.longValue())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+        proyecto.rechazar();
+
+        proyectoDefinitivoDAO.actualizar(proyecto);
+    }
+
+
+    @Override
+    public void rectificarProyectoDefinitivo(Integer proyectoId) {
+
+        ProyectoDefinitivo proyecto = proyectoDefinitivoDAO
+                .buscarPorId(proyectoId.longValue())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+        proyecto.rectificar();
+
+        proyectoDefinitivoDAO.actualizar(proyecto);
+    }
+
+    @Override
+    public void aprobarProyectoDefinitivo(Integer proyectoId) {
+
+        ProyectoDefinitivo proyecto = proyectoDefinitivoDAO
+                .buscarPorId(proyectoId.longValue())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+        proyecto.aprobar();
+
+        proyectoDefinitivoDAO.actualizar(proyecto);
+    }
 
 
 }

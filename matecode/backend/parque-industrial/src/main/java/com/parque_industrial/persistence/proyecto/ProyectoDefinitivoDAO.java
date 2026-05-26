@@ -4,6 +4,7 @@ import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
 import com.parque_industrial.entities.ProyectoDefinitivo;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProyectoDefinitivoDAO {
 
@@ -12,5 +13,8 @@ public interface ProyectoDefinitivoDAO {
     List<CrearRequestDefinitivoDTO> listarProyectos();
     void guardarProyectoDefinitivo(ProyectoDefinitivo entidad);
 
+    void actualizar(ProyectoDefinitivo proyecto);
+
+    Optional<ProyectoDefinitivo> buscarPorId(Long id);
 }
 
