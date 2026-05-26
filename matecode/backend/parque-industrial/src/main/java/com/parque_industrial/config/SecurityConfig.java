@@ -54,7 +54,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/consumos", "/api/consumos/**").hasRole("REPRESENTANTE_EMPRESA")
 
                         // --- ENDPOINTS DE PROYECTOS ---
-                        .requestMatchers("/api/proyectos", "/api/proyectos/**").authenticated()
+                        //.requestMatchers("/api/proyectos", "/api/proyectos/**").authenticated()
+                        .requestMatchers("/api/proyectos", "/api/proyectos/**").permitAll()
 
                         // --- ENDPOINTS DE LOTES ---
                         .requestMatchers("/api/lotes/**").hasRole("ADMINISTRADOR_PARQUE")

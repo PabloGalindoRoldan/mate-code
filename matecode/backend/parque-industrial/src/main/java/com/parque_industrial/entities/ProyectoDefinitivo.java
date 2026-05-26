@@ -1,64 +1,126 @@
 package com.parque_industrial.entities;
 
-import java.time.LocalDate;
+
 
 public class ProyectoDefinitivo extends Proyecto {
-    private LocalDate fechaInicioObra;
-    private LocalDate fechaFinObra;
-    private boolean viabilidadFinanciera;
-    private String informeAmbiental; // podria ser un archivo no?
 
-    public ProyectoDefinitivo(String identificacion, String actividadPrincipal, String referente,
-                               int superficieRequerida, double energiaRequerida, int personalAOcupar,
-                               LocalDate fechaInicioObra, LocalDate fechaFinObra,
-                               boolean viabilidadFinanciera, String informeAmbiental) throws Exception {
-        super(identificacion, actividadPrincipal, referente, superficieRequerida, energiaRequerida, personalAOcupar);
+    private String linkViabilidadFinanciera;
+    private String linkEstudioMercado;
+    private String linkImpactoAmbiental;
+    private String linkHabilitacionMunicipal;
+    private String linkCertificadoInhibiciones;
+
+    public ProyectoDefinitivo() {
+        super();
+        this.estado = REVISION;
+    }
+
+    public void validarDefinitivo() throws Exception {
+
+        // valida campos heredados del proyecto
         validar();
-        validarFechas(fechaInicioObra, fechaFinObra);
 
-        if(informeAmbiental == null || informeAmbiental.isBlank()){
-            throw new Exception("El informe ambiental no puede estar vacío");
+        if (linkViabilidadFinanciera == null
+                || linkViabilidadFinanciera.isBlank()) {
+            throw new Exception(
+                    "El link de viabilidad financiera no puede estar vacío.");
         }
 
-        this.fechaInicioObra = fechaInicioObra;
-        this.fechaFinObra = fechaFinObra;
-        this.viabilidadFinanciera = viabilidadFinanciera;
-        this.informeAmbiental = informeAmbiental;
-    }
-
-    private void validarFechas(LocalDate inicio, LocalDate fin) throws Exception {
-        if (inicio == null) {
-            throw new Exception("La fecha de inicio de obra no puede ser nula.");
+        if (linkEstudioMercado == null
+                || linkEstudioMercado.isBlank()) {
+            throw new Exception(
+                    "El link del estudio de mercado no puede estar vacío.");
         }
-        if (fin == null) {
-            throw new Exception("La fecha de fin de obra no puede ser nula.");
+
+        if (linkImpactoAmbiental == null
+                || linkImpactoAmbiental.isBlank()) {
+            throw new Exception(
+                    "El link del impacto ambiental no puede estar vacío.");
         }
-        if (inicio.isBefore(LocalDate.now())) {
-            throw new Exception("La fecha de inicio de obra no puede ser anterior a la actualidad.");
+
+        if (linkHabilitacionMunicipal == null
+                || linkHabilitacionMunicipal.isBlank()) {
+            throw new Exception(
+                    "El link de habilitación municipal no puede estar vacío.");
         }
-        if (fin.isBefore(inicio)) {
-            throw new Exception("La fecha de fin de obra no puede ser anterior a la de inicio.");
+
+        if (linkCertificadoInhibiciones == null
+                || linkCertificadoInhibiciones.isBlank()) {
+            throw new Exception(
+                    "El link del certificado de inhibiciones no puede estar vacío.");
         }
+
+        //validaciones con regex para los links
+//        validarUrl(linkViabilidadFinanciera,
+//                "viabilidad financiera");
+//
+//        validarUrl(linkEstudioMercado,
+//                "estudio de mercado");
+//
+//        validarUrl(linkImpactoAmbiental,
+//                "impacto ambiental");
+//
+//        validarUrl(linkHabilitacionMunicipal,
+//                "habilitación municipal");
+//
+//        validarUrl(linkCertificadoInhibiciones,
+//                "certificado de inhibiciones");
+//
     }
 
-    @Override
-    public void listoParaRevision() throws Exception {
-        this.estado = PENDIENTE;
+//    private void validarUrl(String url,
+//                            String documento)
+//            throws Exception {
+//
+//        String regexUrl =
+//                "^(https?:\\/\\/).+$";
+//
+//        if (!url.matches(regexUrl)) {
+//            throw new Exception(
+//                    "El link de "
+//                            + documento
+//                            + " no tiene un formato válido.");
+//        }
+//    }
+
+
+    public String getLinkViabilidadFinanciera() {
+        return linkViabilidadFinanciera;
     }
 
-    public LocalDate getFechaInicioObra() {
-        return fechaInicioObra;
+    public void setLinkViabilidadFinanciera(String linkViabilidadFinanciera) {
+        this.linkViabilidadFinanciera = linkViabilidadFinanciera;
     }
 
-    public LocalDate getFechaFinObra() {
-        return fechaFinObra;
+    public String getLinkEstudioMercado() {
+        return linkEstudioMercado;
     }
 
-    public String getInformeAmbiental() {
-        return informeAmbiental;
+    public void setLinkEstudioMercado(String linkEstudioMercado) {
+        this.linkEstudioMercado = linkEstudioMercado;
     }
 
-    public boolean isViabilidadFinanciera(){
-        return viabilidadFinanciera;
+    public String getLinkImpactoAmbiental() {
+        return linkImpactoAmbiental;
+    }
+
+    public void setLinkImpactoAmbiental(String linkImpactoAmbiental) {
+        this.linkImpactoAmbiental = linkImpactoAmbiental;
+    }
+
+    public String getLinkHabilitacionMunicipal() {
+        return linkHabilitacionMunicipal;
+    }
+
+    public void setLinkHabilitacionMunicipal(String linkHabilitacionMunicipal) {
+        this.linkHabilitacionMunicipal = linkHabilitacionMunicipal;
+    }
+
+    public String getLinkCertificadoInhibiciones() {
+        return linkCertificadoInhibiciones;
+    }
+
+    public void setLinkCertificadoInhibiciones(String linkCertificadoInhibiciones) {
+        this.linkCertificadoInhibiciones = linkCertificadoInhibiciones;
     }
 }
