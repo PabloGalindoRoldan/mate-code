@@ -1,7 +1,9 @@
 package com.parque_industrial.dto.proyecto;
 
-public record CrearRequestDefinitivoDTO(
+import java.time.LocalDateTime;
 
+public record CrearRequestDefinitivoDTO(
+        Long id,
         String usuarioNombre,
         String nombre,
         String descripcion,
@@ -13,23 +15,19 @@ public record CrearRequestDefinitivoDTO(
         String personaReferente,
         String materiasPrimas,
         String destinoProduccion,
-
         Double superficieRequerida,
         Double superficieTrabajo,
         Double superficieDeposito,
         Double superficieCubierta,
         Double superficieEstacionamiento,
-
         String tienePlanos,
         String linkPlanos,
-
         Double energiaRequerida,
         Integer personalAOcupar,
         String tensionAlimentacion,
         Double potenciaInstalada,
         Double aguaMensual,
         Double gasMensual,
-
         String residuosTipo,
         Double residuosCantidad,
         String tratamientoEfluentes,
@@ -41,13 +39,13 @@ public record CrearRequestDefinitivoDTO(
         String balanzaPublica,
         String comedor,
         String sumCoworking,
-
+        String estado,
         String cuitEmpresa,
-
+        LocalDateTime fechaCreacion,
+        LocalDateTime fechaActualizacion,
         String linkViabilidadFinanciera,
         String linkEstudioMercado,
         String linkImpactoAmbiental,
         String linkHabilitacionMunicipal,
         String linkCertificadoInhibiciones
-
 ) {}
