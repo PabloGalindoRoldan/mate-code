@@ -12,7 +12,7 @@ public class ProyectoDefinitivo extends Proyecto {
 
     public ProyectoDefinitivo() {
         super();
-        this.estado = PENDIENTE;
+        this.estado = REVISION;
     }
 
     public void validarDefinitivo() throws Exception {

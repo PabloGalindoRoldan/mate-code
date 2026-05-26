@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public abstract class Proyecto {
 
     public static final String APROBADO = "aprobado";
-    public static final String PENDIENTE = "pendiente";
+    public static final String REVISION = "en_revision";
     public static final String RECHAZADO = "rechazado";
     public static final String RECTIFICADO = "rectificado";
     public static final String BORRADOR = "borrador";
@@ -56,7 +56,7 @@ public abstract class Proyecto {
     }
 
     public void aprobar() {
-        if (!PENDIENTE.equals(estado)) {
+        if (!REVISION.equals(estado)) {
             throw new IllegalStateException(
                     "Solo se puede aprobar un proyecto pendiente");
         }
@@ -64,7 +64,7 @@ public abstract class Proyecto {
     }
 
     public void rechazar() {
-        if (!PENDIENTE.equals(estado)) {
+        if (!REVISION.equals(estado)) {
             throw new IllegalStateException(
                     "Solo se puede rechazar un proyecto pendiente");
         }
@@ -72,7 +72,7 @@ public abstract class Proyecto {
     }
 
     public void rectificar() {
-        if (!PENDIENTE.equals(estado)) {
+        if (!REVISION.equals(estado)) {
             throw new IllegalStateException(
                     "Solo se puede rectificar un proyecto pendiente");
         }

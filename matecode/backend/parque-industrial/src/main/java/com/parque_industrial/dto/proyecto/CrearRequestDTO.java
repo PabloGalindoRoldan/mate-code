@@ -1,7 +1,7 @@
 package com.parque_industrial.dto.proyecto;
 
 public class CrearRequestDTO {
-
+    private Long id;
     private String usuarioNombre;
     private String nombre;
     private String descripcion;
@@ -342,4 +342,10 @@ public class CrearRequestDTO {
         this.cuitEmpresa = cuitEmpresa;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Long getId() {
+        return id;
+    }
 }

@@ -9,6 +9,6 @@ public class ProyectoPreliminar extends Proyecto {
 
     public void listoParaRevision() throws Exception {
         validar();
-        this.estado = PENDIENTE;
+        this.estado = REVISION;
     }
 }

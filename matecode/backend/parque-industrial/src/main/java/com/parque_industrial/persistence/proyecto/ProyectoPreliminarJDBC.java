@@ -75,7 +75,7 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
                 VALUES (
                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
                 )
                 """;
 
@@ -128,13 +128,14 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
 
                     p.getEstado() != null
                             ? p.getEstado()
-                            : "en_revision" //! Esto no se si deberia escribirse asi? en_revision?
+                            : "en_revision"
             );
 
         } catch (Exception e) {
 
             throw new DatabaseException(
-                    "Error al insertar proyecto preliminar",
+                    "Error al insertar proyecto preliminar: "
+                            + e.getMessage(),
                     e
             );
         }
@@ -162,7 +163,8 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         } catch (Exception e) {
 
             throw new DatabaseException(
-                    "Error al buscar proyecto preliminar",
+                    "Error al buscar proyecto preliminar: "
+                            + e.getMessage(),
                     e
             );
         }
@@ -282,7 +284,8 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         } catch (Exception e) {
 
             throw new DatabaseException(
-                    "Error al actualizar proyecto preliminar",
+                    "Error al actualizar proyecto preliminar: "
+                            + e.getMessage(),
                     e
             );
         }
@@ -347,41 +350,19 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
 
         CrearRequestDTO dto = new CrearRequestDTO();
 
-        dto.setUsuarioNombre(
-                rs.getString("usuario_nombre"));
-
-        dto.setCuitEmpresa(
-                rs.getString("cuit_empresa"));
-
-        dto.setNombre(
-                rs.getString("nombre"));
-
-        dto.setDescripcion(
-                rs.getString("descripcion"));
-
-        dto.setActividadPrincipal(
-                rs.getString("actividad_principal"));
-
-        dto.setActividadSecundaria(
-                rs.getString("actividad_secundaria"));
-
-        dto.setTelefono(
-                rs.getString("telefono"));
-
-        dto.setRubro(
-                rs.getString("rubro"));
-
-        dto.setDescripcionServicio(
-                rs.getString("descripcion_servicio"));
-
-        dto.setPersonaReferente(
-                rs.getString("persona_referente"));
-
-        dto.setMateriasPrimas(
-                rs.getString("materias_primas"));
-
-        dto.setDestinoProduccion(
-                rs.getString("destino_produccion"));
+        dto.setId(rs.getLong("id"));
+        dto.setUsuarioNombre(rs.getString("usuario_nombre"));
+        dto.setCuitEmpresa(rs.getString("cuit_empresa"));
+        dto.setNombre(rs.getString("nombre"));
+        dto.setDescripcion(rs.getString("descripcion"));
+        dto.setActividadPrincipal(rs.getString("actividad_principal"));
+        dto.setActividadSecundaria(rs.getString("actividad_secundaria"));
+        dto.setTelefono(rs.getString("telefono"));
+        dto.setRubro(rs.getString("rubro"));
+        dto.setDescripcionServicio(rs.getString("descripcion_servicio"));
+        dto.setPersonaReferente(rs.getString("persona_referente"));
+        dto.setMateriasPrimas(rs.getString("materias_primas"));
+        dto.setDestinoProduccion(rs.getString("destino_produccion"));
 
         dto.setSuperficieRequerida(
                 (Double) rs.getObject("superficie_requerida"));
@@ -398,11 +379,8 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         dto.setSuperficieEstacionamiento(
                 (Double) rs.getObject("superficie_estacionamiento"));
 
-        dto.setTienePlanos(
-                rs.getString("tiene_planos"));
-
-        dto.setLinkPlanos(
-                rs.getString("link_planos"));
+        dto.setTienePlanos(rs.getString("tiene_planos"));
+        dto.setLinkPlanos(rs.getString("link_planos"));
 
         dto.setEnergiaRequerida(
                 (Double) rs.getObject("energia_requerida"));
@@ -422,8 +400,7 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         dto.setGasMensual(
                 (Double) rs.getObject("gas_mensual"));
 
-        dto.setResiduosTipo(
-                rs.getString("residuos_tipo"));
+        dto.setResiduosTipo(rs.getString("residuos_tipo"));
 
         dto.setResiduosCantidad(
                 (Double) rs.getObject("residuos_cantidad"));
@@ -431,12 +408,8 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         dto.setTratamientoEfluentes(
                 rs.getString("tratamiento_efluentes"));
 
-        dto.setTipoEmpresa(
-                rs.getString("tipo_empresa"));
-
-        dto.setDireccion(
-                rs.getString("direccion"));
-
+        dto.setTipoEmpresa(rs.getString("tipo_empresa"));
+        dto.setDireccion(rs.getString("direccion"));
         dto.setPretensionTraslado(
                 rs.getString("pretension_traslado"));
 
@@ -449,14 +422,10 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         dto.setBalanzaPublica(
                 rs.getString("balanza_publica"));
 
-        dto.setComedor(
-                rs.getString("comedor"));
+        dto.setComedor(rs.getString("comedor"));
+        dto.setSumCoworking(rs.getString("sum_coworking"));
 
-        dto.setSumCoworking(
-                rs.getString("sum_coworking"));
-
-        dto.setEstado(
-                rs.getString("estado"));
+        dto.setEstado(rs.getString("estado"));
 
         return dto;
     }
@@ -477,35 +446,16 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         proyecto.setCuitEmpresa(
                 rs.getString("cuit_empresa"));
 
-        proyecto.setNombre(
-                rs.getString("nombre"));
-
-        proyecto.setDescripcion(
-                rs.getString("descripcion"));
-
-        proyecto.setActividadPrincipal(
-                rs.getString("actividad_principal"));
-
-        proyecto.setActividadSecundaria(
-                rs.getString("actividad_secundaria"));
-
-        proyecto.setTelefono(
-                rs.getString("telefono"));
-
-        proyecto.setRubro(
-                rs.getString("rubro"));
-
-        proyecto.setDescripcionServicio(
-                rs.getString("descripcion_servicio"));
-
-        proyecto.setPersonaReferente(
-                rs.getString("persona_referente"));
-
-        proyecto.setMateriasPrimas(
-                rs.getString("materias_primas"));
-
-        proyecto.setDestinoProduccion(
-                rs.getString("destino_produccion"));
+        proyecto.setNombre(rs.getString("nombre"));
+        proyecto.setDescripcion(rs.getString("descripcion"));
+        proyecto.setActividadPrincipal(rs.getString("actividad_principal"));
+        proyecto.setActividadSecundaria(rs.getString("actividad_secundaria"));
+        proyecto.setTelefono(rs.getString("telefono"));
+        proyecto.setRubro(rs.getString("rubro"));
+        proyecto.setDescripcionServicio(rs.getString("descripcion_servicio"));
+        proyecto.setPersonaReferente(rs.getString("persona_referente"));
+        proyecto.setMateriasPrimas(rs.getString("materias_primas"));
+        proyecto.setDestinoProduccion(rs.getString("destino_produccion"));
 
         proyecto.setSuperficieRequerida(
                 (Double) rs.getObject("superficie_requerida"));
@@ -522,11 +472,8 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         proyecto.setSuperficieEstacionamiento(
                 (Double) rs.getObject("superficie_estacionamiento"));
 
-        proyecto.setTienePlanos(
-                rs.getString("tiene_planos"));
-
-        proyecto.setLinkPlanos(
-                rs.getString("link_planos"));
+        proyecto.setTienePlanos(rs.getString("tiene_planos"));
+        proyecto.setLinkPlanos(rs.getString("link_planos"));
 
         proyecto.setEnergiaRequerida(
                 (Double) rs.getObject("energia_requerida"));
@@ -546,8 +493,7 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         proyecto.setGasMensual(
                 (Double) rs.getObject("gas_mensual"));
 
-        proyecto.setResiduosTipo(
-                rs.getString("residuos_tipo"));
+        proyecto.setResiduosTipo(rs.getString("residuos_tipo"));
 
         proyecto.setResiduosCantidad(
                 (Double) rs.getObject("residuos_cantidad"));
@@ -555,12 +501,8 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         proyecto.setTratamientoEfluentes(
                 rs.getString("tratamiento_efluentes"));
 
-        proyecto.setTipoEmpresa(
-                rs.getString("tipo_empresa"));
-
-        proyecto.setDireccion(
-                rs.getString("direccion"));
-
+        proyecto.setTipoEmpresa(rs.getString("tipo_empresa"));
+        proyecto.setDireccion(rs.getString("direccion"));
         proyecto.setPretensionTraslado(
                 rs.getString("pretension_traslado"));
 
@@ -573,19 +515,16 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
         proyecto.setBalanzaPublica(
                 rs.getString("balanza_publica"));
 
-        proyecto.setComedor(
-                rs.getString("comedor"));
+        proyecto.setComedor(rs.getString("comedor"));
+        proyecto.setSumCoworking(rs.getString("sum_coworking"));
 
-        proyecto.setSumCoworking(
-                rs.getString("sum_coworking"));
-
-        proyecto.setEstado(
-                rs.getString("estado"));
+        proyecto.setEstado(rs.getString("estado"));
 
         Timestamp fechaCreacion =
                 rs.getTimestamp("fecha_creacion");
 
         if (fechaCreacion != null) {
+
             proyecto.setFechaCreacion(
                     fechaCreacion.toLocalDateTime());
         }
@@ -594,6 +533,7 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
                 rs.getTimestamp("fecha_actualizacion");
 
         if (fechaActualizacion != null) {
+
             proyecto.setFechaActualizacion(
                     fechaActualizacion.toLocalDateTime());
         }

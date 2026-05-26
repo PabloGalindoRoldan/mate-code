@@ -1,4 +1,5 @@
- package com.parque_industrial.persistence.proyecto;
+
+        package com.parque_industrial.persistence.proyecto;
 
 import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
 import com.parque_industrial.entities.ProyectoDefinitivo;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +23,9 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
     }
 
     @Override
-    public List<CrearRequestDefinitivoDTO> listarDefinitivosPorCuit(String cuit) {
+    public List<CrearRequestDefinitivoDTO> listarDefinitivosPorCuit(
+            String cuit
+    ) {
 
         String sql = """
                 SELECT *
@@ -123,21 +125,19 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
 
                     estado,
                     cuit_empresa,
-                    fecha_creacion,
-                    fecha_actualizacion,
 
                     link_viabilidad_financiera,
                     link_estudio_mercado,
                     link_impacto_ambiental,
                     link_habilitacion_municipal,
-                    certificado_inhibiciones
+                    link_certificado_inhibiciones
 
                 )
                 VALUES (
                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?
                 )
                 """;
 
@@ -190,9 +190,6 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
                     proyecto.getEstado(),
                     proyecto.getCuitEmpresa(),
 
-                    Timestamp.valueOf(proyecto.getFechaCreacion()),
-                    Timestamp.valueOf(proyecto.getFechaActualizacion()),
-
                     proyecto.getLinkViabilidadFinanciera(),
                     proyecto.getLinkEstudioMercado(),
                     proyecto.getLinkImpactoAmbiental(),
@@ -202,8 +199,11 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
 
         } catch (Exception e) {
 
+            e.printStackTrace();
+
             throw new DatabaseException(
-                    "Error al guardar proyecto definitivo",
+                    "Error al guardar proyecto definitivo: "
+                            + e.getMessage(),
                     e
             );
         }
@@ -265,7 +265,7 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
                     link_estudio_mercado = ?,
                     link_impacto_ambiental = ?,
                     link_habilitacion_municipal = ?,
-                    certificado_inhibiciones = ?
+                    link_certificado_inhibiciones = ?
 
                 WHERE id = ?
                 """;
@@ -319,7 +319,9 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
                     proyecto.getEstado(),
                     proyecto.getCuitEmpresa(),
 
-                    Timestamp.valueOf(proyecto.getFechaActualizacion()),
+                    Timestamp.valueOf(
+                            proyecto.getFechaActualizacion()
+                    ),
 
                     proyecto.getLinkViabilidadFinanciera(),
                     proyecto.getLinkEstudioMercado(),
@@ -332,14 +334,15 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
 
         } catch (Exception e) {
 
+            e.printStackTrace();
+
             throw new DatabaseException(
-                    "Error al actualizar proyecto definitivo",
+                    "Error al guardar proyecto definitivo: "
+                            + e.getMessage(),
                     e
             );
         }
     }
-
-
 
     @Override
     public Optional<ProyectoDefinitivo> buscarPorId(Long id) {
@@ -362,8 +365,11 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
 
         } catch (Exception e) {
 
+            e.printStackTrace();
+
             throw new DatabaseException(
-                    "Error al buscar proyecto definitivo",
+                    "Error al guardar proyecto definitivo: "
+                            + e.getMessage(),
                     e
             );
         }
@@ -374,23 +380,14 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
             int rowNum
     ) throws SQLException {
 
-        Timestamp fechaCreacionTs =
+        Timestamp fechaCreacion =
                 rs.getTimestamp("fecha_creacion");
 
-        Timestamp fechaActualizacionTs =
+        Timestamp fechaActualizacion =
                 rs.getTimestamp("fecha_actualizacion");
 
-        LocalDateTime fechaCreacion =
-                fechaCreacionTs != null
-                        ? fechaCreacionTs.toLocalDateTime()
-                        : null;
-
-        LocalDateTime fechaActualizacion =
-                fechaActualizacionTs != null
-                        ? fechaActualizacionTs.toLocalDateTime()
-                        : null;
-
         return new CrearRequestDefinitivoDTO(
+
                 rs.getLong("id"),
                 rs.getString("usuario_nombre"),
                 rs.getString("nombre"),
@@ -403,39 +400,55 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
                 rs.getString("persona_referente"),
                 rs.getString("materias_primas"),
                 rs.getString("destino_produccion"),
+
                 (Double) rs.getObject("superficie_requerida"),
                 (Double) rs.getObject("superficie_trabajo"),
                 (Double) rs.getObject("superficie_deposito"),
                 (Double) rs.getObject("superficie_cubierta"),
                 (Double) rs.getObject("superficie_estacionamiento"),
+
                 rs.getString("tiene_planos"),
                 rs.getString("link_planos"),
+
                 (Double) rs.getObject("energia_requerida"),
                 (Integer) rs.getObject("personal_a_ocupar"),
+
                 rs.getString("tension_alimentacion"),
+
                 (Double) rs.getObject("potencia_instalada"),
                 (Double) rs.getObject("agua_mensual"),
                 (Double) rs.getObject("gas_mensual"),
+
                 rs.getString("residuos_tipo"),
                 (Double) rs.getObject("residuos_cantidad"),
+
                 rs.getString("tratamiento_efluentes"),
                 rs.getString("tipo_empresa"),
                 rs.getString("direccion"),
                 rs.getString("pretension_traslado"),
                 rs.getString("emplazamiento_actual"),
                 rs.getString("tiempo_radicacion"),
+
                 rs.getString("balanza_publica"),
                 rs.getString("comedor"),
                 rs.getString("sum_coworking"),
+
                 rs.getString("estado"),
                 rs.getString("cuit_empresa"),
-                fechaCreacion,
-                fechaActualizacion,
+
+                fechaCreacion != null
+                        ? fechaCreacion.toLocalDateTime()
+                        : null,
+
+                fechaActualizacion != null
+                        ? fechaActualizacion.toLocalDateTime()
+                        : null,
+
                 rs.getString("link_viabilidad_financiera"),
                 rs.getString("link_estudio_mercado"),
                 rs.getString("link_impacto_ambiental"),
                 rs.getString("link_habilitacion_municipal"),
-                rs.getString("certificado_inhibiciones")
+                rs.getString("link_certificado_inhibiciones")
         );
     }
 
@@ -448,17 +461,39 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
                 new ProyectoDefinitivo();
 
         proyecto.setId(rs.getLong("id"));
-        proyecto.setUsuarioNombre(rs.getString("usuario_nombre"));
-        proyecto.setNombre(rs.getString("nombre"));
-        proyecto.setDescripcion(rs.getString("descripcion"));
-        proyecto.setActividadPrincipal(rs.getString("actividad_principal"));
-        proyecto.setActividadSecundaria(rs.getString("actividad_secundaria"));
-        proyecto.setTelefono(rs.getString("telefono"));
-        proyecto.setRubro(rs.getString("rubro"));
-        proyecto.setDescripcionServicio(rs.getString("descripcion_servicio"));
-        proyecto.setPersonaReferente(rs.getString("persona_referente"));
-        proyecto.setMateriasPrimas(rs.getString("materias_primas"));
-        proyecto.setDestinoProduccion(rs.getString("destino_produccion"));
+
+        proyecto.setUsuarioNombre(
+                rs.getString("usuario_nombre"));
+
+        proyecto.setNombre(
+                rs.getString("nombre"));
+
+        proyecto.setDescripcion(
+                rs.getString("descripcion"));
+
+        proyecto.setActividadPrincipal(
+                rs.getString("actividad_principal"));
+
+        proyecto.setActividadSecundaria(
+                rs.getString("actividad_secundaria"));
+
+        proyecto.setTelefono(
+                rs.getString("telefono"));
+
+        proyecto.setRubro(
+                rs.getString("rubro"));
+
+        proyecto.setDescripcionServicio(
+                rs.getString("descripcion_servicio"));
+
+        proyecto.setPersonaReferente(
+                rs.getString("persona_referente"));
+
+        proyecto.setMateriasPrimas(
+                rs.getString("materias_primas"));
+
+        proyecto.setDestinoProduccion(
+                rs.getString("destino_produccion"));
 
         proyecto.setSuperficieRequerida(
                 (Double) rs.getObject("superficie_requerida"));
@@ -475,8 +510,11 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
         proyecto.setSuperficieEstacionamiento(
                 (Double) rs.getObject("superficie_estacionamiento"));
 
-        proyecto.setTienePlanos(rs.getString("tiene_planos"));
-        proyecto.setLinkPlanos(rs.getString("link_planos"));
+        proyecto.setTienePlanos(
+                rs.getString("tiene_planos"));
+
+        proyecto.setLinkPlanos(
+                rs.getString("link_planos"));
 
         proyecto.setEnergiaRequerida(
                 (Double) rs.getObject("energia_requerida"));
@@ -496,7 +534,8 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
         proyecto.setGasMensual(
                 (Double) rs.getObject("gas_mensual"));
 
-        proyecto.setResiduosTipo(rs.getString("residuos_tipo"));
+        proyecto.setResiduosTipo(
+                rs.getString("residuos_tipo"));
 
         proyecto.setResiduosCantidad(
                 (Double) rs.getObject("residuos_cantidad"));
@@ -504,8 +543,12 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
         proyecto.setTratamientoEfluentes(
                 rs.getString("tratamiento_efluentes"));
 
-        proyecto.setTipoEmpresa(rs.getString("tipo_empresa"));
-        proyecto.setDireccion(rs.getString("direccion"));
+        proyecto.setTipoEmpresa(
+                rs.getString("tipo_empresa"));
+
+        proyecto.setDireccion(
+                rs.getString("direccion"));
+
         proyecto.setPretensionTraslado(
                 rs.getString("pretension_traslado"));
 
@@ -518,26 +561,34 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
         proyecto.setBalanzaPublica(
                 rs.getString("balanza_publica"));
 
-        proyecto.setComedor(rs.getString("comedor"));
-        proyecto.setSumCoworking(rs.getString("sum_coworking"));
+        proyecto.setComedor(
+                rs.getString("comedor"));
 
-        proyecto.setEstado(rs.getString("estado"));
-        proyecto.setCuitEmpresa(rs.getString("cuit_empresa"));
+        proyecto.setSumCoworking(
+                rs.getString("sum_coworking"));
 
-        Timestamp fechaCreacionTs =
+        proyecto.setEstado(
+                rs.getString("estado"));
+
+        proyecto.setCuitEmpresa(
+                rs.getString("cuit_empresa"));
+
+        Timestamp fechaCreacion =
                 rs.getTimestamp("fecha_creacion");
 
-        if (fechaCreacionTs != null) {
+        if (fechaCreacion != null) {
+
             proyecto.setFechaCreacion(
-                    fechaCreacionTs.toLocalDateTime());
+                    fechaCreacion.toLocalDateTime());
         }
 
-        Timestamp fechaActualizacionTs =
+        Timestamp fechaActualizacion =
                 rs.getTimestamp("fecha_actualizacion");
 
-        if (fechaActualizacionTs != null) {
+        if (fechaActualizacion != null) {
+
             proyecto.setFechaActualizacion(
-                    fechaActualizacionTs.toLocalDateTime());
+                    fechaActualizacion.toLocalDateTime());
         }
 
         proyecto.setLinkViabilidadFinanciera(
@@ -553,9 +604,8 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
                 rs.getString("link_habilitacion_municipal"));
 
         proyecto.setLinkCertificadoInhibiciones(
-                rs.getString("certificado_inhibiciones"));
+                rs.getString("link_certificado_inhibiciones"));
 
         return proyecto;
     }
 }
-
