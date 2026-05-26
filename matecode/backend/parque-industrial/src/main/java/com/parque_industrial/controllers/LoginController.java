@@ -6,6 +6,7 @@ import com.parque_industrial.dto.auth.LoginResponse;
 import com.parque_industrial.dto.auth.RegisterRequest;
 import com.parque_industrial.services.AuthService;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,19 +43,19 @@ public class LoginController {
     // }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerRepresentanteEmpresa(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> registerRepresentanteEmpresa(@Valid @RequestBody RegisterRequest request) {
         authService.registerRepresenteEmpresa(request);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito");
     }
 
     @PostMapping("/registerAdminParque")
-    public ResponseEntity<String> registerAdministradorParque(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> registerAdministradorParque(@Valid @RequestBody RegisterRequest request) {
         authService.registerAdministradorParque(request);
         return ResponseEntity.status(HttpStatus.CREATED).body("Administrador registrado con éxito");
     }
 
     @PostMapping("/registerExtraRepresentanteEmpresa")
-    public ResponseEntity<String> registerUsuarioEmpresaExistente(@RequestBody RegisterRequest request) { // se le puede
+    public ResponseEntity<String> registerUsuarioEmpresaExistente(@Valid @RequestBody RegisterRequest request) { // se le puede
                                                                                                           // mandar los
                                                                                                           // daots del
                                                                                                           // registro
@@ -68,8 +69,8 @@ public class LoginController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(
-            @RequestBody ChangePasswordRequest request,
+    public ResponseEntity<String> changePassword( @Valid
+                                                      @RequestBody ChangePasswordRequest request,
             Authentication authentication) {
 
         authService.changePassword(

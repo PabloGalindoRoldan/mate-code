@@ -21,7 +21,11 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
     @Override
     public void guardar(Empresa empresa) {
         String sql = " INSERT INTO empresas (cuit, razon_social, es_radicada) VALUES (?, ?, ?) ";
-
+        String sql5 = "SELECT COUNT(1) FROM empresas WHERE cuit = ?";
+        Integer count = jdbcTemplate.queryForObject(sql5, Integer.class, empresa.getIdentificacion());
+        if (count > 0) {
+            throw new IllegalArgumentException("La empresa ya se registró");
+        }
         jdbcTemplate.update(sql,
                 empresa.getIdentificacion(),
                 empresa.getRazonSocial(),

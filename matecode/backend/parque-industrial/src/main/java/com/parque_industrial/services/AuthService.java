@@ -10,6 +10,7 @@ import com.parque_industrial.entities.Rol;
 import com.parque_industrial.entities.Usuario;
 import com.parque_industrial.persistence.empresa.EmpresaDAO;
 import com.parque_industrial.persistence.usuario.UsuarioDAO;
+import org.springframework.security.crypto.password.PasswordEncoder; // <-- Importante
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,34 +20,27 @@ public class AuthService {
     private final EmpresaDAO empresaDAO;
     private final UsuarioDAO usuarioDAO;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UsuarioDAO usuarioDAO, EmpresaDAO empresaDAO, JwtUtil jwtUtil) {
+    public AuthService(UsuarioDAO usuarioDAO, EmpresaDAO empresaDAO, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.usuarioDAO = usuarioDAO;
         this.empresaDAO = empresaDAO;
         this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public LoginResponse login(LoginRequest request) {
-        // 1. Fetch user data
         LoginResponse userDetails;
         try {
             userDetails = usuarioDAO.buscarLoginPorNombreUsuario(request.nombreUsuario());
         } catch (Exception e) {
             throw new IllegalArgumentException("Usuario o contraseña incorrectos");
         }
-
-        // 2. Validate Password
-        if (!userDetails.contrasena().equals(request.password())) {
+        if (!passwordEncoder.matches(request.password(), userDetails.contrasena())) {
             throw new IllegalArgumentException("Usuario o contraseña incorrectos");
         }
-
-        // 3. El identificador del token vuelve a ser SIEMPRE el nombre de usuario único
         String subjectIdentifier = userDetails.nombreUsuario();
-
-        // 4. Generate the token
         String token = jwtUtil.generateToken(subjectIdentifier, userDetails.rol());
-
-        // 5. Return the complete package to the controller
         return new LoginResponse(
                 userDetails.nombreUsuario(),
                 userDetails.nombre(),
@@ -61,13 +55,13 @@ public class AuthService {
 
     @Transactional
     public void registerRepresenteEmpresa(RegisterRequest request) {
-        // Validar que las contraseñas coincidan antes de hacer cualquier cosa
         if (!request.password().equals(request.confirmarPassword())) {
             throw new IllegalArgumentException("Las contraseñas no coinciden");
         }
-        Empresa empresa = new Empresa(request.cuitEmpresa(), request.razonSocialEmpresa(), false);
-        empresaDAO.guardar(empresa);
 
+        Empresa empresa = new Empresa(request.cuitEmpresa(), request.razonSocialEmpresa(), true);
+        empresaDAO.guardar(empresa);
+        String passwordHasheada = passwordEncoder.encode(request.password());
         Usuario usuario = new Usuario(
                 request.nombre(),
                 request.apellido(),
@@ -75,12 +69,13 @@ public class AuthService {
                 request.nombreUsuario(),
                 request.cuitUsuario(),
                 Rol.REPRESENTANTE_EMPRESA,
-                request.password(),
+                passwordHasheada,
                 empresa);
         usuarioDAO.guardar(usuario);
     }
 
     public void registerAdministradorParque(RegisterRequest request) {
+        String passwordHasheada = passwordEncoder.encode(request.password());
         Usuario usuario = new Usuario(
                 request.nombre(),
                 request.apellido(),
@@ -88,17 +83,17 @@ public class AuthService {
                 request.nombreUsuario(),
                 request.cuitUsuario(),
                 Rol.ADMINISTRADOR_PARQUE,
-                request.password());
+                passwordHasheada);
         usuarioDAO.guardar(usuario);
     }
 
     public void registerUsuarioEmpresaExistente(RegisterRequest request) {
-
         if (!empresaDAO.existeEmpresa(request.cuitEmpresa())) {
             throw new IllegalArgumentException("La empresa con CUIT " + request.cuitEmpresa() + " no existe");
         }
-        Empresa empresa = new Empresa(request.cuitEmpresa(), "no es importante", false); // Solo necesitamos el CUIT
-                                                                                         // para asociar al usuario
+
+        Empresa empresa = new Empresa(request.cuitEmpresa(), "no es importante", false);
+        String passwordHasheada = passwordEncoder.encode(request.password());
         Usuario usuario = new Usuario(
                 request.nombre(),
                 request.apellido(),
@@ -106,33 +101,25 @@ public class AuthService {
                 request.nombreUsuario(),
                 request.cuitUsuario(),
                 Rol.REPRESENTANTE_EMPRESA,
-                request.password(),
+                passwordHasheada,
                 empresa);
         usuarioDAO.guardar(usuario);
     }
-
     @Transactional
-    public void changePassword(
-            String username,
-            ChangePasswordRequest request) {
-
+    public void changePassword(String username, ChangePasswordRequest request) {
         if (!request.newPassword().equals(request.confirmPassword())) {
-            throw new IllegalArgumentException(
-                    "Las nuevas contraseñas no coinciden");
+            throw new IllegalArgumentException("Las nuevas contraseñas no coinciden");
         }
-
         Usuario usuario = usuarioDAO
                 .buscarPorNombreUsuario(username)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-
-        if (!usuario.getContraseña().equals(request.currentPassword())) {
-            throw new IllegalArgumentException(
-                    "La contraseña actual es incorrecta");
+        if (!passwordEncoder.matches(request.currentPassword(), usuario.getContraseña())) {
+            throw new IllegalArgumentException("La contraseña actual es incorrecta");
         }
+        String nuevaPasswordHasheada = passwordEncoder.encode(request.newPassword());
 
         usuarioDAO.actualizarPassword(
                 username,
-                request.newPassword());
+                nuevaPasswordHasheada);
     }
-
 }
