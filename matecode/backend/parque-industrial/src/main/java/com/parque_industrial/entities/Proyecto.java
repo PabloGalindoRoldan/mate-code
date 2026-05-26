@@ -81,41 +81,31 @@ public abstract class Proyecto {
 
     public void validar() throws Exception {
 
-        if (cuitEmpresa == null || cuitEmpresa.isBlank()) {
-            throw new Exception("El CUIT no puede estar vacío");
-        }
+        validarCampo(
+                cuitEmpresa,
+                "El CUIT no puede estar vacío");
 
         validarCuit(cuitEmpresa);
 
-        if (actividadPrincipal == null
-                || actividadPrincipal.isBlank()) {
-            throw new Exception(
-                    "La actividad principal no puede estar vacía");
-        }
+        validarCampo(
+                actividadPrincipal,
+                "La actividad principal no puede estar vacía");
 
-        if (personaReferente == null
-                || personaReferente.isBlank()) {
-            throw new Exception(
-                    "La persona referente no puede estar vacía");
-        }
+        validarCampo(
+                personaReferente,
+                "La persona referente no puede estar vacía");
 
-        if (superficieRequerida == null
-                || superficieRequerida <= 0) {
-            throw new Exception(
-                    "La superficie requerida debe ser mayor a cero");
-        }
+        validarNumero(
+                superficieRequerida,
+                "La superficie requerida debe ser mayor a cero");
 
-        if (energiaRequerida == null
-                || energiaRequerida <= 0) {
-            throw new Exception(
-                    "La energía requerida debe ser mayor a cero");
-        }
+        validarNumero(
+                energiaRequerida,
+                "La energía requerida debe ser mayor a cero");
 
-        if (personalAOcupar == null
-                || personalAOcupar <= 0) {
-            throw new Exception(
-                    "El personal a ocupar debe ser mayor a cero");
-        }
+        validarNumero(
+                personalAOcupar,
+                "El personal a ocupar debe ser mayor a cero");
     }
 
     private void validarCuit(String cuit) {
@@ -127,6 +117,78 @@ public abstract class Proyecto {
                     "Formato de CUIT inválido. Debe ser XX-XXXXXXXX-X");
         }
     }
+
+    protected void validarCampo(
+            String valor,
+            String mensaje)
+            throws Exception {
+
+        if (valor == null || valor.isBlank()) {
+            throw new Exception(mensaje);
+        }
+    }
+
+    protected void validarNumero(
+            Double valor,
+            String mensaje)
+            throws Exception {
+
+        if (valor == null || valor <= 0) {
+            throw new Exception(mensaje);
+        }
+    }
+
+    protected void validarNumero(
+            Integer valor,
+            String mensaje)
+            throws Exception {
+
+        if (valor == null || valor <= 0) {
+            throw new Exception(mensaje);
+        }
+    }
+
+    protected void validarBooleanTexto(
+            String valor,
+            String nombreCampo)
+            throws Exception {
+
+        if (valor == null || valor.isBlank()) {
+            throw new Exception(
+                    "El campo " + nombreCampo +
+                            " no puede estar vacío");
+        }
+
+        if (!valor.equalsIgnoreCase("si")
+                && !valor.equalsIgnoreCase("no")) {
+
+            throw new Exception(
+                    "El campo " + nombreCampo +
+                            " debe ser 'si' o 'no'");
+        }
+    }
+
+    protected void validarUrl(
+            String url,
+            String nombreCampo)
+            throws Exception {
+
+        String regex =
+                "^(https?:\\/\\/)?([\\w.-]+)\\.([a-z]{2,})([\\/\\w .-]*)*\\/?$";
+
+        if (!url.matches(regex)) {
+            throw new Exception("El link de " + nombreCampo + " no es válido.");
+        }
+    }
+
+//        protected void validarUrl(String url, String documento) throws Exception {
+//
+//        String regexUrl = "^(https?:\\/\\/).+$";
+//
+//        if (!url.matches(regexUrl)) {
+//            throw new Exception("El link de " + documento + " no tiene un formato válido.");
+//        }
+//    }
 
     public String getCuitEmpresaAsociada() {
         return cuitEmpresa;
