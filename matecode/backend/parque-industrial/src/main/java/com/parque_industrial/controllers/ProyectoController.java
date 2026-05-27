@@ -155,44 +155,101 @@ public class ProyectoController {
      @PutMapping("/actualizarPreliminar")
      public ResponseEntity<String> actualizadoPreliminar(@RequestBody CrearRequestDTO request) {
          try {
-             // Llamamos al servicio para procesar la creación
              gestorProyectos.actualizarPreliminar(request);
 
              return ResponseEntity.ok("Proyecto preliminar actualizado exitosamente.");
          } catch (Exception e) {
-             return ResponseEntity.status(500).body("Error al actualizado el proyecto: " + e.getMessage());
+             return ResponseEntity.status(500).body("Error al actualizar el proyecto: " + e.getMessage());
          }
      }
 
-
-    @PostMapping("/aprobarDefinitivo")
-    public ResponseEntity<String> aprobarProyectoDefinitivo(@RequestBody Integer proyectoId) {
+    @PutMapping("/cambiarEstadoDefinitivo")
+    public ResponseEntity<String> cambiarEstadoDefinitivo(
+            @RequestBody CambiarEstadoDTO request
+    ) {
         try {
-            gestorProyectos.aprobarProyectoDefinitivo(proyectoId);
-            return ResponseEntity.ok("Proyecto definitivo rechazado exitosamente.");
+
+            switch (request.getEstado().toUpperCase()) {
+
+                case "APROBADO" -> gestorProyectos
+                        .aprobarProyectoDefinitivo(
+                                request.getProyectoId()
+                        );
+
+                case "RECHAZADO" -> gestorProyectos
+                        .rechazarProyectoDefinitivo(
+                                request.getProyectoId()
+                        );
+
+                case "RECTIFICAR" -> gestorProyectos
+                        .rectificarProyectoDefinitivo(
+                                request.getProyectoId()
+                        );
+
+                case "EN_REVISION" -> gestorProyectos
+                        .ponerEnRevisionProyectoDefinitivo(
+                                request.getProyectoId()
+                        );
+
+                default -> {
+                    return ResponseEntity.badRequest().body(
+                            "Estado inválido"
+                    );
+                }
+            }
+
+            return ResponseEntity.ok(
+                    "Estado actualizado correctamente"
+            );
+
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al rechazar el proyecto definitivo: " + e.getMessage());
+
+            return ResponseEntity.status(500).body(
+                    "Error al cambiar el estado: "
+                            + e.getMessage()
+            );
+        }
+    }
+//    @PostMapping("/aprobarDefinitivo")
+//    public ResponseEntity<String> aprobarProyectoDefinitivo(@RequestBody Integer proyectoId) {
+//        try {
+//            gestorProyectos.aprobarProyectoDefinitivo(proyectoId);
+//            return ResponseEntity.ok("Proyecto definitivo rechazado exitosamente.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error al rechazar el proyecto definitivo: " + e.getMessage());
+//        }
+//    }
+//
+//    @PostMapping("/rectificarDefinitivo")
+//    public ResponseEntity<String> rectificarDefinitivo(@RequestBody Integer proyectoId) {
+//        try {
+//            gestorProyectos.rectificarProyectoDefinitivo(proyectoId);
+//            return ResponseEntity.ok("Proyecto definitivo rectificado exitosamente.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error al rectificar el proyecto definitivo: " + e.getMessage());
+//        }
+//    }
+//
+//    @PostMapping("/rechazarDefinitivo")
+//    public ResponseEntity<String> rechazarDefinitivo(@RequestBody Integer proyectoId) {
+//        try {
+//            gestorProyectos.rechazarProyectoDefinitivo(proyectoId);
+//            return ResponseEntity.ok("Proyecto definitivo rechazado exitosamente.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error al rechazar el proyecto definitivo: " + e.getMessage());
+//        }
+//    }
+
+    @PutMapping("/actualizarDefinitivo")
+    public ResponseEntity<String> actualizadoDefinitivo(@RequestBody CrearRequestDefinitivoDTO request) {
+        try {
+            gestorProyectos.actualizarDefinitivo(request);
+
+            return ResponseEntity.ok("Proyecto definitivo actualizado exitosamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al actualizar el proyecto: " + e.getMessage());
         }
     }
 
-    @PostMapping("/rectificarDefinitivo")
-    public ResponseEntity<String> rectificarDefinitivo(@RequestBody Integer proyectoId) {
-        try {
-            gestorProyectos.rectificarProyectoDefinitivo(proyectoId);
-            return ResponseEntity.ok("Proyecto definitivo rectificado exitosamente.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al rectificar el proyecto definitivo: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/rechazarDefinitivo")
-    public ResponseEntity<String> rechazarDefinitivo(@RequestBody Integer proyectoId) {
-        try {
-            gestorProyectos.rechazarProyectoDefinitivo(proyectoId);
-            return ResponseEntity.ok("Proyecto definitivo rechazado exitosamente.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al rechazar el proyecto definitivo: " + e.getMessage());
-        }
-    }
 
 }
