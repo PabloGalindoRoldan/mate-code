@@ -25,10 +25,22 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
 
     @Override
     public void guardar(Usuario usuario) {
-        String sql = """
-                INSERT INTO usuarios (nombre, apellido, email, nombre_usuario, contrasena, cuit, rol, cuit_empresa)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                """;
+        String sql = "INSERT INTO usuarios (nombre, apellido, email, nombre_usuario, contrasena, cuit, rol, cuit_empresa)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql2 = "SELECT EXISTS (SELECT 1 FROM usuarios WHERE nombre_usuario = ?)";
+        if (jdbcTemplate.queryForObject(sql2, Boolean.class, usuario.getNombreUsuario())) {
+            throw new IllegalArgumentException("El nombre de usuario ya se encuentra en uso");
+        }
+        String sql3 = "SELECT EXISTS (SELECT 1 FROM usuarios WHERE email = ?)";
+        if (jdbcTemplate.queryForObject(sql3, Boolean.class, usuario.getEmail())) {
+            throw new IllegalArgumentException("El email ya se encuentra en uso");
+        }
+        String sql4 = "SELECT EXISTS (SELECT 1 FROM usuarios WHERE cuit = ?)";
+        if (jdbcTemplate.queryForObject(sql4, Boolean.class, usuario.getCuit())) {
+            throw new IllegalArgumentException("El CUIT ya se encuentra en uso");
+        }
+
+
+
 
         jdbcTemplate.update(sql,
                 usuario.getNombre(),
@@ -197,4 +209,5 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 nuevaPassword,
                 username);
     }
+
 }
