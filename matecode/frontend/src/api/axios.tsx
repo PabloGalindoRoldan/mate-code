@@ -176,5 +176,20 @@ export const proyectosApi = {
     }) => {
         const response = await API.post('/api/proyectos/crear', data);
         return response.data;
-    }
+    },
+
+    proyectosPorCuit: async (cuit: string) => {
+        const response = await API.post(`/api/proyectos/porCuit`, { cuit: cuit });
+        return response.data;
+    },
+
+    rectificarPreliminar: async (proyectoId: number) => {
+        const response = await API.post(
+            '/api/proyectos/rectificarPreliminar',
+            proyectoId
+        );
+
+        return response.data;
+    },
+
 };
