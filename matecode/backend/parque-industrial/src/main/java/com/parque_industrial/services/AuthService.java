@@ -59,7 +59,7 @@ public class AuthService {
             throw new IllegalArgumentException("Las contraseñas no coinciden");
         }
 
-        Empresa empresa = new Empresa(request.cuitEmpresa(), request.razonSocialEmpresa(), true);
+        Empresa empresa = new Empresa(request.cuitEmpresa(), request.razonSocialEmpresa(), false);
         empresaDAO.guardar(empresa);
         String passwordHasheada = passwordEncoder.encode(request.password());
         Usuario usuario = new Usuario(

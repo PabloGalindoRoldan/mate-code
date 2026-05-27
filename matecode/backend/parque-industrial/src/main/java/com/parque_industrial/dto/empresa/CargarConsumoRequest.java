@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.Year;
+import java.time.YearMonth;
 
 public class CargarConsumoRequest {
 
@@ -36,7 +37,15 @@ public class CargarConsumoRequest {
     // Constructor vacío para Jackson
     public CargarConsumoRequest() {
     }
-
+    @AssertTrue(message = "No se pueden registrar consumos para períodos futuros")
+    public boolean isNoEsFuturo() {
+        if (this.mes < 1 || this.mes > 12) {
+            return true;
+        }
+        YearMonth periodoIngresado = YearMonth.of(this.ano, this.mes);
+        YearMonth periodoActual = YearMonth.now();
+        return !periodoIngresado.isAfter(periodoActual);
+    }
     @AssertTrue(message = "El año debe ser el actual o hasta dos años anteriores")
     public boolean isAnoValido() {
         int anoActual = Year.now().getValue();

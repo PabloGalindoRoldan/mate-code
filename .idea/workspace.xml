@@ -4,28 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="inverti las dependencias y corregi la estructura">
-      <change afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/controllers/CrearAdminParque.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_12_2026_3_56_PM_[Changes]/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_12_2026_3_56_PM_[Changes]/1.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_12_2026_3_56_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_12_2026_3_58_PM_[Changes]/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_12_2026_3_58_PM_[Changes]/1.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_12_2026_3_58_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_12_2026_4_49_PM_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_13_2026_6_53_PM_[Changes]1/shelved.patch" beforeDir="false" />
+    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="si">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/auth/ChangePasswordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/auth/ChangePasswordRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/auth/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/auth/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/UsuarioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/UsuarioDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/UsuarioDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/usuario/UsuarioDAOJDBC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/CargarConsumoRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/CargarConsumoRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Consumo.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Consumo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/consumos/ConsumoDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/consumos/ConsumoDAOJDBC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorConsumosImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorConsumosImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/controllers/CrearAdminParque.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/features/empresa-dashboard/CargarConsumoPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/features/empresa-dashboard/CargarConsumoPanel.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +86,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -108,42 +98,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.CrearAdminParque.crear.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestorInmobiliarioTest.testCrearLote.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestorInmobiliarioTest.testReservarLote.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestorInmobiliarioTest.testReservarLoteReservado.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestorInmobiliarioTest.testReservarLoteVendido.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestorInmobiliarioTest.testVenderLote.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestorInmobiliarioTest.testVenderLoteVendido.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testCancelarReservaLoteDisponibleLanzaExcepcion.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testCancelarReservaLoteReservado.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testCancelarReservaLoteVendidoLanzaExcepcion.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testMontoVentaNegativoLanzaExcepcion.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testNoSePuedeReservarLoteVendido.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testReservarLoteDisponible.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testReservarLoteReservado.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testSuperficeNegativa.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testVenderLoteDisponible.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testVenderLoteReservado.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testVenderLoteVendido.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ParqueIndustrialApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;nro107HashearContraseña&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/augus_r4ret8/IdeaProjects/mate-code&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.25136238&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.CrearAdminParque.crear.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testCrearLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testReservarLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testReservarLoteReservado.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testReservarLoteVendido.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testVenderLote.executor": "Run",
+    "JUnit.GestorInmobiliarioTest.testVenderLoteVendido.executor": "Run",
+    "JUnit.LoteTest.executor": "Run",
+    "JUnit.LoteTest.testCancelarReservaLoteDisponibleLanzaExcepcion.executor": "Run",
+    "JUnit.LoteTest.testCancelarReservaLoteReservado.executor": "Run",
+    "JUnit.LoteTest.testCancelarReservaLoteVendidoLanzaExcepcion.executor": "Run",
+    "JUnit.LoteTest.testMontoVentaNegativoLanzaExcepcion.executor": "Run",
+    "JUnit.LoteTest.testNoSePuedeReservarLoteVendido.executor": "Run",
+    "JUnit.LoteTest.testReservarLoteDisponible.executor": "Run",
+    "JUnit.LoteTest.testReservarLoteReservado.executor": "Run",
+    "JUnit.LoteTest.testSuperficeNegativa.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteDisponible.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteReservado.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteVendido.executor": "Run",
+    "JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ParqueIndustrialApplication.executor": "Run",
+    "git-widget-placeholder": "nro107HashearContraseña",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/augus_r4ret8/IdeaProjects/mate-code",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.25136238",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial" />
@@ -290,14 +281,53 @@
       <option name="project" value="LOCAL" />
       <updated>1778692974258</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="si">
+      <option name="closed" value="true" />
+      <created>1779828980765</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1779828980765</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="loteTest listo, se testeo la clase lote" />
     <MESSAGE value="ns" />
     <MESSAGE value="inverti las dependencias y corregi la estructura" />
-    <option name="LAST_COMMIT_MESSAGE" value="inverti las dependencias y corregi la estructura" />
+    <MESSAGE value="si" />
+    <option name="LAST_COMMIT_MESSAGE" value="si" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/AuthService.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java</url>
+          <line>21</line>
+          <properties class="com.parque_industrial.persistence.empresa.EmpresaDAOJDBC" method="guardar">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
