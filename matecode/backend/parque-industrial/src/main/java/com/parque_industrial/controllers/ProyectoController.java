@@ -2,6 +2,7 @@ package com.parque_industrial.controllers;
 
 import com.parque_industrial.dto.proyecto.CrearRequestDTO;
 import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
+import com.parque_industrial.dto.proyecto.CuitRequest;
 import com.parque_industrial.dto.proyecto.ProyectosDTO;
 import com.parque_industrial.services.GestorProyectos;
 import org.springframework.http.ResponseEntity;
@@ -56,16 +57,26 @@ public class ProyectoController {
         }
     }
 
+    // @PostMapping("/porCuit")
+    // public ResponseEntity<ProyectosDTO> listarProyectosPorCuit(@RequestBody
+    // String cuit) {
+    // try {
+    // ProyectosDTO proyectos = gestorProyectos.listarProyectosPorCuit(cuit);
+    // return ResponseEntity.ok(proyectos);
+    // } catch (Exception e) {
+    // return ResponseEntity.status(500).body(null);
+    // }
+    // }
+
     @PostMapping("/porCuit")
-    public ResponseEntity<ProyectosDTO> listarProyectosPorCuit(@RequestBody String cuit) {
+    public ResponseEntity<ProyectosDTO> listarProyectosPorCuit(@RequestBody CuitRequest request) {
         try {
-            ProyectosDTO proyectos = gestorProyectos.listarProyectosPorCuit(cuit);
+            ProyectosDTO proyectos = gestorProyectos.listarProyectosPorCuit(request.getCuit());
             return ResponseEntity.ok(proyectos);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
     }
-
 
     @PostMapping("/aprobarPreliminar")
     public ResponseEntity<String> aprobarProyectoPreliminar(@RequestBody Integer proyectoId) {
@@ -97,10 +108,13 @@ public class ProyectoController {
         }
     }
 
-//    @PostMapping("/ModificarPreliminar") // capaz no deberia devolver CrearRequestDTO, este seria aquel q usaria la empresa para modificar la rectificacion q le hayanhecho
-//    public ResponseEntity<CrearRequestDTO> modificarPreliminar(@RequestBody CrearRequestDTO request) {
-//
-//    }
+    // @PostMapping("/ModificarPreliminar") // capaz no deberia devolver
+    // CrearRequestDTO, este seria aquel q usaria la empresa para modificar la
+    // rectificacion q le hayanhecho
+    // public ResponseEntity<CrearRequestDTO> modificarPreliminar(@RequestBody
+    // CrearRequestDTO request) {
+    //
+    // }
     @PostMapping("/aprobarDefinitivo")
     public ResponseEntity<String> aprobarProyectoDefinitivo(@RequestBody Integer proyectoId) {
         try {
@@ -124,11 +138,11 @@ public class ProyectoController {
     @PostMapping("/rechazarDefinitivo")
     public ResponseEntity<String> rechazarDefinitivo(@RequestBody Integer proyectoId) {
         try {
-        gestorProyectos.rechazarProyectoDefinitivo(proyectoId);
-        return ResponseEntity.ok("Proyecto definitivo rechazado exitosamente.");
-    } catch (Exception e) {
-        return ResponseEntity.status(500).body("Error al rechazar el proyecto definitivo: " + e.getMessage());
-    }
+            gestorProyectos.rechazarProyectoDefinitivo(proyectoId);
+            return ResponseEntity.ok("Proyecto definitivo rechazado exitosamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al rechazar el proyecto definitivo: " + e.getMessage());
+        }
     }
 
 }
