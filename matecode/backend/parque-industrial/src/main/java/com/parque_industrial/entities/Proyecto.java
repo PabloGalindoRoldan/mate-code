@@ -7,7 +7,7 @@ public abstract class Proyecto {
     public static final String APROBADO = "aprobado";
     public static final String REVISION = "en_revision";
     public static final String RECHAZADO = "rechazado";
-    public static final String RECTIFICADO = "rectificado";
+    public static final String RECTIFICADO = "rectificar";
     public static final String BORRADOR = "borrador";
 
     protected Long id;
