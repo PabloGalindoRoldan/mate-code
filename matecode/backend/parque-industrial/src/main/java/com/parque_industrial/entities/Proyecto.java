@@ -7,7 +7,7 @@ public abstract class Proyecto {
     public static final String APROBADO = "aprobado";
     public static final String REVISION = "en_revision";
     public static final String RECHAZADO = "rechazado";
-    public static final String RECTIFICADO = "rectificado";
+    public static final String RECTIFICADO = "rectificar";
     public static final String BORRADOR = "borrador";
 
     protected Long id;
@@ -55,10 +55,14 @@ public abstract class Proyecto {
         this.estado = BORRADOR;
     }
 
+    public void ponerEnRevision() {
+        this.estado = REVISION;
+    }
+
     public void aprobar() {
         if (!REVISION.equals(estado)) {
             throw new IllegalStateException(
-                    "Solo se puede aprobar un proyecto pendiente");
+                    "Solo se puede aprobar un proyecto en revision");
         }
         this.estado = APROBADO;
     }
@@ -66,7 +70,7 @@ public abstract class Proyecto {
     public void rechazar() {
         if (!REVISION.equals(estado)) {
             throw new IllegalStateException(
-                    "Solo se puede rechazar un proyecto pendiente");
+                    "Solo se puede rechazar un proyecto en revision");
         }
         this.estado = RECHAZADO;
     }
@@ -74,7 +78,7 @@ public abstract class Proyecto {
     public void rectificar() {
         if (!REVISION.equals(estado)) {
             throw new IllegalStateException(
-                    "Solo se puede rectificar un proyecto pendiente");
+                    "Solo se puede rectificar un proyecto en revision");
         }
         this.estado = RECTIFICADO;
     }
@@ -519,4 +523,6 @@ public abstract class Proyecto {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 }

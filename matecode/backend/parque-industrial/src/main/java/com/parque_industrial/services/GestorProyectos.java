@@ -26,4 +26,8 @@ public interface GestorProyectos {
     void rectificarProyectoDefinitivo(Integer proyectoId);
 
     void aprobarProyectoDefinitivo(Integer proyectoId);
+
+    void ponerEnRevisionProyectoPreliminar(Integer proyectoId);
+
+    void actualizarPreliminar(CrearRequestDTO request);
 }
