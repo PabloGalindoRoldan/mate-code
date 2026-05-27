@@ -302,5 +302,62 @@ public class GestorProyectosImpl implements GestorProyectos {
         proyectoDefinitivoDAO.actualizar(proyecto);
     }
 
+    @Override
+    public void ponerEnRevisionProyectoPreliminar(Integer proyectoId) {
+        ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                .buscarPorId(proyectoId.longValue())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+        proyecto.ponerEnRevision();
+
+        proyectoPreliminarDAO.actualizar(proyecto);
+    }
+
+    @Override
+    public void actualizarPreliminar(CrearRequestDTO dto) {
+        ProyectoPreliminar entidad = new ProyectoPreliminar();
+        entidad.setUsuarioNombre(dto.getUsuarioNombre());
+        entidad.setCuitEmpresa(dto.getCuitEmpresa());
+        entidad.setNombre(dto.getNombre());
+        entidad.setDescripcion(dto.getDescripcion());
+        entidad.setActividadPrincipal(dto.getActividadPrincipal());
+        entidad.setActividadSecundaria(dto.getActividadSecundaria());
+        entidad.setTelefono(dto.getTelefono());
+        entidad.setRubro(dto.getRubro());
+        entidad.setDescripcionServicio(dto.getDescripcionServicio());
+        entidad.setPersonaReferente(dto.getPersonaReferente());
+        entidad.setMateriasPrimas(dto.getMateriasPrimas());
+        entidad.setDestinoProduccion(dto.getDestinoProduccion());
+        entidad.setSuperficieRequerida(dto.getSuperficieRequerida());
+        entidad.setSuperficieTrabajo(dto.getSuperficieTrabajo());
+        entidad.setSuperficieDeposito(dto.getSuperficieDeposito());
+        entidad.setSuperficieCubierta(dto.getSuperficieCubierta());
+        entidad.setSuperficieEstacionamiento(dto.getSuperficieEstacionamiento());
+        entidad.setTienePlanos(dto.getTienePlanos());
+        entidad.setLinkPlanos(dto.getLinkPlanos());
+        entidad.setEnergiaRequerida(dto.getEnergiaRequerida());
+        entidad.setPersonalAOcupar(dto.getPersonalAOcupar());
+        entidad.setTensionAlimentacion(dto.getTensionAlimentacion());
+        entidad.setPotenciaInstalada(dto.getPotenciaInstalada());
+        entidad.setAguaMensual(dto.getAguaMensual());
+        entidad.setGasMensual(dto.getGasMensual());
+        entidad.setResiduosTipo(dto.getResiduosTipo());
+        entidad.setResiduosCantidad(dto.getResiduosCantidad());
+        entidad.setTratamientoEfluentes(dto.getTratamientoEfluentes());
+        entidad.setTipoEmpresa(dto.getTipoEmpresa());
+        entidad.setDireccion(dto.getDireccion());
+        entidad.setPretensionTraslado(dto.getPretensionTraslado());
+        entidad.setEmplazamientoActual(dto.getEmplazamientoActual());
+        entidad.setTiempoRadicacion(dto.getTiempoRadicacion());
+        entidad.setBalanzaPublica(dto.getBalanzaPublica());
+        entidad.setComedor(dto.getComedor());
+        entidad.setSumCoworking(dto.getSumCoworking());
+
+        String estado = (dto.getEstado() != null && !dto.getEstado().isEmpty()) ? dto.getEstado() : "en_revision";
+        entidad.setEstado(estado);
+        proyectoPreliminarDAO.actualizar(entidad);
+    }
+
 
 }

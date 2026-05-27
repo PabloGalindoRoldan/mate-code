@@ -1,9 +1,6 @@
 package com.parque_industrial.controllers;
 
-import com.parque_industrial.dto.proyecto.CrearRequestDTO;
-import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
-import com.parque_industrial.dto.proyecto.CuitRequest;
-import com.parque_industrial.dto.proyecto.ProyectosDTO;
+import com.parque_industrial.dto.proyecto.*;
 import com.parque_industrial.services.GestorProyectos;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,43 +75,96 @@ public class ProyectoController {
         }
     }
 
-    @PostMapping("/aprobarPreliminar")
-    public ResponseEntity<String> aprobarProyectoPreliminar(@RequestBody Integer proyectoId) {
+    @PutMapping("/cambiarEstadoPreliminar")
+    public ResponseEntity<String> cambiarEstadoPreliminar(
+            @RequestBody CambiarEstadoDTO request
+    ) {
         try {
-            gestorProyectos.aprobarProyectoPreliminar(proyectoId);
-            return ResponseEntity.ok("Proyecto preliminar aprobado exitosamente.");
+
+            switch (request.getEstado().toUpperCase()) {
+
+                case "APROBADO" -> gestorProyectos
+                        .aprobarProyectoPreliminar(
+                                request.getProyectoId()
+                        );
+
+                case "RECHAZADO" -> gestorProyectos
+                        .rechazarProyectoPreliminar(
+                                request.getProyectoId()
+                        );
+
+                case "RECTIFICAR" -> gestorProyectos
+                        .rectificarProyectoPreliminar(
+                                request.getProyectoId()
+                        );
+
+                case "EN_REVISION" -> gestorProyectos
+                        .ponerEnRevisionProyectoPreliminar(
+                                request.getProyectoId()
+                        );
+
+                default -> {
+                    return ResponseEntity.badRequest().body(
+                            "Estado inválido"
+                    );
+                }
+            }
+
+            return ResponseEntity.ok(
+                    "Estado actualizado correctamente"
+            );
+
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al aprobar el proyecto preliminar: " + e.getMessage());
+
+            return ResponseEntity.status(500).body(
+                    "Error al cambiar el estado: "
+                            + e.getMessage()
+            );
         }
     }
+//    @PostMapping("/aprobarPreliminar")
+//    public ResponseEntity<String> aprobarProyectoPreliminar(@RequestBody Integer proyectoId) {
+//        try {
+//            gestorProyectos.aprobarProyectoPreliminar(proyectoId);
+//            return ResponseEntity.ok("Proyecto preliminar aprobado exitosamente.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error al aprobar el proyecto preliminar: " + e.getMessage());
+//        }
+//    }
+//
+//    @PostMapping("/rectificarPreliminar")
+//    public ResponseEntity<String> rectificarPreliminar(@RequestBody Integer proyectoId) {
+//        try {
+//            gestorProyectos.rectificarProyectoPreliminar(proyectoId);
+//            return ResponseEntity.ok("Proyecto preliminar rectificado exitosamente.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error al rectificar el proyecto preliminar: " + e.getMessage());
+//        }
+//    }
+//
+//    @PostMapping("/rechazarPreliminar")
+//    public ResponseEntity<String> rechazarPreliminar(@RequestBody Integer proyectoId) {
+//        try {
+//            gestorProyectos.rechazarProyectoPreliminar(proyectoId);
+//            return ResponseEntity.ok("Proyecto preliminar rechazado exitosamente.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error al rechazar el proyecto preliminar: " + e.getMessage());
+//        }
+//    }
 
-    @PostMapping("/rectificarPreliminar")
-    public ResponseEntity<String> rectificarPreliminar(@RequestBody Integer proyectoId) {
-        try {
-            gestorProyectos.rectificarProyectoPreliminar(proyectoId);
-            return ResponseEntity.ok("Proyecto preliminar rectificado exitosamente.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al rectificar el proyecto preliminar: " + e.getMessage());
-        }
-    }
+     @PutMapping("/actualizarPreliminar")
+     public ResponseEntity<String> actualizadoPreliminar(@RequestBody CrearRequestDTO request) {
+         try {
+             // Llamamos al servicio para procesar la creación
+             gestorProyectos.actualizarPreliminar(request);
 
-    @PostMapping("/rechazarPreliminar")
-    public ResponseEntity<String> rechazarPreliminar(@RequestBody Integer proyectoId) {
-        try {
-            gestorProyectos.rechazarProyectoPreliminar(proyectoId);
-            return ResponseEntity.ok("Proyecto preliminar rechazado exitosamente.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al rechazar el proyecto preliminar: " + e.getMessage());
-        }
-    }
+             return ResponseEntity.ok("Proyecto preliminar actualizado exitosamente.");
+         } catch (Exception e) {
+             return ResponseEntity.status(500).body("Error al actualizado el proyecto: " + e.getMessage());
+         }
+     }
 
-    // @PostMapping("/ModificarPreliminar") // capaz no deberia devolver
-    // CrearRequestDTO, este seria aquel q usaria la empresa para modificar la
-    // rectificacion q le hayanhecho
-    // public ResponseEntity<CrearRequestDTO> modificarPreliminar(@RequestBody
-    // CrearRequestDTO request) {
-    //
-    // }
+
     @PostMapping("/aprobarDefinitivo")
     public ResponseEntity<String> aprobarProyectoDefinitivo(@RequestBody Integer proyectoId) {
         try {
