@@ -1,6 +1,7 @@
 package com.parque_industrial.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Consumo {
@@ -20,6 +21,7 @@ public class Consumo {
 
     public Consumo(Long id, String cuitEmpresa, int mes, int ano, BigDecimal gas, BigDecimal luz,
             BigDecimal agua, int empleados, int vehiculos, LocalDateTime fechaCarga) {
+        validarFecha(ano,mes);
         this.id = id;
         this.cuitEmpresa = cuitEmpresa;
         this.mes = mes;
@@ -30,6 +32,13 @@ public class Consumo {
         this.empleados = empleados;
         this.vehiculos = vehiculos;
         this.fechaCarga = fechaCarga;
+    }
+
+    private void validarFecha(int ano, int mes) {
+            LocalDate hoy = LocalDate.now();
+            if (ano > hoy.getYear() || (ano == hoy.getYear() && mes > hoy.getMonthValue())) {
+                throw new IllegalArgumentException("No se pueden registrar consumos para períodos futuros.");
+            }
     }
 
     // Getters y Setters

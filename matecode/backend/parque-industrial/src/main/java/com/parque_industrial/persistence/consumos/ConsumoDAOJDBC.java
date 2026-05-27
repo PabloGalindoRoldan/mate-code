@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class ConsumoDAOJDBC implements ConsumoDAO {
                 INSERT INTO consumos (cuit_empresa, mes, ano, gas, luz, agua, empleados, vehiculos)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
+
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
