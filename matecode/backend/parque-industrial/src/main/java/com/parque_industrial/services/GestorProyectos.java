@@ -30,4 +30,8 @@ public interface GestorProyectos {
     void ponerEnRevisionProyectoPreliminar(Integer proyectoId);
 
     void actualizarPreliminar(CrearRequestDTO request);
+
+    void ponerEnRevisionProyectoDefinitivo(Integer proyectoId);
+
+    void actualizarDefinitivo(CrearRequestDefinitivoDTO request);
 }
