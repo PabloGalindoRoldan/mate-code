@@ -4,6 +4,10 @@
     background-color: #f8fafc;
 }
 
+.noRadicadaBody {
+    min-height: calc(100vh - 80px);
+}
+
 /* Botón Mensajes debajo del Navbar, arriba a la izquierda */
 .btn-flotante-mensajes {
     position: absolute;
