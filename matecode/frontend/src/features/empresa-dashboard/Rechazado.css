@@ -1,0 +1,81 @@
+.rechazado-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 2rem;
+    background-color: #f9fafb;
+}
+
+.card-rechazado {
+    background: #ffffff;
+    max-width: 500px;
+    width: 100%;
+    padding: 3rem;
+    border-radius: 16px;
+    text-align: center;
+
+    border: 1px solid #fecaca;
+
+    box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.08),
+        0 8px 10px -6px rgba(0, 0, 0, 0.08);
+}
+
+.icon-box-rechazado {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    animation: rejectedPulse 2s infinite;
+}
+
+.icon-rejected {
+    color: #dc2626;
+}
+
+.card-rechazado h2 {
+    color: #991b1b;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.card-rechazado p {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.rechazado-info-box {
+    background-color: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.rechazado-info-box p {
+    margin: 0;
+    color: #991b1b;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Animación sutil */
+@keyframes rejectedPulse {
+
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.06);
+        opacity: 0.85;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

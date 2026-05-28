@@ -251,7 +251,6 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
 
                                     estado = ?,
                                     cuit_empresa = ?,
-                                    fecha_actualizacion = ?,
 
                                     link_viabilidad_financiera = ?,
                                     link_estudio_mercado = ?,
@@ -310,9 +309,6 @@ public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
 
                                         proyecto.getEstado(),
                                         proyecto.getCuitEmpresa(),
-
-                                        Timestamp.valueOf(
-                                                        proyecto.getFechaActualizacion()),
 
                                         proyecto.getLinkViabilidadFinanciera(),
                                         proyecto.getLinkEstudioMercado(),

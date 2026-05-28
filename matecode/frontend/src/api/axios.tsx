@@ -135,61 +135,49 @@ export const authApi = {
 };
 
 export const proyectosApi = {
-    // Envía el formulario completo de proyecto al backend
-    crearProyecto: async (data: {
-        usuarioNombre: string;
-        cuitEmpresa: string;
-        nombre: string;
-        descripcion?: string;
-        actividadPrincipal?: string;
-        actividadSecundaria?: string;
-        telefono?: string;
-        rubro?: string;
-        descripcionServicio?: string;
-        personaReferente?: string;
-        materiasPrimas?: string;
-        destinoProduccion?: string;
-        superficieRequerida?: number;
-        superficieTrabajo?: number;
-        superficieDeposito?: number;
-        superficieCubierta?: number;
-        superficieEstacionamiento?: number;
-        tienePlanos?: string;
-        linkPlanos?: string;
-        energiaRequerida?: number;
-        personalAOcupar?: number;
-        tensionAlimentacion?: string;
-        potenciaInstalada?: number;
-        aguaMensual?: number;
-        gasMensual?: number;
-        residuosTipo?: string;
-        residuosCantidad?: number;
-        tratamientoEfluentes?: string;
-        tipoEmpresa?: string;
-        direccion?: string;
-        pretensionTraslado?: string;
-        emplazamientoActual?: string;
-        tiempoRadicacion?: string;
-        balanzaPublica?: string;
-        comedor?: string;
-        sumCoworking?: string;
-    }) => {
-        const response = await API.post('/api/proyectos/crear', data);
-        return response.data;
-    },
 
-    proyectosPorCuit: async (cuit: string) => {
-        const response = await API.post(`/api/proyectos/porCuit`, { cuit: cuit });
-        return response.data;
-    },
-
-    rectificarPreliminar: async (proyectoId: number) => {
+    crearProyecto: async (data: any) => {
         const response = await API.post(
-            '/api/proyectos/rectificarPreliminar',
-            proyectoId
+            '/api/proyectos/crear',
+            data
         );
 
         return response.data;
     },
 
+    proyectosPorCuit: async (cuit: string) => {
+        const response = await API.post(
+            `/api/proyectos/porCuit`,
+            { cuit: cuit }
+        );
+
+        return response.data;
+    },
+
+    crearProyectoDefinitivo: async (data: any) => {
+        const response = await API.post(
+            '/api/proyectos/crearDefinitivo',
+            data
+        );
+
+        return response.data;
+    },
+
+    actualizarDefinitivo: async (data: any) => {
+        const response = await API.put(
+            '/api/proyectos/actualizarDefinitivo',
+            data
+        );
+
+        return response.data;
+    },
+
+    actualizarPreliminar: async (data: any) => {
+        const response = await API.put(
+            '/api/proyectos/actualizarPreliminar',
+            data
+        );
+
+        return response.data;
+    },
 };

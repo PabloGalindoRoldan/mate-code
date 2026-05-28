@@ -15,7 +15,7 @@ export default function FormularioPreliminar({ isRectifying, onProyectoEnviado, 
 
     const { user } = useAuth();
     const [enviado, setEnviado] = useState(false);
-    // const [rectify] = useState(isRectifying)
+    const [rectify] = useState(isRectifying)
 
     const [formData, setFormData] = useState({
         nombre: "",
@@ -141,21 +141,26 @@ export default function FormularioPreliminar({ isRectifying, onProyectoEnviado, 
         }
 
         try {
-            // 2. Preparar el objeto incluyendo el CUIT
-            const payload = {
-                ...formData,
-                usuarioNombre: user?.nombreUsuario || "Anonimo",
-                cuitEmpresa: cuit
-            };
-
             // 3. Llamada a la API
             if (isRectifying && proyectoExistente?.id) {
 
-                await proyectosApi.rectificarPreliminar(
-                    proyectoExistente.id
-                );
+                const payload = {
+                    ...formData,
+                    usuarioNombre: user?.nombreUsuario || "Anonimo",
+                    cuitEmpresa: user?.empresa?.cuit,
+                    id: proyectoExistente.id
+                };
+
+                await proyectosApi.actualizarPreliminar(payload);
 
             } else {
+
+                const payload = {
+                    ...formData,
+                    usuarioNombre: user?.nombreUsuario || "Anonimo",
+                    cuitEmpresa: user?.empresa?.cuit
+                };
+
                 await proyectosApi.crearProyecto(payload);
             }
 
@@ -171,7 +176,7 @@ export default function FormularioPreliminar({ isRectifying, onProyectoEnviado, 
 
             // 5. Limpiar borrador
             localStorage.removeItem("draft_proyecto_" + user?.nombreUsuario);
-            onProyectoEnviado();
+            await onProyectoEnviado();
 
         } catch (error) {
             console.error("Error al enviar proyecto:", error);
@@ -182,6 +187,7 @@ export default function FormularioPreliminar({ isRectifying, onProyectoEnviado, 
     return (
         <div>
             <div className="empresaNoRadicadaBody">
+                {rectify && <h2 className="mensaje-rectificar">Su proyecto debe ser rectificado. Consulte sus mensajes para ver las observaciones efectuadas.</h2>}
                 <div className="formulario-container">
                     <header className="form-header">
                         <FileText size={32} />
