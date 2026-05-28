@@ -172,7 +172,6 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
                 String sql = """
                                 UPDATE proyecto_preliminar
                                 SET
-
                                     usuario_nombre = ?,
                                     cuit_empresa = ?,
                                     nombre = ?,
@@ -185,23 +184,19 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
                                     persona_referente = ?,
                                     materias_primas = ?,
                                     destino_produccion = ?,
-
                                     superficie_requerida = ?,
                                     superficie_trabajo = ?,
                                     superficie_deposito = ?,
                                     superficie_cubierta = ?,
                                     superficie_estacionamiento = ?,
-
                                     tiene_planos = ?,
                                     link_planos = ?,
-
                                     energia_requerida = ?,
                                     personal_a_ocupar = ?,
                                     tension_alimentacion = ?,
                                     potencia_instalada = ?,
                                     agua_mensual = ?,
                                     gas_mensual = ?,
-
                                     residuos_tipo = ?,
                                     residuos_cantidad = ?,
                                     tratamiento_efluentes = ?,
@@ -210,14 +205,10 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
                                     pretension_traslado = ?,
                                     emplazamiento_actual = ?,
                                     tiempo_radicacion = ?,
-
                                     balanza_publica = ?,
                                     comedor = ?,
                                     sum_coworking = ?,
-
-                                    estado = ?,
-                                    fecha_actualizacion = ?
-
+                                    estado = ?
                                 WHERE id = ?
                                 """;
 
@@ -269,9 +260,6 @@ public class ProyectoPreliminarJDBC implements ProyectoPreliminarDAO {
                                         proyecto.getSumCoworking(),
 
                                         proyecto.getEstado(),
-
-                                        Timestamp.valueOf(
-                                                        proyecto.getFechaActualizacion()),
 
                                         proyecto.getId());
 

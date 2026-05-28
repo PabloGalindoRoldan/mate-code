@@ -16,6 +16,7 @@ import { MessageSquare } from 'lucide-react';
 import MensajeriaPanel from '../mensajeria/MensajeriaPanel';
 
 import { ESTADOS_PROYECTO } from './estadosProyecto';
+import Rechazado from './Rechazado';
 
 export default function EmpresaNoRadicadaView() {
 
@@ -25,9 +26,74 @@ export default function EmpresaNoRadicadaView() {
     const [loading, setLoading] = useState(true);
     const [mensajesOpen, setMensajesOpen] = useState(false);
     const [preliminarActual, setPreliminarActual] = useState<any>(null);
+    const [definitivoActual, setDefinitivoActual] = useState<any>(null);
+
+
+    const refreshProyecto = async (cuit: string) => {
+        try {
+            setLoading(true);
+
+            const data = await proyectosApi.proyectosPorCuit(cuit);
+
+            console.log("DEBUG API:", data);
+
+            const definitivo = data?.definitivos?.at(-1);
+            const preliminar = data?.preliminares?.at(-1);
+
+            if (definitivo?.estado) {
+                setDefinitivoActual(definitivo);
+                const estado = String(definitivo.estado).trim().toLowerCase();
+
+                switch (estado) {
+                    case 'en_revision':
+                        setStatus(ESTADOS_PROYECTO.DEFINITIVO_EN_REVISION);
+                        return;
+                    case 'rectificar':
+                        setStatus(ESTADOS_PROYECTO.DEFINITIVO_RECTIFICAR);
+                        return;
+                    case 'aprobado':
+                        setStatus(ESTADOS_PROYECTO.DEFINITIVO_APROBADO);
+                        return;
+                    case 'rechazado':
+                        setStatus(ESTADOS_PROYECTO.RECHAZADO);
+                        return;
+                }
+            }
+
+            if (preliminar?.estado) {
+                setPreliminarActual(preliminar);
+
+                const estado = String(preliminar.estado).trim().toLowerCase();
+
+                switch (estado) {
+                    case 'en_revision':
+                        setStatus(ESTADOS_PROYECTO.PRELIMINAR_EN_REVISION);
+                        return;
+                    case 'rectificar':
+                        setStatus(ESTADOS_PROYECTO.PRELIMINAR_RECTIFICAR);
+                        return;
+                    case 'aprobado':
+                        setStatus(ESTADOS_PROYECTO.PRELIMINAR_APROBADO);
+                        return;
+                    case 'rechazado':
+                        setStatus(ESTADOS_PROYECTO.RECHAZADO);
+                        return;
+                }
+            }
+
+            setStatus(ESTADOS_PROYECTO.NINGUNO);
+
+        } catch (error) {
+            console.error("Error al obtener estado:", error);
+            setStatus(ESTADOS_PROYECTO.NINGUNO);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
     useEffect(() => {
-
         const cuit = user?.empresa?.cuit;
 
         if (!cuit) {
@@ -35,91 +101,7 @@ export default function EmpresaNoRadicadaView() {
             return;
         }
 
-        let isMounted = true;
-
-        const normalizeEstado = (estado?: string) =>
-            String(estado || '')
-                .trim()
-                .toLowerCase();
-
-        const checkStatus = async () => {
-
-            try {
-
-                setLoading(true);
-
-                const data = await proyectosApi.proyectosPorCuit(cuit);
-
-                if (!isMounted) return;
-
-                console.log("DEBUG API:", data);
-
-                const definitivo = data?.definitivos?.[0];
-                const preliminar = data?.preliminares?.[0];
-
-                if (definitivo?.estado) {
-
-                    const estado = normalizeEstado(definitivo.estado);
-
-                    switch (estado) {
-
-                        case 'en_revision':
-                            setStatus(ESTADOS_PROYECTO.DEFINITIVO_EN_REVISION);
-                            return;
-
-                        case 'rectificar':
-                            setStatus(ESTADOS_PROYECTO.DEFINITIVO_RECTIFICAR);
-                            return;
-
-                        case 'aprobado':
-                            setStatus(ESTADOS_PROYECTO.DEFINITIVO_APROBADO);
-                            return;
-                    }
-                }
-
-                if (preliminar?.estado) {
-                    setPreliminarActual(preliminar);
-                    const estado = normalizeEstado(preliminar.estado);
-                    switch (estado) {
-
-                        case 'en_revision':
-                            setStatus(ESTADOS_PROYECTO.PRELIMINAR_EN_REVISION);
-                            return;
-
-                        case 'rectificar':
-                            setStatus(ESTADOS_PROYECTO.PRELIMINAR_RECTIFICAR);
-                            return;
-
-                        case 'aprobado':
-                            setStatus(ESTADOS_PROYECTO.PRELIMINAR_APROBADO);
-                            return;
-                    }
-                }
-
-                setStatus(ESTADOS_PROYECTO.NINGUNO);
-
-            } catch (error) {
-
-                console.error("Error al obtener estado:", error);
-
-                if (isMounted) {
-                    setStatus(ESTADOS_PROYECTO.NINGUNO);
-                }
-
-            } finally {
-
-                if (isMounted) {
-                    setLoading(false);
-                }
-            }
-        };
-
-        checkStatus();
-
-        return () => {
-            isMounted = false;
-        };
-
+        refreshProyecto(cuit);
     }, [user?.empresa?.cuit]);
 
     // =========================================
@@ -149,12 +131,17 @@ export default function EmpresaNoRadicadaView() {
                 return (
                     <FormularioPreliminar
                         isRectifying={false}
-                        onProyectoEnviado={() =>
-                            setStatus(ESTADOS_PROYECTO.PRELIMINAR_EN_REVISION)
-                        }
+                        onProyectoEnviado={() => {
+                            const cuit = user?.empresa?.cuit;
+                            if (cuit) refreshProyecto(cuit);
+                        }}
                         proyectoExistente={null}
                     />
                 );
+
+            case ESTADOS_PROYECTO.RECHAZADO:
+
+                return <Rechazado />
 
             case ESTADOS_PROYECTO.PRELIMINAR_EN_REVISION:
 
@@ -165,9 +152,10 @@ export default function EmpresaNoRadicadaView() {
                 return (
                     <FormularioPreliminar
                         isRectifying={true}
-                        onProyectoEnviado={() =>
-                            setStatus(ESTADOS_PROYECTO.PRELIMINAR_EN_REVISION)
-                        }
+                        onProyectoEnviado={() => {
+                            const cuit = user?.empresa?.cuit;
+                            if (cuit) refreshProyecto(cuit);
+                        }}
                         proyectoExistente={preliminarActual}
                     />
                 );
@@ -175,7 +163,13 @@ export default function EmpresaNoRadicadaView() {
             case ESTADOS_PROYECTO.PRELIMINAR_APROBADO:
 
                 return (
-                    <FormularioDefinitivo isRectifying={false} />
+                    <FormularioDefinitivo
+                        isRectifying={false}
+                        onProyectoEnviado={() => {
+                            const cuit = user?.empresa?.cuit;
+                            if (cuit) refreshProyecto(cuit);
+                        }}
+                        proyectoExistente={definitivoActual} />
                 );
 
             case ESTADOS_PROYECTO.DEFINITIVO_EN_REVISION:
@@ -185,14 +179,20 @@ export default function EmpresaNoRadicadaView() {
             case ESTADOS_PROYECTO.DEFINITIVO_RECTIFICAR:
 
                 return (
-                    <FormularioDefinitivo isRectifying={true} />
+                    <FormularioDefinitivo
+                        isRectifying={true}
+                        onProyectoEnviado={() => {
+                            const cuit = user?.empresa?.cuit;
+                            if (cuit) refreshProyecto(cuit);
+                        }}
+                        proyectoExistente={definitivoActual} />
                 );
 
             case ESTADOS_PROYECTO.DEFINITIVO_APROBADO:
 
                 return (
-                    <div>
-                        Proyecto Definitivo Aprobado, contacte al administrador.
+                    <div className="empresaNoRadicadaView">
+                        <h1 style={{ color: "var(--gris1)", padding: "5rem" }}>Proyecto Definitivo Aprobado. Si ud. esta viendo este mensaje, contacte al administrador para que manualmente radique la empresa en el parque.</h1>
                     </div>
                 );
 
@@ -204,7 +204,6 @@ export default function EmpresaNoRadicadaView() {
 
     return (
         <div className="empresaNoRadicadaView">
-
             <button
                 className="btn-flotante-mensajes"
                 onClick={() => setMensajesOpen(!mensajesOpen)}
@@ -214,11 +213,14 @@ export default function EmpresaNoRadicadaView() {
             </button>
 
             <NavBar />
-
-            {mensajesOpen && <MensajeriaPanel />}
-            <div className='noRadicadaBody'>
-                {renderView()}
-            </div>
+            {mensajesOpen ?
+                <div className='noRadicadaBody noRadicadaMensajeria'>
+                    <MensajeriaPanel />
+                </div> :
+                <div className='noRadicadaBody'>
+                    {renderView()}
+                </div>
+            }
 
             <Footer />
 
