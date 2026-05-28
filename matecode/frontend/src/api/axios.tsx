@@ -180,4 +180,33 @@ export const proyectosApi = {
 
         return response.data;
     },
+
+    listarProyectos: async () => {
+        const response = await API.get('/api/proyectos');
+        return response.data;
+    },
+
+    cambiarEstadoPreliminar: async (data: {
+        proyectoId: number;
+        estado: string;
+    }) => {
+        const response = await API.put(
+            '/api/proyectos/cambiarEstadoPreliminar',
+            data
+        );
+        return response.data;
+    },
+
+    cambiarEstadoDefinitivo: async (data: {
+        proyectoId: number;
+        estado: string;
+    }) => {
+        const response = await API.put(
+            '/api/proyectos/cambiarEstadoDefinitivo',
+            data
+        );
+        return response.data;
+    },
+
+
 };
