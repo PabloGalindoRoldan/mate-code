@@ -22,10 +22,7 @@ public class LoteController {
 
     @GetMapping
     public ResponseEntity<FeatureCollectionDTO> listar() {
-        // 1. Fetch data from your actual Gestor service
         List<com.parque_industrial.entities.Lote> lotes = gestor.listarLotes();
-
-        // 2. Return directly without custom caching layers or conditional ETag filters
         return ResponseEntity.ok(mapper.convertirLista(lotes));
     }
 
