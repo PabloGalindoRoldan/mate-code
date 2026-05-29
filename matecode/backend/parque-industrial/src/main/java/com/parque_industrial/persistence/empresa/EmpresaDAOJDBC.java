@@ -118,13 +118,28 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
 
     @Override
     @Transactional
-    public void desocuparLote(String cuit, Integer idLote) {
+    public void desocuparLote(String cuit) {
 
-        String sqlEmpresa = "UPDATE empresas SET idlote = NULL WHERE cuit = ?";
+        String buscarLoteSql =
+                "SELECT idlote FROM empresas WHERE cuit = ?";
+
+        Integer idLote = jdbcTemplate.queryForObject(
+                buscarLoteSql,
+                Integer.class,
+                cuit
+        );
+
+        if (idLote == null) {
+            return;
+        }
+
+        String sqlEmpresa =
+                "UPDATE empresas SET idlote = NULL WHERE cuit = ?";
 
         jdbcTemplate.update(sqlEmpresa, cuit);
 
-        String sqlLote = "UPDATE lote SET estado = 'disponible' WHERE id = ?";
+        String sqlLote =
+                "UPDATE lote SET estado = 'disponible' WHERE id = ?";
 
         jdbcTemplate.update(sqlLote, idLote);
     }

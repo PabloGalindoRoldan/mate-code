@@ -8,6 +8,7 @@ import com.parque_industrial.dto.empresa.OcupacionLoteDTO;
 import com.parque_industrial.services.GestorEmpresa;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.parque_industrial.dto.empresa.DesocuparLoteDTO;
 
 import java.util.List;
 
@@ -76,10 +77,10 @@ public class EmpresaController {
     }
 
     @PostMapping("/desocupar")
-    public ResponseEntity<Void> desocuparLote(@RequestBody OcupacionLoteDTO request) {
-        gestor.desocuparLote(
-                request.cuit(),
-                request.idlote());
+    public ResponseEntity<Void> desocuparLote(
+            @RequestBody DesocuparLoteDTO request) {
+
+        gestor.desocuparLote(request.cuit());
 
         return ResponseEntity.ok().build();
     }
