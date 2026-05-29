@@ -25,5 +25,5 @@ public interface EmpresaDAO {
 
     void actualizarEstadoRadicacion(String cuit, boolean radicada);
 
-    void desocuparLote(String cuit, Integer idLote);
+    void desocuparLote(String cuit);
 }

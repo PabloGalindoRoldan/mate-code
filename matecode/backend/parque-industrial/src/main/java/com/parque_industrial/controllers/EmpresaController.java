@@ -77,9 +77,7 @@ public class EmpresaController {
     @PostMapping("/desocupar")
     public ResponseEntity<Void> desocuparLote(@RequestBody OcupacionLoteDTO request) {
         gestor.desocuparLote(
-                request.cuit(),
-                request.idlote());
-
+                request.cuit());
         return ResponseEntity.ok().build();
     }
 

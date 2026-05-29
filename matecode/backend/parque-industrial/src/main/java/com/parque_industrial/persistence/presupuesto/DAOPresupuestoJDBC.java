@@ -7,9 +7,10 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
-@Repository // <-- Permite que Spring lo administre y maneje las excepciones de base de
-            // datos
+@Repository
 public class DAOPresupuestoJDBC implements DAOPresupuesto {
 
     private final DataSource dataSource;
@@ -158,5 +159,59 @@ public class DAOPresupuestoJDBC implements DAOPresupuesto {
             throw new RuntimeException(e);
         }
         return "";
+    }
+
+    @Override
+    public boolean existePresupuesto(int partidaId, int ejercicioFiscal) {
+        String sql = "SELECT COUNT(*) FROM presupuesto_anual WHERE partida_id = ? AND ejercicio_fiscal = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, partidaId);
+            ps.setInt(2, ejercicioFiscal);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar existencia de presupuesto", e);
+        }
+        return false;
+    }
+
+    @Override
+    public void insertarPresupuestoInicial(int partidaId, int ejercicio, String fuente, BigDecimal monto) {
+        String sql = "INSERT INTO presupuesto_anual (partida_id, ejercicio_fiscal, fuente_financiamiento, credito_original, credito_vigente) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, partidaId);
+            ps.setInt(2, ejercicio);
+            ps.setString(3, fuente);
+            ps.setBigDecimal(4, monto);
+            ps.setBigDecimal(5, monto); // El vigente inicial es igual al original
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al registrar la carga inicial del presupuesto", e);
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> obtenerTodasLasPartidas() {
+        List<Map<String, Object>> catalogo = new ArrayList<>();
+        String sql = "SELECT id, codigo, nombre FROM partidas_presupuestarias ORDER BY codigo ASC";
+
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Map<String, Object> partida = new HashMap<>();
+                partida.put("id", rs.getInt("id"));
+                partida.put("codigo", rs.getString("codigo"));
+                partida.put("nombre", rs.getString("nombre"));
+                catalogo.add(partida);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener el catálogo de partidas", e);
+        }
+        return catalogo;
     }
 }

@@ -1,6 +1,7 @@
 import "./ProyectosPanel.css";
 
 import { useEffect, useMemo, useState } from "react";
+
 import {
     FolderKanban,
     Search,
@@ -12,7 +13,7 @@ import {
     FileText,
     Building2,
     User,
-    X
+    X,
 } from "lucide-react";
 
 import "./ProyectosPanel.css";
@@ -226,11 +227,9 @@ export default function ProyectosPanel() {
             // LIBERAR LOTE
             // =========================
 
-            // TODO:
-            // cuando exista endpoint
-            // await empresasApi.desocuparLote(
-            //     selectedProyecto.cuitEmpresa
-            // );
+            await empresasApi.desocuparLote(
+                selectedProyecto.cuitEmpresa
+            );
 
             // =========================
             // EMPRESA NO RADICADA

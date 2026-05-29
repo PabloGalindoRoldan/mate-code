@@ -3,6 +3,7 @@ package com.parque_industrial.persistence.presupuesto;
 import com.parque_industrial.dto.presupuesto.BalancePartidaDTO;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface DAOPresupuesto {
     List<BalancePartidaDTO> obtenerBalancePresupuestario(int ejercicioFiscal);
@@ -15,4 +16,10 @@ public interface DAOPresupuesto {
             String fase, BigDecimal monto);
 
     String obtenerCodigoPartidaPorPresupuestoId(int presupuestoId);
+
+    boolean existePresupuesto(int partidaId, int ejercicioFiscal);
+
+    void insertarPresupuestoInicial(int partidaId, int ejercicio, String fuente, BigDecimal monto);
+
+    List<Map<String, Object>> obtenerTodasLasPartidas();
 }
