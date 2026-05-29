@@ -51,6 +51,7 @@ public class GestorEmpresa {
     public void actualizarEstadoRadicacion(String cuit, boolean radicada) {
         dao.actualizarEstadoRadicacion(cuit, radicada);
     }
+
     public void desocuparLote(String cuit) {
         dao.desocuparLote(cuit);
     }

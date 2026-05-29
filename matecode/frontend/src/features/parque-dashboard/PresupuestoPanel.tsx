@@ -1,5 +1,6 @@
+import CargarPresupuesto from "./CargarPresupuesto";
 import { useState, useEffect } from "react";
-import { RefreshCw, ArrowLeftRight, FileText, AlertCircle } from "lucide-react";
+import { RefreshCw, ArrowLeftRight, FileText, AlertCircle, Plus } from "lucide-react";
 import { presupuestoApi } from "../../api/axios";
 import LoadingSpinner from "../../ui/loading/LoadingSpinner";
 import "./PresupuestoPanel.css";
@@ -38,6 +39,9 @@ export default function PresupuestoPanel() {
     const [nroComp, setNroComp] = useState<string>("");
     const [montoGasto, setMontoGasto] = useState<string>("");
     const [descGasto, setDescGasto] = useState<string>("");
+
+    //Modal de carga de presupuesto
+    const [mostrarModalCarga, setMostrarModalCarga] = useState(false);
 
     const cargarLibroBalances = async () => {
         setLoading(true);
@@ -118,6 +122,12 @@ export default function PresupuestoPanel() {
                     <span className="subtitle-ley">Marco Regulatorio Conforme Ley N° 5763 de la Provincia de Río Negro</span>
                 </div>
                 <div className="header-actions">
+                    <button
+                        className="btn-primary"
+                        onClick={() => setMostrarModalCarga(true)}
+                    >
+                        <Plus size={18} /> Cargar Presupuesto Inicial
+                    </button>
                     <select className="select-year" value={ejercicio} onChange={(e) => setEjercicio(parseInt(e.target.value))}>
                         <option value={2025}>Ejercicio Fiscal 2025</option>
                         <option value={2026}>Ejercicio Fiscal 2026</option>
@@ -131,6 +141,26 @@ export default function PresupuestoPanel() {
             {error && (
                 <div className="budget-error-banner">
                     <AlertCircle size={20} /> <span>{error}</span>
+                </div>
+            )}
+
+            {mostrarModalCarga && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <CargarPresupuesto
+                            ejercicio={ejercicio}
+                            onCargaExitosa={() => {
+                                setMostrarModalCarga(false);
+                                cargarLibroBalances(); // Refrescamos la tabla al volver
+                            }}
+                        />
+                        <button
+                            className="btn-cancel"
+                            onClick={() => setMostrarModalCarga(false)}
+                        >
+                            Cerrar
+                        </button>
+                    </div>
                 </div>
             )}
 

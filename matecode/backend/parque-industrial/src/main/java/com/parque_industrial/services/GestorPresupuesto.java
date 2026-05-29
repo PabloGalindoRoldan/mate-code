@@ -4,7 +4,11 @@ import com.parque_industrial.dto.presupuesto.BalancePartidaDTO;
 import com.parque_industrial.persistence.presupuesto.DAOPresupuesto;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Service;
+import com.parque_industrial.dto.presupuesto.PresupuestoInicialDTO;
+import org.springframework.transaction.annotation.Transactional;
+import com.parque_industrial.dto.presupuesto.PresupuestoInicialDTO;
 
 @Service
 public class GestorPresupuesto {
@@ -19,6 +23,10 @@ public class GestorPresupuesto {
 
     public List<BalancePartidaDTO> verLibroDeBalances(int ejercicio) {
         return daoPresupuesto.obtenerBalancePresupuestario(ejercicio);
+    }
+
+    public List<Map<String, Object>> obtenerCatalogoPartidas() {
+        return daoPresupuesto.obtenerTodasLasPartidas();
     }
 
     /**
@@ -60,5 +68,24 @@ public class GestorPresupuesto {
 
         java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
         daoPresupuesto.registrarFaseGasto(presupuestoId, sqlDate, tipoComp, nroComp, desc, fase, monto);
+    }
+
+    @Transactional
+    public void cargarPresupuestoInicial(List<PresupuestoInicialDTO> partidas) {
+        for (PresupuestoInicialDTO dto : partidas) {
+
+            // 1. Validar si ya existe presupuesto para este ejercicio y partida
+            if (daoPresupuesto.existePresupuesto(dto.getPartidaId(), dto.getEjercicioFiscal())) {
+                throw new IllegalArgumentException("Ya existe una asignación de crédito para la partida ID "
+                        + dto.getPartidaId() + " en el ejercicio " + dto.getEjercicioFiscal());
+            }
+
+            // 2. Insertar registro inicial
+            daoPresupuesto.insertarPresupuestoInicial(
+                    dto.getPartidaId(),
+                    dto.getEjercicioFiscal(),
+                    dto.getFuenteFinanciamiento(),
+                    BigDecimal.valueOf(dto.getMonto()));
+        }
     }
 }

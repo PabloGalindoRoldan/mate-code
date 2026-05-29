@@ -61,7 +61,16 @@ export const presupuestoApi = {
     registrarGasto: async (data: { presupuestoId: number; tipoComprobante: string; nroComprobante: string; descripcion: string; fase: 'COMPROMISO' | 'DEVENGADO' | 'PAGADO'; monto: number }) => {
         const response = await API.post('/api/presupuesto/gasto', data);
         return response.data;
-    }
+    },
+
+    cargarPresupuesto: async (partidas: any[]) => {
+        return await API.post('/api/presupuesto/carga-inicial', partidas);
+    },
+
+    getCatalogo: async () => {
+        const response = await API.get('/api/presupuesto/partidas-catalogo');
+        return response.data;
+    },
 };
 
 export const lotesApi = {
@@ -108,7 +117,13 @@ export const empresasApi = {
             cuit,
             idlote
         });
+        return response.data;
+    },
 
+    desocuparLote: async (cuit: string) => {
+        const response = await API.post('/api/empresas/desocupar', {
+            cuit,
+        });
         return response.data;
     },
 
