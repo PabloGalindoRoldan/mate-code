@@ -15,7 +15,56 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
 
     const { user } = useAuth();
     const [enviado, setEnviado] = useState(false);
-    const [rectify] = useState(isRectifying)
+    const [rectify] = useState(isRectifying);
+
+    const parseNumeric = (value: any) => {
+        if (value == null) return 0;
+
+        // backend object format
+        if (typeof value === "object" && "parsedValue" in value) {
+            return Number(value.parsedValue ?? 0);
+        }
+
+        // plain number/string
+        return Number(value);
+    };
+
+    const mapProyectoToForm = (p: any) => ({
+        ...p,
+
+        superficieRequerida: parseNumeric(p.superficieRequerida),
+        superficieTrabajo: parseNumeric(p.superficieTrabajo),
+        superficieDeposito: parseNumeric(p.superficieDeposito),
+        superficieCubierta: parseNumeric(p.superficieCubierta),
+        superficieEstacionamiento: parseNumeric(p.superficieEstacionamiento),
+
+        energiaRequerida: parseNumeric(p.energiaRequerida),
+        personalAOcupar: parseNumeric(p.personalAOcupar),
+
+        potenciaInstalada: parseNumeric(p.potenciaInstalada),
+
+        aguaMensual: parseNumeric(p.aguaMensual),
+        gasMensual: parseNumeric(p.gasMensual),
+
+        residuosCantidad: parseNumeric(p.residuosCantidad),
+
+        tensionAlimentacion: p.tensionAlimentacion || "baja",
+
+        linkViabilidadFinanciera:
+            p.linkViabilidadFinanciera || "",
+
+        linkEstudioMercado:
+            p.linkEstudioMercado || "",
+
+        linkImpactoAmbiental:
+            p.linkImpactoAmbiental || "",
+
+        linkHabilitacionMunicipal:
+            p.linkHabilitacionMunicipal || "",
+
+        linkCertificadoInhibiciones:
+            p.linkCertificadoInhibiciones || "",
+    });
 
     const [formData, setFormData] = useState({
         nombre: "",
@@ -47,8 +96,8 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
         tipoEmpresa: "nueva",
         direccion: "",
         pretensionTraslado: "",
-        emplazamientoActual: "Propio",
-        tiempoRadicacion: "6 meses",
+        emplazamientoActual: "",
+        tiempoRadicacion: "",
         balanzaPublica: "no",
         comedor: "no",
         sumCoworking: "no",
@@ -62,53 +111,7 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
     useEffect(() => {
 
         if (isRectifying && proyectoExistente) {
-
-            setFormData({
-                ...proyectoExistente,
-
-                superficieRequerida:
-                    proyectoExistente.superficieRequerida?.parsedValue || 0,
-
-                superficieTrabajo:
-                    proyectoExistente.superficieTrabajo?.parsedValue || 0,
-
-                superficieDeposito:
-                    proyectoExistente.superficieDeposito?.parsedValue || 0,
-
-                superficieCubierta:
-                    proyectoExistente.superficieCubierta?.parsedValue || 0,
-
-                superficieEstacionamiento:
-                    proyectoExistente.superficieEstacionamiento?.parsedValue || 0,
-
-                potenciaInstalada:
-                    proyectoExistente.potenciaInstalada?.parsedValue || 0,
-
-                aguaMensual:
-                    proyectoExistente.aguaMensual?.parsedValue || 0,
-
-                gasMensual:
-                    proyectoExistente.gasMensual?.parsedValue || 0,
-
-                residuosCantidad:
-                    proyectoExistente.residuosCantidad?.parsedValue || 0,
-
-                linkViabilidadFinanciera:
-                    proyectoExistente.linkViabilidadFinanciera || "",
-
-                linkEstudioMercado:
-                    proyectoExistente.linkEstudioMercado || "",
-
-                linkImpactoAmbiental:
-                    proyectoExistente.linkImpactoAmbiental || "",
-
-                linkHabilitacionMunicipal:
-                    proyectoExistente.linkHabilitacionMunicipal || "",
-
-                linkCertificadoInhibiciones:
-                    proyectoExistente.linkCertificadoInhibiciones || "",
-            });
-
+            setFormData(mapProyectoToForm(proyectoExistente));
             return;
         }
 
@@ -468,7 +471,7 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
                                 />
                             </div>
                             <div className="input-group full-width">
-                                <label>Planos de efificacion</label>
+                                <label>Planos de Edificacion</label>
                                 <input
                                     type="url"
                                     name="linkPlanos"

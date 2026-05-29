@@ -11,13 +11,66 @@ interface Props {
     proyectoExistente?: any;
 }
 
+interface FormDataType {
+    nombre: string;
+    descripcion: string;
+    actividadPrincipal: string;
+    actividadSecundaria: string;
+    telefono: string;
+    rubro: string;
+    descripcionServicio: string;
+    personaReferente: string;
+    materiasPrimas: string;
+    destinoProduccion: string;
+
+    superficieRequerida: number;
+    superficieTrabajo: number;
+    superficieDeposito: number;
+    superficieCubierta: number;
+    superficieEstacionamiento: number;
+
+    tienePlanos: string;
+    linkPlanos: string;
+
+    energiaRequerida: number;
+    personalAOcupar: number;
+    tensionAlimentacion: string;
+
+    potenciaInstalada: number;
+    aguaMensual: number;
+    gasMensual: number;
+
+    residuosTipo: string;
+    residuosCantidad: number;
+
+    tratamientoEfluentes: string;
+    tipoEmpresa: string;
+
+    direccion: string;
+    pretensionTraslado: string;
+    emplazamientoActual: string;
+    tiempoRadicacion: string;
+
+    balanzaPublica: string;
+    comedor: string;
+    sumCoworking: string;
+}
+
 export default function FormularioPreliminar({ isRectifying, onProyectoEnviado, proyectoExistente }: Props) {
 
     const { user } = useAuth();
     const [enviado, setEnviado] = useState(false);
     const [rectify] = useState(isRectifying)
 
-    const [formData, setFormData] = useState({
+    const parseNumeric = (value: any): number => {
+        if (typeof value === "object" && value !== null) {
+            return Number(value.parsedValue ?? 0);
+        }
+
+        return Number(value ?? 0);
+    };
+
+    const [formData, setFormData] = useState<FormDataType>({
         nombre: "",
         descripcion: "",
         actividadPrincipal: "",
@@ -47,48 +100,62 @@ export default function FormularioPreliminar({ isRectifying, onProyectoEnviado, 
         tipoEmpresa: "nueva",
         direccion: "",
         pretensionTraslado: "",
-        emplazamientoActual: "Propio",
-        tiempoRadicacion: "6 meses",
+        emplazamientoActual: "",
+        tiempoRadicacion: "",
         balanzaPublica: "no",
         comedor: "no",
         sumCoworking: "no"
     });
 
+    //Normalizador para que mapee el json del back:
+
+    const mapProyectoToForm = (p: any): FormDataType => ({
+        nombre: p.nombre || "",
+        descripcion: p.descripcion || "",
+        actividadPrincipal: p.actividadPrincipal || "",
+        actividadSecundaria: p.actividadSecundaria || "",
+        telefono: p.telefono || "",
+        rubro: p.rubro || "Bienes",
+        descripcionServicio: p.descripcionServicio || "",
+        personaReferente: p.personaReferente || "",
+        materiasPrimas: p.materiasPrimas || "",
+        destinoProduccion: p.destinoProduccion || "",
+
+        superficieRequerida: parseNumeric(p.superficieRequerida),
+        superficieTrabajo: parseNumeric(p.superficieTrabajo),
+        superficieDeposito: parseNumeric(p.superficieDeposito),
+        superficieCubierta: parseNumeric(p.superficieCubierta),
+        superficieEstacionamiento: parseNumeric(p.superficieEstacionamiento),
+        energiaRequerida: parseNumeric(p.energiaRequerida),
+        potenciaInstalada: parseNumeric(p.potenciaInstalada),
+        aguaMensual: parseNumeric(p.aguaMensual),
+        gasMensual: parseNumeric(p.gasMensual),
+        residuosCantidad: parseNumeric(p.residuosCantidad),
+        tienePlanos: p.tienePlanos || "no",
+        linkPlanos: p.linkPlanos || "",
+        personalAOcupar: Number(p.personalAOcupar ?? 0),
+        tensionAlimentacion: p.tensionAlimentacion || "baja",
+        residuosTipo: p.residuosTipo || "",
+        tratamientoEfluentes: p.tratamientoEfluentes || "no",
+        tipoEmpresa: p.tipoEmpresa || "nueva",
+        direccion: p.direccion || "",
+        pretensionTraslado: p.pretensionTraslado || "",
+        emplazamientoActual: p.emplazamientoActual || "Propio",
+        tiempoRadicacion: p.tiempoRadicacion || "6 meses",
+        balanzaPublica: p.balanzaPublica || "no",
+        comedor: p.comedor || "no",
+        sumCoworking: p.sumCoworking || "no"
+    });
+
+
+
     useEffect(() => {
-
         if (isRectifying && proyectoExistente) {
-
-            setFormData({
-                ...proyectoExistente,
-
-                superficieRequerida:
-                    proyectoExistente.superficieRequerida?.parsedValue || 0,
-
-                superficieTrabajo:
-                    proyectoExistente.superficieTrabajo?.parsedValue || 0,
-
-                superficieDeposito:
-                    proyectoExistente.superficieDeposito?.parsedValue || 0,
-
-                superficieCubierta:
-                    proyectoExistente.superficieCubierta?.parsedValue || 0,
-
-                superficieEstacionamiento:
-                    proyectoExistente.superficieEstacionamiento?.parsedValue || 0,
-
-                potenciaInstalada:
-                    proyectoExistente.potenciaInstalada?.parsedValue || 0,
-
-                aguaMensual:
-                    proyectoExistente.aguaMensual?.parsedValue || 0,
-
-                gasMensual:
-                    proyectoExistente.gasMensual?.parsedValue || 0,
-
-                residuosCantidad:
-                    proyectoExistente.residuosCantidad?.parsedValue || 0,
-            });
-
+            setFormData(mapProyectoToForm(proyectoExistente));
+            console.log("PROYECTO:", proyectoExistente);
+            console.log("AGUA:", proyectoExistente?.aguaMensual);
+            console.log("AGUA PARSED:", proyectoExistente?.aguaMensual?.parsedValue);
+            console.log("PERSONAL:", proyectoExistente?.personalAOcupar);
             return;
         }
 
@@ -112,7 +179,9 @@ export default function FormularioPreliminar({ isRectifying, onProyectoEnviado, 
         const { name, value, type } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: type === 'number' ? parseFloat(value) || null : value
+            [name]: type === 'number'
+                ? value === '' ? 0 : Number(value)
+                : value
         }));
     };
 

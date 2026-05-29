@@ -90,7 +90,7 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
         String sql = "UPDATE empresas SET idlote = ? WHERE cuit = ?";
         jdbcTemplate.update(sql, idLote, cuit);
 
-        String sql2 = "UPDATE Lote SET estado = 'reservado' WHERE id = ?";
+        String sql2 = "UPDATE lote SET estado = 'reservado' WHERE id = ?";
         jdbcTemplate.update(sql2, idLote);
     }
 
@@ -99,11 +99,8 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
     public void ocuparLote(String cuit, Integer idLote) {
 
         String sqlEmpresa = "UPDATE empresas SET idlote = ? WHERE cuit = ?";
-
         jdbcTemplate.update(sqlEmpresa, idLote, cuit);
-
         String sqlLote = "UPDATE lote SET estado = 'ocupado' WHERE id = ?";
-
         jdbcTemplate.update(sqlLote, idLote);
     }
 

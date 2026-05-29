@@ -10,7 +10,7 @@ import {
     Tooltip,
     Legend
 } from 'chart.js';
-import { Building2, Users, Zap, Layers, RefreshCw, Calendar, Flame, Truck } from 'lucide-react';
+import { Building2, Users, Zap, Layers, RefreshCw, Calendar, Flame, Truck, Pencil } from 'lucide-react';
 import './EmpresasPanel.css';
 import LoadingSpinner from '../../ui/loading/LoadingSpinner';
 
@@ -255,8 +255,8 @@ export default function EmpresasPanel() {
                 {
                     label: 'Electricidad (kWh)',
                     data: dataLuz,
-                    backgroundColor: 'rgba(46, 125, 50, 0.75)',
-                    borderColor: 'rgb(46, 125, 50)',
+                    backgroundColor: '#d9d506',
+                    borderColor: '#d9b906',
                     borderWidth: 1,
                 },
                 {
@@ -428,7 +428,6 @@ export default function EmpresasPanel() {
                                     <th>CUIT</th>
                                     <th>Lote Vinculado</th>
                                     <th>Estatus Radicación</th>
-                                    <th>Acciones Administrativas</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -448,38 +447,57 @@ export default function EmpresasPanel() {
                                                         value={newLote}
                                                         onChange={(e) => setNewLote(e.target.value)}
                                                     />
-                                                    <button className="btn-save" onClick={() => handleSaveLote(emp.identificacion)}>Guardar</button>
-                                                    <button className="btn-cancel" onClick={() => setEditingCuit(null)}>X</button>
+
+                                                    <button
+                                                        className="btn-save"
+                                                        onClick={() => handleSaveLote(emp.identificacion)}
+                                                    >
+                                                        Guardar
+                                                    </button>
+
+                                                    <button
+                                                        className="btn-cancel"
+                                                        onClick={() => setEditingCuit(null)}
+                                                    >
+                                                        X
+                                                    </button>
                                                 </div>
                                             ) : (
-                                                <span className="lote-display-badge">
-                                                    <Layers size={12} />{' '}
-                                                    {emp.idlote !== null && emp.idlote !== undefined
-                                                        ? `Lote ${emp.idlote}`
-                                                        : 'Sin Lote Asignado'}
-                                                </span>
+                                                <div className="inline-pill-action">
+                                                    <span className="lote-display-badge">
+                                                        <Layers size={12} />
+                                                        {emp.idlote !== null && emp.idlote !== undefined
+                                                            ? `Lote ${emp.idlote}`
+                                                            : 'Sin Lote Asignado'}
+                                                    </span>
+
+                                                    <button
+                                                        className="icon-edit-btn"
+                                                        onClick={() => {
+                                                            setEditingCuit(emp.identificacion);
+                                                            setNewLote(
+                                                                emp.idlote !== null && emp.idlote !== undefined
+                                                                    ? String(emp.idlote)
+                                                                    : ''
+                                                            );
+                                                        }}
+                                                    >
+                                                        <Pencil size={14} />
+                                                    </button>
+                                                </div>
                                             )}
                                         </td>
                                         <td>
-                                            <span className={`radicada-toggle-pill ${emp.esRadicada ? 'true' : 'false'}`}>
-                                                {emp.esRadicada ? 'Radicada' : 'No Radicada'}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div className="action-row-buttons">
-                                                {editingCuit !== emp.identificacion && (
-                                                    <button className="action-link-btn" onClick={() => {
-                                                        setEditingCuit(emp.identificacion);
-                                                        setNewLote(emp.idlote !== null && emp.idlote !== undefined ? String(emp.idlote) : '');
-                                                    }}>
-                                                        Modificar Lote
-                                                    </button>
-                                                )}
+                                            <div className="inline-pill-action">
+                                                <span className={`radicada-toggle-pill ${emp.esRadicada ? 'true' : 'false'}`}>
+                                                    {emp.esRadicada ? 'Radicada' : 'No Radicada'}
+                                                </span>
+
                                                 <button
-                                                    className={`action-toggle-btn ${emp.esRadicada ? 'danger' : 'success'}`}
+                                                    className="icon-edit-btn"
                                                     onClick={() => handleToggleRadicacion(emp)}
                                                 >
-                                                    {emp.esRadicada ? 'Cambiar a No Radicada' : 'Establecer Radicada'}
+                                                    <Pencil size={14} />
                                                 </button>
                                             </div>
                                         </td>

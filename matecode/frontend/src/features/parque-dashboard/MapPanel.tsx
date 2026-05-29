@@ -125,8 +125,8 @@ export default function MapPanel() {
 
     const dynamicColor: any = [
         "case",
-        ["all", ["literal", showDisponible], ["==", ["get", "estado"], "disponible"]], "#76e3bb",
         ["all", ["literal", showOcupado], ["==", ["get", "estado"], "ocupado"]], "#FF8B94",
+        ["all", ["literal", showOcupado], ["==", ["get", "estado"], "reservado"]], "#ffff00",
         ["all", ["literal", showStreets], ["==", ["get", "estado"], "infraestructura"]], "#808080",
         "#8CC63F"
     ];

@@ -59,7 +59,6 @@ public class EmpresaController {
         gestor.ocuparLote(
                 request.cuit(),
                 request.idlote());
-
         return ResponseEntity.ok().build();
     }
 
