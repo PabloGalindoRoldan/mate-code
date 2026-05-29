@@ -8,6 +8,7 @@ import com.parque_industrial.dto.empresa.OcupacionLoteDTO;
 import com.parque_industrial.services.GestorEmpresa;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.parque_industrial.dto.empresa.DesocuparLoteDTO;
 
 import java.util.List;
 
