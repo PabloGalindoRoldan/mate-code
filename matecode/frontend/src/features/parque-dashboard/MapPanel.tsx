@@ -104,7 +104,7 @@ export default function MapPanel() {
     const mapRef = useRef<MapRef>(null);
     const {
         isSatellite, rotationEnabled, isMapMenuOpen, setIsMapMenuOpen,
-        showNuevo, showViejo, showStreets, showDisponible, showOcupado, showLabels,
+        showNuevo, showViejo, showStreets, showOcupado, showLabels,
     } = useMap();
 
     const [isInteracting, setIsInteracting] = useState(false);

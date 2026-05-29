@@ -12,7 +12,6 @@ import {
     FileText,
     Building2,
     User,
-    CalendarDays,
     X
 } from "lucide-react";
 
