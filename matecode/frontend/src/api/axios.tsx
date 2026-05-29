@@ -98,10 +98,7 @@ export const empresasApi = {
         return response.data;
     },
 
-    // Optional handler placeholder: if your backend requires updating the full EmpresaDTO object 
-    // to toggle isRadicada, map it here. If you use a custom endpoint, align it accordingly:
     actualizarEstadoRadicacion: async (cuit: string, radicada: boolean) => {
-        // Adjust endpoint signature according to backend expectations if different
         const response = await API.put(`/api/empresas/${cuit}/radicacion`, { radicada });
         return response.data;
     },
@@ -113,7 +110,7 @@ export const empresasApi = {
         });
 
         return response.data;
-    }
+    },
 
 };
 

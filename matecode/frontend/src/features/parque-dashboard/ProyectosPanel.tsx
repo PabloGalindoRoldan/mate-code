@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 import "./ProyectosPanel.css";
-import { proyectosApi, mensajeriaApi } from "../../api/axios";
+import { proyectosApi, mensajeriaApi, empresasApi } from "../../api/axios";
 
 interface Proyecto {
     id: number;
@@ -63,10 +63,10 @@ export default function ProyectosPanel() {
     const [search, setSearch] = useState("");
     const [decisionMessage, setDecisionMessage] = useState("");
     const [sendingDecision, setSendingDecision] = useState(false);
+    const [selectedLote, setSelectedLote] = useState("");
 
-    const isFinalState =
-        selectedProyecto?.estado === "aprobado" ||
-        selectedProyecto?.estado === "rechazado";
+    const canTakeDecision =
+        selectedProyecto?.estado === "en_revision";
 
     const cambiarEstado = async (estado: string) => {
         if (!selectedProyecto) return;
@@ -112,6 +112,180 @@ export default function ProyectosPanel() {
 
         } finally {
             setSendingDecision(false);
+        }
+    };
+
+
+    const aprobarProyecto = async () => {
+
+        if (!selectedProyecto) return;
+
+        if (!selectedLote.trim()) {
+            alert("Debe seleccionar un lote.");
+            return;
+        }
+
+        if (!decisionMessage.trim()) {
+            alert("Debe redactar un mensaje para la empresa.");
+            return;
+        }
+
+        try {
+            setSendingDecision(true);
+
+            const loteIdParsed = Number(selectedLote);
+
+            if (isNaN(loteIdParsed)) {
+                alert("ID de lote inválido");
+                return;
+            }
+
+            // =========================
+            // ASIGNAR / OCUPAR LOTE
+            // =========================
+
+            if (selectedProyecto.tipoProyecto === "Definitivo") {
+                await empresasApi.ocuparLote(
+                    selectedProyecto.cuitEmpresa,
+                    loteIdParsed
+                );
+            } else {
+                await empresasApi.asignarLote(
+                    selectedProyecto.cuitEmpresa,
+                    loteIdParsed
+                );
+            }
+
+            // =========================
+            // MENSAJE
+            // =========================
+
+            await mensajeriaApi.enviarMensaje(
+                selectedProyecto.usuarioNombre,
+                decisionMessage
+            );
+
+            // =========================
+            // CAMBIAR ESTADO PROYECTO
+            // =========================
+
+            await cambiarEstado("APROBADO");
+
+            // =========================
+            // RADICACIÓN (SOLO DEFINITIVOS)
+            // =========================
+
+            if (selectedProyecto.tipoProyecto === "Definitivo") {
+                await empresasApi.actualizarEstadoRadicacion(
+                    selectedProyecto.cuitEmpresa,
+                    true
+                );
+            }
+
+            // =========================
+            // UPDATE LOCAL UI
+            // =========================
+
+            setProyectos(prev =>
+                prev.map(p =>
+                    p.id === selectedProyecto.id
+                        ? { ...p, estado: "aprobado" }
+                        : p
+                )
+            );
+
+            // =========================
+            // CLEANUP
+            // =========================
+
+            setSelectedProyecto(null);
+            setDecisionMessage("");
+            setSelectedLote("");
+
+        } catch (err) {
+            console.error(err);
+            alert("Error al aprobar el proyecto.");
+        } finally {
+            setSendingDecision(false);
+        }
+    };
+
+    const rechazarProyecto = async () => {
+
+        if (!selectedProyecto) return;
+
+        if (!decisionMessage.trim()) {
+            alert("Debe redactar un mensaje para la empresa.");
+            return;
+        }
+
+        try {
+
+            setSendingDecision(true);
+
+            // =========================
+            // LIBERAR LOTE
+            // =========================
+
+            // TODO:
+            // cuando exista endpoint
+            // await empresasApi.desocuparLote(
+            //     selectedProyecto.cuitEmpresa
+            // );
+
+            // =========================
+            // EMPRESA NO RADICADA
+            // =========================
+
+            await empresasApi.actualizarEstadoRadicacion(
+                selectedProyecto.cuitEmpresa,
+                false
+            );
+
+            // =========================
+            // MENSAJE
+            // =========================
+
+            await mensajeriaApi.enviarMensaje(
+                selectedProyecto.usuarioNombre,
+                decisionMessage
+            );
+
+            // =========================
+            // CAMBIAR ESTADO PROYECTO
+            // =========================
+
+            await cambiarEstado("RECHAZADO");
+
+            // =========================
+            // UPDATE LOCAL UI
+            // =========================
+
+            setProyectos(prev =>
+                prev.map(p =>
+                    p.id === selectedProyecto.id
+                        ? { ...p, estado: "rechazado" }
+                        : p
+                )
+            );
+
+            // =========================
+            // CLEANUP
+            // =========================
+
+            setSelectedProyecto(null);
+            setDecisionMessage("");
+            setSelectedLote("");
+
+        } catch (err) {
+
+            console.error(err);
+            alert("Error al rechazar el proyecto.");
+
+        } finally {
+
+            setSendingDecision(false);
+
         }
     };
 
@@ -360,7 +534,11 @@ export default function ProyectosPanel() {
 
                 <div
                     className="modal-overlay"
-                    onClick={() => setSelectedProyecto(null)}
+                    onClick={() => {
+                        setSelectedProyecto(null);
+                        setDecisionMessage("");
+                        setSelectedLote("");
+                    }}
                 >
 
                     <div
@@ -370,7 +548,11 @@ export default function ProyectosPanel() {
 
                         <button
                             className="close-modal"
-                            onClick={() => setSelectedProyecto(null)}
+                            onClick={() => {
+                                setSelectedProyecto(null);
+                                setDecisionMessage("");
+                                setSelectedLote("");
+                            }}
                         >
                             <X size={22} />
                         </button>
@@ -388,191 +570,310 @@ export default function ProyectosPanel() {
 
                         <div className="modal-grid">
 
-                            <div className="modal-field">
-                                <label>Usuario</label>
-                                <p>{selectedProyecto.usuarioNombre}</p>
-                            </div>
+                            {/* ================= IDENTIFICACIÓN ================= */}
+                            <fieldset className="form-section">
+                                <legend>Identificación</legend>
 
-                            <div className="modal-field">
-                                <label>CUIT</label>
-                                <p>{selectedProyecto.cuitEmpresa}</p>
-                            </div>
+                                <div className="modal-field">
+                                    <label>Nombre</label>
+                                    <p>{selectedProyecto.nombre}</p>
+                                </div>
+                                <div className="modal-field">
+                                    <label>Numero de Proyecto</label>
+                                    <p>{selectedProyecto.id}</p>
+                                </div>
 
-                            <div className="modal-field">
-                                <label>Actividad Principal</label>
-                                <p>{selectedProyecto.actividadPrincipal || "-"}</p>
-                            </div>
+                                <div className="modal-field">
+                                    <label>Fecha Creación</label>
+                                    <p>{selectedProyecto.fechaCreacion || "-"}</p>
+                                </div>
 
-                            <div className="modal-field">
-                                <label>Actividad Secundaria</label>
-                                <p>{selectedProyecto.actividadSecundaria || "-"}</p>
-                            </div>
+                                <div className="modal-field">
+                                    <label>Última Actualización</label>
+                                    <p>{selectedProyecto.fechaActualizacion || "-"}</p>
+                                </div>
 
-                            <div className="modal-field full-width">
-                                <label>Descripción</label>
-                                <p>{selectedProyecto.descripcion || "-"}</p>
-                            </div>
+                            </fieldset>
 
-                            <div className="modal-field">
-                                <label>Persona Referente</label>
-                                <p>{selectedProyecto.personaReferente || "-"}</p>
-                            </div>
+                            {/* ================= CONTACTO ================= */}
+                            <fieldset className="form-section">
+                                <legend>Contacto</legend>
 
-                            <div className="modal-field">
-                                <label>Teléfono</label>
-                                <p>{selectedProyecto.telefono || "-"}</p>
-                            </div>
+                                <div className="modal-field">
+                                    <label>Usuario</label>
+                                    <p>{selectedProyecto.usuarioNombre}</p>
+                                </div>
+                                <div className="modal-field">
+                                    <label>Persona Referente</label>
+                                    <p>{selectedProyecto.personaReferente || "-"}</p>
+                                </div>
+                                <div className="modal-field">
+                                    <label>Teléfono</label>
+                                    <p>{selectedProyecto.telefono || "-"}</p>
+                                </div>
+                                <div className="modal-field">
+                                    <label>CUIT</label>
+                                    <p>{selectedProyecto.cuitEmpresa}</p>
+                                </div>
+                            </fieldset>
 
-                            <div className="modal-field">
-                                <label>Superficie</label>
-                                <p>
-                                    {selectedProyecto.superficieRequerida || 0} m²
-                                </p>
-                            </div>
+                            {/* ================= ACTIVIDAD ================= */}
+                            <fieldset className="form-section">
+                                <legend>Actividad Propuesta</legend>
 
-                            <div className="modal-field">
-                                <label>Personal</label>
-                                <p>
-                                    {selectedProyecto.personalAOcupar || 0}
-                                </p>
-                            </div>
+                                <div className="modal-field">
+                                    <label>Actividad Principal</label>
+                                    <p>{selectedProyecto.actividadPrincipal || "-"}</p>
+                                </div>
 
-                            <div className="modal-field">
-                                <label>Potencia</label>
-                                <p>
-                                    {selectedProyecto.potenciaInstalada || 0} KW
-                                </p>
-                            </div>
+                                <div className="modal-field">
+                                    <label>Actividad Secundaria</label>
+                                    <p>{selectedProyecto.actividadSecundaria || "-"}</p>
+                                </div>
 
-                            <div className="modal-field">
-                                <label>Fecha</label>
+                                <div className="modal-field full-width">
+                                    <label>Descripción</label>
+                                    <p>{selectedProyecto.descripcion || "-"}</p>
+                                </div>
+                            </fieldset>
 
-                                <p className="date-row">
-                                    <CalendarDays size={16} />
-                                    {selectedProyecto.fechaCreacion || "-"}
-                                </p>
-                            </div>
-                        </div>
+                            {/* ================= ANTECEDENTES ================= */}
+                            <fieldset className="form-section">
+                                <legend>ANTECEDENTES</legend>
 
-                        <div className="documents-section">
+                                <div className="modal-field">
+                                    <label>Tipo Empresa</label>
+                                    <p>{selectedProyecto.tipoEmpresa || "-"}</p>
+                                </div>
 
-                            <h3>Documentación</h3>
+                                {selectedProyecto.tipoEmpresa !== "nueva" && (
+                                    <>
+                                        <div className="modal-field">
+                                            <label>Rubro</label>
+                                            <p>{selectedProyecto.rubro || "-"}</p>
+                                        </div>
 
-                            <div className="documents-grid">
+                                        <div className="modal-field full-width">
+                                            <label>Dirección</label>
+                                            <p>{(selectedProyecto as any).direccion || "-"}</p>
+                                        </div>
+
+                                        <div className="modal-field">
+                                            <label>Emplazamiento Actual</label>
+                                            <p>{(selectedProyecto as any).emplazamientoActual || "-"}</p>
+                                        </div>
+
+                                        <div className="modal-field">
+                                            <label>Tiempo Radicación</label>
+                                            <p>{(selectedProyecto as any).tiempoRadicacion || "-"}</p>
+                                        </div>
+                                        <div className="modal-field full-width">
+                                            <label>Descripción Servicio</label>
+                                            <p>{(selectedProyecto as any).descripcionServicio || "-"}</p>
+                                        </div>
+                                    </>
+                                )}
+                            </fieldset>
+
+                            {/* ================= SUPERFICIES ================= */}
+                            <fieldset className="form-section">
+                                <legend>Superficies Requeridas</legend>
+
+                                <div className="modal-field">
+                                    <label>Superficie Total</label>
+                                    <p>{selectedProyecto.superficieRequerida ?? 0} m²</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Superficie Trabajo</label>
+                                    <p>{(selectedProyecto as any).superficieTrabajo ?? 0} m²</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Superficie Depósito</label>
+                                    <p>{(selectedProyecto as any).superficieDeposito ?? 0} m²</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Superficie Cubierta</label>
+                                    <p>{(selectedProyecto as any).superficieCubierta ?? 0} m²</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Superficie Estacionamiento</label>
+                                    <p>{(selectedProyecto as any).superficieEstacionamiento ?? 0} m²</p>
+                                </div>
+                            </fieldset>
+
+                            {/* ================= CONSUMOS ================= */}
+                            <fieldset className="form-section">
+                                <legend>Consumos y Energía</legend>
+
+                                <div className="modal-field">
+                                    <label>Potencia Instalada Prevista</label>
+                                    <p>{selectedProyecto.potenciaInstalada ?? 0} kW/mes</p>
+                                </div>
+                                <div className="modal-field">
+                                    <label>Tensión Alimentación</label>
+                                    <p>{(selectedProyecto as any).tensionAlimentacion || "-"}</p>
+                                </div>
+                                <div className="modal-field">
+                                    <label>Agua Mensual</label>
+                                    <p>{(selectedProyecto as any).aguaMensual ?? 0} m³/mes</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Gas Mensual</label>
+                                    <p>{(selectedProyecto as any).gasMensual ?? 0} m³/mes</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Residuos Tipo</label>
+                                    <p>{(selectedProyecto as any).residuosTipo || "-"}</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Cantidad de Residuos</label>
+                                    <p>{(selectedProyecto as any).residuosCantidad ?? 0} Kg/mes </p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Tratamiento Efluentes</label>
+                                    <p>{(selectedProyecto as any).tratamientoEfluentes || "-"}</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Personal a Ocupar</label>
+                                    <p>{selectedProyecto.personalAOcupar || 0}</p>
+                                </div>
+                            </fieldset>
+
+                            {/* ================= INFRAESTRUCTURA ================= */}
+                            <fieldset className="form-section">
+                                <legend>Infraestructura Requerida</legend>
+
+                                <div className="modal-field">
+                                    <label>Balanza Pública</label>
+                                    <p>{(selectedProyecto as any).balanzaPublica || "-"}</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>Comedor</label>
+                                    <p>{(selectedProyecto as any).comedor || "-"}</p>
+                                </div>
+
+                                <div className="modal-field">
+                                    <label>SUM / Coworking</label>
+                                    <p>{(selectedProyecto as any).sumCoworking || "-"}</p>
+                                </div>
+                            </fieldset>
+
+                            {/* ================ DOCUMENTACIÓN =================== */}
+                            <fieldset className="form-section">
+                                <legend>Documentación</legend>
 
                                 {selectedProyecto.linkPlanos && (
-                                    <a
-                                        href={selectedProyecto.linkPlanos}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="document-link"
-                                    >
+                                    <a className="document-link" href={selectedProyecto.linkPlanos} target="_blank">
                                         Planos
                                     </a>
                                 )}
 
                                 {selectedProyecto.linkViabilidadFinanciera && (
-                                    <a
-                                        href={selectedProyecto.linkViabilidadFinanciera}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="document-link"
-                                    >
+                                    <a className="document-link" href={selectedProyecto.linkViabilidadFinanciera} target="_blank">
                                         Viabilidad Financiera
                                     </a>
                                 )}
 
                                 {selectedProyecto.linkEstudioMercado && (
-                                    <a
-                                        href={selectedProyecto.linkEstudioMercado}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="document-link"
-                                    >
-                                        Estudio de Mercado
+                                    <a className="document-link" href={selectedProyecto.linkEstudioMercado} target="_blank">
+                                        Estudio Mercado
                                     </a>
                                 )}
 
                                 {selectedProyecto.linkImpactoAmbiental && (
-                                    <a
-                                        href={selectedProyecto.linkImpactoAmbiental}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="document-link"
-                                    >
+                                    <a className="document-link" href={selectedProyecto.linkImpactoAmbiental} target="_blank">
                                         Impacto Ambiental
                                     </a>
                                 )}
 
                                 {selectedProyecto.linkHabilitacionMunicipal && (
-                                    <a
-                                        href={selectedProyecto.linkHabilitacionMunicipal}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="document-link"
-                                    >
+                                    <a className="document-link" href={selectedProyecto.linkHabilitacionMunicipal} target="_blank">
                                         Habilitación Municipal
                                     </a>
                                 )}
 
                                 {selectedProyecto.linkCertificadoInhibiciones && (
-                                    <a
-                                        href={selectedProyecto.linkCertificadoInhibiciones}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="document-link"
-                                    >
-                                        Certificado de Inhibiciones
+                                    <a className="document-link" href={selectedProyecto.linkCertificadoInhibiciones} target="_blank">
+                                        Certificado Inhibiciones
                                     </a>
                                 )}
+                            </fieldset>
 
-                            </div>
+
                         </div>
 
-                        {!isFinalState && (
+                        {canTakeDecision && (
                             <div className="decision-block">
 
-                                <div className="decision-input-row">
+                                <div className="decision-panel">
 
                                     <textarea
                                         className="decision-textarea"
                                         placeholder="Escribí el motivo de la decisión..."
                                         value={decisionMessage}
                                         onChange={(e) => setDecisionMessage(e.target.value)}
+                                        disabled={sendingDecision}
                                     />
 
-                                    <div className="decision-buttons">
+                                    <input
+                                        type="number"
+                                        className="decision-lote-input"
+                                        placeholder="ID del lote (opcional)"
+                                        value={selectedLote}
+                                        onChange={(e) => setSelectedLote(e.target.value)}
+                                        disabled={sendingDecision}
+                                    />
 
-                                        <button
-                                            className="btn-rectify"
-                                            onClick={solicitarRectificacion}
-                                            disabled={sendingDecision}
-                                        >
-                                            Solicitar Rectificación
-                                        </button>
-
-                                    </div>
                                 </div>
 
-                                <div className="modal-actions">
+                                <div className="decision-actions">
 
-                                    <button className="btn-approve">
+                                    <button
+                                        className="btn-rectify"
+                                        onClick={solicitarRectificacion}
+                                        disabled={sendingDecision}
+                                    >
+                                        Rectificar
+                                    </button>
+
+                                    <button
+                                        className="btn-approve"
+                                        onClick={aprobarProyecto}
+                                        disabled={sendingDecision}
+                                    >
                                         Aprobar
                                     </button>
 
-                                    <button className="btn-reject">
+                                    <button
+                                        className="btn-reject"
+                                        onClick={rechazarProyecto}
+                                        disabled={sendingDecision}
+                                    >
                                         Rechazar
                                     </button>
 
                                 </div>
+
                             </div>
                         )}
-                        {isFinalState && (
+                        {!canTakeDecision && (
                             <div className="modal-actions">
                                 <div className={`status-pill ${selectedProyecto.estado}`}>
-                                    {selectedProyecto.estado === "aprobado"
-                                        ? "Proyecto aprobado"
-                                        : "Proyecto rechazado"}
+                                    {selectedProyecto.estado === "aprobado" && "Proyecto aprobado"}
+
+                                    {selectedProyecto.estado === "rechazado" && "Proyecto rechazado"}
+
+                                    {selectedProyecto.estado === "rectificar" && "Debe Rectificar"}
                                 </div>
                             </div>
                         )}
