@@ -450,7 +450,7 @@ export default function PresupuestoPanel() {
             {modalModificacion && (
                 <div className="modal-overlay">
                     <div className="modal-content budget-modal">
-                        <h3><ArrowLeftRight size={20} /> Reestructuración Analítica de Crédito</h3>
+                        <h3> Reestructuración Analítica de Crédito</h3>
                         <p className="modal-partida-info">Partida seleccionada: <strong>{modalModificacion.codigo} - {modalModificacion.nombre}</strong></p>
 
                         <form onSubmit={handleReestructurar}>
