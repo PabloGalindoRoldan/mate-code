@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { mensajeriaApi, proyectosApi } from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { Save, Send, FileText } from "lucide-react";
+import { toast } from 'sonner';
 
 
 interface Props {
@@ -141,7 +142,7 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
 
     const handleSaveDraft = () => {
         localStorage.setItem("draft_proyecto_definitivo_" + user?.nombreUsuario, JSON.stringify(formData));
-        alert("Borrador guardado localmente.");
+        toast.success("Borrador guardado localmente.");
     };
 
     const handleSubmit = async (e: React.SubmitEvent) => {
@@ -152,14 +153,14 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
         const faltantes = obligatorios.filter(f => !formData[f as keyof typeof formData]);
 
         if (faltantes.length > 0) {
-            alert("Debe completar los campos críticos: " + faltantes.join(", "));
+            toast.warning("Debe completar los campos críticos: " + faltantes.join(", "));
             return;
         }
 
         // Validación extra de seguridad para el CUIT
         const cuit = user?.empresa?.cuit;
         if (!cuit) {
-            alert("Error: No se pudo identificar el CUIT de su empresa. Por favor, contacte al administrador.");
+            toast.error("Error: No se pudo identificar el CUIT de su empresa. Por favor, contacte al administrador.");
             return;
         }
 
@@ -194,7 +195,7 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
             );
 
             setEnviado(true);
-            alert("¡Proyecto enviado correctamente!");
+            toast.success("¡Proyecto enviado correctamente!");
             console.log(enviado)
 
             // 5. Limpiar borrador
@@ -203,7 +204,7 @@ export default function FormularioDefinitivo({ isRectifying, onProyectoEnviado, 
 
         } catch (error) {
             console.error("Error al enviar proyecto:", error);
-            alert("Hubo un error al procesar el proyecto. Por favor, intente nuevamente.");
+            toast.error("Hubo un error al procesar el proyecto. Por favor, intente nuevamente.");
         }
     };
 

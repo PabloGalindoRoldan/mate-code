@@ -29,6 +29,10 @@ public class GestorPresupuesto {
         return daoPresupuesto.obtenerTodasLasPartidas();
     }
 
+    public void registrarNuevaPartida(String codigo, String nombre, String nivel, Integer parentId) {
+        daoPresupuesto.crearPartida(codigo, nombre, nivel, parentId);
+    }
+
     /**
      * Regla del Art. 20 y 27 de la Ley 5763: Las partidas de Personal (Código que
      * inicia con '1.') son inmutables para decrementos en favor de otros rubros.
@@ -87,5 +91,10 @@ public class GestorPresupuesto {
                     dto.getFuenteFinanciamiento(),
                     BigDecimal.valueOf(dto.getMonto()));
         }
+    }
+
+    public List<Map<String, Object>> obtenerHistorialMovimientos(int presupuestoId) {
+        // Delegamos al DAO para que resuelva el UNION de las tablas
+        return daoPresupuesto.obtenerHistorialMovimientos(presupuestoId);
     }
 }

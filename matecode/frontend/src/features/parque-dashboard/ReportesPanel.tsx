@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from 'sonner';
 import { BarChart3, FileText, Download, LayoutGrid, Info, AlertTriangle } from "lucide-react";
 import "./ReportesPanel.css";
 
@@ -32,7 +33,7 @@ export default function ReportesPanel() {
         setIsExporting(true);
         // Aquí se acoplará la llamada a las librerías de guardado en la Iteración correspondiente
         setTimeout(() => {
-            alert(`Reporte exportado exitosamente en formato .${exportFormat.toUpperCase()}`);
+            toast.success(`Reporte exportado exitosamente en formato .${exportFormat.toUpperCase()}`);
             setIsExporting(false);
         }, 1200);
     };

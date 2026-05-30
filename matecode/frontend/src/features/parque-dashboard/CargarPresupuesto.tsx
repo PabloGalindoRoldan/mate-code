@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
+import { toast } from 'sonner';
 import { Save, AlertCircle } from "lucide-react";
 import { presupuestoApi } from "../../api/axios";
 import "./CargarPresupuesto.css";
 
-
 export default function CargarPresupuesto({ onCargaExitosa, ejercicio }: { onCargaExitosa: () => void, ejercicio: number }) {
     const [partidas, setPartidas] = useState<{ id: number; codigo: string; nombre: string }[]>([]);
-    const [formData, setFormData] = useState({ partidaId: "", monto: "", fuente: "Tesoro Provincial" });
+
+    // NUEVO: Agregamos documentoOrigen y fuenteFinanciamiento al estado
+    const [formData, setFormData] = useState({
+        partidaId: "",
+        monto: "",
+        documentoOrigen: "",
+        fuente: "Tesoro Provincial"
+    });
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -25,18 +33,18 @@ export default function CargarPresupuesto({ onCargaExitosa, ejercicio }: { onCar
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Estructura que espera tu Backend ahora (con el ejercicio fiscal)
         const payload = [{
             partidaId: parseInt(formData.partidaId),
             monto: parseFloat(formData.monto),
             fuenteFinanciamiento: formData.fuente,
+            documentoOrigen: formData.documentoOrigen, // Nuevo campo
             ejercicioFiscal: ejercicio
         }];
 
         setLoading(true);
         try {
             await presupuestoApi.cargarPresupuesto(payload);
-            alert("Presupuesto cargado correctamente.");
+            toast.success("Presupuesto cargado correctamente.");
             onCargaExitosa();
         } catch (err: any) {
             setError(err.response?.data?.error || "Error al registrar el presupuesto.");
@@ -47,7 +55,7 @@ export default function CargarPresupuesto({ onCargaExitosa, ejercicio }: { onCar
 
     return (
         <div className="carga-presupuesto-container">
-            <h3><Save size={20} /> Asignación de Crédito Inicial</h3>
+            <h3><Save size={20} /> Asignación de Crédito Inicial ({ejercicio})</h3>
 
             {error && <div className="error-banner"><AlertCircle size={16} /> {error}</div>}
 
@@ -55,6 +63,7 @@ export default function CargarPresupuesto({ onCargaExitosa, ejercicio }: { onCar
                 <div className="field-group">
                     <label>Partida Presupuestaria:</label>
                     <select
+                        required
                         value={formData.partidaId}
                         onChange={(e) => setFormData({ ...formData, partidaId: e.target.value })}
                     >
@@ -66,10 +75,34 @@ export default function CargarPresupuesto({ onCargaExitosa, ejercicio }: { onCar
                 </div>
 
                 <div className="field-group">
+                    <label>Documento de Origen (Ej: Ley 5763 / Resol. Interna):</label>
+                    <input
+                        type="text"
+                        required
+                        value={formData.documentoOrigen}
+                        onChange={(e) => setFormData({ ...formData, documentoOrigen: e.target.value })}
+                        placeholder="Número de Ley o Resolución"
+                    />
+                </div>
+
+                <div className="field-group">
+                    <label>Fuente de Financiamiento:</label>
+                    <select
+                        value={formData.fuente}
+                        onChange={(e) => setFormData({ ...formData, fuente: e.target.value })}
+                    >
+                        <option value="Tesoro Provincial">Tesoro Provincial</option>
+                        <option value="Recursos Propios">Recursos Propios (Venta de tierras)</option>
+                        <option value="Otras Fuentes">Otras Fuentes</option>
+                    </select>
+                </div>
+
+                <div className="field-group">
                     <label>Monto Aprobado ($):</label>
                     <input
                         type="number"
                         step="0.01"
+                        required
                         value={formData.monto}
                         onChange={(e) => setFormData({ ...formData, monto: e.target.value })}
                         placeholder="0.00"

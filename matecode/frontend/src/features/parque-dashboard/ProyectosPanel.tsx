@@ -1,7 +1,7 @@
 import "./ProyectosPanel.css";
 
 import { useEffect, useMemo, useState } from "react";
-
+import { toast } from 'sonner';
 import {
     FolderKanban,
     Search,
@@ -121,12 +121,12 @@ export default function ProyectosPanel() {
         if (!selectedProyecto) return;
 
         if (!selectedLote.trim()) {
-            alert("Debe seleccionar un lote.");
+            toast.warning("Debe seleccionar un lote.");
             return;
         }
 
         if (!decisionMessage.trim()) {
-            alert("Debe redactar un mensaje para la empresa.");
+            toast.warning("Debe redactar un mensaje para la empresa.");
             return;
         }
 
@@ -136,7 +136,7 @@ export default function ProyectosPanel() {
             const loteIdParsed = Number(selectedLote);
 
             if (isNaN(loteIdParsed)) {
-                alert("ID de lote inválido");
+                toast.error("ID de lote inválido");
                 return;
             }
 
@@ -204,7 +204,7 @@ export default function ProyectosPanel() {
 
         } catch (err) {
             console.error(err);
-            alert("Error al aprobar el proyecto.");
+            toast.error("Error al aprobar el proyecto.");
         } finally {
             setSendingDecision(false);
         }
@@ -215,7 +215,7 @@ export default function ProyectosPanel() {
         if (!selectedProyecto) return;
 
         if (!decisionMessage.trim()) {
-            alert("Debe redactar un mensaje para la empresa.");
+            toast.warning("Debe redactar un mensaje para la empresa.");
             return;
         }
 
@@ -278,7 +278,7 @@ export default function ProyectosPanel() {
         } catch (err) {
 
             console.error(err);
-            alert("Error al rechazar el proyecto.");
+            toast.error("Error al rechazar el proyecto.");
 
         } finally {
 

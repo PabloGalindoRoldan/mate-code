@@ -6,7 +6,6 @@ import "./EmpresaNoRadicadaView.css";
 
 import FormularioPreliminar from './FormularioPreliminar';
 import EnRevision from './EnRevision';
-import ErrorView from './ErrorView';
 import FormularioDefinitivo from './FormularioDefinitivo';
 
 import NavBar from '../../ui/navBar/NavBar';
@@ -198,7 +197,7 @@ export default function EmpresaNoRadicadaView() {
 
             default:
 
-                return <ErrorView />;
+                return <div>Error!</div>;
         }
     };
 
