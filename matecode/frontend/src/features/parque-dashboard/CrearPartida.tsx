@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from 'sonner';
 import { presupuestoApi } from "../../api/axios";
 import "./CrearPartida.css"
+import "./CargarPresupuesto.css"
 
 export default function CrearPartida({ onGuardadoExitoso }: { onGuardadoExitoso: () => void }) {
     // Inicializamos con los nuevos campos requeridos
@@ -27,31 +28,44 @@ export default function CrearPartida({ onGuardadoExitoso }: { onGuardadoExitoso:
     };
 
     return (
-        <form onSubmit={handleSubmit} className="form-admin-partidas">
-            <input
-                placeholder="Código (ej: 1.1.0)"
-                value={formData.codigo}
-                onChange={e => setFormData({ ...formData, codigo: e.target.value })}
-                required
-            />
-            <input
-                placeholder="Nombre de la partida"
-                value={formData.nombre}
-                onChange={e => setFormData({ ...formData, nombre: e.target.value })}
-                required
-            />
-            <select
-                value={formData.nivel}
-                onChange={e => setFormData({ ...formData, nivel: e.target.value as any })}
-            >
-                <option value="PRINCIPAL">PRINCIPAL</option>
-                <option value="PARCIAL">PARCIAL</option>
-                <option value="SUBPARCIAL">SUBPARCIAL</option>
-            </select>
+        <div className="carga-presupuesto-container">
+            <h3> Nueva Partida</h3>
 
-            {/* Opcional: Podrías añadir aquí un campo para el parentId si fuera necesario */}
+            <form onSubmit={handleSubmit} className="form-carga">
+                <div className="field-group">
+                    <label>Código:</label>
+                    <input
+                        placeholder="Ej: 1.1.0"
+                        value={formData.codigo}
+                        onChange={e => setFormData({ ...formData, codigo: e.target.value })}
+                        required
+                    />
+                </div>
 
-            <button type="submit">Guardar Partida</button>
-        </form>
+                <div className="field-group">
+                    <label>Nombre de la partida:</label>
+                    <input
+                        placeholder="Descripción de la partida"
+                        value={formData.nombre}
+                        onChange={e => setFormData({ ...formData, nombre: e.target.value })}
+                        required
+                    />
+                </div>
+
+                <div className="field-group">
+                    <label>Nivel:</label>
+                    <select
+                        value={formData.nivel}
+                        onChange={e => setFormData({ ...formData, nivel: e.target.value as any })}
+                    >
+                        <option value="PRINCIPAL">PRINCIPAL</option>
+                        <option value="PARCIAL">PARCIAL</option>
+                        <option value="SUBPARCIAL">SUBPARCIAL</option>
+                    </select>
+                </div>
+
+                <button type="submit" className="btn-save">Guardar Partida</button>
+            </form>
+        </div>
     );
 }
