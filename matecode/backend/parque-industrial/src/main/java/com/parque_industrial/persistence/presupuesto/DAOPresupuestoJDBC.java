@@ -214,4 +214,89 @@ public class DAOPresupuestoJDBC implements DAOPresupuesto {
         }
         return catalogo;
     }
+
+    @Override
+    public void crearPartida(String codigo, String nombre, String nivel, Integer parentId) {
+        String sql = "INSERT INTO partidas_presupuestarias (codigo, nombre, nivel, parent_id) VALUES (?, ?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, codigo);
+            ps.setString(2, nombre);
+            ps.setString(3, nivel); // Asegúrate de que coincida con el ENUM
+
+            if (parentId != null) {
+                ps.setInt(4, parentId);
+            } else {
+                ps.setNull(4, java.sql.Types.INTEGER);
+            }
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al crear partida. Verifica si el nivel es correcto: " + e.getMessage(),
+                    e);
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> obtenerHistorialMovimientos(int presupuestoId) {
+        List<Map<String, Object>> historial = new ArrayList<>();
+
+        // Ajustamos los nombres de las columnas para que coincidan con tu esquema real
+        String sql = """
+                SELECT
+                    fecha AS fecha,
+                    'MODIFICACION' AS origen,
+                    tipo AS tipo,
+                    justificacion,
+                    NULL AS fase,
+                    NULL AS comprobante_tipo,
+                    NULL AS comprobante_nro,
+                    NULL AS descripcion,
+                    monto
+                FROM modificaciones_presupuestarias
+                WHERE presupuesto_id = ?
+
+                UNION ALL
+
+                SELECT
+                    fecha AS fecha,
+                    'EJECUCION' AS origen,
+                    NULL AS tipo,
+                    NULL AS justificacion,
+                    fase,
+                    comprobante_tipo,
+                    comprobante_nro,
+                    descripcion,
+                    monto
+                FROM registro_ejecucion_gasto
+                WHERE presupuesto_id = ?
+
+                ORDER BY fecha ASC
+                """;
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, presupuestoId);
+            ps.setInt(2, presupuestoId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> fila = new HashMap<>();
+                    fila.put("fecha", rs.getDate("fecha"));
+                    fila.put("origen", rs.getString("origen"));
+                    fila.put("tipo", rs.getString("tipo"));
+                    fila.put("justificacion", rs.getString("justificacion"));
+                    fila.put("fase", rs.getString("fase"));
+                    fila.put("comprobante_tipo", rs.getString("comprobante_tipo"));
+                    fila.put("comprobante_nro", rs.getString("comprobante_nro"));
+                    fila.put("descripcion", rs.getString("descripcion"));
+                    fila.put("monto", rs.getBigDecimal("monto"));
+
+                    historial.add(fila);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener el historial de movimientos unificado", e);
+        }
+        return historial;
+    }
 }

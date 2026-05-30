@@ -1,6 +1,7 @@
 package com.parque_industrial.controllers;
 
 import com.parque_industrial.dto.presupuesto.BalancePartidaDTO;
+import com.parque_industrial.dto.presupuesto.CrearPartidaRequest;
 import com.parque_industrial.dto.presupuesto.PresupuestoInicialDTO;
 import com.parque_industrial.dto.presupuesto.ModificacionPresupuestariaRequest;
 import com.parque_industrial.dto.presupuesto.RegistroGastoRequest;
@@ -109,8 +110,32 @@ public class PresupuestoController {
 
     @GetMapping("/partidas-catalogo")
     public ResponseEntity<List<Map<String, Object>>> getCatalogo() {
-        // Esto debería llamar a un método en tu servicio que haga un SELECT * FROM
-        // partidas_presupuestarias
         return ResponseEntity.ok(gestorPresupuesto.obtenerCatalogoPartidas());
+    }
+
+    @PostMapping("/partidas")
+    public ResponseEntity<?> registrarPartida(@RequestBody CrearPartidaRequest request) {
+        gestorPresupuesto.registrarNuevaPartida(request.getCodigo(), request.getNombre(), request.getNivel(),
+                request.getParentId());
+        return ResponseEntity.ok(Map.of("message", "Partida creada exitosamente"));
+    }
+
+    /**
+     * * Obtiene el historial unificado de movimientos de una partida (Extracto
+     * Mayor).
+     * Combina modificaciones presupuestarias y registros de ejecución del gasto.
+     * * GET /api/presupuesto/partidas/{presupuestoId}/historial
+     */
+    @GetMapping("/partidas/{presupuestoId}/historial")
+    public ResponseEntity<?> getHistorialPartida(@PathVariable int presupuestoId) {
+        try {
+            List<Map<String, Object>> historial = gestorPresupuesto.obtenerHistorialMovimientos(presupuestoId);
+            return ResponseEntity.ok(historial);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Error interno al recuperar el historial contable."));
+        }
     }
 }

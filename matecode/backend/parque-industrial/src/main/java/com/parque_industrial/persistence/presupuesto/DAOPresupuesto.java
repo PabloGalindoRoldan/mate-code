@@ -22,4 +22,8 @@ public interface DAOPresupuesto {
     void insertarPresupuestoInicial(int partidaId, int ejercicio, String fuente, BigDecimal monto);
 
     List<Map<String, Object>> obtenerTodasLasPartidas();
+
+    void crearPartida(String codigo, String nombre, String nivel, Integer parentId);
+
+    List<Map<String, Object>> obtenerHistorialMovimientos(int presupuestoId);
 }

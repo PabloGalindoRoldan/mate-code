@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { empresasApi, consumosApi } from '../../api/axios';
 import { Bar } from 'react-chartjs-2';
+import { toast } from 'sonner';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -118,7 +119,7 @@ export default function EmpresasPanel() {
                     : e
             ));
         } catch (err) {
-            alert('Error al modificar el estado de radicación corporativa.');
+            toast.error('Error al modificar el estado de radicación corporativa.');
         }
     };
 
@@ -126,7 +127,7 @@ export default function EmpresasPanel() {
         try {
             const loteIdParsed = newLote.trim() === '' ? null : Number(newLote);
             if (loteIdParsed !== null && isNaN(loteIdParsed)) {
-                alert('ID de lote inválido');
+                toast.warning('ID de lote inválido');
                 return;
             }
             await empresasApi.ocuparLote(cuit, loteIdParsed);
@@ -134,7 +135,7 @@ export default function EmpresasPanel() {
             setEditingCuit(null);
             setNewLote('');
         } catch (err) {
-            alert('Error al actualizar la asignación parcelaria del lote.');
+            toast.error('Error al actualizar la asignación parcelaria del lote.');
         }
     };
 

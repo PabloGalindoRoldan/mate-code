@@ -67,6 +67,21 @@ export const presupuestoApi = {
         return await API.post('/api/presupuesto/carga-inicial', partidas);
     },
 
+    crearPartida: async (data: {
+        codigo: string;
+        nombre: string;
+        nivel: 'PRINCIPAL' | 'PARCIAL' | 'SUBPARCIAL';
+        parentId: number | null
+    }) => {
+        const response = await API.post('/api/presupuesto/partidas', data);
+        return response.data;
+    },
+
+    getHistorialPartida: async (presupuestoId: number) => {
+        const response = await API.get(`/api/presupuesto/partidas/${presupuestoId}/historial`);
+        return response.data; // Debe retornar un array de MovimientoHistorial ordenado por fecha
+    },
+
     getCatalogo: async () => {
         const response = await API.get('/api/presupuesto/partidas-catalogo');
         return response.data;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from 'sonner';
 import { Trash2, Plus, RefreshCw, AlertTriangle } from "lucide-react";
 import API from "../../api/axios"; // Ajustá la ruta según dónde tengas guardado tu archivo de Axios
 import LoadingSpinner from "../../ui/loading/LoadingSpinner";
@@ -66,7 +67,7 @@ export default function InventarioPanel() {
             cargarInventario();
         } catch (err: any) {
             const msg = err.response?.data || "Error al crear el elemento.";
-            alert(typeof msg === "string" ? msg : "Error al crear el elemento.");
+            toast.error(typeof msg === "string" ? msg : "Error al crear el elemento.");
         }
     };
 
@@ -84,7 +85,7 @@ export default function InventarioPanel() {
             cargarInventario();
         } catch (err: any) {
             const msg = err.response?.data || "No se pudo procesar la baja.";
-            alert(typeof msg === "string" ? msg : "No se pudo procesar la baja.");
+            toast.error(typeof msg === "string" ? msg : "No se pudo procesar la baja.");
         }
     };
 
