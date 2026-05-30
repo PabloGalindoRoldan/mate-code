@@ -1,9 +1,11 @@
 .settings-panel-container {
     padding: 4rem;
+    padding-top: 6rem;
     display: flex;
     justify-content: center;
     justify-self: center;
     align-self: center;
+    min-width: 40%;
 }
 
 .settings-card {
@@ -136,4 +138,33 @@
     background: #f0fdf4;
     color: #15803d;
     border: 1px solid #bbf7d0;
+}
+
+.save-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background: var(--verde1);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.save-btn:hover:not(:disabled) {
+    background: var(--verde2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.save-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

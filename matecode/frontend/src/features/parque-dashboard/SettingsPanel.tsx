@@ -1,54 +1,32 @@
 import { useState } from "react";
 import { authApi } from "../../api/axios";
-import { Lock, ShieldCheck } from "lucide-react";
+import { Save } from "lucide-react";
+import { toast } from "sonner";
 import "./SettingsPanel.css";
 
 export default function SettingsPanel() {
-
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-
+    const [formData, setFormData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState("");
-    const [error, setError] = useState("");
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const LABELS: Record<string, string> = {
+        currentPassword: "CONTRASEÑA ACTUAL",
+        newPassword: "NUEVA CONTRASEÑA",
+        confirmPassword: "CONFIRMAR CONTRASEÑA"
+    };
+
+    const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
-
-        setError("");
-        setSuccess("");
-
-        if (newPassword !== confirmPassword) {
-            setError("Las nuevas contraseñas no coinciden.");
-            return;
+        if (formData.newPassword !== formData.confirmPassword) {
+            return toast.error("Las nuevas contraseñas no coinciden.");
         }
 
-        if (newPassword.length < 6) {
-            setError("La nueva contraseña debe tener al menos 6 caracteres.");
-            return;
-        }
-
+        setLoading(true);
         try {
-            setLoading(true);
-
-            await authApi.changePassword({
-                currentPassword,
-                newPassword,
-                confirmPassword
-            });
-
-            setSuccess("Contraseña actualizada correctamente.");
-
-            setCurrentPassword("");
-            setNewPassword("");
-            setConfirmPassword("");
-
+            await authApi.changePassword(formData);
+            toast.success("Seguridad actualizada correctamente");
+            setFormData({ currentPassword: "", newPassword: "", confirmPassword: "" });
         } catch (err: any) {
-            setError(
-                err?.response?.data ||
-                "No se pudo actualizar la contraseña."
-            );
+            toast.error(err?.response?.data || "Error al actualizar la contraseña.");
         } finally {
             setLoading(false);
         }
@@ -56,80 +34,31 @@ export default function SettingsPanel() {
 
     return (
         <div className="settings-panel-container">
-
             <div className="settings-card">
                 <div className="settings-header">
-                    <ShieldCheck size={22} />
                     <div>
-                        <h2>Seguridad de la Cuenta</h2>
-                        <p>Actualice sus credenciales de acceso.</p>
+                        <h2>Seguridad de Cuenta</h2>
+                        <p>Cambiar contraseña</p>
                     </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="password-form">
-
-                    <div className="form-group">
-                        <label>
-                            <Lock size={14} />
-                            Contraseña Actual
-                        </label>
-
-                        <input
-                            type="password"
-                            value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>
-                            <Lock size={14} />
-                            Nueva Contraseña
-                        </label>
-
-                        <input
-                            type="password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>
-                            <Lock size={14} />
-                            Confirmar Nueva Contraseña
-                        </label>
-
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-
-                    {error && (
-                        <div className="settings-error">
-                            {error}
+                    {['currentPassword', 'newPassword', 'confirmPassword'].map((field) => (
+                        <div className="form-group" key={field}>
+                            <label>{LABELS[field]}</label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                value={formData[field as keyof typeof formData]}
+                                onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                                required
+                            />
                         </div>
-                    )}
+                    ))}
 
-                    {success && (
-                        <div className="settings-success">
-                            {success}
-                        </div>
-                    )}
-
-                    <button
-                        type="submit"
-                        className="save-password-btn"
-                        disabled={loading}
-                    >
-                        {loading ? "Actualizando..." : "Actualizar Contraseña"}
+                    <button type="submit" className="save-btn" disabled={loading}>
+                        {loading ? "Procesando..." : <><Save size={18} /> Actualizar Contraseña</>}
                     </button>
-
                 </form>
             </div>
         </div>
