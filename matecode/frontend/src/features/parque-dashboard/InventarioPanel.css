@@ -141,6 +141,15 @@
     border: 1px solid #e2e8f0;
 }
 
+.table-responsive::-webkit-scrollbar {
+    display: none;
+}
+
+.table-responsive {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .inventario-table {
     width: 100%;
     border-collapse: collapse;
@@ -299,4 +308,66 @@
 
 .btn-confirm-baja:hover {
     background: #c53030;
+}
+
+/* --- Ajustes para pantallas < 768px --- */
+@media (max-width: 768px) {
+    .inventario-panel {
+        padding: 1rem;
+        padding-top: 5rem;
+    }
+
+    /* Convertir el formulario horizontal en vertical */
+    .alta-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .panel-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .btn-registrarElemento {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* --- Ajustes para pantallas < 600px --- */
+@media (max-width: 600px) {
+
+    .inventario-panel {
+        padding-top: 2rem;
+        min-height: 120vh;
+    }
+
+    /* Ajuste de fuentes para evitar desbordamientos */
+    .inventario-table th,
+    .inventario-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    /* Modales: asegurar que ocupen casi toda la pantalla pero sean usables */
+    .modal-content {
+        width: 90%;
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .btn-cancel,
+    .btn-confirm-baja {
+        width: 100%;
+    }
+
+    .table-responsive {
+        overflow-x: scroll;
+    }
 }

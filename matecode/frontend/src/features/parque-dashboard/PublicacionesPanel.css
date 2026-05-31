@@ -256,15 +256,64 @@
     background-color: #16a34a;
 }
 
-/* Small Responsive Tweaks */
-@media (max-width: 640px) {
-    .formRowGrid {
-        grid-template-columns: 1fr;
+@media (max-width: 768px) {
+
+    /* Reduce side padding for better space utilization on tablets/phones */
+    .publicacionesPanel {
+        padding: 4rem 1rem;
+        max-width: 100vw;
     }
+
+    .tableWrapper {
+        max-width: 100%;
+    }
+
+    /* Stack header elements vertically */
+    .panelHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    /* Reduce table cell padding to prevent horizontal overflow */
+    .publicacionesTable th,
+    .publicacionesTable td {
+        padding: 12px 10px;
+    }
+
+    /* Adjust max-width for the truncated cell so it doesn't break the layout */
+    .pubTruncatedCell {
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 640px) {
 
     .panelHeader {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
+
+    /* Stack grid columns in forms */
+    .formRowGrid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Full-width buttons on mobile */
+    .btnNuevaPublicacion {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Reduce font sizes for smaller viewports */
+    .panelHeader h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Optimize form container padding */
+    .formViewContainer {
+        padding: 20px;
+    }
+
 }

@@ -39,6 +39,9 @@
     font-weight: 300;
     color: white;
     font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* --- SWITCH BASE (ESCRITORIO) --- */
@@ -84,7 +87,8 @@
 
 @media (max-width: 768px) {
     .map-menu-sidebar {
-        width: 180px;
+        width: 160px;
+        padding: 20px 0px;
     }
 
     .option-label {
@@ -105,6 +109,5 @@
 
     .switch-btn.on .switch-slider {
         transform: translateX(14px);
-
     }
 }

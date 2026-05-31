@@ -454,3 +454,61 @@
 .text-danger {
     color: #dc2626;
 }
+
+/* --- Ajustes para Tablet (hasta 900px) --- */
+@media (max-width: 900px) {
+    .reportes-content-layout {
+        grid-template-columns: 1fr;
+        /* Apila las tarjetas */
+    }
+
+    .reportes-panel {
+        padding: 16px;
+        /* Menos padding en móviles para ganar espacio */
+        padding-top: 4rem;
+    }
+}
+
+/* --- Ajustes para Móvil (hasta 600px) --- */
+@media (max-width: 600px) {
+
+    /* Permitir scroll horizontal en tablas internas */
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ajustar las estadísticas para que no se amontonen */
+    .stats-grid-preview {
+        grid-template-columns: 1fr;
+        /* Una sola columna de estadísticas */
+    }
+
+    /* Ajustar los tabs para que no ocupen demasiado espacio */
+    .reportes-tabs {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .tab-btn {
+        flex: 1 1 auto;
+        /* Permite que los tabs se ajusten */
+        justify-content: center;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    /* Reducir tamaño de fuentes en tablas para evitar cortes */
+    .inventario-report-table,
+    .presupuesto-detail-table {
+        font-size: 12px;
+    }
+
+    .inventario-report-table th,
+    .inventario-report-table td,
+    .presupuesto-detail-table th,
+    .presupuesto-detail-table td {
+        padding: 8px 6px;
+    }
+}
