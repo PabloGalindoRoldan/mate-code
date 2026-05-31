@@ -321,3 +321,62 @@
         transform: translateY(0);
     }
 }
+
+/* Inventario */
+
+.stat-box.blue {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.inventory-value-card {
+    margin-top: 16px;
+    padding: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inventory-label {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Presupuesto */
+
+.budget-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.budget-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.budget-row span {
+    color: #4b5563;
+    font-size: 14px;
+}
+
+.budget-row strong {
+    color: #111827;
+}
+
+.progress-bar-fill.budget {
+    background: linear-gradient(90deg,
+            #3b82f6,
+            #2563eb);
+}
