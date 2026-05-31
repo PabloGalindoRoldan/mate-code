@@ -365,3 +365,81 @@
 .modal-form-group {
     margin-bottom: 20px;
 }
+
+/* --- Ajustes para Tablet y Móvil --- */
+@media (max-width: 900px) {
+    .presupuesto-panel {
+        padding: 1rem 0.5rem;
+    }
+
+    .table-responsive {
+        width: 100%;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+        overflow: auto;
+        max-width: 95vw;
+    }
+
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .header-title h2,
+    .subtitle-ley {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        max-width: 100%;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.5rem;
+    }
+
+    /* El contenedor del libro mayor necesita ser más compacto */
+    .libro-mayor-container {
+        padding: 1rem;
+        margin: 0;
+    }
+}
+
+@media (max-width: 600px) {
+
+    /* Ajuste de columnas en el formulario del modal */
+    .modal-form-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    /* Reducción drástica de padding en celdas para que quepan más datos */
+    .presupuesto-table th,
+    .presupuesto-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    /* Permitir scroll en el libro mayor interno */
+    .libro-mayor-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    /* Ocultar etiquetas de texto muy largas si es necesario */
+    .badge-operacion {
+        font-size: 0.65rem;
+    }
+
+    .btn-action-budget {
+        max-width: 100%;
+        /* Ahora ocupan el 100% en columna */
+        justify-content: flex-start;
+        /* Alinea el texto a la izquierda */
+    }
+}

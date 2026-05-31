@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'https://mate-code-production.up.railway.app',
+    baseURL: 'http://localhost:8080',
     headers: {
         'Content-Type': 'application/json',
     },

@@ -72,8 +72,9 @@
 
 @media (max-width: 768px) {
     .map-settings-menu-open {
-        right: 190px;
+        right: 145px;
     }
+
 }
 
 /* ==========================================

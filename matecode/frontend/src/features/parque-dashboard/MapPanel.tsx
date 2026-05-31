@@ -300,7 +300,6 @@ export default function MapPanel() {
             <button
                 className={`map-settings-btn ${isMapMenuOpen ? "map-settings-menu-open" : ""}`}
                 onClick={() => setIsMapMenuOpen(!isMapMenuOpen)}
-                style={{ zIndex: 11 }}
             >
                 {isMapMenuOpen ? <ChevronRight size={20} /> : <MapIcon size={20} />}
             </button>
