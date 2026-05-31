@@ -53,6 +53,10 @@ public class EmpresaController {
     @PostMapping("/AsignarLote")
     public void AsignarLote(@RequestBody AsignarLoteRequestDTO datosEntrada) {
         gestor.asignarLoteAEmpresa(datosEntrada.cuit(), datosEntrada.idlote());
+        // este metodo le cambia al lote que le asigna el estado a vendido
+        // y la empresa pasa a ser radicada
+        //si querias dejarlo en el reservado solo hay que cambia el estado metodo Asignarlote de empresadaojdbc
+        //depues en el controller de lote esta el endpoitn par cambiar el estado a un lote sin importar el estado anterior
     }
 
     @PostMapping("/ocupar")

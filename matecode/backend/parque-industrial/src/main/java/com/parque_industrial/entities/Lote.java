@@ -33,8 +33,7 @@ public class Lote {
             BigDecimal montoVenta,
             String nc,
             String parque,
-            String coordinates
-    ) {
+            String coordinates) {
 
         validar(superficie, identificacion);
         validarParque(parque);
@@ -54,8 +53,7 @@ public class Lote {
 
         if (!estado.equals(DISPONIBLE)) {
             throw new IllegalArgumentException(
-                    "El lote no está disponible"
-            );
+                    "El lote no está disponible");
         }
 
         estado = RESERVADO;
@@ -65,8 +63,7 @@ public class Lote {
 
         if (!estado.equals(RESERVADO)) {
             throw new IllegalArgumentException(
-                    "El lote no está reservado"
-            );
+                    "El lote no está reservado");
         }
 
         estado = DISPONIBLE;
@@ -74,46 +71,40 @@ public class Lote {
 
     public void vender(
             BigDecimal monto,
-            LocalDate fechaVenta
-    ) {
+            LocalDate fechaVenta) {
 
         if (!estado.equals(RESERVADO)) {
             throw new IllegalArgumentException(
-                    "El lote debe estar reservado"
-            );
+                    "El lote debe estar reservado");
         }
 
         if (monto.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException(
-                    "Monto inválido"
-            );
+                    "Monto inválido");
         }
 
         if (fechaVenta == null) {
             throw new IllegalArgumentException(
-                    "Fecha inválida"
-            );
+                    "Fecha inválida");
         }
 
         estado = VENDIDO;
         montoVenta = monto;
         this.fechaVenta = fechaVenta;
     }
+
     private void validar(
             double superficie,
-            int identificacion
-    ) {
+            int identificacion) {
 
         if (superficie <= 0) {
             throw new IllegalArgumentException(
-                    "Superficie inválida"
-            );
+                    "Superficie inválida");
         }
 
         if (identificacion < 0) {
             throw new IllegalArgumentException(
-                    "Identificación inválida"
-            );
+                    "Identificación inválida");
         }
     }
 
@@ -123,8 +114,7 @@ public class Lote {
                 && !parque.equals(PARQUE_VIEJO)) {
 
             throw new IllegalArgumentException(
-                    "Parque inválido"
-            );
+                    "Parque inválido");
         }
     }
 

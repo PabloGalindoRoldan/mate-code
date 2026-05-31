@@ -56,6 +56,7 @@
       <list>
         <option value="Record" />
         <option value="Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -136,6 +137,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.parque_industrial.dto.lote" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial" />
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\main\java" />
@@ -169,7 +173,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
       <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
-      <option name="METHOD_NAME" value="testCrearLote" />
+      <option name="METHOD_NAME" value="testCambiarEstado" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -234,6 +238,8 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testCambiarEstado" />
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testReservarLote" />
         <item itemvalue="Spring Boot.ParqueIndustrialApplication" />
         <item itemvalue="JUnit.CrearAdminParque.crear" />
         <item itemvalue="JUnit.LoteTest" />

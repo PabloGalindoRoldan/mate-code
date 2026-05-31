@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LoteDAO {
 
-    //void crear(Lote lote);
+    // void crear(Lote lote);
 
     void actualizar(Lote lote);
 

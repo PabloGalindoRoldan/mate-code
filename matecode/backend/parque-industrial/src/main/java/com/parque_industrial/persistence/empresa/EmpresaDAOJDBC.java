@@ -87,7 +87,7 @@ public class EmpresaDAOJDBC implements EmpresaDAO {
     @Override
     @Transactional
     public void asignarLote(String cuit, Integer idLote) {
-        String sql = "UPDATE empresas SET idlote = ? WHERE cuit = ?";
+        String sql = "UPDATE empresas SET idlote = ?, es_radicada = 0 WHERE cuit = ?";
         jdbcTemplate.update(sql, idLote, cuit);
 
         String sql2 = "UPDATE lote SET estado = 'reservado' WHERE id = ?";
