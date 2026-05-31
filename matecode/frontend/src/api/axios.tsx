@@ -95,6 +95,16 @@ export const lotesApi = {
     }
 };
 
+export const inventarioApi = {
+    listarInventario: async (soloActivos = false, config = {}) => {
+        const response = await API.get('/api/inventario', {
+            params: { soloActivos },
+            ...config,
+        });
+        return response.data;
+    }
+};
+
 export const consumosApi = {
     // Fetches the entire park's consumption logs for a given calendar year
     getReporteGlobal: async (ano: number) => {

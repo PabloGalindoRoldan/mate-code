@@ -41,10 +41,43 @@ export interface InventarioResumen {
     valorEstimado: number;
 }
 
+export interface InventarioCategoriaResumen {
+    categoria: string;
+    label: string;
+    cantidad: number;
+}
+
+export interface InventarioItem {
+    id: number;
+    nombre: string;
+    categoria: string;
+    detalle: string;
+    activo: boolean;
+}
+
+export interface PresupuestoPartida {
+    presupuestoId: number;
+    codigo: string;
+    nombre: string;
+    nivel: 'PRINCIPAL' | 'PARCIAL' | 'SUBPARCIAL';
+    fuenteFinanciamiento: string;
+    creditoOriginal: number;
+    creditoVigente: number;
+    comprometido: number;
+    devengado: number;
+    pagado: number;
+    saldoDisponible: number;
+}
+
 export interface PresupuestoResumen {
     presupuestoAnual: number;
+    creditoVigente?: number;
+    comprometido?: number;
+    devengado?: number;
+    pagado?: number;
     ejecutado: number;
     disponible: number;
+    totalPartidas?: number;
 }
 
 export interface ReportData {
@@ -52,7 +85,23 @@ export interface ReportData {
     empresasActivas?: number;
     empresasPendientes?: number;
     inventarioResumen?: InventarioResumen;
+    inventarioCategorias?: InventarioCategoriaResumen[];
+    inventarioActivosTotal?: number;
+    inventarioItems?: InventarioItem[];
     presupuestoResumen?: PresupuestoResumen;
+    presupuestoPartidas?: PresupuestoPartida[];
+    proyectosEnRevision?: number;
+    proyectosAprobados?: number;
+    proyectosRectificar?: number;
+    proyectosRechazados?: number;
+    consumosTotales?: {
+        luz: number;
+        gas: number;
+        agua: number;
+    };
+    empleadosUltimoRegistro?: number;
+    vehiculosUltimoRegistro?: number;
+    ultimaFechaRegistro?: string;
 }
 
 export interface ReportProps {

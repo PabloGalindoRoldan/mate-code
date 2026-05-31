@@ -10,20 +10,21 @@ export function ProyectosReport({ data }: ReportProps) {
 
             <div className="stats-grid-preview">
                 <div className="stat-box green">
-                    <span className="stat-val">{data.empresasActivas ?? 0}</span>
-                    <span className="stat-lbl">Empresas asociadas</span>
+                    <span className="stat-val">{data.proyectosAprobados ?? 0}</span>
+                    <span className="stat-lbl">Proyectos aprobados</span>
                 </div>
                 <div className="stat-box orange">
-                    <span className="stat-val">{data.empresasPendientes ?? 0}</span>
-                    <span className="stat-lbl">Proyectos pendientes</span>
+                    <span className="stat-val">{data.proyectosEnRevision ?? 0}</span>
+                    <span className="stat-lbl">Proyectos en revisión</span>
                 </div>
-            </div>
-
-            <div className="pending-integration-notice">
-                <div className="notice-title">Próximos pasos</div>
-                <p>
-                    Se integrarán los datos reales de proyectos y su ciclo de vida para este reporte.
-                </p>
+                <div className="stat-box normal">
+                    <span className="stat-val">{data.proyectosRectificar ?? 0}</span>
+                    <span className="stat-lbl">Rectificaciones</span>
+                </div>
+                <div className="stat-box normal">
+                    <span className="stat-val">{data.proyectosRechazados ?? 0}</span>
+                    <span className="stat-lbl">Proyectos rechazados</span>
+                </div>
             </div>
         </section>
     )

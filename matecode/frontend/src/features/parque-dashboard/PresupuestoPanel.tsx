@@ -57,7 +57,7 @@ export default function PresupuestoPanel() {
     const [balance, setBalance] = useState<BalancePartida[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [ejercicio, setEjercicio] = useState<number>(2025);
+    const [ejercicio, setEjercicio] = useState<number>(new Date().getFullYear());
 
     // NUEVOS ESTADOS: Control de fila expandida e historial analítico
     const [expandedId, setExpandedId] = useState<number | null>(null);

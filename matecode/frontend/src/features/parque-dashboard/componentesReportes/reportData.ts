@@ -23,8 +23,13 @@ const defaultInventario: InventarioResumen = {
 
 const defaultPresupuesto: PresupuestoResumen = {
     presupuestoAnual: 250000000,
+    creditoVigente: 215000000,
+    comprometido: 42000000,
+    devengado: 112000000,
+    pagado: 142000000,
     ejecutado: 142000000,
     disponible: 108000000,
+    totalPartidas: 42,
 };
 
 export function getMockReportData(reportType: ReportType): ReportData {

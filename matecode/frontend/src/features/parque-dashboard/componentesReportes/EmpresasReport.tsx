@@ -19,12 +19,6 @@ export function EmpresasReport({ data }: ReportProps) {
                 </div>
             </div>
 
-            <div className="pending-integration-notice">
-                <div className="notice-title">Datos de back-end</div>
-                <p>
-                    Pronto se integrará con los endpoints de empresas para mostrar registros reales.
-                </p>
-            </div>
         </section>
     );
 }
