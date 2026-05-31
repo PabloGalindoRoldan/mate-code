@@ -13,7 +13,7 @@ import { Toaster } from 'sonner';
 
 function App() {
   return (
-    <BrowserRouter basename="/mate-code">
+    <BrowserRouter basename="/">
       <Toaster position="top-right" richColors />
       <Routes>
         {/* Public Routes accessible by anyone */}
