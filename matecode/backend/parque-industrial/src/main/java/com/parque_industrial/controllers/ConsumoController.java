@@ -35,13 +35,8 @@ public class ConsumoController {
             @Valid @RequestBody CargarConsumoRequest request,
             Principal principal) {
 
-        // 1. 'principal.getName()' nos da el username único del token
         String username = principal.getName();
-
-        // 2. Buscamos el CUIT real mapeado en el backend
         String cuitEmpresa = obtenerCuitEmpresaPorUsername(username);
-
-        // 3. Se registra usando el CUIT corporativo recuperado
         gestorConsumos.registrarConsumoMensual(cuitEmpresa, request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -55,14 +50,22 @@ public class ConsumoController {
      */
     @GetMapping("/historial")
     public ResponseEntity<List<ConsumoResponseDTO>> obtenerHistorialEmpresa(Principal principal) {
-        // 1. Obtenemos el username extraído del contexto de seguridad
         String username = principal.getName();
-
-        // 2. Buscamos su CUIT correspondiente
         String cuitEmpresa = obtenerCuitEmpresaPorUsername(username);
-
-        // 3. Traemos el historial filtrado estrictamente por ese CUIT
         List<ConsumoResponseDTO> historial = gestorConsumos.obtenerHistorialEmpresa(cuitEmpresa);
+        return ResponseEntity.ok(historial);
+    }
+
+    /**
+     * GET /api/consumos/historial/{cuit}
+     * Permite a los administradores del parque consultar el historial completo de
+     * cualquier empresa seleccionada usando su CUIT de forma directa.
+     */
+    @GetMapping("/historial/{cuit}")
+    public ResponseEntity<List<ConsumoResponseDTO>> obtenerHistorialEmpresaPorCuit(@PathVariable String cuit) {
+        // Reutiliza directo la lógica que ya tenías en el gestor pasándole el CUIT del
+        // path
+        List<ConsumoResponseDTO> historial = gestorConsumos.obtenerHistorialEmpresa(cuit);
         return ResponseEntity.ok(historial);
     }
 
@@ -79,22 +82,16 @@ public class ConsumoController {
 
     /**
      * Método auxiliar privado para resolver la relación Usuario -> Empresa -> CUIT.
-     * Si no cumple los requisitos de negocio, corta el flujo lanzando una
-     * excepción.
      */
     private String obtenerCuitEmpresaPorUsername(String username) {
         Usuario usuario = usuarioDAO.buscarPorNombreUsuario(username)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado en el sistema"));
 
-        // Validación de seguridad por si un ADMIN_PARQUE intenta entrar a endpoints de
-        // carga/historial corporativo
         if (usuario.getEmpresa() == null || usuario.getEmpresa().getIdentificacion() == null) {
             throw new IllegalArgumentException(
                     "El usuario '" + username + "' no posee una empresa vinculada para operar consumos.");
         }
 
-        // Modificado de .getIdentificacion() a .getCuit() para respetar tu modelo de
-        // datos
         return usuario.getEmpresa().getIdentificacion();
     }
 }

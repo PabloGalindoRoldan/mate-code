@@ -1,0 +1,527 @@
+/* ==========================================================================
+   EMPRESAS MANAGEMENT DASHBOARD PANEL STYLES (CORREGIDO)
+   ========================================================================== */
+
+.empresas-panel-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: #f8fafc;
+    height: auto;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 2rem;
+}
+
+.panel-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.panel-dashboard-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 300;
+    color: #30332D;
+}
+
+.refresh-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.refresh-action-btn:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+/* INPUT FILTERS DISPLAY SECTION */
+.filter-dashboard-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    border: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+    .filter-dashboard-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+.filter-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    /* Permite que los select no fuercen un ancho mínimo */
+}
+
+.filter-input-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+
+.filter-input-group select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 14px;
+    color: #334155;
+    outline: none;
+    cursor: pointer;
+    max-width: 100%;
+}
+
+.filter-input-group select:focus {
+    border-color: var(--verde1);
+    background-color: #ffffff;
+}
+
+/* KPI CARDS CONTAINER */
+.analytics-metrics-grid {
+    display: grid;
+    /* El truco del minmax(0, 1fr) rompe el comportamiento del min-content intrínseco del Grid */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+@media (max-width: 1024px) {
+    .analytics-metrics-grid {
+        grid-template-columns: 1fr;
+        /* Colapsa a una columna en tablets y mobile */
+    }
+}
+
+.metric-panel-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    min-width: 0;
+    /* Previene overflow interno */
+}
+
+.icon-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* Evita que el badge se deforme si el texto empuja */
+}
+
+.icon-badge.power {
+    color: #d9d506;
+}
+
+.icon-badge.staff {
+    color: #0284c7;
+}
+
+.metric-data {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    /* Permite truncar o ajustar textos largos */
+}
+
+.metric-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Si el título no entra, mete puntos suspensivos */
+}
+
+.metric-data h3 {
+    margin: 4px 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.metric-data h3 small {
+    font-size: 14px;
+    font-weight: 400;
+    color: #64748b;
+}
+
+.metric-subtitle {
+    margin: 0;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* VISUAL CHART BOX DISPLAY CONTAINER */
+.chart-visualization-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+}
+
+.chart-visualization-container h3,
+.management-table-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.chart-box-render {
+    height: 280px;
+    position: relative;
+    width: 100%;
+}
+
+/* ==========================================================================
+   MANAGEMENT TABLE — MODERNIZED
+   ========================================================================== */
+
+.management-table-card {
+    background: #ffffff;
+    border-radius: 22px;
+
+    border: 1px solid #e2e8f0;
+
+    padding: 28px;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.04),
+        0 2px 6px rgba(15, 23, 42, 0.04);
+
+    overflow: hidden;
+}
+
+/* HEADER */
+
+.management-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid #edf2f7;
+
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.management-table-header h3 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 300;
+    color: #30332D;
+
+    letter-spacing: -0.02em;
+}
+
+/* TABLE WRAPPER */
+
+.table-responsive-wrapper {
+    overflow-x: auto;
+    border: 1px solid #edf2f7;
+    border-radius: 18px;
+    background-color: #ffffff;
+}
+
+/* TABLE */
+
+.admin-companies-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 980px;
+}
+
+/* HEADER */
+
+.admin-companies-table thead {
+    background-color: #f8fafc;
+}
+
+.admin-companies-table thead th {
+    padding: 18px;
+
+    text-align: left;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    color: #64748b;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* ROWS */
+
+.admin-companies-table tbody tr {
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.admin-companies-table tbody tr:hover {
+    background-color: #f8fbff;
+}
+
+/* CELLS */
+
+.admin-companies-table td {
+    padding: 18px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    color: #334155;
+}
+
+/* COMPANY NAME */
+
+.company-name-bold {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+}
+
+/* CUIT */
+
+.admin-companies-table code {
+    background-color: #f1f5f9;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #334155;
+    font-family: 'SFMono-Regular', monospace;
+}
+
+/* LOT BADGE */
+
+.lote-display-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 12px;
+
+    border-radius: 999px;
+
+    background-color: #f1f5f9;
+
+    border: 1px solid #dbe4ee;
+
+    color: #475569;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* STATUS PILLS */
+
+.radicada-toggle-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 14px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    border: 1px solid transparent;
+}
+
+.radicada-toggle-pill.true {
+    background-color: #dcfce7;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+
+.radicada-toggle-pill.false {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border-color: #fecaca;
+}
+
+
+/* PRIMARY ACTION BUTTON */
+
+.action-toggle-btn {
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        filter 0.15s ease;
+    background-color: var(--verde1);
+    color: white;
+}
+
+.action-toggle-btn:hover {
+    background-color: var(--verde2);
+}
+
+/* INLINE EDITOR */
+
+.inline-lote-editor {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inline-lote-editor input {
+    width: 90px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 13px;
+    outline: none;
+}
+
+.inline-lote-editor input:focus {
+    border-color: var(--verde1);
+    background-color: white;
+}
+
+.inline-lote-editor .btn-save,
+.inline-lote-editor .btn-cancel {
+    border: none;
+
+    padding: 8px 10px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.inline-lote-editor .btn-save {
+    background-color: var(--verde1);
+    color: white;
+}
+
+.inline-lote-editor .btn-save:hover {
+    background-color: var(--verde2);
+}
+
+.inline-lote-editor .btn-cancel {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.inline-lote-editor .btn-cancel:hover {
+    background-color: #cbd5e1;
+}
+
+.company-row {
+    animation: fadeInRow 0.25s ease;
+}
+
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-companies-table td:nth-child(2),
+.admin-companies-table td:nth-child(3),
+.admin-companies-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+.admin-companies-table tbody tr:hover td {
+    color: #0f172a;
+}
+
+.inline-pill-action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-edit-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(37, 99, 235, 0.08);
+    color: #2563eb;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease,
+        color 0.15s ease;
+}
+
+.icon-edit-btn:hover {
+    background-color: rgba(37, 99, 235, 0.14);
+    color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.icon-edit-btn:active {
+    transform: scale(0.96);
+}

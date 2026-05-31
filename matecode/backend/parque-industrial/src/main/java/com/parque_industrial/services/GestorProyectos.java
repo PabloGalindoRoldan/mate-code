@@ -1,77 +1,37 @@
 package com.parque_industrial.services;
 
-import com.parque_industrial.entities.ProyectoDefinitivo;
-import com.parque_industrial.entities.ProyectoPreliminar;
-import com.parque_industrial.persistence.proyecto.ProyectoDefinitivoJDBC;
-import com.parque_industrial.persistence.proyecto.ProyectoPreliminarJDBC;
+import com.parque_industrial.dto.proyecto.CrearRequestDTO;
+import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
+import com.parque_industrial.dto.proyecto.ProyectosDTO;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class GestorProyectos{
-    private final Connection connection;
+public interface GestorProyectos {
+    void crearProyectoPreliminar(CrearRequestDTO dto);
 
-    private final ProyectoPreliminarJDBC preliminarDAO;
-    private final ProyectoDefinitivoJDBC definitivoDAO;
+    void crearProyectoDefinitivo(CrearRequestDefinitivoDTO request);
 
-    public GestorProyectos(Connection connection) {
-        this.connection = connection;
-        this.preliminarDAO = new ProyectoPreliminarJDBC(connection);
-        this.definitivoDAO = new ProyectoDefinitivoJDBC(connection);
-    }
+    ProyectosDTO listarProyectos();
 
-    // -------------------- CREAR --------------------
+    ProyectosDTO listarProyectosPorCuit(String cuit);
 
-    public void crearProyectoPreliminar(ProyectoPreliminar proyecto) throws Exception {
-      // recibe un dao, lo transforma y despues lo guarda.
-        preliminarDAO.guardar(proyecto);
-    }
+    void rectificarProyectoPreliminar(Integer proyectoId);
 
-    public void crearProyectoDefinitivo(ProyectoDefinitivo proyecto) throws Exception {
-        definitivoDAO.guardar(proyecto);
-    }
+    void aprobarProyectoPreliminar(Integer proyectoId);
 
-    // -------------------- PRELIMINAR --------------------
+    void rechazarProyectoPreliminar(Integer proyectoId);
 
-    public void aprobarProyectoPreliminar(ProyectoPreliminar proyecto) throws Exception {
-        proyecto.aprobar();
-        preliminarDAO.actualizar(proyecto);
-    }
+    void rechazarProyectoDefinitivo(Integer proyectoId);
 
-    public void rechazarProyectoPreliminar(ProyectoPreliminar proyecto) throws Exception {
-        proyecto.rechazar();
-        preliminarDAO.actualizar(proyecto);
-    }
+    void rectificarProyectoDefinitivo(Integer proyectoId);
 
-    public void rectificarProyectoPreliminar(ProyectoPreliminar proyecto) throws Exception {
-        proyecto.rectificar();
-        preliminarDAO.actualizar(proyecto);
-    }
+    void aprobarProyectoDefinitivo(Integer proyectoId);
 
-    // -------------------- DEFINITIVO --------------------
+    void ponerEnRevisionProyectoPreliminar(Integer proyectoId);
 
-    public void aprobarProyectoDefinitivo(ProyectoDefinitivo proyecto) throws Exception {
-        proyecto.aprobar();
-        definitivoDAO.actualizar(proyecto);
-    }
+    void actualizarPreliminar(CrearRequestDTO request);
 
-    public void rechazarProyectoDefinitivo(ProyectoDefinitivo proyecto) throws Exception {
-        proyecto.rechazar();
-        definitivoDAO.actualizar(proyecto);
-    }
+    void ponerEnRevisionProyectoDefinitivo(Integer proyectoId);
 
-    public void rectificarProyectoDefinitivo(ProyectoDefinitivo proyecto) throws Exception {
-        proyecto.rectificar();
-        definitivoDAO.actualizar(proyecto);
-    }
-
-    // -------------------- CONSULTAS --------------------
-
-    public List<ProyectoPreliminar> proyectosPreliminaresPorEstado(String estado) throws Exception {
-        return preliminarDAO.buscarPorEstado(estado);
-    }
-
-    public List<ProyectoDefinitivo> proyectosDefinitivosPorEstado(String estado) throws Exception {
-        return definitivoDAO.buscarPorEstado(estado);
-    }
+    void actualizarDefinitivo(CrearRequestDefinitivoDTO request);
 }

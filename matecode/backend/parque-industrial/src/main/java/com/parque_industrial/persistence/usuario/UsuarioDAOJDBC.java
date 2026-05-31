@@ -6,7 +6,7 @@ import com.parque_industrial.dto.auth.UsuarioResponse;
 import com.parque_industrial.entities.Empresa;
 import com.parque_industrial.entities.Rol;
 import com.parque_industrial.entities.Usuario;
-import org.springframework.dao.DataAccessException;
+// import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -25,20 +25,32 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
 
     @Override
     public void guardar(Usuario usuario) {
-        String sql = """
-                INSERT INTO usuarios (nombre, apellido, email, nombre_usuario, contrasena, cuit, rol, cuit_empresa)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                """;
+        String sql = "INSERT INTO usuarios (nombre, apellido, email, nombre_usuario, contrasena, cuit, rol, cuit_empresa)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql2 = "SELECT EXISTS (SELECT 1 FROM usuarios WHERE nombre_usuario = ?)";
+        if (jdbcTemplate.queryForObject(sql2, Boolean.class, usuario.getNombreUsuario())) {
+            throw new IllegalArgumentException("El nombre de usuario ya se encuentra en uso");
+        }
+        String sql3 = "SELECT EXISTS (SELECT 1 FROM usuarios WHERE email = ?)";
+        if (jdbcTemplate.queryForObject(sql3, Boolean.class, usuario.getEmail())) {
+            throw new IllegalArgumentException("El email ya se encuentra en uso");
+        }
+        String sql4 = "SELECT EXISTS (SELECT 1 FROM usuarios WHERE cuit = ?)";
+        if (jdbcTemplate.queryForObject(sql4, Boolean.class, usuario.getCuit())) {
+            throw new IllegalArgumentException("El CUIT ya se encuentra en uso");
+        }
 
-            jdbcTemplate.update(sql,
-                    usuario.getNombre(),
-                    usuario.getApellido(),
-                    usuario.getEmail(),
-                    usuario.getNombreUsuario(),
-                    usuario.getContraseña(),
-                    usuario.getCuit(),
-                    usuario.getRol().name(),
-                    usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
+
+
+
+        jdbcTemplate.update(sql,
+                usuario.getNombre(),
+                usuario.getApellido(),
+                usuario.getEmail(),
+                usuario.getNombreUsuario(),
+                usuario.getContraseña(),
+                usuario.getCuit(),
+                usuario.getRol().name(),
+                usuario.getEmpresa() != null ? usuario.getEmpresa().getIdentificacion() : null);
 
     }
 
@@ -48,12 +60,12 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
         // estado real
         String sql = """
                 SELECT u.nombre, u.apellido, u.email, u.nombre_usuario, u.cuit, u.rol, u.contrasena, u.cuit_empresa,
-                       e.razon_social, e.es_radicada
+                        e.razon_social, e.es_radicada
                 FROM usuarios u
                 LEFT JOIN empresas e ON u.cuit_empresa = e.cuit
                 WHERE u.nombre_usuario = ?
                 """;
-        try{
+        try {
             Usuario usuario = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
@@ -180,4 +192,22 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
                 empresaResponse,
                 null);
     }
+
+    @Override
+    public void actualizarPassword(
+            String username,
+            String nuevaPassword) {
+
+        String sql = """
+                UPDATE usuarios
+                SET contrasena = ?
+                WHERE nombre_usuario = ?
+                """;
+
+        jdbcTemplate.update(
+                sql,
+                nuevaPassword,
+                username);
+    }
+
 }

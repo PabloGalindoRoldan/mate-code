@@ -6,7 +6,9 @@ import com.parque_industrial.entities.Consumo;
 import com.parque_industrial.persistence.consumos.ConsumoDAO;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,7 @@ public class GestorConsumosImpl implements GestorConsumos {
                     "La empresa ya registró los consumos correspondientes al período: "
                             + request.getMes() + "/" + request.getAno());
         }
+
 
         // 2. Mapear el Request DTO a la Entidad de dominio
         Consumo nuevoConsumo = new Consumo();

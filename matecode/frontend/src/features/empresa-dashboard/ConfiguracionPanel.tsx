@@ -22,6 +22,16 @@ export default function ConfiguracionPanel({ empresa }: ConfiguracionPanelProps)
         confirmarPassword: ''
     });
 
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: ""
+    });
+
+    const [pwLoading, setPwLoading] = useState(false);
+    const [pwError, setPwError] = useState<string | null>(null);
+    const [pwSuccess, setPwSuccess] = useState<string | null>(null);
+
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -33,6 +43,51 @@ export default function ConfiguracionPanel({ empresa }: ConfiguracionPanelProps)
         if (digits.length > 2) masked = `${digits.substring(0, 2)}-${digits.substring(2)}`;
         if (digits.length > 10) masked = `${masked.substring(0, 11)}-${digits.substring(10, 11)}`;
         return masked.substring(0, 13);
+    };
+
+    const handlePasswordChange = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        setPwError(null);
+        setPwSuccess(null);
+
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            setPwError("Las contraseñas no coinciden.");
+            return;
+        }
+
+        if (passwordData.newPassword.length < 6) {
+            setPwError("La nueva contraseña debe tener al menos 6 caracteres.");
+            return;
+        }
+
+        try {
+            setPwLoading(true);
+
+            await api.post("/auth/change-password", {
+                currentPassword: passwordData.currentPassword,
+                newPassword: passwordData.newPassword,
+                confirmPassword: passwordData.confirmPassword
+            });
+
+            setPwSuccess("Contraseña actualizada correctamente.");
+
+            setPasswordData({
+                currentPassword: "",
+                newPassword: "",
+                confirmPassword: ""
+            });
+
+        } catch (err: any) {
+            setPwError(err.response?.data || "Error al cambiar la contraseña.");
+        } finally {
+            setPwLoading(false);
+        }
+    };
+
+    const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setPasswordData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,19 +187,57 @@ export default function ConfiguracionPanel({ empresa }: ConfiguracionPanelProps)
 
     return (
         <div className="configuracionPanel">
-            <header className="panel-header">
+            <header className="panel-header panel-header-configuracion">
                 <h2>Configuración del Sistema</h2>
                 <p>Gestión interna de credenciales, accesos y parámetros de la organización.</p>
             </header>
             {/* SECCIÓN 2: ESPACIO RESERVADO PARA LA SEGUNDA FUNCIÓN */}
-            <section className="configuracion-card placeholder-card">
-                <div className="card-header">
-                    <h3>Cambiar Contraseña</h3>
-                    <p>Espacio reservado para implementar el cambio de contraseña.</p>
-                </div>
-                <div className="placeholder-content">
-                    <p className="no-data">Sección lista para desarrollo.</p>
-                </div>
+            <section className="password-section">
+                <h3>Cambiar Contraseña</h3>
+                <p>Actualice sus credenciales de acceso al sistema.</p>
+
+                <form onSubmit={handlePasswordChange} className="password-form-grid">
+
+                    <div className="form-group">
+                        <label>Contraseña Actual</label>
+                        <input
+                            type="password"
+                            name="currentPassword"
+                            value={passwordData.currentPassword}
+                            onChange={handlePasswordInput}
+                            disabled={pwLoading}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Nueva Contraseña</label>
+                        <input
+                            type="password"
+                            name="newPassword"
+                            value={passwordData.newPassword}
+                            onChange={handlePasswordInput}
+                            disabled={pwLoading}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Confirmar Contraseña</label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            value={passwordData.confirmPassword}
+                            onChange={handlePasswordInput}
+                            disabled={pwLoading}
+                        />
+                    </div>
+
+                    {pwError && <div className="alert-danger">{pwError}</div>}
+                    {pwSuccess && <div className="alert-success">{pwSuccess}</div>}
+
+                    <button type="submit" className="submit-settings-btn" disabled={pwLoading}>
+                        {pwLoading ? "Actualizando..." : "Cambiar Contraseña"}
+                    </button>
+                </form>
             </section>
 
 

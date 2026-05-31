@@ -6,6 +6,14 @@
     animation: fadeIn 0.3s ease-in-out;
 }
 
+.panel-header.panel-header-configuracion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+
 .configuracion-sections-grid {
     display: flex;
     flex-direction: column;
@@ -40,8 +48,10 @@
 }
 
 .submit-settings-btn {
+    align-self: center;
     background-color: var(--verde1);
     color: white;
+    margin-top: 15px;
     padding: 10px 20px;
     border: none;
     border-radius: 6px;
@@ -70,4 +80,48 @@
     align-items: center;
     justify-content: center;
     height: 100px;
+}
+
+.password-section {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.password-section h3 {
+    margin: 0;
+    color: #30332D;
+}
+
+.password-section p {
+    margin: 4px 0 20px 0;
+    font-size: 14px;
+    color: #75944d;
+}
+
+.password-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.password-form-grid .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.alert-success {
+    color: #15803d;
+    font-size: 14px;
+}
+
+.alert-danger {
+    color: #dc2626;
+    font-size: 14px;
+}
+
+@media (max-width: 640px) {
+    .password-form-grid {
+        grid-template-columns: 1fr;
+    }
 }

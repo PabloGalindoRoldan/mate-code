@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="inverti las dependencias y corregi la estructura">
+    <list default="true" id="a2906ca6-4bfd-48ed-acac-6fdc5de0bb78" name="Changes" comment="si">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/FakeLoteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/FakeLoteDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/GestorInmobiliarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/services/GestorInmobiliarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/CargarConsumoRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/dto/empresa/CargarConsumoRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Consumo.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/entities/Consumo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/consumos/ConsumoDAOJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/consumos/ConsumoDAOJDBC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorConsumosImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/GestorConsumosImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/backend/parque-industrial/src/test/java/com/parque_industrial/controllers/CrearAdminParque.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/matecode/frontend/src/features/empresa-dashboard/CargarConsumoPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/matecode/frontend/src/features/empresa-dashboard/CargarConsumoPanel.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +22,7 @@
   <component name="CopilotChats">
     <option name="panelChat">
       <chat>
-        <option name="activeSessionId" value="3702af27-0178-4970-b34e-49ae3fabb134" />
+        <option name="activeSessionId" value="348c1ab4-2b03-4cbe-a8b1-dcc6acda232a" />
         <option name="sessions">
           <session>
             <option name="chatType" value="PANEL" />
@@ -41,10 +46,16 @@
       </chat>
     </option>
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/augus_r4ret8/IdeaProjects/mate-code" value="3DVUOaXGMdepGADYYngEDNqbGJo" />
+    </persistenceIdMap>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Record" />
+        <option value="Class" />
         <option value="Class" />
       </list>
     </option>
@@ -76,6 +87,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -87,7 +101,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "JUnit.GestorInmobiliarioTest.testCambiarEstado.executor": "Run",
+    "JUnit.CrearAdminParque.crear.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testCancelarReservaLote.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testCrearLote.executor": "Run",
     "JUnit.GestorInmobiliarioTest.testReservarLote.executor": "Run",
@@ -110,15 +124,16 @@
     "JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ParqueIndustrialApplication.executor": "Run",
-    "git-widget-placeholder": "nro150AgregarFuncionalidadesEmpresa",
+    "git-widget-placeholder": "nro107HashearContraseña",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/augus_r4ret8/IdeaProjects/mate-code",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.25136238",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -131,8 +146,24 @@
       <recent name="C:\Users\augus_r4ret8\IdeaProjects\mate-code\matecode\backend\parque-industrial\src\test" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GestorInmobiliarioTest.testCambiarEstado">
-    <configuration name="GestorInmobiliarioTest.testCambiarEstado" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Spring Boot.ParqueIndustrialApplication">
+    <configuration name="CrearAdminParque.crear" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parque-industrial" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.parque_industrial.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.parque_industrial.controllers" />
+      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.controllers.CrearAdminParque" />
+      <option name="METHOD_NAME" value="crear" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GestorInmobiliarioTest.testCrearLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parque-industrial" />
       <extension name="coverage">
         <pattern>
@@ -143,22 +174,6 @@
       <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
       <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
       <option name="METHOD_NAME" value="testCambiarEstado" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GestorInmobiliarioTest.testReservarLote" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="parque-industrial" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.parque_industrial.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.parque_industrial.services" />
-      <option name="MAIN_CLASS_NAME" value="com.parque_industrial.services.GestorInmobiliarioTest" />
-      <option name="METHOD_NAME" value="testReservarLote" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -197,8 +212,8 @@
     </configuration>
     <configuration name="ParqueIndustrialApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <envs>
-        <env name="DB_PASSWORD" value="VaZCZynLpJuEMobJGXKBKcziBBeZFzwS" />
-        <env name="DB_URL" value="jdbc:mysql://viaduct.proxy.rlwy.net:33128/railway" />
+        <env name="DB_PASSWORD" value="YqSktvgWHwoSSPBtiOpLLscudbWsccaq" />
+        <env name="DB_URL" value="jdbc:mysql://root:YqSktvgWHwoSSPBtiOpLLscudbWsccaq@kodama.proxy.rlwy.net:12484/railway" />
         <env name="DB_USERNAME" value="root" />
       </envs>
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
@@ -215,8 +230,8 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.GestorInmobiliarioTest.testCambiarEstado" />
-      <item itemvalue="JUnit.GestorInmobiliarioTest.testReservarLote" />
+      <item itemvalue="JUnit.CrearAdminParque.crear" />
+      <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
       <item itemvalue="JUnit.LoteTest" />
       <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
       <item itemvalue="Spring Boot.ParqueIndustrialApplication" />
@@ -226,8 +241,10 @@
         <item itemvalue="JUnit.GestorInmobiliarioTest.testCambiarEstado" />
         <item itemvalue="JUnit.GestorInmobiliarioTest.testReservarLote" />
         <item itemvalue="Spring Boot.ParqueIndustrialApplication" />
+        <item itemvalue="JUnit.CrearAdminParque.crear" />
         <item itemvalue="JUnit.LoteTest" />
         <item itemvalue="JUnit.LoteTest.testVenderLoteVendidoLanzaExcepcion" />
+        <item itemvalue="JUnit.GestorInmobiliarioTest.testCrearLote" />
       </list>
     </recent_temporary>
   </component>
@@ -270,13 +287,13 @@
       <option name="project" value="LOCAL" />
       <updated>1778692974258</updated>
     </task>
-    <task id="LOCAL-00004" summary="inverti las dependencias y corregi la estructura">
+    <task id="LOCAL-00004" summary="si">
       <option name="closed" value="true" />
-      <created>1779371551277</created>
+      <created>1779828980765</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1779371551277</updated>
+      <updated>1779828980765</updated>
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
@@ -285,6 +302,45 @@
     <MESSAGE value="loteTest listo, se testeo la clase lote" />
     <MESSAGE value="ns" />
     <MESSAGE value="inverti las dependencias y corregi la estructura" />
-    <option name="LAST_COMMIT_MESSAGE" value="inverti las dependencias y corregi la estructura" />
+    <MESSAGE value="si" />
+    <option name="LAST_COMMIT_MESSAGE" value="si" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/services/AuthService.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/matecode/backend/parque-industrial/src/main/java/com/parque_industrial/persistence/empresa/EmpresaDAOJDBC.java</url>
+          <line>21</line>
+          <properties class="com.parque_industrial.persistence.empresa.EmpresaDAOJDBC" method="guardar">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

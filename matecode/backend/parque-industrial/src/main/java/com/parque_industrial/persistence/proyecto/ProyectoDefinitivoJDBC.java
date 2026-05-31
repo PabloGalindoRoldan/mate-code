@@ -1,138 +1,586 @@
+
 package com.parque_industrial.persistence.proyecto;
 
+import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
 import com.parque_industrial.entities.ProyectoDefinitivo;
+import com.parque_industrial.exceptions.DatabaseException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
-public class ProyectoDefinitivoJDBC implements ProyectoDAO<ProyectoDefinitivo> {
+@Repository
+public class ProyectoDefinitivoJDBC implements ProyectoDefinitivoDAO {
 
-    private final Connection connection;
+        private final JdbcTemplate jdbcTemplate;
 
-    public ProyectoDefinitivoJDBC(Connection connection) {
-        this.connection = connection;
-    }
-
-    // GUARDAR
-    public void guardar(ProyectoDefinitivo p) throws SQLException {
-        String sql = "INSERT INTO proyecto_definitivo " +
-                "(identificacion, actividad_principal, referente, superficie, energia, personal, estado, " +
-                "fecha_inicio, fecha_fin, viabilidad_financiera, informe_ambiental) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        PreparedStatement stmt = connection.prepareStatement(sql);
-
-        stmt.setString(1, p.getCuitEmpresaAsociada());
-        stmt.setString(2, p.getActividadPrincipal());
-        stmt.setString(3, p.getReferente());
-        stmt.setInt(4, p.getSuperficieRequerida());
-        stmt.setDouble(5, p.getEnergiaRequerida());
-        stmt.setInt(6, p.getPersonalAOcupar());
-        stmt.setString(7, p.getEstado());
-
-        stmt.setDate(8, Date.valueOf(p.getFechaInicioObra()));
-        stmt.setDate(9, Date.valueOf(p.getFechaFinObra()));
-        stmt.setBoolean(10, p.isViabilidadFinanciera());
-        stmt.setString(11, p.getInformeAmbiental());
-
-        stmt.executeUpdate();
-    }
-
-    // BUSCAR POR ID
-    public ProyectoDefinitivo buscarPorId(String identificacion) throws SQLException {
-        String sql = "SELECT * FROM proyecto_definitivo WHERE identificacion = ?";
-
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setString(1, identificacion);
-
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            return mapear(rs);
+        public ProyectoDefinitivoJDBC(JdbcTemplate jdbcTemplate) {
+                this.jdbcTemplate = jdbcTemplate;
         }
 
-        return null;
-    }
+        @Override
+        public List<CrearRequestDefinitivoDTO> listarDefinitivosPorCuit(
+                        String cuit) {
 
-    // BUSCAR POR ESTADO
-    public List<ProyectoDefinitivo> buscarPorEstado(String estado) throws SQLException {
-        String sql = "SELECT * FROM proyecto_definitivo WHERE estado = ?";
+                String sql = """
+                                SELECT *
+                                FROM proyecto_definitivo
+                                WHERE cuit_empresa = ?
+                                """;
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setString(1, estado);
+                try {
 
-        ResultSet rs = stmt.executeQuery();
+                        return jdbcTemplate.query(
+                                        sql,
+                                        this::mapearDefinitivoDTO,
+                                        cuit);
 
-        List<ProyectoDefinitivo> lista = new ArrayList<>();
+                } catch (Exception e) {
 
-        while (rs.next()) {
-            lista.add(mapear(rs));
+                        throw new DatabaseException(
+                                        "Error al listar proyectos definitivos",
+                                        e);
+                }
         }
 
-        return lista;
-    }
+        @Override
+        public List<CrearRequestDefinitivoDTO> listarProyectos() {
 
-    // ACTUALIZAR
-    public void actualizar(ProyectoDefinitivo p) throws SQLException {
-        String sql = """
-            UPDATE proyecto_definitivo
-            SET actividad_principal = ?, referente = ?, superficie = ?, energia = ?, personal = ?, estado = ?,
-                fecha_inicio = ?, fecha_fin = ?, viabilidad_financiera = ?, informe_ambiental = ?
-            WHERE identificacion = ?
-        """;
+                String sql = """
+                                SELECT *
+                                FROM proyecto_definitivo
+                                """;
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
+                try {
 
-        stmt.setString(1, p.getActividadPrincipal());
-        stmt.setString(2, p.getReferente());
-        stmt.setInt(3, p.getSuperficieRequerida());
-        stmt.setDouble(4, p.getEnergiaRequerida());
-        stmt.setInt(5, p.getPersonalAOcupar());
-        stmt.setString(6, p.getEstado());
+                        return jdbcTemplate.query(
+                                        sql,
+                                        this::mapearDefinitivoDTO);
 
-        stmt.setDate(7, Date.valueOf(p.getFechaInicioObra()));
-        stmt.setDate(8, Date.valueOf(p.getFechaFinObra()));
-        stmt.setBoolean(9, p.isViabilidadFinanciera());
-        stmt.setString(10, p.getInformeAmbiental());
+                } catch (Exception e) {
 
-        stmt.setString(11, p.getCuitEmpresaAsociada());
-
-        stmt.executeUpdate();
-    }
-
-    // ELIMINAR
-    public void eliminar(String identificacion) throws SQLException {
-        String sql = "DELETE FROM proyecto_definitivo WHERE identificacion = ?";
-
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setString(1, identificacion);
-
-        stmt.executeUpdate();
-    }
-
-    // MAPPER
-    private ProyectoDefinitivo mapear(ResultSet rs) {
-        try {
-            ProyectoDefinitivo p = new ProyectoDefinitivo(
-                    rs.getString("identificacion"),
-                    rs.getString("actividad_principal"),
-                    rs.getString("referente"),
-                    rs.getInt("superficie"),
-                    rs.getDouble("energia"),
-                    rs.getInt("personal"),
-                    rs.getDate("fecha_inicio").toLocalDate(),
-                    rs.getDate("fecha_fin").toLocalDate(),
-                    rs.getBoolean("viabilidad_financiera"),
-                    rs.getString("informe_ambiental")
-            );
-
-            p.setEstado(rs.getString("estado"));
-
-            return p;
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error mapeando ProyectoDefinitivo", e);
+                        throw new DatabaseException(
+                                        "Error al listar proyectos definitivos",
+                                        e);
+                }
         }
-    }
+
+        @Override
+        public void guardarProyectoDefinitivo(
+                        ProyectoDefinitivo proyecto) {
+
+                String sql = """
+                                INSERT INTO proyecto_definitivo (
+
+                                    usuario_nombre,
+                                    nombre,
+                                    descripcion,
+                                    actividad_principal,
+                                    actividad_secundaria,
+                                    telefono,
+                                    rubro,
+                                    descripcion_servicio,
+                                    persona_referente,
+                                    materias_primas,
+                                    destino_produccion,
+
+                                    superficie_requerida,
+                                    superficie_trabajo,
+                                    superficie_deposito,
+                                    superficie_cubierta,
+                                    superficie_estacionamiento,
+
+                                    tiene_planos,
+                                    link_planos,
+
+                                    energia_requerida,
+                                    personal_a_ocupar,
+                                    tension_alimentacion,
+                                    potencia_instalada,
+                                    agua_mensual,
+                                    gas_mensual,
+
+                                    residuos_tipo,
+                                    residuos_cantidad,
+                                    tratamiento_efluentes,
+                                    tipo_empresa,
+                                    direccion,
+                                    pretension_traslado,
+                                    emplazamiento_actual,
+                                    tiempo_radicacion,
+
+                                    balanza_publica,
+                                    comedor,
+                                    sum_coworking,
+
+                                    estado,
+                                    cuit_empresa,
+
+                                    link_viabilidad_financiera,
+                                    link_estudio_mercado,
+                                    link_impacto_ambiental,
+                                    link_habilitacion_municipal,
+                                    link_certificado_inhibiciones
+
+                                )
+                                VALUES (
+                                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                                    ?, ?, ?, ?, ?, ?, ?, ?, ?
+                                )
+                                """;
+
+                try {
+
+                        jdbcTemplate.update(
+                                        sql,
+
+                                        proyecto.getUsuarioNombre(),
+                                        proyecto.getNombre(),
+                                        proyecto.getDescripcion(),
+                                        proyecto.getActividadPrincipal(),
+                                        proyecto.getActividadSecundaria(),
+                                        proyecto.getTelefono(),
+                                        proyecto.getRubro(),
+                                        proyecto.getDescripcionServicio(),
+                                        proyecto.getPersonaReferente(),
+                                        proyecto.getMateriasPrimas(),
+                                        proyecto.getDestinoProduccion(),
+
+                                        proyecto.getSuperficieRequerida(),
+                                        proyecto.getSuperficieTrabajo(),
+                                        proyecto.getSuperficieDeposito(),
+                                        proyecto.getSuperficieCubierta(),
+                                        proyecto.getSuperficieEstacionamiento(),
+
+                                        proyecto.getTienePlanos(),
+                                        proyecto.getLinkPlanos(),
+
+                                        proyecto.getEnergiaRequerida(),
+                                        proyecto.getPersonalAOcupar(),
+                                        proyecto.getTensionAlimentacion(),
+                                        proyecto.getPotenciaInstalada(),
+                                        proyecto.getAguaMensual(),
+                                        proyecto.getGasMensual(),
+
+                                        proyecto.getResiduosTipo(),
+                                        proyecto.getResiduosCantidad(),
+                                        proyecto.getTratamientoEfluentes(),
+                                        proyecto.getTipoEmpresa(),
+                                        proyecto.getDireccion(),
+                                        proyecto.getPretensionTraslado(),
+                                        proyecto.getEmplazamientoActual(),
+                                        proyecto.getTiempoRadicacion(),
+
+                                        proyecto.getBalanzaPublica(),
+                                        proyecto.getComedor(),
+                                        proyecto.getSumCoworking(),
+
+                                        proyecto.getEstado(),
+                                        proyecto.getCuitEmpresa(),
+
+                                        proyecto.getLinkViabilidadFinanciera(),
+                                        proyecto.getLinkEstudioMercado(),
+                                        proyecto.getLinkImpactoAmbiental(),
+                                        proyecto.getLinkHabilitacionMunicipal(),
+                                        proyecto.getLinkCertificadoInhibiciones());
+
+                } catch (Exception e) {
+
+                        e.printStackTrace();
+
+                        throw new DatabaseException(
+                                        "Error al guardar proyecto definitivo: "
+                                                        + e.getMessage(),
+                                        e);
+                }
+        }
+
+        @Override
+        public void actualizar(ProyectoDefinitivo proyecto) {
+
+                String sql = """
+                                UPDATE proyecto_definitivo
+                                SET
+
+                                    usuario_nombre = ?,
+                                    nombre = ?,
+                                    descripcion = ?,
+                                    actividad_principal = ?,
+                                    actividad_secundaria = ?,
+                                    telefono = ?,
+                                    rubro = ?,
+                                    descripcion_servicio = ?,
+                                    persona_referente = ?,
+                                    materias_primas = ?,
+                                    destino_produccion = ?,
+
+                                    superficie_requerida = ?,
+                                    superficie_trabajo = ?,
+                                    superficie_deposito = ?,
+                                    superficie_cubierta = ?,
+                                    superficie_estacionamiento = ?,
+
+                                    tiene_planos = ?,
+                                    link_planos = ?,
+
+                                    energia_requerida = ?,
+                                    personal_a_ocupar = ?,
+                                    tension_alimentacion = ?,
+                                    potencia_instalada = ?,
+                                    agua_mensual = ?,
+                                    gas_mensual = ?,
+
+                                    residuos_tipo = ?,
+                                    residuos_cantidad = ?,
+                                    tratamiento_efluentes = ?,
+                                    tipo_empresa = ?,
+                                    direccion = ?,
+                                    pretension_traslado = ?,
+                                    emplazamiento_actual = ?,
+                                    tiempo_radicacion = ?,
+
+                                    balanza_publica = ?,
+                                    comedor = ?,
+                                    sum_coworking = ?,
+
+                                    estado = ?,
+                                    cuit_empresa = ?,
+
+                                    link_viabilidad_financiera = ?,
+                                    link_estudio_mercado = ?,
+                                    link_impacto_ambiental = ?,
+                                    link_habilitacion_municipal = ?,
+                                    link_certificado_inhibiciones = ?
+
+                                WHERE id = ?
+                                """;
+
+                try {
+
+                        jdbcTemplate.update(
+                                        sql,
+
+                                        proyecto.getUsuarioNombre(),
+                                        proyecto.getNombre(),
+                                        proyecto.getDescripcion(),
+                                        proyecto.getActividadPrincipal(),
+                                        proyecto.getActividadSecundaria(),
+                                        proyecto.getTelefono(),
+                                        proyecto.getRubro(),
+                                        proyecto.getDescripcionServicio(),
+                                        proyecto.getPersonaReferente(),
+                                        proyecto.getMateriasPrimas(),
+                                        proyecto.getDestinoProduccion(),
+
+                                        proyecto.getSuperficieRequerida(),
+                                        proyecto.getSuperficieTrabajo(),
+                                        proyecto.getSuperficieDeposito(),
+                                        proyecto.getSuperficieCubierta(),
+                                        proyecto.getSuperficieEstacionamiento(),
+
+                                        proyecto.getTienePlanos(),
+                                        proyecto.getLinkPlanos(),
+
+                                        proyecto.getEnergiaRequerida(),
+                                        proyecto.getPersonalAOcupar(),
+                                        proyecto.getTensionAlimentacion(),
+                                        proyecto.getPotenciaInstalada(),
+                                        proyecto.getAguaMensual(),
+                                        proyecto.getGasMensual(),
+
+                                        proyecto.getResiduosTipo(),
+                                        proyecto.getResiduosCantidad(),
+                                        proyecto.getTratamientoEfluentes(),
+                                        proyecto.getTipoEmpresa(),
+                                        proyecto.getDireccion(),
+                                        proyecto.getPretensionTraslado(),
+                                        proyecto.getEmplazamientoActual(),
+                                        proyecto.getTiempoRadicacion(),
+
+                                        proyecto.getBalanzaPublica(),
+                                        proyecto.getComedor(),
+                                        proyecto.getSumCoworking(),
+
+                                        proyecto.getEstado(),
+                                        proyecto.getCuitEmpresa(),
+
+                                        proyecto.getLinkViabilidadFinanciera(),
+                                        proyecto.getLinkEstudioMercado(),
+                                        proyecto.getLinkImpactoAmbiental(),
+                                        proyecto.getLinkHabilitacionMunicipal(),
+                                        proyecto.getLinkCertificadoInhibiciones(),
+
+                                        proyecto.getId());
+
+                } catch (Exception e) {
+
+                        e.printStackTrace();
+
+                        throw new DatabaseException(
+                                        "Error al guardar proyecto definitivo: "
+                                                        + e.getMessage(),
+                                        e);
+                }
+        }
+
+        @Override
+        public Optional<ProyectoDefinitivo> buscarPorId(Long id) {
+
+                String sql = """
+                                SELECT *
+                                FROM proyecto_definitivo
+                                WHERE id = ?
+                                """;
+
+                try {
+
+                        List<ProyectoDefinitivo> resultados = jdbcTemplate.query(
+                                        sql,
+                                        this::mapearEntidad,
+                                        id);
+
+                        return resultados.stream().findFirst();
+
+                } catch (Exception e) {
+
+                        e.printStackTrace();
+
+                        throw new DatabaseException(
+                                        "Error al guardar proyecto definitivo: "
+                                                        + e.getMessage(),
+                                        e);
+                }
+        }
+
+        private CrearRequestDefinitivoDTO mapearDefinitivoDTO(
+                        ResultSet rs,
+                        int rowNum) throws SQLException {
+
+                Timestamp fechaCreacion = rs.getTimestamp("fecha_creacion");
+
+                Timestamp fechaActualizacion = rs.getTimestamp("fecha_actualizacion");
+
+                return new CrearRequestDefinitivoDTO(
+
+                                rs.getLong("id"),
+                                rs.getString("usuario_nombre"),
+                                rs.getString("nombre"),
+                                rs.getString("descripcion"),
+                                rs.getString("actividad_principal"),
+                                rs.getString("actividad_secundaria"),
+                                rs.getString("telefono"),
+                                rs.getString("rubro"),
+                                rs.getString("descripcion_servicio"),
+                                rs.getString("persona_referente"),
+                                rs.getString("materias_primas"),
+                                rs.getString("destino_produccion"),
+
+                                (Double) rs.getObject("superficie_requerida"),
+                                (Double) rs.getObject("superficie_trabajo"),
+                                (Double) rs.getObject("superficie_deposito"),
+                                (Double) rs.getObject("superficie_cubierta"),
+                                (Double) rs.getObject("superficie_estacionamiento"),
+
+                                rs.getString("tiene_planos"),
+                                rs.getString("link_planos"),
+
+                                (Double) rs.getObject("energia_requerida"),
+                                (Integer) rs.getObject("personal_a_ocupar"),
+
+                                rs.getString("tension_alimentacion"),
+
+                                (Double) rs.getObject("potencia_instalada"),
+                                (Double) rs.getObject("agua_mensual"),
+                                (Double) rs.getObject("gas_mensual"),
+
+                                rs.getString("residuos_tipo"),
+                                (Double) rs.getObject("residuos_cantidad"),
+
+                                rs.getString("tratamiento_efluentes"),
+                                rs.getString("tipo_empresa"),
+                                rs.getString("direccion"),
+                                rs.getString("pretension_traslado"),
+                                rs.getString("emplazamiento_actual"),
+                                rs.getString("tiempo_radicacion"),
+
+                                rs.getString("balanza_publica"),
+                                rs.getString("comedor"),
+                                rs.getString("sum_coworking"),
+
+                                rs.getString("estado"),
+                                rs.getString("cuit_empresa"),
+
+                                fechaCreacion != null
+                                                ? fechaCreacion.toLocalDateTime()
+                                                : null,
+
+                                fechaActualizacion != null
+                                                ? fechaActualizacion.toLocalDateTime()
+                                                : null,
+
+                                rs.getString("link_viabilidad_financiera"),
+                                rs.getString("link_estudio_mercado"),
+                                rs.getString("link_impacto_ambiental"),
+                                rs.getString("link_habilitacion_municipal"),
+                                rs.getString("link_certificado_inhibiciones"));
+        }
+
+        private ProyectoDefinitivo mapearEntidad(
+                        ResultSet rs,
+                        int rowNum) throws SQLException {
+
+                ProyectoDefinitivo proyecto = new ProyectoDefinitivo();
+
+                proyecto.setId(rs.getLong("id"));
+
+                proyecto.setUsuarioNombre(
+                                rs.getString("usuario_nombre"));
+
+                proyecto.setNombre(
+                                rs.getString("nombre"));
+
+                proyecto.setDescripcion(
+                                rs.getString("descripcion"));
+
+                proyecto.setActividadPrincipal(
+                                rs.getString("actividad_principal"));
+
+                proyecto.setActividadSecundaria(
+                                rs.getString("actividad_secundaria"));
+
+                proyecto.setTelefono(
+                                rs.getString("telefono"));
+
+                proyecto.setRubro(
+                                rs.getString("rubro"));
+
+                proyecto.setDescripcionServicio(
+                                rs.getString("descripcion_servicio"));
+
+                proyecto.setPersonaReferente(
+                                rs.getString("persona_referente"));
+
+                proyecto.setMateriasPrimas(
+                                rs.getString("materias_primas"));
+
+                proyecto.setDestinoProduccion(
+                                rs.getString("destino_produccion"));
+
+                proyecto.setSuperficieRequerida(
+                                (Double) rs.getObject("superficie_requerida"));
+
+                proyecto.setSuperficieTrabajo(
+                                (Double) rs.getObject("superficie_trabajo"));
+
+                proyecto.setSuperficieDeposito(
+                                (Double) rs.getObject("superficie_deposito"));
+
+                proyecto.setSuperficieCubierta(
+                                (Double) rs.getObject("superficie_cubierta"));
+
+                proyecto.setSuperficieEstacionamiento(
+                                (Double) rs.getObject("superficie_estacionamiento"));
+
+                proyecto.setTienePlanos(
+                                rs.getString("tiene_planos"));
+
+                proyecto.setLinkPlanos(
+                                rs.getString("link_planos"));
+
+                proyecto.setEnergiaRequerida(
+                                (Double) rs.getObject("energia_requerida"));
+
+                proyecto.setPersonalAOcupar(
+                                (Integer) rs.getObject("personal_a_ocupar"));
+
+                proyecto.setTensionAlimentacion(
+                                rs.getString("tension_alimentacion"));
+
+                proyecto.setPotenciaInstalada(
+                                (Double) rs.getObject("potencia_instalada"));
+
+                proyecto.setAguaMensual(
+                                (Double) rs.getObject("agua_mensual"));
+
+                proyecto.setGasMensual(
+                                (Double) rs.getObject("gas_mensual"));
+
+                proyecto.setResiduosTipo(
+                                rs.getString("residuos_tipo"));
+
+                proyecto.setResiduosCantidad(
+                                (Double) rs.getObject("residuos_cantidad"));
+
+                proyecto.setTratamientoEfluentes(
+                                rs.getString("tratamiento_efluentes"));
+
+                proyecto.setTipoEmpresa(
+                                rs.getString("tipo_empresa"));
+
+                proyecto.setDireccion(
+                                rs.getString("direccion"));
+
+                proyecto.setPretensionTraslado(
+                                rs.getString("pretension_traslado"));
+
+                proyecto.setEmplazamientoActual(
+                                rs.getString("emplazamiento_actual"));
+
+                proyecto.setTiempoRadicacion(
+                                rs.getString("tiempo_radicacion"));
+
+                proyecto.setBalanzaPublica(
+                                rs.getString("balanza_publica"));
+
+                proyecto.setComedor(
+                                rs.getString("comedor"));
+
+                proyecto.setSumCoworking(
+                                rs.getString("sum_coworking"));
+
+                proyecto.setEstado(
+                                rs.getString("estado"));
+
+                proyecto.setCuitEmpresa(
+                                rs.getString("cuit_empresa"));
+
+                Timestamp fechaCreacion = rs.getTimestamp("fecha_creacion");
+
+                if (fechaCreacion != null) {
+
+                        proyecto.setFechaCreacion(
+                                        fechaCreacion.toLocalDateTime());
+                }
+
+                Timestamp fechaActualizacion = rs.getTimestamp("fecha_actualizacion");
+
+                if (fechaActualizacion != null) {
+
+                        proyecto.setFechaActualizacion(
+                                        fechaActualizacion.toLocalDateTime());
+                }
+
+                proyecto.setLinkViabilidadFinanciera(
+                                rs.getString("link_viabilidad_financiera"));
+
+                proyecto.setLinkEstudioMercado(
+                                rs.getString("link_estudio_mercado"));
+
+                proyecto.setLinkImpactoAmbiental(
+                                rs.getString("link_impacto_ambiental"));
+
+                proyecto.setLinkHabilitacionMunicipal(
+                                rs.getString("link_habilitacion_municipal"));
+
+                proyecto.setLinkCertificadoInhibiciones(
+                                rs.getString("link_certificado_inhibiciones"));
+
+                return proyecto;
+        }
 }

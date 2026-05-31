@@ -9,10 +9,12 @@ import EmpresaNoRadicadaView from './features/empresa-dashboard/EmpresaNoRadicad
 import EmpresaRadicadaView from './features/empresa-dashboard/EmpresaRadicadaView';
 import AdministradorParqueView from './features/parque-dashboard/AdministradorParqueView';
 import ProtectedRoute from './routes/ProtectedRoute';
+import { Toaster } from 'sonner';
 
 function App() {
   return (
     <BrowserRouter basename="/mate-code">
+      <Toaster position="top-right" richColors />
       <Routes>
         {/* Public Routes accessible by anyone */}
         <Route path="/" element={<Landing />} />

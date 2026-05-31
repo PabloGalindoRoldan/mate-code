@@ -4,6 +4,7 @@ public class Elemento {
     private Integer id;
     private String nombre;
     private CategoriaInventario categoria;
+    private String detalle;
     private boolean activo;
     private RazonBajaCategoria bajaRazonCategoria;
     private String bajaObservacion;
@@ -14,20 +15,22 @@ public class Elemento {
 
     // Constructor completo para instanciar elementos recuperados con historial de
     // baja
-    public Elemento(Integer id, String nombre, CategoriaInventario categoria, boolean activo,
+    public Elemento(Integer id, String nombre, CategoriaInventario categoria, String detalle, boolean activo,
             RazonBajaCategoria bajaRazonCategoria, String bajaObservacion) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
+        this.detalle = detalle;
         this.activo = activo;
         this.bajaRazonCategoria = bajaRazonCategoria;
         this.bajaObservacion = bajaObservacion;
     }
 
     // Constructor intermedio útil para dar de alta nuevos elementos del inventario
-    public Elemento(String nombre, CategoriaInventario categoria) {
+    public Elemento(String nombre, CategoriaInventario categoria, String detalle) {
         this.nombre = nombre;
         this.categoria = categoria;
+        this.detalle = detalle;
         this.activo = true; // Por defecto nace activo
         this.bajaRazonCategoria = null;
         this.bajaObservacion = null;
@@ -63,6 +66,14 @@ public class Elemento {
 
     public void setCategoria(CategoriaInventario categoria) {
         this.categoria = categoria;
+    }
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
     }
 
     public boolean isActivo() {

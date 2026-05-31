@@ -39,7 +39,11 @@ export default function LoginView() {
                         navigate('/parque');
                         break;
                     case 'REPRESENTANTE_EMPRESA':
-                        navigate('/empresa-radicada');
+                        if (userDetails.empresa.esRadicada) {
+                            navigate('/empresa-radicada');
+                        } else {
+                            navigate('/nueva-empresa');
+                        }
                         break;
                     default:
                         navigate('/');

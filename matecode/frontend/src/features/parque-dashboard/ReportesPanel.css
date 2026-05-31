@@ -5,6 +5,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     width: 100%;
     box-sizing: border-box;
+    padding-top: 5rem;
 }
 
 .reportes-header h2 {
@@ -276,6 +277,50 @@
     color: white;
 }
 
+.inventory-table-section {
+    margin-top: 24px;
+}
+
+.inventory-table-section h4 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    color: #30332D;
+}
+
+.inventario-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.inventario-report-table th,
+.inventario-report-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.inventario-report-table th {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: 700;
+}
+
+.inventario-report-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.empty-row {
+    padding: 18px 0;
+    color: #6b7280;
+    text-align: center;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
 /* Estado Vacío / Marcador de posición */
 .placeholder-state {
     display: flex;
@@ -320,4 +365,92 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Inventario */
+
+.stat-box.blue {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.inventory-value-card {
+    margin-top: 16px;
+    padding: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inventory-label {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Presupuesto */
+
+.budget-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.budget-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.budget-row span {
+    color: #4b5563;
+    font-size: 14px;
+}
+
+.budget-row strong {
+    color: #111827;
+}
+
+.progress-bar-fill.budget {
+    background: linear-gradient(90deg,
+            #3b82f6,
+            #2563eb);
+}
+
+/* Detalle presupuestario */
+.presupuesto-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.presupuesto-detail-table th,
+.presupuesto-detail-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.presupuesto-detail-table th {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: 700;
+}
+
+.presupuesto-detail-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.text-danger {
+    color: #dc2626;
 }

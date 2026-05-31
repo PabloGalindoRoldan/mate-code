@@ -28,13 +28,14 @@ public class InventarioDAOJDBC implements InventarioDAO {
 
     // Mapeador explícito agregando @NonNull en los parámetros heredados para saciar
     // al compilador
-    private final RowMapper<Elemento> elementRowMapper = new RowMapper<Elemento>() {
+    private final @NonNull RowMapper<Elemento> elementRowMapper = new RowMapper<Elemento>() {
         @Override
         public Elemento mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
             Elemento elemento = new Elemento();
             elemento.setId(rs.getInt("id"));
             elemento.setNombre(rs.getString("nombre"));
             elemento.setCategoria(CategoriaInventario.valueOf(rs.getString("categoria")));
+            elemento.setDetalle(rs.getString("detalle"));
             elemento.setActivo(rs.getBoolean("activo"));
 
             String razonStr = rs.getString("baja_razon_categoria");
@@ -49,7 +50,7 @@ public class InventarioDAOJDBC implements InventarioDAO {
 
     @Override
     public Elemento guardar(Elemento elemento) {
-        String sql = "INSERT INTO inventario (nombre, categoria, activo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO inventario (nombre, categoria, activo, detalle) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
@@ -57,6 +58,7 @@ public class InventarioDAOJDBC implements InventarioDAO {
             ps.setString(1, elemento.getNombre());
             ps.setString(2, elemento.getCategoria().name());
             ps.setBoolean(3, elemento.isActivo());
+            ps.setString(4, elemento.getDetalle());
             return ps;
         }, keyHolder);
 
@@ -72,26 +74,26 @@ public class InventarioDAOJDBC implements InventarioDAO {
 
     @Override
     public Optional<Elemento> buscarPorId(Integer id) {
-        String sql = "SELECT id, nombre, categoria, activo, baja_razon_categoria, baja_observacion FROM inventario WHERE id = ?";
+        String sql = "SELECT id, nombre, categoria, activo, baja_razon_categoria, baja_observacion, detalle FROM inventario WHERE id = ?";
         List<Elemento> resultados = jdbcTemplate.query(sql, elementRowMapper, id);
         return resultados.stream().findFirst();
     }
 
     @Override
     public List<Elemento> listarTodos() {
-        String sql = "SELECT id, nombre, categoria, activo, baja_razon_categoria, baja_observacion FROM inventario";
+        String sql = "SELECT id, nombre, categoria, activo, baja_razon_categoria, baja_observacion, detalle FROM inventario";
         return jdbcTemplate.query(sql, elementRowMapper);
     }
 
     @Override
     public List<Elemento> listarActivos() {
-        String sql = "SELECT id, nombre, categoria, activo, baja_razon_categoria, baja_observacion FROM inventario WHERE activo = TRUE";
+        String sql = "SELECT id, nombre, categoria, activo, baja_razon_categoria, baja_observacion, detalle FROM inventario WHERE activo = TRUE";
         return jdbcTemplate.query(sql, elementRowMapper);
     }
 
     @Override
     public void actualizar(Elemento elemento) {
-        String sql = "UPDATE inventario SET nombre = ?, categoria = ?, activo = ?, baja_razon_categoria = ?, baja_observacion = ? WHERE id = ?";
+        String sql = "UPDATE inventario SET nombre = ?, categoria = ?, activo = ?, baja_razon_categoria = ?, baja_observacion = ?, detalle = ? WHERE id = ?";
 
         String razonBaja = (elemento.getBajaRazonCategoria() != null) ? elemento.getBajaRazonCategoria().name() : null;
 
@@ -101,6 +103,7 @@ public class InventarioDAOJDBC implements InventarioDAO {
                 elemento.isActivo(),
                 razonBaja,
                 elemento.getBajaObservacion(),
+                elemento.getDetalle(),
                 elemento.getId());
     }
 }

@@ -1,66 +1,49 @@
 package com.parque_industrial.controllers;
 
 import com.parque_industrial.dto.lote.*;
+import com.parque_industrial.services.GeoJsonMapper;
 import com.parque_industrial.services.GestorInmobiliario;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@RestController // Indica que esta clase es un controlador de API
-@RequestMapping("/api/lotes") // La URL base para React
+@RestController
+@RequestMapping("/api/lotes")
 public class LoteController {
+
     private final GestorInmobiliario gestor;
-    public LoteController(GestorInmobiliario gestor) {
+    private final GeoJsonMapper mapper;
+
+    public LoteController(GestorInmobiliario gestor, GeoJsonMapper mapper) {
         this.gestor = gestor;
-    }
-    @PostMapping("/vender")//si el lote no esta Reservado lanza excepcion
-    public void procesarVenta(@RequestBody VentaRequestDTO datosEntrada) {
-        gestor.VenderLote(datosEntrada.identificacion(), datosEntrada.monto());
-    }
-    @PostMapping("/reservar")//si el lote no es disponible lanza excepcion
-    public void reservarUnLote(@RequestBody ReservarRequestDTO datosEntrada) {
-        gestor.ReservarLote(datosEntrada.identificacion());
-    }
-    @PostMapping("/registrar")
-    public void crearUnLote(@RequestBody CrearRequestDTO datosEntrada) {
-        LoteDTO lote = new LoteDTO(datosEntrada.identificacion(), datosEntrada.superficie(), datosEntrada.nc(), datosEntrada.parque());
-        gestor.crearLote(lote);
-    }
-    @PostMapping("/cancelarReserva")//este es por si no cumplio y se le quita el lote
-    public void cancelarReserva(@RequestBody AnularReservaRequestDTO datosEntrada) {
-        gestor.cancelarReserva(datosEntrada.identificacion()); // este si no esta reservado lanza exepcion
-    }
-    @PostMapping("/CambiarEstado")
-    public void marcarComoDisponible(@RequestBody CambiarEstadoRequest datosEntrada) {
-        gestor.CambiarEstadoLote(datosEntrada.identificacion(),datosEntrada.estado());
-        // este le cambia el estado al lote sin importar que eseado tenia antes
+        this.mapper = mapper;
     }
 
+    @GetMapping
+    public ResponseEntity<FeatureCollectionDTO> listar() {
+        // 1. Fetch data from your actual Gestor service
+        List<com.parque_industrial.entities.Lote> lotes = gestor.listarLotes();
 
-    @GetMapping("/disponibles")
-    public ResponseEntity<List<LoteDTO>> listarDisponibles()  {
-        List<LoteDTO>  lista = gestor.LotesDisponibles();
-        return ResponseEntity.ok(lista);
+        // 2. Return directly without custom caching layers or conditional ETag filters
+        return ResponseEntity.ok(mapper.convertirLista(lotes));
     }
-    @GetMapping("/vendidos")
-    public ResponseEntity<List<LoteDTO>> listarVendidos()  {
-        List<LoteDTO>    lista = gestor.LotesVendidos();
-        return ResponseEntity.ok(lista);
+
+    @PostMapping("/reservar")
+    public ResponseEntity<Void> reservar(@RequestBody ReservarRequestDTO request) {
+        gestor.reservarLote(request.identificacion());
+        return ResponseEntity.ok().build();
     }
-    @GetMapping("/reservados")
-    public ResponseEntity<List<LoteDTO>> listarReservados()  {
-        List<LoteDTO> lista=  gestor.LotesReservados();
-        return ResponseEntity.ok(lista);
+
+    @PostMapping("/cancelarReserva")
+    public ResponseEntity<Void> cancelarReserva(@RequestBody AnularReservaRequestDTO request) {
+        gestor.cancelarReserva(request.identificacion());
+        return ResponseEntity.ok().build();
     }
-    @GetMapping("/nuevos")
-    public ResponseEntity<List<LoteDTO>> listarLotesDeParqueNuevo()  {
-        List<LoteDTO> lista = gestor.LotesDeParqueNuevo();
-        return ResponseEntity.ok(lista);
-    }
-    @GetMapping("/viejos")
-    public ResponseEntity<List<LoteDTO>> listarLotesDeParqueViejo()  {
-        List<LoteDTO> lista = gestor.LotesDeParqueViejo();
-        return ResponseEntity.ok(lista);
+
+    @PostMapping("/vender")
+    public ResponseEntity<Void> vender(@RequestBody VentaRequestDTO request) {
+        gestor.venderLote(request.identificacion(), request.monto(), request.fechaVenta());
+        return ResponseEntity.ok().build();
     }
 }

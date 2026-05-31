@@ -113,17 +113,22 @@ export default function CargarConsumoPanel() {
 
             // Refrescamos la tabla inferior con el nuevo registro
             cargarHistorial();
-        } catch (err: any) {
-            const msg = err.response?.data || "Ocurrió un error al registrar el consumo.";
-            setError(typeof msg === "string" ? msg : "El período ya se encuentra declarado.");
-        } finally {
-            setLoading(false);
-        }
+      } catch (err: any) {
+          // 1. Buscamos el mensaje si viene como string, o dentro de la propiedad del objeto
+          const backendMessage = typeof err.response?.data === 'string'
+              ? err.response.data
+              : err.response?.data?.message; // O la propiedad que use tu backend
+
+          // 2. Si encontramos un mensaje del backend lo usamos, si no, ponemos uno genérico real
+          setError(backendMessage || "Ocurrió un error inesperado al registrar el consumo.");
+      }finally {
+               setLoading(false);
+      }
     };
 
     return (
         <div className="cargarConsumoPanel">
-            <header className="panel-header">
+            <header className="panel-header panel-header-configuracion"> {/* CAMBIAR EL CSS PARA AGREGAR LA CLASE CORRESPONDIENTE A ESTE ELEMENTO*/}
                 <h2>Declaración Mensual de Consumos</h2>
                 <p>Cargue los registros métricos y de personal correspondientes a su empresa.</p>
             </header>

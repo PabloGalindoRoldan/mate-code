@@ -17,4 +17,8 @@ public interface UsuarioDAO {
     List<UsuarioResponse> obtenerTodasLasEmpresas();
 
     List<UsuarioResponse> obtenerTodosLosUsuariosMenos(String usernameActual);
+
+    void actualizarPassword(String username, String nuevaPassword);
+
+
 }

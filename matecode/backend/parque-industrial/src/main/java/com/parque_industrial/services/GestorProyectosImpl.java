@@ -1,0 +1,503 @@
+package com.parque_industrial.services;
+
+import com.parque_industrial.dto.proyecto.CrearRequestDTO;
+import com.parque_industrial.dto.proyecto.CrearRequestDefinitivoDTO;
+import com.parque_industrial.dto.proyecto.ProyectosDTO;
+import com.parque_industrial.entities.ProyectoPreliminar;
+import com.parque_industrial.persistence.proyecto.ProyectoDefinitivoDAO;
+import com.parque_industrial.persistence.proyecto.ProyectoPreliminarDAO;
+import org.springframework.stereotype.Service;
+import com.parque_industrial.entities.ProyectoDefinitivo;
+
+import java.util.List;
+
+@Service
+public class GestorProyectosImpl implements GestorProyectos {
+
+        private final ProyectoPreliminarDAO proyectoPreliminarDAO;
+        private final ProyectoDefinitivoDAO proyectoDefinitivoDAO;
+
+        public GestorProyectosImpl(ProyectoPreliminarDAO proyectoPreliminarDAO,
+                        ProyectoDefinitivoDAO proyectoDefinitivoDAO) {
+                this.proyectoPreliminarDAO = proyectoPreliminarDAO;
+                this.proyectoDefinitivoDAO = proyectoDefinitivoDAO;
+        }
+
+        @Override
+        public void crearProyectoPreliminar(CrearRequestDTO dto) {
+                ProyectoPreliminar entidad = new ProyectoPreliminar();
+                entidad.setUsuarioNombre(dto.getUsuarioNombre());
+                entidad.setCuitEmpresa(dto.getCuitEmpresa());
+                entidad.setNombre(dto.getNombre());
+                entidad.setDescripcion(dto.getDescripcion());
+                entidad.setActividadPrincipal(dto.getActividadPrincipal());
+                entidad.setActividadSecundaria(dto.getActividadSecundaria());
+                entidad.setTelefono(dto.getTelefono());
+                entidad.setRubro(dto.getRubro());
+                entidad.setDescripcionServicio(dto.getDescripcionServicio());
+                entidad.setPersonaReferente(dto.getPersonaReferente());
+                entidad.setMateriasPrimas(dto.getMateriasPrimas());
+                entidad.setDestinoProduccion(dto.getDestinoProduccion());
+                entidad.setSuperficieRequerida(dto.getSuperficieRequerida());
+                entidad.setSuperficieTrabajo(dto.getSuperficieTrabajo());
+                entidad.setSuperficieDeposito(dto.getSuperficieDeposito());
+                entidad.setSuperficieCubierta(dto.getSuperficieCubierta());
+                entidad.setSuperficieEstacionamiento(dto.getSuperficieEstacionamiento());
+                entidad.setTienePlanos(dto.getTienePlanos());
+                entidad.setLinkPlanos(dto.getLinkPlanos());
+                entidad.setEnergiaRequerida(dto.getEnergiaRequerida());
+                entidad.setPersonalAOcupar(dto.getPersonalAOcupar());
+                entidad.setTensionAlimentacion(dto.getTensionAlimentacion());
+                entidad.setPotenciaInstalada(dto.getPotenciaInstalada());
+                entidad.setAguaMensual(dto.getAguaMensual());
+                entidad.setGasMensual(dto.getGasMensual());
+                entidad.setResiduosTipo(dto.getResiduosTipo());
+                entidad.setResiduosCantidad(dto.getResiduosCantidad());
+                entidad.setTratamientoEfluentes(dto.getTratamientoEfluentes());
+                entidad.setTipoEmpresa(dto.getTipoEmpresa());
+                entidad.setDireccion(dto.getDireccion());
+                entidad.setPretensionTraslado(dto.getPretensionTraslado());
+                entidad.setEmplazamientoActual(dto.getEmplazamientoActual());
+                entidad.setTiempoRadicacion(dto.getTiempoRadicacion());
+                entidad.setBalanzaPublica(dto.getBalanzaPublica());
+                entidad.setComedor(dto.getComedor());
+                entidad.setSumCoworking(dto.getSumCoworking());
+
+                String estado = (dto.getEstado() != null && !dto.getEstado().isEmpty()) ? dto.getEstado()
+                                : "en_revision";
+                entidad.setEstado(estado);
+                proyectoPreliminarDAO.guardar(entidad);
+        }
+
+        @Override
+        public void crearProyectoDefinitivo( // esto deberia hacerse con gets, no me di cuenta. Despues de la
+                                             // presentacion lo modificare porque ahora funciona SJSJAS
+                        CrearRequestDefinitivoDTO dto) {
+
+                ProyectoDefinitivo entidad = new ProyectoDefinitivo();
+
+                entidad.setUsuarioNombre(
+                                dto.usuarioNombre());
+
+                entidad.setCuitEmpresa(
+                                dto.cuitEmpresa());
+
+                entidad.setNombre(
+                                dto.nombre());
+
+                entidad.setDescripcion(
+                                dto.descripcion());
+
+                entidad.setActividadPrincipal(
+                                dto.actividadPrincipal());
+
+                entidad.setActividadSecundaria(
+                                dto.actividadSecundaria());
+
+                entidad.setTelefono(
+                                dto.telefono());
+
+                entidad.setRubro(
+                                dto.rubro());
+
+                entidad.setDescripcionServicio(
+                                dto.descripcionServicio());
+
+                entidad.setPersonaReferente(
+                                dto.personaReferente());
+
+                entidad.setMateriasPrimas(
+                                dto.materiasPrimas());
+
+                entidad.setDestinoProduccion(
+                                dto.destinoProduccion());
+
+                entidad.setSuperficieRequerida(
+                                dto.superficieRequerida());
+
+                entidad.setSuperficieTrabajo(
+                                dto.superficieTrabajo());
+
+                entidad.setSuperficieDeposito(
+                                dto.superficieDeposito());
+
+                entidad.setSuperficieCubierta(
+                                dto.superficieCubierta());
+
+                entidad.setSuperficieEstacionamiento(
+                                dto.superficieEstacionamiento());
+
+                entidad.setTienePlanos(
+                                dto.tienePlanos());
+
+                entidad.setLinkPlanos(
+                                dto.linkPlanos());
+
+                entidad.setEnergiaRequerida(
+                                dto.energiaRequerida());
+
+                entidad.setPersonalAOcupar(
+                                dto.personalAOcupar());
+
+                entidad.setTensionAlimentacion(
+                                dto.tensionAlimentacion());
+
+                entidad.setPotenciaInstalada(
+                                dto.potenciaInstalada());
+
+                entidad.setAguaMensual(
+                                dto.aguaMensual());
+
+                entidad.setGasMensual(
+                                dto.gasMensual());
+
+                entidad.setResiduosTipo(
+                                dto.residuosTipo());
+
+                entidad.setResiduosCantidad(
+                                dto.residuosCantidad());
+
+                entidad.setTratamientoEfluentes(
+                                dto.tratamientoEfluentes());
+
+                entidad.setTipoEmpresa(
+                                dto.tipoEmpresa());
+
+                entidad.setDireccion(
+                                dto.direccion());
+
+                entidad.setPretensionTraslado(
+                                dto.pretensionTraslado());
+
+                entidad.setEmplazamientoActual(
+                                dto.emplazamientoActual());
+
+                entidad.setTiempoRadicacion(
+                                dto.tiempoRadicacion());
+
+                entidad.setBalanzaPublica(
+                                dto.balanzaPublica());
+
+                entidad.setComedor(
+                                dto.comedor());
+
+                entidad.setSumCoworking(
+                                dto.sumCoworking());
+
+                entidad.setLinkViabilidadFinanciera(
+                                dto.linkViabilidadFinanciera());
+
+                entidad.setLinkEstudioMercado(
+                                dto.linkEstudioMercado());
+
+                entidad.setLinkImpactoAmbiental(
+                                dto.linkImpactoAmbiental());
+
+                entidad.setLinkHabilitacionMunicipal(
+                                dto.linkHabilitacionMunicipal());
+
+                entidad.setLinkCertificadoInhibiciones(
+                                dto.linkCertificadoInhibiciones());
+
+                String estado = (dto.estado() != null && !dto.estado().isEmpty()) ? dto.estado() : "en_revision";
+                entidad.setEstado(estado);
+
+                proyectoDefinitivoDAO
+                                .guardarProyectoDefinitivo(
+                                                entidad);
+        }
+
+        @Override
+        public ProyectosDTO listarProyectos() {
+                List<CrearRequestDefinitivoDTO> definitivos = proyectoDefinitivoDAO.listarProyectos();
+                List<CrearRequestDTO> preliminares = proyectoPreliminarDAO.listarProyectos();
+                return new ProyectosDTO(definitivos, preliminares);
+        }
+
+        @Override
+        public ProyectosDTO listarProyectosPorCuit(String cuit) {
+                List<CrearRequestDefinitivoDTO> definitivos = proyectoDefinitivoDAO.listarDefinitivosPorCuit(cuit);
+                List<CrearRequestDTO> preliminares = proyectoPreliminarDAO.listarPreliminarPorCuit(cuit);
+                return new ProyectosDTO(definitivos, preliminares);
+        }
+
+        @Override
+        public void rectificarProyectoPreliminar(Integer proyectoId) {
+
+                ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+                proyecto.rectificar();
+
+                proyectoPreliminarDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void aprobarProyectoPreliminar(Integer proyectoId) {
+
+                ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+                proyecto.aprobar();
+
+                proyectoPreliminarDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void rechazarProyectoPreliminar(Integer proyectoId) {
+
+                ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+                proyecto.rechazar();
+
+                proyectoPreliminarDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void rechazarProyectoDefinitivo(Integer proyectoId) {
+
+                ProyectoDefinitivo proyecto = proyectoDefinitivoDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+                proyecto.rechazar();
+
+                proyectoDefinitivoDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void rectificarProyectoDefinitivo(Integer proyectoId) {
+
+                ProyectoDefinitivo proyecto = proyectoDefinitivoDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+                proyecto.rectificar();
+
+                proyectoDefinitivoDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void aprobarProyectoDefinitivo(Integer proyectoId) {
+
+                ProyectoDefinitivo proyecto = proyectoDefinitivoDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+                proyecto.aprobar();
+
+                proyectoDefinitivoDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void ponerEnRevisionProyectoPreliminar(Integer proyectoId) {
+                ProyectoPreliminar proyecto = proyectoPreliminarDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto preliminar no encontrado"));
+
+                proyecto.ponerEnRevision();
+
+                proyectoPreliminarDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void actualizarPreliminar(CrearRequestDTO dto) {
+
+                ProyectoPreliminar entidad = proyectoPreliminarDAO
+                                .buscarPorId(dto.getId())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto no encontrado"));
+
+                entidad.setUsuarioNombre(dto.getUsuarioNombre());
+                entidad.setCuitEmpresa(dto.getCuitEmpresa());
+                entidad.setNombre(dto.getNombre());
+                entidad.setDescripcion(dto.getDescripcion());
+                entidad.setActividadPrincipal(dto.getActividadPrincipal());
+                entidad.setActividadSecundaria(dto.getActividadSecundaria());
+                entidad.setTelefono(dto.getTelefono());
+                entidad.setRubro(dto.getRubro());
+                entidad.setDescripcionServicio(dto.getDescripcionServicio());
+                entidad.setPersonaReferente(dto.getPersonaReferente());
+                entidad.setMateriasPrimas(dto.getMateriasPrimas());
+                entidad.setDestinoProduccion(dto.getDestinoProduccion());
+                entidad.setSuperficieRequerida(dto.getSuperficieRequerida());
+                entidad.setSuperficieTrabajo(dto.getSuperficieTrabajo());
+                entidad.setSuperficieDeposito(dto.getSuperficieDeposito());
+                entidad.setSuperficieCubierta(dto.getSuperficieCubierta());
+                entidad.setSuperficieEstacionamiento(dto.getSuperficieEstacionamiento());
+                entidad.setTienePlanos(dto.getTienePlanos());
+                entidad.setLinkPlanos(dto.getLinkPlanos());
+                entidad.setEnergiaRequerida(dto.getEnergiaRequerida());
+                entidad.setPersonalAOcupar(dto.getPersonalAOcupar());
+                entidad.setTensionAlimentacion(dto.getTensionAlimentacion());
+                entidad.setPotenciaInstalada(dto.getPotenciaInstalada());
+                entidad.setAguaMensual(dto.getAguaMensual());
+                entidad.setGasMensual(dto.getGasMensual());
+                entidad.setResiduosTipo(dto.getResiduosTipo());
+                entidad.setResiduosCantidad(dto.getResiduosCantidad());
+                entidad.setTratamientoEfluentes(dto.getTratamientoEfluentes());
+                entidad.setTipoEmpresa(dto.getTipoEmpresa());
+                entidad.setDireccion(dto.getDireccion());
+                entidad.setPretensionTraslado(dto.getPretensionTraslado());
+                entidad.setEmplazamientoActual(dto.getEmplazamientoActual());
+                entidad.setTiempoRadicacion(dto.getTiempoRadicacion());
+                entidad.setBalanzaPublica(dto.getBalanzaPublica());
+                entidad.setComedor(dto.getComedor());
+                entidad.setSumCoworking(dto.getSumCoworking());
+
+                // 🔥 FORCE RESET STATUS ON EVERY UPDATE
+                entidad.setEstado("en_revision");
+
+                proyectoPreliminarDAO.actualizar(entidad);
+        }
+
+        @Override
+        public void ponerEnRevisionProyectoDefinitivo(Integer proyectoId) {
+                ProyectoDefinitivo proyecto = proyectoDefinitivoDAO
+                                .buscarPorId(proyectoId.longValue())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+                proyecto.ponerEnRevision();
+
+                proyectoDefinitivoDAO.actualizar(proyecto);
+        }
+
+        @Override
+        public void actualizarDefinitivo(CrearRequestDefinitivoDTO dto) {
+
+                ProyectoDefinitivo entidad = proyectoDefinitivoDAO
+                                .buscarPorId(dto.id())
+                                .orElseThrow(() -> new IllegalArgumentException("Proyecto definitivo no encontrado"));
+
+                entidad.setUsuarioNombre(
+                                dto.usuarioNombre());
+
+                entidad.setCuitEmpresa(
+                                dto.cuitEmpresa());
+
+                entidad.setNombre(
+                                dto.nombre());
+
+                entidad.setDescripcion(
+                                dto.descripcion());
+
+                entidad.setActividadPrincipal(
+                                dto.actividadPrincipal());
+
+                entidad.setActividadSecundaria(
+                                dto.actividadSecundaria());
+
+                entidad.setTelefono(
+                                dto.telefono());
+
+                entidad.setRubro(
+                                dto.rubro());
+
+                entidad.setDescripcionServicio(
+                                dto.descripcionServicio());
+
+                entidad.setPersonaReferente(
+                                dto.personaReferente());
+
+                entidad.setMateriasPrimas(
+                                dto.materiasPrimas());
+
+                entidad.setDestinoProduccion(
+                                dto.destinoProduccion());
+
+                entidad.setSuperficieRequerida(
+                                dto.superficieRequerida());
+
+                entidad.setSuperficieTrabajo(
+                                dto.superficieTrabajo());
+
+                entidad.setSuperficieDeposito(
+                                dto.superficieDeposito());
+
+                entidad.setSuperficieCubierta(
+                                dto.superficieCubierta());
+
+                entidad.setSuperficieEstacionamiento(
+                                dto.superficieEstacionamiento());
+
+                entidad.setTienePlanos(
+                                dto.tienePlanos());
+
+                entidad.setLinkPlanos(
+                                dto.linkPlanos());
+
+                entidad.setEnergiaRequerida(
+                                dto.energiaRequerida());
+
+                entidad.setPersonalAOcupar(
+                                dto.personalAOcupar());
+
+                entidad.setTensionAlimentacion(
+                                dto.tensionAlimentacion());
+
+                entidad.setPotenciaInstalada(
+                                dto.potenciaInstalada());
+
+                entidad.setAguaMensual(
+                                dto.aguaMensual());
+
+                entidad.setGasMensual(
+                                dto.gasMensual());
+
+                entidad.setResiduosTipo(
+                                dto.residuosTipo());
+
+                entidad.setResiduosCantidad(
+                                dto.residuosCantidad());
+
+                entidad.setTratamientoEfluentes(
+                                dto.tratamientoEfluentes());
+
+                entidad.setTipoEmpresa(
+                                dto.tipoEmpresa());
+
+                entidad.setDireccion(
+                                dto.direccion());
+
+                entidad.setPretensionTraslado(
+                                dto.pretensionTraslado());
+
+                entidad.setEmplazamientoActual(
+                                dto.emplazamientoActual());
+
+                entidad.setTiempoRadicacion(
+                                dto.tiempoRadicacion());
+
+                entidad.setBalanzaPublica(
+                                dto.balanzaPublica());
+
+                entidad.setComedor(
+                                dto.comedor());
+
+                entidad.setSumCoworking(
+                                dto.sumCoworking());
+
+                entidad.setLinkViabilidadFinanciera(
+                                dto.linkViabilidadFinanciera());
+
+                entidad.setLinkEstudioMercado(
+                                dto.linkEstudioMercado());
+
+                entidad.setLinkImpactoAmbiental(
+                                dto.linkImpactoAmbiental());
+
+                entidad.setLinkHabilitacionMunicipal(
+                                dto.linkHabilitacionMunicipal());
+
+                entidad.setLinkCertificadoInhibiciones(
+                                dto.linkCertificadoInhibiciones());
+
+                entidad.setEstado("en_revision");
+
+                proyectoDefinitivoDAO.actualizar(entidad);
+        }
+
+}
