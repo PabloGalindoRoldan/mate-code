@@ -361,3 +361,7 @@
     font-weight: 700;
     text-transform: uppercase;
 }
+
+.modal-form-group {
+    margin-bottom: 20px;
+}
