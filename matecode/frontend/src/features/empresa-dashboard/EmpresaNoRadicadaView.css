@@ -165,16 +165,58 @@ input:focus {
 }
 
 @media (max-width: 768px) {
+    .empresaNoRadicadaBody {
+        padding: 80px 16px 40px 16px;
+        max-width: 100%;
+    }
+
+    .formulario-container {
+        padding: 24px;
+    }
+
+    .form-header {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
     .project-form-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
 
     .form-section {
         grid-column: span 1;
+        padding: 16px;
+    }
+
+    .grid-2-col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .full-width {
         grid-column: span 1;
+    }
+
+    .input-group {
+        min-width: 0;
+    }
+
+    .form-actions {
+        grid-column: span 1;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: stretch;
+        gap: 14px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .form-actions button {
+        width: 100%;
     }
 }
 
