@@ -158,7 +158,6 @@ export default function MapPanel() {
             empresasApi.listarEmpresas({ signal: controller.signal })
         ])
             .then(([geoJsonData, empresasData]) => {
-                // Inyección defensiva de ID numérico a nivel raíz por si tu backend no lo trae
                 if (geoJsonData && Array.isArray(geoJsonData.features)) {
                     geoJsonData.features = geoJsonData.features.map((f: any) => ({
                         ...f,
@@ -186,7 +185,6 @@ export default function MapPanel() {
         return findLinkedEmpresa(popupInfo.featureId, empresas);
     }, [popupInfo, empresas]);
 
-    // Rotation Loop
     useEffect(() => {
         let animationFrame: number;
         const rotate = () => {
@@ -446,6 +444,59 @@ function ModalPanel({ loteId, data, index, onClose }: ModalPanelProps) {
     const [ultimoConsumo, setUltimoConsumo] = useState<ConsumoRecord | null>(null);
     const [isConsumosLoading, setIsConsumosLoading] = useState(false);
 
+    // --- LÓGICA DE ARRASTRE (Unificada) ---
+    const getCoordinates = (e: React.MouseEvent | React.TouchEvent) => {
+        if ('touches' in e) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+    };
+
+    const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
+        if ((e.target as HTMLElement).closest("button")) return;
+        e.stopPropagation();
+
+        setIsDragging(true);
+        const coords = getCoordinates(e);
+        dragStart.current = {
+            x: coords.x - position.x,
+            y: coords.y - position.y
+        };
+    };
+
+    const handleMove = useCallback((e: MouseEvent | TouchEvent) => {
+        if (!isDragging) return;
+        if ('touches' in e) e.preventDefault();
+
+        const clientX = 'touches' in e ? (e as TouchEvent).touches[0].clientX : (e as MouseEvent).clientX;
+        const clientY = 'touches' in e ? (e as TouchEvent).touches[0].clientY : (e as MouseEvent).clientY;
+
+        setPosition({
+            x: clientX - dragStart.current.x,
+            y: clientY - dragStart.current.y
+        });
+    }, [isDragging]);
+
+    const handleEnd = useCallback(() => {
+        setIsDragging(false);
+    }, []);
+
+    useEffect(() => {
+        if (isDragging) {
+            window.addEventListener("mousemove", handleMove as EventListener);
+            window.addEventListener("mouseup", handleEnd as EventListener);
+            window.addEventListener("touchmove", handleMove as EventListener, { passive: false });
+            window.addEventListener("touchend", handleEnd as EventListener);
+        }
+        return () => {
+            window.removeEventListener("mousemove", handleMove as EventListener);
+            window.removeEventListener("mouseup", handleEnd as EventListener);
+            window.removeEventListener("touchmove", handleMove as EventListener);
+            window.removeEventListener("touchend", handleEnd as EventListener);
+        };
+    }, [isDragging, handleMove, handleEnd]);
+
+    // --- CARGA DE DATOS ---
     useEffect(() => {
         if (!data.activeEmpresa?.identificacion) {
             setUltimoConsumo(null);
@@ -457,64 +508,21 @@ function ModalPanel({ loteId, data, index, onClose }: ModalPanelProps) {
 
         consumosApi.getHistorialPorEmpresa(data.activeEmpresa.identificacion)
             .then((historial: ConsumoRecord[]) => {
-                if (historial && historial.length > 0) {
-                    const ordenado = [...historial].sort((a, b) => {
-                        if (a.ano !== b.ano) return b.ano - a.ano;
-                        return b.mes - a.mes;
-                    });
+                if (historial?.length > 0) {
+                    const ordenado = [...historial].sort((a, b) => (b.ano - a.ano) || (b.mes - a.mes));
                     setUltimoConsumo(ordenado[0]);
-                } else {
-                    setUltimoConsumo(null);
                 }
             })
-            .catch((err) => {
-                console.error(`Error consultando consumos de la empresa en lote ${loteId}:`, err);
-                setUltimoConsumo(null);
-            })
-            .finally(() => {
-                setIsConsumosLoading(false);
-            });
+            .catch(console.error)
+            .finally(() => setIsConsumosLoading(false));
 
         return () => controller.abort();
     }, [data.activeEmpresa?.identificacion, loteId]);
 
-    const handleMouseDown = (e: React.MouseEvent) => {
-        if ((e.target as HTMLElement).closest("button")) return;
-        e.stopPropagation();
-
-        setIsDragging(true);
-        dragStart.current = {
-            x: e.clientX - position.x,
-            y: e.clientY - position.y
-        };
-    };
-
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        if (!isDragging) return;
-        setPosition({
-            x: e.clientX - dragStart.current.x,
-            y: e.clientY - dragStart.current.y
-        });
-    }, [isDragging]);
-
-    const handleMouseUp = useCallback(() => {
-        setIsDragging(false);
-    }, []);
-
-    useEffect(() => {
-        if (isDragging) {
-            window.addEventListener("mousemove", handleMouseMove);
-            window.addEventListener("mouseup", handleMouseUp);
-        }
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseup", handleMouseUp);
-        };
-    }, [isDragging, handleMouseMove, handleMouseUp]);
-
-    const getLuzValue = (record: ConsumoRecord) => typeof record.luz === "object" ? record.luz.parsedValue : record.luz;
-    const getAguaValue = (record: ConsumoRecord) => typeof record.agua === "object" ? record.agua.parsedValue : record.agua;
-    const getGasValue = (record: ConsumoRecord) => typeof record.gas === "object" ? record.gas.parsedValue : record.gas;
+    // --- UTILS ---
+    const getLuzValue = (r: ConsumoRecord) => typeof r.luz === "object" ? r.luz.parsedValue : r.luz;
+    const getAguaValue = (r: ConsumoRecord) => typeof r.agua === "object" ? r.agua.parsedValue : r.agua;
+    const getGasValue = (r: ConsumoRecord) => typeof r.gas === "object" ? r.gas.parsedValue : r.gas;
 
     return (
         <div
@@ -530,8 +538,9 @@ function ModalPanel({ loteId, data, index, onClose }: ModalPanelProps) {
         >
             <header
                 className="modal-panel-header"
-                onMouseDown={handleMouseDown}
-                style={{ cursor: "grab" }}
+                onMouseDown={handleStart}
+                onTouchStart={handleStart}
+                style={{ cursor: "grab", touchAction: "none" }}
             >
                 <div className="modal-header-title">
                     <Building2 size={16} />

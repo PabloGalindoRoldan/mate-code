@@ -339,9 +339,14 @@
 @media (max-width: 600px) {
     .mensajeria-container {
         min-height: 100vh;
-        padding-top: 1rem;
+        padding-top: 0;
         height: auto;
         border: none;
+    }
+
+    .mensajeria-sidebar h3 {
+        text-align: end;
+        padding: 26px;
     }
 
     .conversaciones-list {
