@@ -326,7 +326,7 @@
     .panel-header {
         flex-direction: column;
         gap: 1rem;
-        align-items: flex-start;
+        align-items: flex-end;
     }
 
     .btn-registrarElemento {
@@ -370,4 +370,5 @@
     .table-responsive {
         overflow-x: scroll;
     }
+
 }

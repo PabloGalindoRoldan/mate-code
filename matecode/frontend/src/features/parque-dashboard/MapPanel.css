@@ -489,3 +489,11 @@
     font-weight: 700;
     color: #1e293b;
 }
+
+@media (max-width: 480px) {
+    .draggable-modal-panel {
+        max-width: 80%;
+        max-height: 80vh;
+
+    }
+}

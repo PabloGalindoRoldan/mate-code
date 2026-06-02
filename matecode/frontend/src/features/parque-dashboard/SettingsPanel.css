@@ -168,3 +168,13 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+@media (max-width: 600px) {
+    .settings-panel-container {
+        width: 90%;
+    }
+
+    .settings-card {
+        padding: 20px;
+    }
+}

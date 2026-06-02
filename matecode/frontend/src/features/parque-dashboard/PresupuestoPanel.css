@@ -369,7 +369,7 @@
 /* --- Ajustes para Tablet y Móvil --- */
 @media (max-width: 900px) {
     .presupuesto-panel {
-        padding: 1rem 0.5rem;
+        padding: 5rem 0.5rem;
     }
 
     .table-responsive {

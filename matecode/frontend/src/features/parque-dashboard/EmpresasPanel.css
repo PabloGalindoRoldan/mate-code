@@ -230,7 +230,9 @@
         0 10px 30px rgba(15, 23, 42, 0.04),
         0 2px 6px rgba(15, 23, 42, 0.04);
 
+    min-width: 0;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 /* HEADER */
@@ -262,13 +264,16 @@
 /* TABLE WRAPPER */
 
 .table-responsive-wrapper {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     border: 1px solid #edf2f7;
     border-radius: 18px;
     background-color: #ffffff;
-    width: 100%;
-    max-width: 100%;
+    box-sizing: border-box;
 }
 
 /* TABLE */
@@ -278,6 +283,15 @@
     border-collapse: collapse;
     font-size: 14px;
     min-width: 100%;
+    table-layout: auto;
+    box-sizing: border-box;
+}
+
+.admin-companies-table th,
+.admin-companies-table td {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 /* HEADER */
@@ -492,7 +506,7 @@
 .admin-companies-table td:nth-child(2),
 .admin-companies-table td:nth-child(3),
 .admin-companies-table td:nth-child(4) {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .admin-companies-table tbody tr:hover td {
@@ -508,6 +522,16 @@
 
 /* RESPONSIVE MOBILE STYLES */
 @media (max-width: 768px) {
+    .lucide.lucide-layers {
+        display: none;
+    }
+
+    .lote-display-badge {
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
     .empresas-panel-container {
         padding: 16px;
         gap: 16px;
@@ -562,15 +586,17 @@
     .table-responsive-wrapper {
         border-radius: 10px;
         width: 100%;
+        min-width: 0;
+        max-width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .admin-companies-table {
-        min-width: 600px;
-        font-size: 12px;
+        table-layout: auto;
         width: 100%;
+        min-width: 0;
     }
 
     .admin-companies-table thead th {
@@ -642,10 +668,14 @@
 @media (max-width: 480px) {
     .empresas-panel-container {
         padding: 12px;
+        margin-top: 0;
     }
 
     .panel-dashboard-header h2 {
         font-size: 16px;
+        margin-left: 60px;
+        text-align: end;
+        padding: 7px 0px;
     }
 
     .filter-dashboard-card {
@@ -673,19 +703,24 @@
     }
 
     .management-table-card {
-        padding: 12px;
-        border-radius: 8px;
+        min-width: 0;
+        /* Esto permite que el padre se encoja */
+        overflow: hidden;
+        /* Opcional: asegura que nada escape del card */
     }
 
     .table-responsive-wrapper {
+        min-width: 0;
+        /* Importante para que el flex/grid respete el 100% */
         width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
         max-width: 100%;
+        overflow-x: auto;
+        table-layout: auto;
     }
 
     .admin-companies-table {
-        min-width: 600px;
+        min-width: 0;
+        width: 100%;
         font-size: 12px;
     }
 
@@ -769,4 +804,42 @@
 
 .icon-edit-btn:active {
     transform: scale(0.96);
+}
+
+@media (max-width: 768px) {
+
+    /* 1. Contención del contenedor principal */
+    .empresas-panel-container {
+        width: 100%;
+        min-width: 0;
+        /* Esto es lo que rompe el "estiramiento" */
+        overflow-x: hidden;
+        /* Evita que los hijos desborden el layout */
+        box-sizing: border-box;
+    }
+
+    .management-table-card {
+        max-width: 100%;
+        min-width: 0;
+        /* Esto permite que el card se encoja */
+        overflow: hidden;
+        /* Opcional: asegura que nada escape del card */
+    }
+
+    /* 2. El wrapper debe ser un bloque flexible pero limitado */
+    .table-responsive-wrapper {
+        width: 100%;
+        min-width: 0;
+        /* Impide que el wrapper herede el ancho de la tabla */
+        overflow-x: auto;
+        /* Permite el scroll solo aquí */
+        /* Asegura que no se comporte como un ítem flex/grid estirado */
+    }
+
+    /* 3. La tabla se mantiene, pero obligada a ajustarse al wrapper */
+    .admin-companies-table {
+        table-layout: auto;
+        width: 100%;
+        min-width: 0;
+    }
 }
