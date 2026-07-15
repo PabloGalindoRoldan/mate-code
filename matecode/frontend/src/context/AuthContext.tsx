@@ -9,7 +9,7 @@ interface UserDetails {
     email: string;
     cuit: string;
     rol: string;
-    empresa: any; // You can expand this if you have an Empresa type
+    empresa: any;
 }
 
 interface AuthContextType {
