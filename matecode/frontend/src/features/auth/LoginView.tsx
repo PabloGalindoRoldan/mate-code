@@ -6,8 +6,8 @@ import NavBar from '../../ui/navBar/NavBar';
 import './LoginView.css';
 
 export default function LoginView() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('adminparque');
+    const [password, setPassword] = useState('Admin123');
     const [errorMsg, setErrorMsg] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
